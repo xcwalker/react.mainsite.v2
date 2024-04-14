@@ -1,0 +1,45 @@
+.castItem {
+}
+
+.castItem > a {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  /* styling */
+  text-decoration: none;
+  color: inherit;
+}
+
+.castItem img {
+  /* sizing */
+  --_size: 125px;
+  width: var(--_size);
+  height: var(--_size);
+
+  /* styling */
+  overflow: clip;
+  border-radius: 50%;
+}
+
+.tag {
+  /* text */
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.role {
+  /* text */
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+
+.tag > *,
+.role > * {
+  margin: 0;
+}

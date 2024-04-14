@@ -1,0 +1,14 @@
+.stack,
+.stack:global(.column) {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: var(--_gap, 1rem);
+  flex-wrap: wrap;
+}
+
+.stack:global(.row) {
+  /* flex */
+  flex-direction: row;
+  align-items: center;
+}

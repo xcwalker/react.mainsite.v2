@@ -1,0 +1,59 @@
+.items {
+  /* spacing */
+  padding: 0;
+  margin: 0;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: 1rem;
+
+  .item {
+    /* position */
+    position: relative;
+
+    /* sizing */
+    width: 100%;
+
+    & img {
+      /* sizing */
+      width: 100%;
+      aspect-ratio: 2/3;
+
+      /* styling */
+      border-radius: 0.5rem;
+      object-fit: cover;
+      /* background-color: red; */
+      border: none;
+      outline: none;
+    }
+
+    & span.title {
+      /* text */
+      font-weight: 600;
+      line-height: 1;
+      font-size: 1rem;
+    }
+
+    & span.year {
+      /* position */
+      position: absolute;
+      inset: 0.25rem;
+      right: auto;
+      bottom: auto;
+
+      /* sizing */
+      padding: 0.25rem 0.75rem;
+
+      /* text */
+      font-weight: 700;
+      line-height: 1;
+      font-size: 0.75rem;
+
+      /* styling */
+      border-radius: 0.5rem;
+      background-color: var(--background-color-100);
+      color: white;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.separator {
+  /* sizing */
+  width: var(--_size, 10px);
+  height: var(--_size, 10px);
+
+  /* styling */
+  color: inherit;
+  background-color: currentColor;
+  border-radius: 50%;
+}

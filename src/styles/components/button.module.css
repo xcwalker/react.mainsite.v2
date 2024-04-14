@@ -1,0 +1,27 @@
+.button {
+  /* sizing */
+  padding: 0.5rem 1.25rem;
+
+  /* text */
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  /* text */
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background-color: var(--background-color-200);
+  color: var(--foreground-color-100);
+}

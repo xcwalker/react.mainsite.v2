@@ -1,0 +1,24 @@
+.section {
+  /* sizing */
+  width: 100%;
+}
+
+.container {
+  /* sizing */
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+.container > h1,
+.container > h2,
+.container > h3,
+.container > h4,
+.container > h5,
+.container > h6 {
+  margin: 0;
+}

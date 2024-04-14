@@ -1,0 +1,44 @@
+.libraryItem {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+
+  /* styling */
+  list-style: none;
+}
+
+.libraryItem a {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* styling */
+  color: inherit;
+  text-decoration: none;
+  border-radius: 0.5rem;
+}
+
+.libraryItem a:hover span,
+.libraryItem a:focus span {
+  text-decoration: underline;
+}
+
+.libraryItem a:focus {
+  outline: solid 2px var(--foreground-color-100);
+  outline-offset: 0.125rem;
+}
+
+.libraryItem span.title {
+  /* text */
+  font-weight: 600;
+  line-height: 1;
+  font-size: 1rem;
+}
+

@@ -1,0 +1,20 @@
+.sideBySide {
+  /* sizing */
+  width: 100%;
+  
+  /* grid */
+  display: grid;
+  grid-template-columns: var(--_width, 175px) 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .sideBySide {
+    /* grid */
+    grid-template-columns: 1fr;
+  }
+
+  .sideBySide > :first-child {
+    max-width: var(--_width);
+  }
+}

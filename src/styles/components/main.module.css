@@ -1,0 +1,19 @@
+.main {
+  /* spacing */
+  padding-top: calc(52px + 1rem);
+  padding-bottom: 2rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.main:has(> :global(#hero)) {
+  padding-top: 0;
+}
+
+.main > section {
+  max-width: calc(100% - (2 * min(3rem, max(4vw, 1rem))));
+  margin-inline: auto;
+}

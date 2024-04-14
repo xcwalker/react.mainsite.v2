@@ -1,0 +1,19 @@
+.autoGrid {
+  /* spacing */
+  padding: 0;
+  margin: 0;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--_width, 200px), 100%), 1fr));
+  gap: 1rem;
+
+  /* styling */
+  list-style: none;
+}
+
+@media (max-width: 700px) {
+  .autoGrid {
+  grid-template-columns: repeat(auto-fill, minmax(min(120px, 100%), 1fr));
+  }
+}

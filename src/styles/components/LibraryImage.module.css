@@ -1,0 +1,48 @@
+.image {
+  /* position */
+  position: relative;
+}
+
+.image .noImage,
+.image img {
+  /* sizing */
+  width: 100%;
+  aspect-ratio: 2/3;
+
+  /* text */
+  color: transparent;
+
+  /* styling */
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+.image .noImage {
+  /* position */
+  position: absolute;
+  inset: 0;
+  bottom: auto;
+  z-index: -1;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+
+  /* styling */
+  background-color: var(--background-color-200);
+  color: white;
+}
+
+.image .noImage span {
+  /* sizing */
+  --_size: 30px;
+  width: var(--_size);
+  height: var(--_size);
+  font-size: var(--_size);
+}
+
+.image a:hover .noImage span {
+  text-decoration: none;
+}
