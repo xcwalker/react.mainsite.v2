@@ -1,97 +1,143 @@
-html
-
-/* colors */ {
-  /** DO NOT USE **/
-  /* foreground */
-  --dnu-light-color-100: hsl(0, 0%, 93%);
-  --dnu-light-color-200: hwb(0 87% 13%);
-  --dnu-light-color-300: hsl(0, 0%, 81%);
-  --dnu-light-color-400: hsl(0, 0%, 75%);
-  --dnu-light-color-500: hsl(0, 0%, 69%);
-
-  /* background */
-  --dnu-dark-color-100: hsl(0, 0%, 7%);
-  --dnu-dark-color-200: hsl(0, 0%, 13%);
-  --dnu-dark-color-300: hsl(0, 0%, 19%);
-  --dnu-dark-color-400: hsl(0, 0%, 25%);
-  --dnu-dark-color-500: hsl(0, 0%, 31%);
+:root {
+  --text: #111711;
+  --background: #f5faf5;
+  --primary: #2a6728;
+  --secondary: #88df86;
+  --accent: #22b91d;
 }
 
-html body.oled {
-  /** colors **/
-  /* foreground */
-  --foreground-color-100: var(--dnu-light-color-100);
-  --foreground-color-200: var(--dnu-light-color-200);
-  --foreground-color-300: var(--dnu-light-color-300);
-  --foreground-color-400: var(--dnu-light-color-400);
-  --foreground-color-500: var(--dnu-light-color-500);
-
-  /* background */
-  --background-color-100: var(--dnu-dark-color-100);
-  --background-color-200: var(--dnu-dark-color-200);
-  --background-color-300: var(--dnu-dark-color-300);
-  --background-color-400: var(--dnu-dark-color-400);
-  --background-color-500: var(--dnu-dark-color-500);
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #e8eee8;
+    --background: #050a05;
+    --primary: #9ad798;
+    --secondary: #227920;
+    --accent: #4be246;
+  }
 }
 
-html
+:root {
+  --text-050: hsl(120, 15%, 95%);
+  --text-100: hsl(120, 14%, 90%);
+  --text-200: hsl(120, 16%, 80%);
+  --text-300: hsl(120, 15%, 70%);
+  --text-400: hsl(120, 15%, 60%);
+  --text-500: hsl(120, 15%, 50%);
+  --text-600: hsl(120, 15%, 40%);
+  --text-700: hsl(120, 15%, 30%);
+  --text-800: hsl(120, 16%, 20%);
+  --text-900: hsl(120, 14%, 10%);
+  --text-950: hsl(120, 15%, 5%);
 
-/* padding */ {
-  --default-padding: 10px;
-  --header-padding: calc(var(--default-padding) * 1) min(calc(var(--default-padding) * 4), max(4vw, var(--default-padding)));
-  --header-bottom-padding: var(--header-height) min(calc(var(--default-padding) * 4), max(4vw, var(--default-padding))) 0;
-  --header-style-padding: min(var(--header-height), max(10vh, calc(var(--default-padding) * 3)))
-    min(calc(var(--default-padding) * 4), max(5vw, var(--default-padding)));
-  --header-style-half-padding: calc(var(--header-height) / 2) min(calc(var(--default-padding) * 2), max(2vw, var(--default-padding)));
-  --footer-padding: calc(var(--default-padding) * 2) min(calc(var(--default-padding) * 4), max(4vw, var(--default-padding)));
+  --background-050: hsl(120, 31%, 95%);
+  --background-100: hsl(120, 33%, 90%);
+  --background-200: hsl(120, 33%, 80%);
+  --background-300: hsl(120, 33%, 70%);
+  --background-400: hsl(120, 33%, 60%);
+  --background-500: hsl(120, 33%, 50%);
+  --background-600: hsl(120, 33%, 40%);
+  --background-700: hsl(120, 33%, 30%);
+  --background-800: hsl(120, 33%, 20%);
+  --background-900: hsl(120, 33%, 10%);
+  --background-950: hsl(120, 31%, 5%);
+
+  --primary-050: hsl(120, 44%, 95%);
+  --primary-100: hsl(117, 45%, 90%);
+  --primary-200: hsl(119, 43%, 80%);
+  --primary-300: hsl(118, 44%, 70%);
+  --primary-400: hsl(118, 44%, 60%);
+  --primary-500: hsl(118, 44%, 50%);
+  --primary-600: hsl(118, 44%, 40%);
+  --primary-700: hsl(118, 44%, 30%);
+  --primary-800: hsl(119, 43%, 20%);
+  --primary-900: hsl(117, 45%, 10%);
+  --primary-950: hsl(115, 44%, 5%);
+
+  --secondary-050: hsl(120, 60%, 95%);
+  --secondary-100: hsl(120, 57%, 90%);
+  --secondary-200: hsl(119, 59%, 80%);
+  --secondary-300: hsl(119, 58%, 70%);
+  --secondary-400: hsl(119, 58%, 60%);
+  --secondary-500: hsl(119, 58%, 50%);
+  --secondary-600: hsl(119, 58%, 40%);
+  --secondary-700: hsl(119, 58%, 30%);
+  --secondary-800: hsl(119, 59%, 20%);
+  --secondary-900: hsl(120, 57%, 10%);
+  --secondary-950: hsl(116, 60%, 5%);
+
+  --accent-050: hsl(117, 76%, 95%);
+  --accent-100: hsl(118, 73%, 90%);
+  --accent-200: hsl(118, 73%, 80%);
+  --accent-300: hsl(118, 73%, 70%);
+  --accent-400: hsl(118, 73%, 60%);
+  --accent-500: hsl(118, 73%, 50%);
+  --accent-600: hsl(118, 73%, 40%);
+  --accent-700: hsl(118, 73%, 30%);
+  --accent-800: hsl(118, 73%, 20%);
+  --accent-900: hsl(118, 73%, 10%);
+  --accent-950: hsl(117, 76%, 5%);
 }
 
-html
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-050: hsl(120, 15%, 5%);
+    --text-100: hsl(120, 14%, 10%);
+    --text-200: hsl(120, 16%, 20%);
+    --text-300: hsl(120, 15%, 30%);
+    --text-400: hsl(120, 15%, 40%);
+    --text-500: hsl(120, 15%, 50%);
+    --text-600: hsl(120, 15%, 60%);
+    --text-700: hsl(120, 15%, 70%);
+    --text-800: hsl(120, 16%, 80%);
+    --text-900: hsl(120, 14%, 90%);
+    --text-950: hsl(120, 15%, 95%);
 
-/* sizing */ {
-  --header-height: 52px;
-  --header-offset: min(75px, 10vmin);
-  --header-stacked-offset: calc(var(--header-height) + (var(--header-offset) * 2));
-}
+    --background-050: hsl(120, 31%, 5%);
+    --background-100: hsl(120, 33%, 10%);
+    --background-200: hsl(120, 33%, 20%);
+    --background-300: hsl(120, 33%, 30%);
+    --background-400: hsl(120, 33%, 40%);
+    --background-500: hsl(120, 33%, 50%);
+    --background-600: hsl(120, 33%, 60%);
+    --background-700: hsl(120, 33%, 70%);
+    --background-800: hsl(120, 33%, 80%);
+    --background-900: hsl(120, 33%, 90%);
+    --background-950: hsl(120, 31%, 95%);
 
-html
+    --primary-050: hsl(115, 44%, 5%);
+    --primary-100: hsl(117, 45%, 10%);
+    --primary-200: hsl(119, 43%, 20%);
+    --primary-300: hsl(118, 44%, 30%);
+    --primary-400: hsl(118, 44%, 40%);
+    --primary-500: hsl(118, 44%, 50%);
+    --primary-600: hsl(118, 44%, 60%);
+    --primary-700: hsl(118, 44%, 70%);
+    --primary-800: hsl(119, 43%, 80%);
+    --primary-900: hsl(117, 45%, 90%);
+    --primary-950: hsl(120, 44%, 95%);
 
-/* radii */ {
-  --border-radius: 5px;
-}
+    --secondary-050: hsl(116, 60%, 5%);
+    --secondary-100: hsl(120, 57%, 10%);
+    --secondary-200: hsl(119, 59%, 20%);
+    --secondary-300: hsl(119, 58%, 30%);
+    --secondary-400: hsl(119, 58%, 40%);
+    --secondary-500: hsl(119, 58%, 50%);
+    --secondary-600: hsl(119, 58%, 60%);
+    --secondary-700: hsl(119, 58%, 70%);
+    --secondary-800: hsl(119, 59%, 80%);
+    --secondary-900: hsl(120, 57%, 90%);
+    --secondary-950: hsl(120, 60%, 95%);
 
-html {
-  /** colors **/
-  /* foreground */
-  --foreground-color-100: var(--dnu-light-color-100);
-  --foreground-color-200: var(--dnu-light-color-200);
-  --foreground-color-300: var(--dnu-light-color-300);
-  --foreground-color-400: var(--dnu-light-color-400);
-  --foreground-color-500: var(--dnu-light-color-500);
-
-  /* background */
-  --background-color-100: var(--dnu-dark-color-100);
-  --background-color-200: var(--dnu-dark-color-200);
-  --background-color-300: var(--dnu-dark-color-300);
-  --background-color-400: var(--dnu-dark-color-400);
-  --background-color-500: var(--dnu-dark-color-500);
-
-  /* brand */
-  --brand-header-color: var(--foreground-color-200);
-
-  /* selector */
-  --selector-color: hsl(214, 100%, 44%);
-
-  /* forms */
-  --form-color-selector: hsl(214, 100%, 44%);
-  --form-color-invalid: hsl(0, 100%, 50%);
-  --form-color-invalid-hold: hsl(39, 100%, 50%);
-  --form-color-valid-hold: hsl(120, 100%, 38%);
-  --form-color-valid: hsl(120, 100%, 25%);
-
-  --form-color-selector-opac: hsl(214, 100%, 44%, 0.25);
-  --form-color-invalid-opac: hsl(0, 100%, 50%, 0.25);
-  --form-color-invalid-hold-opac: hsl(39, 100%, 50%, 0.25);
-  --form-color-valid-hold-opac: hsl(120, 100%, 38%, 0.25);
-  --form-color-valid-opac: hsl(120, 100%, 25%, 0.25);
+    --accent-050: hsl(117, 76%, 5%);
+    --accent-100: hsl(118, 73%, 10%);
+    --accent-200: hsl(118, 73%, 20%);
+    --accent-300: hsl(118, 73%, 30%);
+    --accent-400: hsl(118, 73%, 40%);
+    --accent-500: hsl(118, 73%, 50%);
+    --accent-600: hsl(118, 73%, 60%);
+    --accent-700: hsl(118, 73%, 70%);
+    --accent-800: hsl(118, 73%, 80%);
+    --accent-900: hsl(118, 73%, 90%);
+    --accent-950: hsl(117, 76%, 95%);
+  }
 }

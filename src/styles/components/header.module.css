@@ -24,7 +24,11 @@
 }
 
 :global(.scrolled) .container {
-    backdrop-filter: brightness(.8) blur(15px) opacity(1);
+  backdrop-filter: brightness(0.8) blur(15px) opacity(1);
+}
+
+.container a {
+  color: inherit;
 }
 
 .svg {
@@ -33,7 +37,8 @@
   flex-shrink: 0;
 
   /* color */
-  fill: white;
+  fill: currentColor;
+  color: inherit;
 }
 
 .links {
@@ -58,7 +63,7 @@
   position: relative;
 
   /* text */
-  color: white;
+  color: inherit;
   text-decoration: none;
   font-weight: 600;
 

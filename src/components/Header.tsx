@@ -3,6 +3,7 @@ import Logo from "./Logo";
 import { Link } from "react-router-dom";
 
 import css from "../styles/components/header.module.css";
+import { PrimaryButtonLink } from "./PrimaryButton";
 
 const navItems = [
   {
@@ -44,7 +45,9 @@ export default function Header() {
   return (
     <header className={css.header}>
       <div className={css.container}>
-        <Logo type="xcwalker" className={css.svg} />
+        <Link to={"/"}>
+          <Logo type="xcwalker" className={css.svg} />
+        </Link>
         <ul className={css.links}>
           {navItems &&
             navItems.map((item, index) => {
@@ -54,6 +57,7 @@ export default function Header() {
                 </Fragment>
               );
             })}
+          <PrimaryButtonLink href="/login">Login</PrimaryButtonLink>
         </ul>
       </div>
     </header>

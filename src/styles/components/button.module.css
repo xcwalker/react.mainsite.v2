@@ -3,9 +3,10 @@
   padding: 0.5rem 1.25rem;
 
   /* text */
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1;
+  text-decoration: none;
 
   /* flex */
   display: flex;
@@ -13,12 +14,6 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-
-  /* text */
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1;
-  text-decoration: none;
 
   /* styling */
   border-radius: 0.5rem;

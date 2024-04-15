@@ -7,11 +7,17 @@ export default function Footer() {
       <div className={css.container}>
         <div className={css.column}>
           <Logo className={css.svg} />
-          <span className={css.span}>
-            An <a href="https://xcw.one">xcwalker</a> development
-          </span>
+          <div className={css.group}>
+            <span className={css.span}>Copyright © 2022 XCWalker.</span>
+            <span className={css.span}>All rights reserved.</span>
+          </div>
+          <Divider />
         </div>
       </div>
     </footer>
   );
+}
+
+function Divider() {
+  return <div className={css.divider} />;
 }
