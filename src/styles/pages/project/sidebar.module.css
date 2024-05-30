@@ -13,10 +13,10 @@
 }
 
 @media (max-width: 900px) {
-.sidebar {
-  /* position */
-  position: static;
-}
+  .sidebar {
+    /* position */
+    position: static;
+  }
 }
 
 .thumbnail {
@@ -85,6 +85,7 @@ h4 {
 .tags {
   /* sizing */
   padding-inline: 0.5rem;
+
   /* flex */
   display: flex;
   flex-direction: row;
@@ -92,7 +93,8 @@ h4 {
   gap: 0.5rem;
 }
 
-.tags > .tag {
+.tags > .tag,
+.collection {
   /* styling */
   padding: 0.25rem 0.5rem;
   background-color: var(--background-200);
@@ -103,6 +105,17 @@ h4 {
   font-weight: 800;
   line-height: 1;
   text-transform: uppercase;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tag > .icon,
+.collection > .icon {
+  font-size: 1.5em;
 }
 
 .links {
@@ -114,6 +127,17 @@ h4 {
 
 .links > a {
   height: 40px;
+}
+
+.links > a > .icon {
+  /* position */
+  position: absolute;
+  inset: 0.5rem;
+  left: auto;
+  bottom: auto;
+
+  /* sizing */
+  font-size: 1em;
 }
 
 /* .github {

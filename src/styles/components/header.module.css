@@ -1,6 +1,6 @@
 .header {
   /* position */
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -14,7 +14,7 @@
   width: 100%;
   height: 52px;
   padding: 0.625rem min(3rem, max(4vw, 1rem));
-
+ 
   /* flex */
   display: flex;
   justify-content: space-between;

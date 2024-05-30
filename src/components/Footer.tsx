@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className={css.footer}>
       <div className={css.container}>
         <Logo className={css.svg} />
-        <span className={css.span}>Copyright © 2022 XCWalker.</span>
+        <span className={css.span}>Copyright © 2024 XCWalker.</span>
         <span className={css.span}>All rights reserved.</span>
       </div>
     </footer>

@@ -1,13 +1,28 @@
 .hero {
   /* sizing */
-  height: 100svh;
-  max-width: unset !important;
+  height: 800px;
   margin: 0;
 
-  background: #200122;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to bottom right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to bottom right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /* styling */
+  border-radius: 1rem;
+  background: #200122; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom right,
+    #6f0000,
+    #200122
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom right,
+    #6f0000,
+    #200122
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+  --_blur: 4rem;
+  --_spread: 2rem;
+  --_color: var(--background-200);
+  -webkit-box-shadow: 0px 0px var(--_blur) var(--_spread) var(--_color);
+  -moz-box-shadow: 0px 0px var(--_blur) var(--_spread) var(--_color);
+  box-shadow: 0px 0px var(--_blur) var(--_spread) var(--_color);
 }
 
 .container {

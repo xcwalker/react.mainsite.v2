@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Section from "../components/Section";
 import Hero from "./home/Hero";
 import Button from "../components/Button";
 import SecurityWarning from "../components/Security/Warning";
@@ -10,8 +9,6 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Section id="test">Home</Section>
-      Home
       <Projects />
       <SecurityWarning visibility={modalVisibility} setVisibility={setModalVisibility} />
       <Button

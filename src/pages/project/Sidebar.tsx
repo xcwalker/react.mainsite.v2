@@ -2,6 +2,7 @@ import { ProjectItem } from "../../types";
 import css from "../../styles/pages/project/sidebar.module.css";
 import { ButtonLink } from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
+import GFIcon from "../../components/GFIcon";
 
 export function Sidebar(props: { item: ProjectItem }) {
   const item = props.item;
@@ -54,8 +55,17 @@ export function Sidebar(props: { item: ProjectItem }) {
       </div>
 
       <div className={css.tags}>
+        <div className={css.collection}>
+          <GFIcon className={css.icon}>category</GFIcon>
+          {item.metaData.collectionName}
+        </div>
         {item.metaData.tags.map((tag, index) => {
-          return <div key={index} className={css.tag}>{tag}</div>
+          return (
+            <div key={index} className={css.tag}>
+              <GFIcon className={css.icon}>label</GFIcon>
+              <span>{tag}</span>
+            </div>
+          );
         })}
       </div>
 
@@ -68,14 +78,21 @@ export function Sidebar(props: { item: ProjectItem }) {
             item.metaData.slug
           }
           className={css.github}
+          type="newTab"
         >
           <SocialIcon social="github" />
           Github Repo
+          <GFIcon className={css.icon}>open_in_new</GFIcon>
         </ButtonLink>
         {item.metaData.workshop && (
-          <ButtonLink href={item.metaData.workshop} className={css.steam}>
+          <ButtonLink
+            href={item.metaData.workshop}
+            className={css.steam}
+            type="newTab"
+          >
             <SocialIcon social="steam" />
             Workshop Page
+            <GFIcon className={css.icon}>open_in_new</GFIcon>
           </ButtonLink>
         )}
       </div>

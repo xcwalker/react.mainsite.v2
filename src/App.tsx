@@ -37,3 +37,6 @@ function ScrollToTop() {
 
   return null;
 }
+
+export const title = "xcwalker"
+export const separator = "|";
