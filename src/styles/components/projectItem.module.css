@@ -1,0 +1,88 @@
+.project {
+  /* sizing */
+  width: 400px;
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* styling */
+  border-radius: 1rem;
+  border: 0.25rem solid transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project:hover,
+.project:focus-visible {
+  border-color: var(--background-300);
+}
+
+.project .thumbnail {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+  aspect-ratio: 16/9;
+
+  /* flex */
+  display: flex;
+
+  /* styling */
+  border-radius: 0.5rem;
+  overflow: clip;
+}
+
+.project .thumbnail > img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.project .thumbnail > span.collection {
+  /* position */
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+
+  /* styling */
+  padding: 0.25rem 0.5rem;
+  background-color: var(--background);
+  border-radius: 0.25rem;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.project .details {
+  /* sizing */
+  padding-inline: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+} 
+
+.project h3 {
+  margin: 0;
+  
+  /* text */
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.project h4 {
+  margin: 0;
+
+  /* text */
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+}

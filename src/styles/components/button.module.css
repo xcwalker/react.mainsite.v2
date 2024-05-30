@@ -1,4 +1,16 @@
 .button {
+  /* position */
+  position: relative;
+
+  /* corner variables */
+  --_size: 10px;
+  --_border-width: 2px;
+  --_border-color: currentColor;
+  --_offset: 0px;
+  --_offset-hover: 5px;
+  --_duration: 100ms;
+  --_ease: ease;
+
   /* sizing */
   padding: 0.5rem 1.25rem;
 
@@ -16,7 +28,94 @@
   gap: 0.5rem;
 
   /* styling */
-  border-radius: 0.5rem;
-  background-color: var(--background-color-200);
-  color: var(--foreground-color-100);
+  --_border-radius: 0.5rem;
+  border-radius: var(--_border-radius);
+  background-color: var(--background-200);
+  color: var(--text);
+  border: none;
+}
+
+.button svg {
+  /* position */
+  position: absolute;
+  inset: 0px;
+  right: auto;
+
+  /* sizing */
+  padding: 0.5rem;
+  height: 100%;
+
+  /* styling */
+  fill: currentColor;
+}
+
+.button > .corner {
+  /* position */
+  position: absolute;
+
+  /* sizing */
+  width: var(--_size);
+  height: var(--_size);
+
+  /* hiding */
+  opacity: 0;
+
+  /* transition */
+  transition: top var(--_duration) var(--_ease),
+    bottom var(--_duration) var(--_ease), left var(--_duration) var(--_ease),
+    right var(--_duration) var(--_ease), opacity var(--_duration) var(--_ease);
+}
+
+.button:hover > .corner,
+.button:focus-visible > .corner {
+  --_offset: calc(var(--_offset-hover) * -1);
+  opacity: 1;
+}
+
+.button:focus-visible {
+  outline: var(--_border-width) solid var(--_border-color);
+}
+
+.button > .corner:nth-child(1) {
+  /* position */
+  top: var(--_offset);
+  left: var(--_offset);
+
+  /* styling */
+  border-top: var(--_border-width) solid var(--_border-color);
+  border-left: var(--_border-width) solid var(--_border-color);
+  border-top-left-radius: calc(var(--_offset-hover) + var(--_border-radius));
+}
+
+.button > .corner:nth-child(2) {
+  /* position */
+  top: var(--_offset);
+  right: var(--_offset);
+
+  /* styling */
+  border-top: var(--_border-width) solid var(--_border-color);
+  border-right: var(--_border-width) solid var(--_border-color);
+  border-top-right-radius: calc(var(--_offset-hover) + var(--_border-radius));
+}
+
+.button > .corner:nth-child(3) {
+  /* position */
+  bottom: var(--_offset);
+  left: var(--_offset);
+
+  /* styling */
+  border-bottom: var(--_border-width) solid var(--_border-color);
+  border-left: var(--_border-width) solid var(--_border-color);
+  border-bottom-left-radius: calc(var(--_offset-hover) + var(--_border-radius));
+}
+
+.button > .corner:nth-child(4) {
+  /* position */
+  bottom: var(--_offset);
+  right: var(--_offset);
+
+  /* styling */
+  border-bottom: var(--_border-width) solid var(--_border-color);
+  border-right: var(--_border-width) solid var(--_border-color);
+  border-bottom-right-radius: calc(var(--_offset-hover) + var(--_border-radius));
 }

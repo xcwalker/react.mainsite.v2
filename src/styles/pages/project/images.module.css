@@ -1,0 +1,24 @@
+.images {
+  /* position */
+  position: relative;
+}
+
+.images .tabButton {
+  /* position */
+  position: absolute;
+  inset: 0.5rem;
+  right: auto;
+  bottom: auto;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.images .tabButton:focus {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.images img {
+  border-radius: 0.5rem;
+}

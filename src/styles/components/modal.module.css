@@ -1,0 +1,345 @@
+@media (prefers-reduced-motion) {
+  .mainContainer {
+    --_slide-duration: 0s !important;
+    --_opacity-duration: 0s !important;
+    --_hold-after-slide: 0s !important;
+    --_hold-after-opacity: 0s !important;
+  }
+  .modal header,
+  .corner {
+    animation: none !important;
+  }
+}
+
+.mainContainer {
+  /* variables */
+  --_background: var(--background-050);
+  --_stripe-color: var(--primary);
+  --_row-height: calc(50px + 1rem);
+  --_modal-height: 350px;
+  --_modal-width: 500px;
+
+  --_slide-duration: 0.6s;
+  --_opacity-duration: 0.35s;
+  --_hold-after-slide: 0s;
+  --_hold-after-opacity: 0.25s;
+
+  /* position */
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: 1fr 10px var(--_modal-width) 10px 1fr;
+  grid-template-rows: 1fr 10px var(--_row-height) 10px 1fr;
+  gap: 0.25rem;
+
+  /* hiding */
+  pointer-events: none;
+
+  /* transition */
+  transition: grid-template-rows var(--_slide-duration) ease;
+}
+
+.mainContainer.visible {
+  --_row-height: var(--_modal-height) !important;
+
+  /* hiding */
+  opacity: 1;
+  pointer-events: auto;
+  transition: grid-template-rows var(--_slide-duration) ease calc(var(--_opacity-duration) + var(--_hold-after-opacity));
+}
+
+@media (max-width: 600px) {
+  .mainContainer {
+    --_modal-height: 400px;
+    --_modal-width: 400px;
+  }
+}
+
+@media (max-width: 450px) {
+  .mainContainer {
+    --_modal-height: 500px;
+    --_modal-width: 300px;
+  }
+}
+
+body :has(.visible) {
+  overflow-y: hidden;
+}
+
+.modal {
+  /* position */
+  grid-column: 3;
+  grid-row: 3;
+
+  /* styling */
+  border-radius: 1rem;
+  background-color: var(--_background);
+  color: var(--text);
+  overflow: hidden;
+}
+
+.modal,
+.corner,
+.backdrop {
+  /* hiding */
+  opacity: 0;
+
+  /* transition */
+  transition: opacity var(--_opacity-duration) ease calc(var(--_slide-duration) + var(--_hold-after-slide));
+}
+
+.mainContainer.visible > .modal,
+.mainContainer.visible > .corner,
+.mainContainer.visible > .backdrop {
+  /* hiding */
+  opacity: 1;
+  /* transition */
+
+  transition: opacity var(--_opacity-duration) ease;
+}
+
+.modal > .container {
+  /* sizing */
+  height: var(--_modal-height);
+  padding: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal header {
+  /* Variables */
+  --_color-1: var(--_stripe-color);
+  --_color-2: transparent;
+  --_width: 1rem;
+
+  /* sizing */
+  height: 50px;
+  padding: 0.5rem;
+
+  /* flex */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  /* Styling */
+  background: repeating-linear-gradient(
+    135deg,
+    var(--_color-1) 0px,
+    var(--_color-1) var(--_width),
+    var(--_color-2) var(--_width),
+    var(--_color-2) calc(var(--_width) * 2)
+  );
+  background-size: calc((var(--_width) * 2) / sin(135deg)) 100%;
+  animation: stripes 3s infinite linear;
+  border-radius: 0.5rem;
+}
+
+@keyframes stripes {
+  to {
+    background-position: calc((var(--_width) * 2) / sin(135deg)) 0;
+  }
+}
+
+.modal header h2 {
+  /* sizing */
+  margin: 0;
+  padding-left: 0.5rem;
+  padding-right: 2rem;
+  width: 250px;
+  height: 100%;
+
+  /* flex */
+  display: flex;
+  align-items: center;
+  flex-shrink: 1;
+
+  /* styling */
+  background-color: var(--_background);
+  color: currentColor;
+
+  /* text */
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.125rem;
+  border-radius: 0.5rem;
+}
+
+.modal header button {
+  /* sizing */
+  margin: 0;
+  height: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
+  border: none;
+  background-color: var(--_background);
+  color: currentColor;
+}
+
+.modal main {
+  /* sizing */
+  padding-inline: 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.modal main p {
+  margin: 0;
+}
+
+.modal main a {
+  /* text */
+  text-decoration: underline dotted;
+  color: inherit;
+}
+
+.modal main a:hover,
+.modal main a:focus-visible {
+  /* text */
+  text-decoration: underline solid;
+}
+
+.modal footer {
+  /* position */
+  margin-top: auto;
+
+  /* sizing */
+  padding: 0.5rem;
+
+  /* flex */
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modal footer button,
+.modal footer a {
+  /* sizing */
+  min-width: 150px;
+  padding: 0.75rem 2rem;
+
+  /* styling */
+  background-color: darkred;
+  border: none;
+}
+
+.modal footer button:global(.return),
+.modal footer a:global(.return) {
+  background-color: darkgreen;
+  border: none;
+  padding: 0.75rem 2rem;
+}
+
+.backdrop {
+  /* position */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  /* styling */
+  /* background-color: rgba(0, 0, 0, 75%); */
+  backdrop-filter: blur(50px) brightness(20%);
+}
+
+.corner {
+  /* sizing */
+  --_size: 50px;
+  width: calc(var(--_size) * 1.5);
+  height: var(--_size);
+
+  /* variables */
+  --_border-width: 5px;
+  --_border-color: var(--_background);
+  place-content: top right;
+
+  animation: cornerFlash 2s infinite;
+}
+
+@keyframes cornerFlash {
+  0%,
+  50%,
+  60%,
+  70%,
+  80%,
+  90% {
+    border-color: var(--_background);
+  }
+
+  51%,
+  59%,
+  71%,
+  79%,
+  91%,
+  100% {
+    border-color: var(--_stripe-color);
+  }
+}
+
+.corner:nth-child(1) {
+  /* position */
+  grid-column: 2;
+  grid-row: 2;
+
+  /* styling */
+  border-top: var(--_border-width) solid var(--_border-color);
+  border-left: var(--_border-width) solid var(--_border-color);
+  border-top-left-radius: 1.5rem;
+}
+
+.corner:nth-child(2) {
+  /* position */
+  grid-column: 4;
+  grid-row: 2;
+
+  /* styling */
+  border-top: var(--_border-width) solid var(--_border-color);
+  border-right: var(--_border-width) solid var(--_border-color);
+  place-self: start end;
+  border-top-right-radius: 1.5rem;
+}
+
+.corner:nth-child(3) {
+  /* position */
+  grid-column: 2;
+  grid-row: 4;
+
+  /* styling */
+  border-bottom: var(--_border-width) solid var(--_border-color);
+  border-left: var(--_border-width) solid var(--_border-color);
+  place-self: end start;
+  border-bottom-left-radius: 1.5rem;
+}
+
+.corner:nth-child(4) {
+  /* position */
+  grid-column: 4;
+  grid-row: 4;
+  place-self: end end;
+
+  /* styling */
+  border-bottom: var(--_border-width) solid var(--_border-color);
+  border-right: var(--_border-width) solid var(--_border-color);
+  border-bottom-right-radius: 1.5rem;
+}
