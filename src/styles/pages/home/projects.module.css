@@ -1,0 +1,11 @@
+.container {
+  gap: 0.5rem;
+}
+
+.slider {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0rem;
+  overflow-y: scroll;
+}

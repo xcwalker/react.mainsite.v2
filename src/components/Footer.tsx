@@ -5,19 +5,10 @@ export default function Footer() {
   return (
     <footer className={css.footer}>
       <div className={css.container}>
-        <div className={css.column}>
-          <Logo className={css.svg} />
-          <div className={css.group}>
-            <span className={css.span}>Copyright © 2022 XCWalker.</span>
-            <span className={css.span}>All rights reserved.</span>
-          </div>
-          <Divider />
-        </div>
+        <Logo className={css.svg} />
+        <span className={css.span}>Copyright © 2024 XCWalker.</span>
+        <span className={css.span}>All rights reserved.</span>
       </div>
     </footer>
   );
-}
-
-function Divider() {
-  return <div className={css.divider} />;
 }
