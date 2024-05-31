@@ -1,6 +1,7 @@
 .hero {
   /* sizing */
   height: 800px;
+  max-height: 70vh;
   margin: 0;
 
   /* styling */

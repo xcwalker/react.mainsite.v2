@@ -1,3 +1,7 @@
+html {
+  --content-max-width: calc(100% - (2 * min(3rem, max(4vw, 1rem))));
+}
+
 :root {
   --text: #000000;
   --background: #f2f2f2;

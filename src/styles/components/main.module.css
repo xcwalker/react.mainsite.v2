@@ -6,6 +6,6 @@
 }
 
 .main > section {
-  max-width: calc(100% - (2 * min(3rem, max(4vw, 1rem))));
+  max-width: var(--content-max-width);
   margin-inline: auto;
 }

@@ -19,6 +19,7 @@ export const projectsArray = [
       collection: "gmod",
       collectionName: "garry's mod",
       repoName: "gmod",
+      subRepo: true,
       workshop:
         "https://steamcommunity.com/sharedfiles/filedetails/?id=3082493539",
     },
@@ -43,6 +44,7 @@ export const projectsArray = [
       collection: "gmod",
       collectionName: "garry's mod",
       repoName: "gmod",
+      subRepo: true,
       workshop:
         "https://steamcommunity.com/sharedfiles/filedetails/?id=3082493539",
     },

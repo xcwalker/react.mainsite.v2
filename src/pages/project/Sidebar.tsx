@@ -74,8 +74,7 @@ export function Sidebar(props: { item: ProjectItem }) {
           href={
             "https://github.com/xcwalker/" +
             item.metaData.repoName +
-            "/tree/main/" +
-            item.metaData.slug
+            (item.metaData.subRepo ? "/tree/main/" + item.metaData.slug : "")
           }
           className={css.github}
           type="newTab"
