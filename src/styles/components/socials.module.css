@@ -1,0 +1,42 @@
+.container {
+  /* sizing */
+  padding: 2rem 2rem;
+
+  /* styling */
+  background-color: var(--background-200);
+}
+
+.list {
+  /* spacing */
+  margin: 0;
+  padding: 0;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.social {
+  /* sizing */
+  --_width: 50px;
+  width: var(--_width);
+  height: var(--_width);
+  padding: 0.75rem;
+  flex-shrink: 0;
+
+  background-color: var(--background-100);
+}
+
+.social svg {
+  /* position */
+  position: static;
+
+  /* sizing */
+  --_size: 100%;
+  width: var(--_size);
+  height: var(--_size);
+  padding: 0;
+}

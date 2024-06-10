@@ -3,9 +3,9 @@
 }
 
 .slider {
-  /* flex */
-  display: flex;
-  flex-direction: row;
-  gap: 0rem;
-  overflow-y: scroll;
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(282px, 100%), 1fr));
+  gap: 1rem;
+
 }

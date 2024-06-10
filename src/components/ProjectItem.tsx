@@ -1,13 +1,20 @@
 import { ProjectItem as ProjectItemType } from "../types";
-import css from "../styles/components/projectItem.module.css";
 import { Link } from "react-router-dom";
+import css from "../styles/components/projectItem.module.css";
 
-export default function ProjectItem(props: { item: ProjectItemType }) {
+export default function ProjectItem(props: {
+  item: ProjectItemType;
+  style?: React.CSSProperties;
+}) {
   const item = props.item;
   const date = new Date(item.metaData.date.modified);
-  
+
   return (
-    <Link className={css.project} to={"/project/" + item.metaData.slug}>
+    <Link
+      className={css.project}
+      to={"/project/" + item.metaData.slug}
+      style={props.style}
+    >
       <div className={css.thumbnail}>
         <img
           src={
@@ -36,6 +43,7 @@ export default function ProjectItem(props: { item: ProjectItemType }) {
           })}
         </h4>
       </div>
+      <div className={css.background}></div>
     </Link>
   );
 }

@@ -1,8 +1,9 @@
 .hero {
   /* sizing */
   height: 800px;
-  max-height: 70vh;
+  max-height: 60vmin;
   margin: 0;
+  padding: 2rem;
 
   /* styling */
   border-radius: 1rem;

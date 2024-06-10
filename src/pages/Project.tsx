@@ -19,7 +19,7 @@ export default function Project() {
       <Helmet>
         <title>
           {item.data.title} - {item.data.subTitle} {separator} {title}
-        </title>{" "}
+        </title>
         <meta
           name="description"
           content={

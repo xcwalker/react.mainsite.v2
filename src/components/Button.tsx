@@ -14,9 +14,9 @@ export default function Button(props: { children: ReactNode; onClick: () => void
   );
 }
 
-export function ButtonLink(props: { children: ReactNode; className?: string; href: string; tabIndex?: number; type?: string }) {
+export function ButtonLink(props: { children: ReactNode; className?: string; href: string; tabIndex?: number; type?: string; title?: string; }) {
   return (
-    <Link to={props.href} className={css.button + " " + props?.className} tabIndex={props.tabIndex} target={props.type === "newTab" ? "_blank" : ""}>
+    <Link to={props.href} className={css.button + " " + props?.className} tabIndex={props.tabIndex} target={props.type === "newTab" ? "_blank" : ""} title={props.title}>
       <div className={css.corner} />
       <div className={css.corner} />
       <div className={css.corner} />

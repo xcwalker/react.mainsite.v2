@@ -5,23 +5,14 @@ import Button from "../../components/Button";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { Download, Zoom } from "yet-another-react-lightbox/plugins";
-import PhotoAlbum from "react-photo-album";
+import PhotoAlbum, { Photo } from "react-photo-album";
 import GFIcon from "../../components/GFIcon";
 
 export default function Images(props: { item: ProjectItem }) {
   const item = props.item;
   const [open, setOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
-  const [images, setImages] = useState<
-    [
-      {
-        key: number;
-        src: string;
-        width: number;
-        height: number;
-      }?
-    ]
-  >([]);
+  const [images, setImages] = useState<Photo[]>([]);
 
   useEffect(() => {
     if (item.metaData.imageCount === 0) return;
@@ -38,7 +29,10 @@ export default function Images(props: { item: ProjectItem }) {
           (index + 1) +
           ".jpg";
 
-        const getMeta = (url: string, cb: (err, img?) => {}) => {
+        const getMeta = (
+          url: string,
+          cb: (err: string | Event | null, img?: HTMLImageElement) => void
+        ) => {
           const img = new Image();
           img.onload = () => cb(null, img);
           img.onerror = (err) => cb(err);
@@ -48,11 +42,11 @@ export default function Images(props: { item: ProjectItem }) {
         // Use like:
         getMeta(string, (err, img) => {
           setImages((prev) => {
-            if (prev.some((v) => v.key === index)) return [...prev];
+            if (prev.some((v) => v.key === index.toString())) return [...prev];
             return [
               ...prev,
               {
-                key: index,
+                key: index.toString(),
                 src: string,
                 height: img ? img.naturalHeight : 0,
                 width: img ? img.naturalWidth : 0,
@@ -85,7 +79,7 @@ export default function Images(props: { item: ProjectItem }) {
           setSlideIndex(current);
           setOpen(true);
         }}
-        renderPhoto={({ photo, wrapperStyle, renderDefaultPhoto }) => (
+        renderPhoto={({ wrapperStyle, renderDefaultPhoto }) => (
           <div style={wrapperStyle} className={css.image}>
             <GFIcon className={css.icon}>fullscreen</GFIcon>
             {renderDefaultPhoto({ wrapped: true })}

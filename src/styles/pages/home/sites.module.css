@@ -1,0 +1,135 @@
+.sites {
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(282px, 100%), 1fr));
+  grid-template-rows: repeat(auto-fit, 400px);
+  gap: 1rem;
+}
+
+.sites > div,
+.sites > div > div {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+}
+
+.site {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+
+  /* flex */
+  display: flex;;
+
+  /* styling */
+  border-radius: 1rem;
+  overflow: clip;
+  color: white;
+
+  /* text */
+  text-decoration: none;
+
+  /* hover effect */
+  position: relative;
+  
+  transition-duration: 300ms;
+  transition-property: transform, box-shadow;
+  transition-timing-function: ease-out;
+  transform: rotate3d(0);
+}
+
+.site:hover {
+  transition-duration: 150ms;
+  box-shadow: 0 5px 20px 5px #00000044;
+}
+
+.site .icon {
+  /* position */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 1;
+
+  /* sizing */
+  --_size: 100px;
+  width: var(--_size);
+  height: var(--_size);
+}
+
+.site .background {
+  /* variables */
+  --_extend: 4rem;
+
+  /* position */
+  position: absolute;
+  inset: calc(var(--_extend) * -1);
+  z-index: -1;
+
+  /* sizing */
+  width: calc(100% + (var(--_extend) * 2));
+  height: calc(100% + (var(--_extend) * 2));
+
+  /* styling */
+  filter: brightness(0.6);
+}
+
+.site .container {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* flex */
+  display: flex;
+  align-items: flex-end;
+
+  /* styling */
+  border-radius: 0.5rem;
+  border: 1px solid white;
+}
+
+.site .container .info {
+  /* sizing */
+  padding: 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* hiding */
+  translate: 0 1.5rem;
+  transition: translate 300ms ease;
+}
+
+.site .container .info h3 {
+  /* text */
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.site .container .info span {
+  /* text */
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+
+  /* hiding */
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+
+.site:hover .container .info,
+.site:focus-visible .container .info {
+  translate: 0 0;
+}
+.site:hover .container .info span,
+.site:focus-visible .container .info span {
+  opacity: 1;
+}
