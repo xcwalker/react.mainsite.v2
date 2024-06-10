@@ -3,6 +3,78 @@
   position: relative;
 }
 
+.images .image {
+  /* position */
+  position: relative;
+
+  /* styling */
+  border-radius: 0.5rem;
+  overflow: clip;
+}
+
+.images .image .icon {
+  /* position */
+  position: absolute;
+  inset: 0.5rem;
+  left: auto;
+  bottom: auto;
+  z-index: 1;
+
+  /* sizing */
+  font-size: 1.5rem;
+
+  /* hiding */
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.images .image:hover .icon {
+  opacity: 1;
+}
+
+.images .image:after {
+  /* content */
+  content: "";
+
+  /* position */
+  position: absolute;
+  inset: 0;
+
+  /* mouse */
+  pointer-events: none;
+
+  /* styling */
+  background: rgb(0, 0, 0);
+  background: -moz-linear-gradient(
+    225deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 30%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background: -webkit-linear-gradient(
+    225deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 30%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background: linear-gradient(
+    225deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 30%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
+
+  /* hiding */
+  transition: background-position 500ms ease;
+  background-position: -200% 100%;
+  background-size: 200% 200%;
+}
+
+.images .image:hover:after {
+  background-position: -100% 0%;
+}
+
 .images .tabButton {
   /* position */
   position: absolute;
@@ -17,8 +89,4 @@
 .images .tabButton:focus {
   opacity: 1;
   pointer-events: auto;
-}
-
-.images img {
-  border-radius: 0.5rem;
 }

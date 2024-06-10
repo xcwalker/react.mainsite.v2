@@ -46,6 +46,7 @@ export type ProjectItem = {
     collection: string;
     collectionName: string;
     repoName: string;
+    subRepo: boolean;
     workshop: string;
   };
 };

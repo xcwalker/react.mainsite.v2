@@ -6,6 +6,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { Download, Zoom } from "yet-another-react-lightbox/plugins";
 import PhotoAlbum from "react-photo-album";
+import GFIcon from "../../components/GFIcon";
 
 export default function Images(props: { item: ProjectItem }) {
   const item = props.item;
@@ -24,7 +25,7 @@ export default function Images(props: { item: ProjectItem }) {
 
   useEffect(() => {
     if (item.metaData.imageCount === 0) return;
-    
+
     Array(item.metaData.imageCount)
       .fill(1)
       .map((unused, index) => {
@@ -84,6 +85,12 @@ export default function Images(props: { item: ProjectItem }) {
           setSlideIndex(current);
           setOpen(true);
         }}
+        renderPhoto={({ photo, wrapperStyle, renderDefaultPhoto }) => (
+          <div style={wrapperStyle} className={css.image}>
+            <GFIcon className={css.icon}>fullscreen</GFIcon>
+            {renderDefaultPhoto({ wrapped: true })}
+          </div>
+        )}
       />
       <Lightbox
         open={open}
