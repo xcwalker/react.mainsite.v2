@@ -20,6 +20,7 @@
   padding: 0.625rem 0;
   max-width: var(--content-max-width);
   margin-inline: auto;
+  height: 100%;
   
   /* flex */
   display: flex;
@@ -79,4 +80,21 @@
 .link a:focus {
   outline: solid 2px var(--foreground-color-100);
   outline-offset: 0.25rem;
+}
+
+
+@media print {
+  .header {
+    /* position */
+    position: static;
+    
+    /* sizing */
+    height: 52px;
+
+    /* styling */
+    background: transparent;
+  }
+  .links {
+    display: none;
+  }
 }

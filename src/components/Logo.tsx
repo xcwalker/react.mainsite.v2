@@ -1,7 +1,7 @@
 export default function Logo(props: { type?: string; className: string }) {
   return (
     <>
-      {props.type === "x" && <XLogo className={props.className} />}
+      {props.type?.toLowerCase() === "x" && <XLogo className={props.className} />}
       {(!props.type || props.type === "xcwalker") && <XCWalkerLogo className={props.className} />}
       {}
     </>

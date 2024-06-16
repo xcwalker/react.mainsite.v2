@@ -5,7 +5,7 @@
   box-sizing: border-box;
 
   /* font */
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 body {
@@ -20,7 +20,15 @@ body {
   color: var(--text);
 
   /* transition */
-  transition: var(--transition-background_color-600), var(--transition-color-600);
+  transition: var(--transition-background_color-600),
+    var(--transition-color-600);
+}
+
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
 }
 
 body.oled {
@@ -47,22 +55,23 @@ html {
   gap: 1rem;
 }
 
-#root>main {
+#root > main {
   min-height: 85vh;
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 48
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
 
 .material-symbols-outlined.active {
-  font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 48
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  z-index: 1;
 }

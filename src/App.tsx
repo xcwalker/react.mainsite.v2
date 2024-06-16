@@ -13,6 +13,9 @@ import Main from "./components/Main";
 import Project from "./pages/Project";
 import { Helmet } from "react-helmet";
 import ErrorPage from "./ErrorPage";
+import Recipe from "./pages/Recipe";
+import ProjectsPage from "./pages/Projects";
+import RecipesPage from "./pages/Recipes";
 
 export default function App() {
   return (
@@ -27,11 +30,20 @@ export default function App() {
         <Main>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/project">
-              <Route index element={<Navigate to={"/#projects"} />} />
+              <Route index element={<Navigate to={"/projects"} />} />
               <Route path=":slug" element={<Project />} />
             </Route>
-            <Route path="*" element={<ErrorPage code={404} error="Page not found" />} />
+            <Route path="/recipes" element={<RecipesPage />} />
+            <Route path="/recipe">
+              <Route index element={<Navigate to={"/recipes"} />} />
+              <Route path=":slug" element={<Recipe />} />
+            </Route>
+            <Route
+              path="*"
+              element={<ErrorPage code={404} error="Page not found" />}
+            />
           </Routes>
         </Main>
         <Footer />
@@ -44,7 +56,9 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    console.log(pathname);
+    // window.scrollTo(0,0);
+    setTimeout(() => window.scrollTo(0, 0), 10);
   }, [pathname]);
 
   return null;

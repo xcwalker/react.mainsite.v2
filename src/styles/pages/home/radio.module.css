@@ -1,0 +1,127 @@
+.radio {
+  /* sizing */
+  padding: 0.5rem;
+
+  /* styling */
+  border-radius: 1rem;
+  border: 2px solid var(--text-200);
+  color: white;
+}
+
+.container {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  padding: 1.5rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.background {
+  /* position */
+  position: absolute;
+  inset: -25%;
+  z-index: -1;
+
+  /* sizing */
+  width: 150%;
+  height: 150%;
+  object-fit: cover;
+
+  /* styling */
+  filter: blur(10px) brightness(0.75);
+}
+
+/** Player Background Animated **/
+@media not (prefers-reduced-motion) {
+  /* styles to apply if a user's device settings are set to reduced motion */
+  .background.animated {
+    /* position */
+    inset: 0 !important;
+    
+    /* sizing */
+    height: 150svh;
+    width: 150svw;
+
+    /* animation */
+    animation: backgroundAnimated 90s forwards infinite linear;
+
+    /* styling */
+    object-fit: cover;
+    filter: blur(50px) brightness(65%);
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  @-moz-document url-prefix() {
+    /* Only applies to firefox mobile */
+    .background.animated {
+      /* sizing */
+      width: calc(100% + var(--_pad));
+      height: calc(100% + var(--_pad));
+
+      /* animation */
+      animation: none;
+
+      /* styling */
+      filter: blur(20px) brightness(75%);
+    }
+  }
+}
+
+@keyframes backgroundAnimated {
+  0% {
+    translate: 0svw 0svh;
+  }
+
+  25% {
+    translate: -50svw 0svh;
+  }
+
+  50% {
+    translate: -50svw -50svh;
+  }
+
+  75% {
+    translate: 0svw -50svh;
+  }
+}
+
+.image {
+  /* sizing */
+  width: 100%;
+  max-width: unset !important;
+  aspect-ratio: 1/1;
+
+  /* styling */
+  border-radius: 1rem;
+}
+
+.stack {
+  justify-content: space-between;
+}
+
+.title {
+  /* text */
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.subTitle {
+  /* text */
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.links {
+  align-items: flex-end;
+}
+
+.links .link {
+  color: white;
+}

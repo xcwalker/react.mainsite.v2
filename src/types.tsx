@@ -32,7 +32,6 @@ export type ProjectItem = {
     title: string;
     subTitle: string;
     description: string;
-    thumbnail: string;
   };
   metaData: {
     date: {
@@ -40,7 +39,6 @@ export type ProjectItem = {
       modified: string;
     };
     slug: string;
-    imageDirectory: string;
     imageCount: number;
     tags: string[];
     collection: string;
@@ -48,5 +46,51 @@ export type ProjectItem = {
     repoName: string;
     subRepo?: boolean;
     workshop: string;
+    author: {
+      name: string;
+      image: {
+        webpURL: string;
+        jpgURL: string;
+      };
+    };
+  };
+};
+
+export type RecipeItem = {
+  data: {
+    title: string;
+    subTitle: string;
+    description?: string;
+    instructions: {
+      prep?: [];
+      cook: [];
+    };
+    ingredients: [];
+    information: {
+      prepTime: string;
+      cookTime: string;
+      serves: string;
+    };
+  };
+  metaData: {
+    date: {
+      created: string;
+      modified: string;
+    };
+    imageCount: number;
+    tags: string[];
+    collection: string;
+    collectionName: string;
+    colors: {
+      dark: string;
+      light: string;
+    };
+    author: {
+      name: string;
+      image: {
+        webpURL: string;
+        jpgURL: string;
+      };
+    };
   };
 };

@@ -18,3 +18,12 @@
     max-width: var(--_width);
   }
 }
+
+
+
+
+@media print {
+  .sideBySide {
+  grid-template-columns: var(--_print-width, 175px) 1fr;
+  }
+}

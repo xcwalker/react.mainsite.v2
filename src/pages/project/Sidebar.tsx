@@ -4,7 +4,7 @@ import { ButtonLink } from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
 
-export function Sidebar(props: { item: ProjectItem }) {
+export function Sidebar(props: { item: ProjectItem; slug: string }) {
   const item = props.item;
   const dateModified = new Date(item.metaData.date.modified);
   const dateCreated = new Date(item.metaData.date.created);
@@ -23,12 +23,9 @@ export function Sidebar(props: { item: ProjectItem }) {
     <div className={css.sidebar}>
       <img
         src={
-          "https://raw.githubusercontent.com/xcwalker/gmod/main/" +
-          item.metaData.slug +
-          "/" +
-          item.metaData.imageDirectory +
-          "/" +
-          item.data.thumbnail
+          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
+          props.slug.toLowerCase() +
+          "/images/thumbnail.jpg"
         }
         className={css.thumbnail}
         alt="Thumbnail"
@@ -69,6 +66,35 @@ export function Sidebar(props: { item: ProjectItem }) {
         })}
       </div>
 
+      {item.metaData.author && (
+        <div className={css.author}>
+          <picture>
+            <source
+              srcSet={
+                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
+                item.metaData.author.image.webpURL
+              }
+              type="image/webp"
+            />
+            <source
+              srcSet={
+                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
+                item.metaData.author.image.webpURL
+              }
+              type="image/jpg"
+            />
+            <img
+              src={
+                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
+                item.metaData.author.image.webpURL
+              }
+              className={css.profile}
+              alt="Thumbnail"
+            />
+          </picture>
+          <span className={css.title}>{item.metaData.author.name}</span>
+        </div>
+      )}
       <div className={css.links}>
         <ButtonLink
           href={

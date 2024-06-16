@@ -1,3 +1,5 @@
+import css from "../styles/components/socialIcon.module.css"
+
 export function SocialIcon(props: { social: string }) {
   return (
     <>
@@ -54,6 +56,66 @@ export function SocialIcon(props: { social: string }) {
       {props.social.toLowerCase() === "tiktok" && (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z" />
+        </svg>
+      )}
+    </>
+  );
+}
+
+export default function SocialBackground(props: { social: string }) {
+  return (
+    <>
+      {props.social.toLowerCase() === "twitter" && (
+        <div className={css.twitter + " background"} />
+      )}
+      {props.social.toLowerCase() === "youtube" && (
+        <div className={css.youtube + " background"} />
+      )}
+      {props.social.toLowerCase() === "discord" && (
+        <div className={css.discord + " background"} />
+      )}
+      {props.social.toLowerCase() === "twitch" && (
+        <div className={css.twitch + " background"} />
+      )}
+      {props.social.toLowerCase() === "tiktok" && (
+        <div className={css.tiktok + " background"} />
+      )}
+
+      {props.social.toLowerCase() === "instagram" && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="background"
+          viewBox="0 0 132 132"
+        >
+          <defs>
+            <radialGradient
+              id="a"
+              cx={158.43}
+              cy={578.09}
+              r={65}
+              gradientTransform="matrix(0 -1.982 1.8439 0 -1029.9 455.51)"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset={0} stopColor="#fd5" />
+              <stop offset={0.1} stopColor="#fd5" />
+              <stop offset={0.5} stopColor="#ff543e" />
+              <stop offset={1} stopColor="#c837ab" />
+            </radialGradient>
+            <radialGradient
+              id="b"
+              cx={147.69}
+              cy={473.46}
+              r={65}
+              gradientTransform="matrix(.17394 .86872 -3.5818 .71718 1649.9 -456.99)"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset={0} stopColor="#3771c8" />
+              <stop offset={0.128} stopColor="#3771c8" />
+              <stop offset={1} stopColor="#60f" stopOpacity={0} />
+            </radialGradient>
+          </defs>
+          <path fill="url(#a)" d="M.507.505v130.99h130.99V.506z" />
+          <path fill="url(#b)" d="M.507.505v130.99h130.99V.506z" />
         </svg>
       )}
     </>

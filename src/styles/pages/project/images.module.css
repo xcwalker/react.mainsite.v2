@@ -90,3 +90,9 @@
   opacity: 1;
   pointer-events: auto;
 }
+
+@media print {
+  .images {
+    display: none;
+  }
+}

@@ -1,6 +1,6 @@
 import { Fragment } from "react/jsx-runtime";
 import { ButtonLink } from "./Button";
-import { SocialIcon } from "./SocialIcon";
+import SocialBackground, { SocialIcon } from "./SocialIcon";
 import css from "../styles/components/socials.module.css"
 
 export default function Socials() {
@@ -16,6 +16,7 @@ export default function Socials() {
                 className={css.social}
               >
                 <SocialIcon social={item.icon} />
+                <SocialBackground social={item.icon} />
               </ButtonLink>
             </Fragment>
           );

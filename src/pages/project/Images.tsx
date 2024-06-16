@@ -8,7 +8,7 @@ import { Download, Zoom } from "yet-another-react-lightbox/plugins";
 import PhotoAlbum, { Photo } from "react-photo-album";
 import GFIcon from "../../components/GFIcon";
 
-export default function Images(props: { item: ProjectItem }) {
+export default function Images(props: { item: ProjectItem; slug: string }) {
   const item = props.item;
   const [open, setOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -20,13 +20,12 @@ export default function Images(props: { item: ProjectItem }) {
     Array(item.metaData.imageCount)
       .fill(1)
       .map((unused, index) => {
+        
         const string =
-          "https://raw.githubusercontent.com/xcwalker/gmod/main/" +
-          item.metaData.slug +
-          "/" +
-          item.metaData.imageDirectory +
-          "/promo-" +
-          (index + 1) +
+          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
+          props.slug.toLowerCase() +
+          "/images/image-" +
+          index +
           ".jpg";
 
         const getMeta = (
@@ -61,8 +60,7 @@ export default function Images(props: { item: ProjectItem }) {
     };
   }, [
     item.metaData.imageCount,
-    item.metaData.imageDirectory,
-    item.metaData.slug,
+    props.slug,
   ]);
 
   return (

@@ -1,0 +1,165 @@
+.recipe {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  padding: 1rem;
+  flex-shrink: 0;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* styling */
+  border-radius: 1rem;
+  border: 0.25rem solid transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+.recipe .thumbnail {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+  aspect-ratio: 16/9;
+
+  /* flex */
+  display: flex;
+
+  /* styling */
+  border-radius: 0.5rem;
+  overflow: clip;
+}
+
+.recipe .thumbnail img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.recipe .thumbnail > span.collection {
+  /* position */
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+
+  /* styling */
+  padding: 0.25rem 0.5rem;
+  background-color: var(--background);
+  border-radius: 0.25rem;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.recipe .details {
+  /* sizing */
+  padding-inline: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.recipe h3 {
+  margin: 0;
+
+  /* text */
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.recipe h4 {
+  margin: 0;
+
+  /* text */
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.recipe .background {
+  /* position */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  /* styling */
+  border-radius: 1rem;
+  background-color: var(--background-200);
+  scale: 0.85;
+  translate: -3rem 1rem;
+  transition: scale 300ms ease, translate 300ms ease;
+}
+
+.recipe:hover .background,
+.recipe:focus-visible .background {
+  scale: 1;
+  translate: 0 0;
+}
+
+@media (prefers-color-scheme: light) {
+  .recipe .background {
+    background-color: var(--_color-light, var(--background-200));
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .recipe .background {
+    background-color: var(--_color-dark, var(--background-200));
+  }
+}
+
+.logo {
+  /* variables */
+  --_hover-drop-depth: 0.5rem;
+
+  /* position */
+  position: absolute;
+  right: 1rem;
+  top: 0;
+
+  /* sizing */
+  width: 2rem;
+  height: fit-content;
+  padding: 0.35rem;
+  padding-top: calc(0.75rem + var(--_hover-drop-depth));
+  translate: 0 calc(-1 * var(--_hover-drop-depth));
+
+  /* flex */
+  display: flex;
+
+  /* styling */
+  fill: currentColor;
+  background-color: var(--text);
+  color: var(--background-200);
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+
+  /* transition */
+  transition: translate 200ms ease;
+}
+
+.recipe:hover .logo,
+.recipe:focus-visible .logo {
+  translate: 0 0;
+}
+
+@media (prefers-color-scheme: light) {
+  .logo {
+    color: var(--_color-light, var(--background-200));
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo {
+    color: var(--_color-dark, var(--background-200));
+  }
+}

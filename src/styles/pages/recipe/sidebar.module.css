@@ -1,0 +1,279 @@
+.sidebar {
+  /* position */
+  position: sticky;
+  top: calc(52px + 1rem);
+  /* sizing */
+  width: 100%;
+  height: fit-content;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    /* position */
+    position: static;
+  }
+}
+
+.thumbnail {
+  /* sizing */
+  width: 100%;
+  aspect-ratio: 16/9;
+
+  /* styling */
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+.details {
+  /* sizing */
+  padding-inline: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sidebar h2 {
+  margin: 0;
+
+  /* text */
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.sidebar h2 + span {
+  margin: 0;
+
+  /* text */
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+@media (prefers-color-scheme: light) {
+  .sidebar h2 {
+    color: var(--_color-light, inherit);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidebar h2 {
+    color: var(--_color-dark, inherit);
+  }
+}
+
+.dates {
+  /* sizing */
+  padding-inline: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dates .created {
+  /* text */
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.dates .modified {
+  /* text */
+  font-size: 0.75rem;
+  line-height: 1;
+  font-weight: 500;
+  color: var(--text-400);
+}
+
+.tags {
+  /* sizing */
+  padding-inline: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tags > .tag,
+.collection {
+  /* styling */
+  padding: 0.25rem 0.5rem;
+  background-color: var(--background-200);
+  border-radius: 0.25rem;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tag > .icon,
+.collection > .icon {
+  font-size: 1.5em;
+}
+
+.author {
+  /* sizing */
+  margin-inline: 0.5rem;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 1rem;
+  place-items: center left;
+}
+
+.author .profile {
+  /* sizing */
+  width: 100%;
+  aspect-ratio: 1/1;
+
+  /* styling */
+  border-radius: 50%;
+}
+
+.author .title {
+  /* text */
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.author .subTitle {
+  /* text */
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.information {
+  /* sizing */
+  margin-inline: 0.5rem;
+  padding: 0.5rem;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  /* styling */
+  background-color: var(--background-100);
+  border-radius: 0.5rem;
+}
+
+.information > .info {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+
+  /* styling */
+  border-right: 1px solid var(--text-200);
+}
+
+.information > .info:last-child {
+  border: none;
+}
+
+.information > .info span:first-child {
+  /* text */
+  font-weight: 500;
+  font-size: 0.7rem;
+  line-height: 1;
+  color: var(--text-800);
+}
+
+.information > .info span:last-child {
+  /* text */
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1;
+  text-transform: capitalize;
+}
+
+.ingredients {
+  /* sizing */
+  padding-inline: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ingredients h3 {
+  margin: 0;
+}
+
+.ingredients > ul {
+  /* spacing */
+  margin: 0;
+  padding: 0;
+  margin-left: 1rem;
+}
+
+.links {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.links > a,
+.links > button {
+  height: 40px;
+}
+
+.links > a > .icon {
+  /* position */
+  position: absolute;
+  inset: 0.5rem;
+  left: auto;
+  bottom: auto;
+
+  /* sizing */
+  font-size: 1em;
+}
+
+.links .gficon {
+  /* position */
+  position: absolute;
+  inset: 0px;
+  right: auto;
+
+  /* sizing */
+  padding: 0.5rem;
+  height: 100%;
+
+  /* sizing */
+  font-size: 1.5rem;
+}
+
+/* .github {
+  background: #21262d;
+  color: #c9d1d9;
+}
+
+.steam {
+  background: linear-gradient(-60deg, #417a9b 5%, #67c1f5 95%);
+  color: #fff;
+} */

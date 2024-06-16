@@ -39,7 +39,7 @@
   gap: 0.25rem;
 }
 
-h3 {
+.sidebar h3 {
   margin: 0;
 
   /* text */
@@ -48,7 +48,7 @@ h3 {
   line-height: 1;
 }
 
-h4 {
+.sidebar h4 {
   margin: 0;
 
   /* text */
@@ -118,6 +118,41 @@ h4 {
   font-size: 1.5em;
 }
 
+.author {
+  /* sizing */
+  margin-inline: 0.5rem;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 1rem;
+  place-items: center left;
+}
+
+.author .profile {
+  /* sizing */
+  width: 100%;
+  aspect-ratio: 1/1;
+
+  /* styling */
+  border-radius: 50%;
+
+}
+
+.author .title {
+  /* text */
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.author .subTitle {
+  /* text */
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
 .links {
   /* flex */
   display: flex;
@@ -125,7 +160,8 @@ h4 {
   gap: 0.5rem;
 }
 
-.links > a {
+.links > a,
+.links > button {
   height: 40px;
 }
 
@@ -138,6 +174,20 @@ h4 {
 
   /* sizing */
   font-size: 1em;
+}
+
+.links .gficon {
+  /* position */
+  position: absolute;
+  inset: 0px;
+  right: auto;
+
+  /* sizing */
+  padding: 0.5rem;
+  height: 100%;
+
+  /* sizing */
+  font-size: 1.5rem;
 }
 
 /* .github {

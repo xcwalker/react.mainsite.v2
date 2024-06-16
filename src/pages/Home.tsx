@@ -6,6 +6,8 @@ import Projects from "./home/Projects";
 import { Helmet } from "react-helmet";
 import { separator, title } from "../App";
 import Sites from "./home/Sites";
+import { Radio } from "./home/Radio";
+import Recipes from "./home/Recipes";
 
 export default function Home() {
   const [modalVisibility, setModalVisibility] = useState(false);
@@ -17,7 +19,9 @@ export default function Home() {
         </title>
       </Helmet>
       <Hero />
-      <Projects />
+      <Projects limit={3} title="Some of our projects" />
+      <Radio />
+      <Recipes limit={3} title="Some recipes" />
       <Sites />
       <SecurityWarning
         visibility={modalVisibility}

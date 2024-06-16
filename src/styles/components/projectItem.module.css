@@ -18,11 +18,6 @@
   color: inherit;
 }
 
-.project:hover,
-.project:focus-visible {
-  /* border-color: var(--background-300); */
-}
-
 .project .thumbnail {
   /* position */
   position: relative;
@@ -39,7 +34,7 @@
   overflow: clip;
 }
 
-.project .thumbnail > img {
+.project .thumbnail img {
   width: 100%;
   object-fit: cover;
 }
@@ -98,7 +93,7 @@
 
   /* styling */
   border-radius: 1rem;
-  background-color: var(--background-100);
+  background-color: var(--background-200);
   scale: 0.85;
   translate: 3rem 1rem;
   transition: scale 300ms ease, translate 300ms ease;

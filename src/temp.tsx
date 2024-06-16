@@ -1,82 +1,25 @@
 export const projectsArray = [
   {
-    data: {
-      title: "Chevrolet Tahoe",
-      subTitle: "XCW Photon Series",
-      description:
-        "A photon version of Lonewolfie's Chevrolet Tahoe.\n\nFeaturing an LEO and CIV spec vehicle.\n\nLEO lighting in colors, Red & Blue, Blue, Red, Amber, and Green.\n\nSkins shown are currently unavailable, but will later be found in a skin pack, work in progress is visible here: [XCW-Skins](https://github.com/XCWalker/gmod/tree/main/xcw-skins)",
-      thumbnail: "promo-0.jpg",
-    },
-    metaData: {
-      date: {
-        created: "2024-05-20T15:38:37.234Z",
-        modified: "2024-05-20T16:38:37.234Z",
-      },
-      slug: "xcw-chevrolet_tahoe",
-      imageDirectory: "promo-images",
-      imageCount: 13,
-      tags: ["gmod", "photon", "lua"],
-      collection: "gmod",
-      collectionName: "garry's mod",
-      repoName: "gmod",
-      subRepo: true,
-      workshop:
-        "https://steamcommunity.com/sharedfiles/filedetails/?id=3082493539",
-    },
+    slug: "xcw-chevrolet_tahoe",
+    collection: "gmod",
   },
   {
-    data: {
-      title: "Dodge Ram",
-      subTitle: "XCW Photon Series",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam, in temporibus laborum, non est deleniti eum hic, ipsam recusandae dolor impedit? Cumque odit sapiente explicabo minus ea voluptatum eaque illo.",
-      thumbnail: "promo-0.jpg",
-    },
-    metaData: {
-      date: {
-        created: "2024-05-20T15:38:37.234Z",
-        modified: "2024-05-20T15:38:37.234Z",
-      },
-      slug: "xcw-dodge_ram",
-      imageDirectory: "promo-images",
-      imageCount: 9,
-      tags: ["gmod", "photon", "lua"],
-      collection: "gmod",
-      collectionName: "garry's mod",
-      repoName: "gmod",
-      subRepo: true,
-      workshop:
-        "https://steamcommunity.com/sharedfiles/filedetails/?id=3082493539",
-    },
+    slug: "xcw-dodge_ram",
+    collection: "gmod",
   },
   {
-    data: {
-      title: "Chevrolet Impala",
-      subTitle: "XCW Photon Series",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam, in temporibus laborum, non est deleniti eum hic, ipsam recusandae dolor impedit? Cumque odit sapiente explicabo minus ea voluptatum eaque illo.",
-      thumbnail: "civ-icon-small.png",
-    },
-    metaData: {
-      date: {
-        created: "2024-05-20T15:38:37.234Z",
-        modified: "2024-05-20T15:38:37.234Z",
-      },
-      slug: "xcw-chevrolet_impala",
-      imageDirectory: "promo-images",
-      imageCount: 0,
-      tags: ["gmod", "photon", "lua"],
-      collection: "gmod",
-      collectionName: "garry's mod",
-      repoName: "gmod",
-      workshop:
-        "https://steamcommunity.com/sharedfiles/filedetails/?id=3082493539",
-    },
+    slug: "xcw-chevrolet_impala",
+    collection: "gmod",
   },
 ];
 
 // repo = https://github.com/xcwalker/ + repoName + "/tree/main/ + slug
 // thumbnail = https://raw.githubusercontent.com/xcwalker/gmod/main/ + slug + "/" + imageDirectory + "/" + thumbnail
+
+export const recipesArray = [
+  { slug: "ChickenAndChorizoPaella", collection: "Best Of" },
+  { slug: "CosmoChickenBaguette", collection: "Baguette" },
+];
 
 export const photonIDs = [
   {

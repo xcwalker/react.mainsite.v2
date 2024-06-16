@@ -7,8 +7,13 @@ import { PrimaryButtonLink } from "./PrimaryButton";
 
 const navItems = [
   {
-    title: "Test",
-    href: "test",
+    title: "Recipes",
+    href: "recipes",
+    type: "normal",
+  },
+  {
+    title: "Projects",
+    href: "projects",
     type: "normal",
   },
   {
