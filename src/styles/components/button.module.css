@@ -49,73 +49,11 @@
   fill: currentColor;
 }
 
-.button > .corner {
-  /* position */
-  position: absolute;
-
-  /* sizing */
-  width: var(--_size);
-  height: var(--_size);
-
-  /* hiding */
-  opacity: 0;
-
-  /* transition */
-  transition: top var(--_duration) var(--_ease),
-    bottom var(--_duration) var(--_ease), left var(--_duration) var(--_ease),
-    right var(--_duration) var(--_ease), opacity var(--_duration) var(--_ease);
-}
-
-.button:hover > .corner,
-.button:focus-visible > .corner {
-  --_offset: calc(var(--_offset-hover) * -1);
-  opacity: 1;
+.button:hover {
+  background-color: var(--background-500);
+  /* outline: var(--_border-width) solid var(--_border-color); */
 }
 
 .button:focus-visible {
   outline: var(--_border-width) solid var(--_border-color);
-}
-
-.button > .corner:nth-child(1) {
-  /* position */
-  top: var(--_offset);
-  left: var(--_offset);
-
-  /* styling */
-  border-top: var(--_border-width) solid var(--_border-color);
-  border-left: var(--_border-width) solid var(--_border-color);
-  border-top-left-radius: calc(var(--_offset-hover) + var(--_border-radius));
-}
-
-.button > .corner:nth-child(2) {
-  /* position */
-  top: var(--_offset);
-  right: var(--_offset);
-
-  /* styling */
-  border-top: var(--_border-width) solid var(--_border-color);
-  border-right: var(--_border-width) solid var(--_border-color);
-  border-top-right-radius: calc(var(--_offset-hover) + var(--_border-radius));
-}
-
-.button > .corner:nth-child(3) {
-  /* position */
-  bottom: var(--_offset);
-  left: var(--_offset);
-
-  /* styling */
-  border-bottom: var(--_border-width) solid var(--_border-color);
-  border-left: var(--_border-width) solid var(--_border-color);
-  border-bottom-left-radius: calc(var(--_offset-hover) + var(--_border-radius));
-}
-
-.button > .corner:nth-child(4) {
-  /* position */
-  bottom: var(--_offset);
-  right: var(--_offset);
-
-  /* styling */
-  border-bottom: var(--_border-width) solid var(--_border-color);
-  border-right: var(--_border-width) solid var(--_border-color);
-  border-bottom-right-radius: calc(var(--_offset-hover) + var(--_border-radius));
 }

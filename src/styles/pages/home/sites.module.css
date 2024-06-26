@@ -2,7 +2,6 @@
   /* grid */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(282px, 100%), 1fr));
-  grid-template-rows: repeat(auto-fit, 400px);
   gap: 1rem;
 }
 
@@ -19,7 +18,7 @@
 
   /* sizing */
   width: 100%;
-  height: 100%;
+  height: 400px;
   padding: 0.5rem;
 
   /* flex */
@@ -45,6 +44,10 @@
 .site:hover {
   transition-duration: 150ms;
   box-shadow: 0 5px 20px 5px #00000044;
+}
+
+.site:hover .container {
+  outline: 2px solid currentColor;
 }
 
 .site .icon {
@@ -73,6 +76,7 @@
   /* sizing */
   width: calc(100% + (var(--_extend) * 2));
   height: calc(100% + (var(--_extend) * 2));
+  object-fit: cover;
 
   /* styling */
   filter: brightness(0.6);

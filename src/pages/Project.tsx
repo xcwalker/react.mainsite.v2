@@ -50,37 +50,33 @@ export default function Project() {
             <title>
               {item.data.title} - {item.data.subTitle} {separator} {title}
             </title>
-            {item.data.description && (
-              <>
-                <meta
-                  name="description"
-                  content={
-                    "An " +
-                    title +
-                    " project. " +
-                    removeMd(item.data.description)
-                  }
-                />
-                <meta
-                  name="twitter:description"
-                  content={
-                    "An " +
-                    title +
-                    " project. " +
-                    removeMd(item.data.description)
-                  }
-                />
-                <meta
-                  property="og:description"
-                  content={
-                    "An " +
-                    title +
-                    " project. " +
-                    removeMd(item.data.description)
-                  }
-                />
-              </>
-            )}
+            <meta
+              name="description"
+              content={
+                "An " +
+                title +
+                " project. " +
+                removeMd(item.data.description ? item.data.description : "")
+              }
+            />
+            <meta
+              name="twitter:description"
+              content={
+                "An " +
+                title +
+                " project. " +
+                removeMd(item.data.description ? item.data.description : "")
+              }
+            />
+            <meta
+              property="og:description"
+              content={
+                "An " +
+                title +
+                " project. " +
+                removeMd(item.data.description ? item.data.description : "")
+              }
+            />
             {/* Twitter Meta */}
             <meta
               name="twitter:title"

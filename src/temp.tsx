@@ -1,25 +1,25 @@
-export const projectsArray = [
-  {
-    slug: "xcw-chevrolet_tahoe",
-    collection: "gmod",
-  },
-  {
-    slug: "xcw-dodge_ram",
-    collection: "gmod",
-  },
-  {
-    slug: "xcw-chevrolet_impala",
-    collection: "gmod",
-  },
-];
+// export const projectsArray = [
+//   {
+//     slug: "xcw-chevrolet_tahoe",
+//     collection: "gmod",
+//   },
+//   {
+//     slug: "xcw-dodge_ram",
+//     collection: "gmod",
+//   },
+//   {
+//     slug: "xcw-chevrolet_impala",
+//     collection: "gmod",
+//   },
+// ];
 
 // repo = https://github.com/xcwalker/ + repoName + "/tree/main/ + slug
 // thumbnail = https://raw.githubusercontent.com/xcwalker/gmod/main/ + slug + "/" + imageDirectory + "/" + thumbnail
 
-export const recipesArray = [
-  { slug: "ChickenAndChorizoPaella", collection: "Best Of" },
-  { slug: "CosmoChickenBaguette", collection: "Baguette" },
-];
+// export const recipesArray = [
+//   { slug: "ChickenAndChorizoPaella", collection: "Best Of" },
+//   { slug: "CosmoChickenBaguette", collection: "Baguette" },
+// ];
 
 export const photonIDs = [
   {

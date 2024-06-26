@@ -125,3 +125,8 @@
 .links .link {
   color: white;
 }
+
+.links .link:hover,
+.links .link:focus-visible {
+  text-decoration: underline dashed;
+}

@@ -23,17 +23,6 @@ export default function Home() {
       <Radio />
       <Recipes limit={3} title="Some recipes" />
       <Sites />
-      <SecurityWarning
-        visibility={modalVisibility}
-        setVisibility={setModalVisibility}
-      />
-      <Button
-        onClick={() => {
-          setModalVisibility(true);
-        }}
-      >
-        ShowModal
-      </Button>
     </>
   );
 }

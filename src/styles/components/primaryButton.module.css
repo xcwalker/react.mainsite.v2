@@ -1,3 +1,7 @@
 .primaryButton {
   background-color: var(--primary) !important;
 }
+
+.primaryButton:hover {
+  background-color: var(--secondary) !important;
+}

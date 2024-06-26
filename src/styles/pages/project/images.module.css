@@ -23,6 +23,9 @@
   /* sizing */
   font-size: 1.5rem;
 
+  /* styling */
+  color: white;
+
   /* hiding */
   opacity: 0;
   transition: opacity 300ms ease;

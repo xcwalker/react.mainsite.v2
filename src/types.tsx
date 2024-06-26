@@ -78,6 +78,7 @@ export type RecipeItem = {
       modified: string;
     };
     imageCount: number;
+    youtube?: string
     tags: string[];
     collection: string;
     collectionName: string;
@@ -87,7 +88,7 @@ export type RecipeItem = {
     };
     author: {
       name: string;
-      image: {
+      image?: {
         webpURL: string;
         jpgURL: string;
       };
