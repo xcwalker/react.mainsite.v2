@@ -16,6 +16,10 @@ import ErrorPage from "./ErrorPage";
 import Recipe from "./pages/Recipe";
 import ProjectsPage from "./pages/Projects";
 import RecipesPage from "./pages/Recipes";
+import ManagePage from "./pages/account/Manage";
+import LoginPage from "./pages/account/Login";
+import RegisterPage from "./pages/account/Register";
+import ForgotPasswordPage from "./pages/account/ForgotPassword";
 
 export default function App() {
   return (
@@ -30,16 +34,31 @@ export default function App() {
         <Main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/project">
+
+            {/* projects */}
+            <Route path="projects" element={<ProjectsPage />} />
+            <Route path="project">
               <Route index element={<Navigate to={"/projects"} />} />
               <Route path=":slug" element={<Project />} />
             </Route>
-            <Route path="/recipes" element={<RecipesPage />} />
-            <Route path="/recipe">
+
+            {/* recipes */}
+            <Route path="recipes" element={<RecipesPage />} />
+            <Route path="recipe">
               <Route index element={<Navigate to={"/recipes"} />} />
               <Route path=":slug" element={<Recipe />} />
             </Route>
+
+            {/* accounts */}
+            <Route path="account">
+              <Route index element={<Navigate to={"manage"} />} />
+              <Route path="manage" element={<ManagePage />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="forgot" element={<ForgotPasswordPage />} />
+            </Route>
+
+            {/* 404 */}
             <Route
               path="*"
               element={<ErrorPage code={404} error="Page not found" />}

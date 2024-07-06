@@ -1,0 +1,5 @@
+@font-face {
+    font-family: 'EmotionalRescue';
+    src: local('EmotionalRescueRegular'),
+         url('./EmotionalRescueRegular.ttf') format('opentype');
+}

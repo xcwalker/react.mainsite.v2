@@ -6,6 +6,10 @@ import "./styles/defaults/page-setup.css";
 import "./styles/defaults/transitions.css";
 import "./styles/defaults/variables.css";
 
+
+import "./fonts/fonts.css";
+import "./fonts/EmotionalRescueRegular.ttf";
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <App />

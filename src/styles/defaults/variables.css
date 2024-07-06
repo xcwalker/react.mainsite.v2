@@ -8,6 +8,8 @@ html {
   --primary: #797979;
   --secondary: #484848;
   --accent: #2a2a2a;
+
+  --selector: #0061e0;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -5,10 +5,13 @@ export default function SideBySide(props: {
   leftWidth?: string;
   printLeftWidth?: string;
   children: ReactNode;
+  className?: string;
 }) {
   return (
     <div
-      className={css.sideBySide}
+      className={
+        css.sideBySide + (props.className ? " " + props.className : "")
+      }
       style={
         {
           "--_width": props.leftWidth,
