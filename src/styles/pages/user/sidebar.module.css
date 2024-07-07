@@ -1,0 +1,220 @@
+.sidebar {
+  /* position */
+  position: sticky;
+  top: calc(52px + 1rem);
+  /* sizing */
+  width: 100%;
+  height: fit-content;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.user {
+  /* position */
+  position: relative;
+  z-index: 1;
+
+  /* sizing */
+  width: 100%;
+  height: 200px;
+  padding: 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  overflow: clip;
+}
+
+.user > .background {
+  /* position */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* image */
+  object-fit: cover;
+}
+
+.user > .profile {
+  /* sizing */
+  --_size: 4rem;
+  width: var(--_size);
+  height: var(--_size);
+
+  /* styling */
+  border-radius: 0.25rem;
+}
+
+.user > .details {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.user > .details span.displayName {
+  /* text */
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.user > .details span.userName {
+  /* text */
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.information {
+  /* sizing */
+  padding: 0.75rem 0.5rem;
+  margin-top: 1rem;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 0.25rem;
+
+  /* styling */
+  background-color: var(--background-100);
+  border-radius: 0.5rem;
+}
+
+.information > .info {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+
+  /* styling */
+  border-right: 1px solid var(--text-200);
+}
+
+.information > .info:last-child {
+  border: none;
+}
+
+.information > span {
+  /* text */
+  font-weight: 500;
+  font-size: 0.7rem;
+  line-height: 1;
+  color: var(--text-800);
+  text-align: center;
+}
+
+.information > .info span {
+  /* text */
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+div.date {
+  /* sizing */
+  padding: 1rem;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  /* styling */
+  background-color: var(--background-100);
+  border-radius: 0.5rem;
+}
+
+div.date .left {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+div.date .right {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+div.date span {
+  /* text */
+  font-weight: 500;
+  font-size: 0.7rem;
+  line-height: 1;
+  color: var(--text-800);
+}
+
+div.date span.date {
+  /* text */
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  text-transform: capitalize;
+  color: inherit;
+}
+
+.links {
+  /* spacing */
+  margin: 0;
+  padding: 0;
+  padding-left: 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.link {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+
+  /* text */
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: underline dashed;
+
+  /* styling */
+  color: inherit;
+}
+
+.link .favicon {
+  /* sizing */
+  --_size: 1.5rem;
+  width: var(--_size);
+  height: var(--_size);
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration: underline solid;
+}

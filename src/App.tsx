@@ -20,6 +20,9 @@ import ManagePage from "./pages/account/Manage";
 import LoginPage from "./pages/account/Login";
 import RegisterPage from "./pages/account/Register";
 import ForgotPasswordPage from "./pages/account/ForgotPassword";
+import { Toaster } from "react-hot-toast";
+import UserIndex from "./pages/user/Index";
+import UserPage from "./pages/user/User";
 
 export default function App() {
   return (
@@ -29,6 +32,15 @@ export default function App() {
         <Helmet>
           <title>{title}</title>
         </Helmet>
+
+        <Toaster
+          position="top-left"
+          reverseOrder={true}
+          containerStyle={{
+            top: "calc(50px + 1rem)",
+            left: "min(3rem, max(4vw, 1rem))",
+          }}
+        />
 
         <Header />
         <Main>
@@ -56,6 +68,12 @@ export default function App() {
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="forgot" element={<ForgotPasswordPage />} />
+            </Route>
+
+            {/* user */}
+            <Route path="user">
+              <Route index element={<UserIndex />} />
+              <Route path=":uuid" element={<UserPage />} />
             </Route>
 
             {/* 404 */}

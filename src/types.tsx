@@ -95,3 +95,36 @@ export type RecipeItem = {
     };
   };
 };
+
+export type UserType = {
+  about: {
+    userName: string;
+    displayName: string;
+    firstName: string;
+    lastName: string;
+    status: string;
+    statement: string;
+  };
+  images: {
+    header: string;
+    profile: string;
+    background?: string;
+    backgroundType?: string;
+  };
+  info: {
+    gender: string;
+    location: string;
+    pronouns: string;
+    joined: string;
+    lastOnline: string;
+  };
+  links: string[];
+  settings: {
+    showOrganization: boolean;
+  };
+  organization?: {
+    id: string;
+    title: string;
+    email: string;
+  };
+};
