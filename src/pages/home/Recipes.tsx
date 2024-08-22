@@ -5,7 +5,7 @@ import RecipeItem from "../../components/RecipeItem";
 import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
 
-export default function Recipes(props: { limit?: number; title: string }) {
+export default function HomeRecipes(props: { limit?: number; title: string }) {
   const [recipesArray, setRecipesArray] =
     useState<[{ slug: string; collection: string }] | undefined>();
 

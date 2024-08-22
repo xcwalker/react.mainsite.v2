@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import { separator, title } from "../App";
-import Projects from "./home/Projects";
+import HomeProjects from "./home/Projects";
 
 export default function ProjectsPage() {
   return (
@@ -24,7 +24,7 @@ export default function ProjectsPage() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://xcwalker.dev/projects/" />
       </Helmet>
-      <Projects title={"Projects"} />
+      <HomeProjects title={"Projects"} />
     </>
   );
 }

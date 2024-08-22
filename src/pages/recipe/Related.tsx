@@ -4,7 +4,7 @@ import css from "../../styles/pages/project/related.module.css";
 import RecipeItem from "../../components/RecipeItem";
 import { useEffect, useState } from "react";
 
-export default function Related(props: {
+export default function RecipeRelated(props: {
   slug: string;
   collection?: string;
   sameCollection: boolean;

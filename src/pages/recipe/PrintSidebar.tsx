@@ -3,7 +3,7 @@ import css from "../../styles/pages/recipe/sidebar.print.module.css";
 import GFIcon from "../../components/GFIcon";
 import SideBySide from "../../components/SideBySide";
 
-export function PrintSidebar(props: { item: RecipeItem; slug: string }) {
+export function RecipePrintSidebar(props: { item: RecipeItem; slug: string }) {
   const item = props.item;
   const dateModified = new Date(item.metaData.date.modified);
   const dateCreated = new Date(item.metaData.date.created);

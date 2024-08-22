@@ -3,7 +3,7 @@ import Section from "../../components/Section";
 import css from "../../styles/pages/home/sites.module.css";
 import { Fragment } from "react/jsx-runtime";
 
-export default function Sites() {
+export default function HomeSites() {
   return (
     <Section id="sites">
       <h2>Our other sites</h2>

@@ -4,7 +4,7 @@ import { ButtonLink } from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
 
-export function Sidebar(props: { item: ProjectItem; slug: string }) {
+export function ProjectSidebar(props: { item: ProjectItem; slug: string }) {
   const item = props.item;
   const dateModified = new Date(item.metaData.date.modified);
   const dateCreated = new Date(item.metaData.date.created);

@@ -1,20 +1,21 @@
 import { useParams } from "react-router-dom";
-import Section from "../components/Section";
-import SideBySide from "../components/SideBySide";
-import { Sidebar } from "./project/Sidebar";
+import Section from "../../components/Section";
+import SideBySide from "../../components/SideBySide";
+import { ProjectSidebar } from "./Sidebar";
 import Markdown from "react-markdown";
-import Images from "./project/Images";
-import css from "../styles/pages/project.module.css";
-import Related from "./project/Related";
+import ProjectImages from "./Images";
+import ProjectRelated from "./Related";
 import { Helmet } from "react-helmet";
-import { separator, title } from "../App";
+import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
-import ErrorPage from "../ErrorPage";
+import ErrorPage from "../../ErrorPage";
 import { useEffect, useState } from "react";
-import { ProjectItem } from "../types";
-import LoadingPage from "../components/Loading";
+import { ProjectItem } from "../../types";
+import LoadingPage from "../../components/Loading";
 
-export default function Project() {
+import css from "../../styles/pages/project.module.css";
+
+export default function ProjectIndex() {
   const { slug } = useParams();
   const [item, setItem] = useState<ProjectItem | undefined>(undefined);
 
@@ -127,15 +128,15 @@ export default function Project() {
           </Helmet>
           <Section id="project">
             <SideBySide leftWidth="400px">
-              <Sidebar item={item} slug={slug} />
+              <ProjectSidebar item={item} slug={slug} />
               <main className={css.main}>
                 <Markdown className={css.description}>
                   {item.data.description}
                 </Markdown>
-                <Images item={item} slug={slug} />
+                <ProjectImages item={item} slug={slug} />
               </main>
             </SideBySide>
-            <Related
+            <ProjectRelated
               slug={slug}
               collection={item.metaData.collection}
               sameCollection={true}
@@ -143,7 +144,7 @@ export default function Project() {
                 "More from the " + item.metaData.collectionName + " collection"
               }
             />
-            <Related
+            <ProjectRelated
               slug={slug}
               collection={item.metaData.collection}
               sameCollection={false}

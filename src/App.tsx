@@ -6,14 +6,14 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useEffect } from "react";
-import Home from "./pages/Home";
+import HomeIndex from "./pages/home/Index";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Main from "./components/Main";
-import Project from "./pages/Project";
+import ProjectIndex from "./pages/project/Index";
 import { Helmet } from "react-helmet";
 import ErrorPage from "./ErrorPage";
-import Recipe from "./pages/Recipe";
+import RecipeIndex from "./pages/recipe/Index";
 import ProjectsPage from "./pages/Projects";
 import RecipesPage from "./pages/Recipes";
 import ManagePage from "./pages/account/Manage";
@@ -23,6 +23,7 @@ import ForgotPasswordPage from "./pages/account/ForgotPassword";
 import { Toaster } from "react-hot-toast";
 import UserIndex from "./pages/user/Index";
 import UserPage from "./pages/user/User";
+import DashboardIndex from "./pages/dashboard/Index";
 
 export default function App() {
   return (
@@ -45,20 +46,20 @@ export default function App() {
         <Header />
         <Main>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<HomeIndex />} />
 
             {/* projects */}
             <Route path="projects" element={<ProjectsPage />} />
             <Route path="project">
               <Route index element={<Navigate to={"/projects"} />} />
-              <Route path=":slug" element={<Project />} />
+              <Route path=":slug" element={<ProjectIndex />} />
             </Route>
 
             {/* recipes */}
             <Route path="recipes" element={<RecipesPage />} />
             <Route path="recipe">
               <Route index element={<Navigate to={"/recipes"} />} />
-              <Route path=":slug" element={<Recipe />} />
+              <Route path=":slug" element={<RecipeIndex />} />
             </Route>
 
             {/* accounts */}
@@ -75,6 +76,9 @@ export default function App() {
               <Route index element={<UserIndex />} />
               <Route path=":uuid" element={<UserPage />} />
             </Route>
+
+            {/* dashboard */}
+            <Route path="dashboard" element={<DashboardIndex />} />
 
             {/* 404 */}
             <Route
