@@ -5,7 +5,7 @@ import css from "../../styles/components/accountPage.module.css";
 export default function AccountPage(props: {
   id: string;
   children: ReactNode;
-  onSubmit: (e: any) => void;
+  onSubmit: (e: never) => void;
 }) {
   return (
     <Section

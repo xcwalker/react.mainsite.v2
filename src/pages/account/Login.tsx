@@ -19,7 +19,7 @@ export default function LoginPage() {
 
     setLoading(true);
 
-    firebaseLogin(email, password).then((res) => {
+    firebaseLogin(email, password).then(() => {
       setLoading(false);
     });
   }
