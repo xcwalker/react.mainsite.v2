@@ -1,0 +1,22 @@
+.dashboard {
+  /* sizing */
+  width: 100%;
+  max-width: 100% !important;
+  height: 100vh;
+}
+
+.dashboard :global(.mosaic) {
+  /* sizing */
+  width: 100%;
+  max-width: 100% !important;
+  height: calc(100vh - 52px);
+
+  /* styling */
+  background: transparent;
+}
+.dashboard :global(.mosaic-tile) {
+  /* styling */
+  border-radius: 0.5rem;
+  background-color: var(--background-100);
+}
+.dashboard :global(.mosaic-split) {}
