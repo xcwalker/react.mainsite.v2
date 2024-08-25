@@ -6,7 +6,7 @@ import css from "../../styles/pages/home/radio.module.css";
 import Stack from "../../components/Stack";
 import { useEffect, useState } from "react";
 
-export function Radio() {
+export function HomeRadio() {
   const api = "https://apiv2.simulatorradio.com/metadata/combined";
   const [ticking] = useState(true);
   const [count, setCount] = useState(0);

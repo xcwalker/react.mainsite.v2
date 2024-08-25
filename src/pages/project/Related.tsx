@@ -4,7 +4,7 @@ import ProjectItem from "../../components/ProjectItem";
 import css from "../../styles/pages/project/related.module.css";
 import { useEffect, useState } from "react";
 
-export default function Related(props: {
+export default function ProjectRelated(props: {
   slug: string;
   collection?: string;
   sameCollection: boolean;

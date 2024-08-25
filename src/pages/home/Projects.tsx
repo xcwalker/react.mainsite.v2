@@ -5,7 +5,7 @@ import ProjectItem from "../../components/ProjectItem";
 import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
 
-export default function Projects(props: { limit?: number; title: string }) {
+export default function HomeProjects(props: { limit?: number; title: string }) {
   const [projectsArray, setProjectsArray] = useState<
     [{ slug: string; collection: string }] | undefined
   >();

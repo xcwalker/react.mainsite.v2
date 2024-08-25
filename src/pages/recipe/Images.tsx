@@ -8,7 +8,7 @@ import { Download, Zoom } from "yet-another-react-lightbox/plugins";
 import PhotoAlbum, { Photo } from "react-photo-album";
 import GFIcon from "../../components/GFIcon";
 
-export default function Images(props: { item: RecipeItem, slug: string }) {
+export default function RecipeImages(props: { item: RecipeItem, slug: string }) {
   const item = props.item;
   const [open, setOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);

@@ -1,22 +1,23 @@
 import { useParams } from "react-router-dom";
-import Section from "../components/Section";
-import SideBySide from "../components/SideBySide";
-import { Sidebar } from "./recipe/Sidebar";
+import Section from "../../components/Section";
+import SideBySide from "../../components/SideBySide";
+import { RecipeSidebar } from "./Sidebar";
 import Markdown from "react-markdown";
-import Images from "./recipe/Images";
-import css from "../styles/pages/recipe.module.css";
-import Related from "./recipe/Related";
+import RecipeImages from "./Images";
+import RecipeRelated from "./Related";
 import { Helmet } from "react-helmet";
-import { separator, title } from "../App";
+import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
 import { useEffect, useState } from "react";
-import { RecipeItem } from "../types";
-import Stack from "../components/Stack";
-import { PrintSidebar } from "./recipe/PrintSidebar";
-import ErrorPage from "../ErrorPage";
-import LoadingPage from "../components/Loading";
+import { RecipeItem } from "../../types";
+import Stack from "../../components/Stack";
+import { RecipePrintSidebar } from "./PrintSidebar";
+import ErrorPage from "../../ErrorPage";
+import LoadingPage from "../../components/Loading";
 
-export default function Recipe() {
+import css from "../../styles/pages/recipe.module.css";
+
+export default function RecipeIndex() {
   const { slug } = useParams<string>();
   const [item, setItem] = useState<RecipeItem | undefined>(undefined);
   const [error, setError] = useState(false);
@@ -130,7 +131,7 @@ export default function Recipe() {
           </Helmet>
           <Section id="recipe" className={css.recipe}>
             <SideBySide leftWidth="400px">
-              <Sidebar item={item} slug={slug} />
+              <RecipeSidebar item={item} slug={slug} />
               <main className={css.main}>
                 <Markdown className={css.description}>
                   {item.data.description}
@@ -153,14 +154,14 @@ export default function Recipe() {
                       })}
                   </ul>
                 </div>
-                <Images item={item} slug={slug} />
+                <RecipeImages item={item} slug={slug} />
               </main>
             </SideBySide>
           </Section>
 
           <Section id="recipe-print" className={css.printRecipe}>
             <Stack>
-              <PrintSidebar item={item} slug={slug} />
+              <RecipePrintSidebar item={item} slug={slug} />
               <main className={css.main}>
                 <Markdown className={css.description}>
                   {item.data.description}
@@ -186,7 +187,7 @@ export default function Recipe() {
               </main>
             </Stack>
           </Section>
-          <Related
+          <RecipeRelated
             slug={slug}
             collection={item.metaData.collection}
             sameCollection={true}
@@ -194,7 +195,7 @@ export default function Recipe() {
               "More from the " + item.metaData.collectionName + " collection"
             }
           />
-          <Related
+          <RecipeRelated
             slug={slug}
             collection={item.metaData.collection}
             sameCollection={false}

@@ -4,7 +4,7 @@ import Button, { ButtonLink } from "../../components/Button";
 import GFIcon from "../../components/GFIcon";
 import { SocialIcon } from "../../components/SocialIcon";
 
-export function Sidebar(props: { item: RecipeItem; slug: string }) {
+export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
   const item = props.item;
   const shareOutput = {
     title: item.data.title + " | " + item.data.subTitle,
