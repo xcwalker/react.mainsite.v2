@@ -53,16 +53,14 @@ export default function App() {
             <Route path="/" element={<HomeIndex />} />
 
             {/* projects */}
-            <Route path="projects" element={<ProjectsPage />} />
             <Route path="project">
-              <Route index element={<Navigate to={"/projects"} />} />
+              <Route index element={<ProjectsPage />} />
               <Route path=":slug" element={<ProjectIndex />} />
             </Route>
 
             {/* recipes */}
-            <Route path="recipes" element={<RecipesPage />} />
             <Route path="recipe">
-              <Route index element={<Navigate to={"/recipes"} />} />
+              <Route index element={<RecipesPage />} />
               <Route path=":slug" element={<RecipeIndex />} />
             </Route>
 

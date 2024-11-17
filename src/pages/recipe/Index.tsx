@@ -130,12 +130,21 @@ export default function RecipeIndex() {
             />
           </Helmet>
           <Section id="recipe" className={css.recipe}>
-            <SideBySide leftWidth="400px">
+            <SideBySide leftWidth="350px">
               <RecipeSidebar item={item} slug={slug} />
               <main className={css.main}>
                 <Markdown className={css.description}>
                   {item.data.description}
                 </Markdown>
+                <div className={css.instructions + " " + css.ingredients}>
+                  <h3>Ingredients</h3>
+                  <ul>
+                    {item.data.ingredients &&
+                      item.data.ingredients.map((item, index) => {
+                        return <li key={index}>{item}</li>;
+                      })}
+                  </ul>
+                </div>
                 <div className={css.instructions + " " + css.prep}>
                   <h3>Prep</h3>
                   <ul>

@@ -3,7 +3,7 @@
   position: relative;
 
   /* sizing */
-  padding: 1rem;
+  padding: 0;
   flex-shrink: 0;
 
   /* flex */
@@ -117,24 +117,10 @@
   line-height: 1;
 }
 
-.recipe .background {
-  /* position */
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-
-  /* styling */
-  border-radius: 1rem;
-  background-color: var(--background-200);
-  scale: 0.85;
-  translate: -3rem 1rem;
-  transition: scale 300ms ease, translate 300ms ease;
-}
-
-.recipe:hover .background,
-.recipe:focus-visible .background {
-  scale: 1;
-  translate: 0 0;
+.recipe:hover .thumbnail,
+.recipe:focus-visible .thumbnail {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
 }
 
 @media (prefers-color-scheme: light) {

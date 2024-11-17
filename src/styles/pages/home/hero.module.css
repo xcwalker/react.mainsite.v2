@@ -3,7 +3,7 @@
   position: relative;
 
   /* sizing */
-  height: 800px;
+  height: 250px;
   max-height: 60vmin;
   margin: 0;
   padding: 2rem;
@@ -82,7 +82,7 @@
 .logo {
   color: inherit;
   fill: black;
-  width: min(600px, 100%);
+  width: min(300px, 100%);
 }
 
 .h1 {

@@ -175,15 +175,6 @@ export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
           <span>{item.data.information.serves}</span>
         </div>
       </div>
-      <div className={css.ingredients}>
-        <h3>Ingredients</h3>
-        <ul>
-          {item.data.ingredients &&
-            item.data.ingredients.map((item, index) => {
-              return <li key={index}>{item}</li>;
-            })}
-        </ul>
-      </div>
       <div className={css.links}>
         {navigator.canShare && navigator.canShare(shareOutput) && (
           <Button

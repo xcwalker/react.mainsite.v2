@@ -63,7 +63,6 @@ export default function ProjectItem(props: {
               })}
             </h4>
           </div>
-          <div className={css.background}></div>
         </Link>
       )}
     </>

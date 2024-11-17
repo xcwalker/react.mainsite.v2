@@ -127,7 +127,7 @@ export default function ProjectIndex() {
             />
           </Helmet>
           <Section id="project">
-            <SideBySide leftWidth="400px">
+            <SideBySide leftWidth="350px">
               <ProjectSidebar item={item} slug={slug} />
               <main className={css.main}>
                 <Markdown className={css.description}>

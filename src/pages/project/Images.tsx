@@ -71,7 +71,7 @@ export default function ProjectImages(props: { item: ProjectItem; slug: string }
       <PhotoAlbum
         layout="rows"
         photos={images}
-        targetRowHeight={300}
+        targetRowHeight={200}
         breakpoints={[300, 600, 900, 1200, 1500, 1800, 2100]}
         onClick={({ index: current }) => {
           setSlideIndex(current);

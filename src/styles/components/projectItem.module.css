@@ -3,7 +3,7 @@
   position: relative;
 
   /* sizing */
-  padding: 1rem;
+  padding: 0;
   flex-shrink: 0;
 
   /* flex */
@@ -85,22 +85,8 @@
   line-height: 1;
 }
 
-.project .background {
-  /* position */
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-
-  /* styling */
-  border-radius: 1rem;
-  background-color: var(--background-200);
-  scale: 0.85;
-  translate: 3rem 1rem;
-  transition: scale 300ms ease, translate 300ms ease;
-}
-
-.project:hover .background,
-.project:focus-visible .background {
-  scale: 1;
-  translate: 0 0;
+.project:hover .thumbnail,
+.project:focus-visible .thumbnail {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
 }
