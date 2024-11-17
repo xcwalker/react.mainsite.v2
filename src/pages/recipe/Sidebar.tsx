@@ -3,6 +3,7 @@ import css from "../../styles/pages/recipe/sidebar.module.css";
 import Button, { ButtonLink } from "../../components/Button";
 import GFIcon from "../../components/GFIcon";
 import { SocialIcon } from "../../components/SocialIcon";
+import { Link } from "react-router-dom";
 
 export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
   const item = props.item;
@@ -175,6 +176,14 @@ export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
           <span>{item.data.information.serves}</span>
         </div>
       </div>
+      <div className={css.quickLinks}>
+        <span className={css.title}>Quick Links</span>
+        <div className={css.container}>
+          <a href="#ingredients">Ingredients</a>
+          <a href="#prep">Prep</a>
+          <a href="#instructions">Instructions</a>
+        </div>
+      </div>
       <div className={css.links}>
         {navigator.canShare && navigator.canShare(shareOutput) && (
           <Button
@@ -186,11 +195,12 @@ export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
             Share
           </Button>
         )}
-        {item.metaData.youtube && <ButtonLink href={item.metaData.youtube}
-        >
-          <SocialIcon social="youtube" />
-          YouTube
-        </ButtonLink>}
+        {item.metaData.youtube && (
+          <ButtonLink href={item.metaData.youtube}>
+            <SocialIcon social="youtube" />
+            YouTube
+          </ButtonLink>
+        )}
       </div>
     </div>
   );

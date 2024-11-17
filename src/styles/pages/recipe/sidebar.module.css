@@ -281,6 +281,45 @@
   margin-left: 1rem;
 }
 
+.quickLinks {
+  /* sizing */
+  padding-inline: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quickLinks .title {
+  /* text */
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.quickLinks .container {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.quickLinks .container a {
+  /* text */
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline solid;
+}
+
+
+.quickLinks .container a:hover,
+.quickLinks .container a:focus-visible {
+  text-decoration: underline dashed;
+}
+
 .links {
   /* flex */
   display: flex;

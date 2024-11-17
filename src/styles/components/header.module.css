@@ -32,19 +32,24 @@
   border-right: 2px solid var(--text-100);
 }
 
-.container svg {
+.container .svg {
   /* sizing */
   width: 135px;
+  margin-left: 0.75rem;
   margin-right: auto;
   flex-shrink: 0;
 
   /* flex */
   display: flex;
 
-  /* color */
+  /* color */ 
   fill: currentColor;
   color: inherit;
 }
+
+.container .svgSmall {
+    display: none;
+  }
 
 .links {
   /* sizing */

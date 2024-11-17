@@ -19,6 +19,8 @@
 }
 
 .instructions {
+  scroll-margin-top: 1rem;
+
   /* flex */
   display: flex;
   flex-direction: column;

@@ -136,7 +136,10 @@ export default function RecipeIndex() {
                 <Markdown className={css.description}>
                   {item.data.description}
                 </Markdown>
-                <div className={css.instructions + " " + css.ingredients}>
+                <div
+                  className={css.instructions + " " + css.ingredients}
+                  id="ingredients"
+                >
                   <h3>Ingredients</h3>
                   <ul>
                     {item.data.ingredients &&
@@ -145,7 +148,7 @@ export default function RecipeIndex() {
                       })}
                   </ul>
                 </div>
-                <div className={css.instructions + " " + css.prep}>
+                <div className={css.instructions + " " + css.prep} id="prep">
                   <h3>Prep</h3>
                   <ul>
                     {item.data.instructions.prep &&
@@ -154,7 +157,10 @@ export default function RecipeIndex() {
                       })}
                   </ul>
                 </div>
-                <div className={css.instructions + " " + css.cook}>
+                <div
+                  className={css.instructions + " " + css.cook}
+                  id="instructions"
+                >
                   <h3>Instructions</h3>
                   <ul>
                     {item.data.instructions.cook &&
