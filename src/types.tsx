@@ -27,6 +27,33 @@ export type StackType = {
   gap?: string;
 };
 
+export type BlogItem = {
+  data: {
+    title: string;
+    subTitle: string;
+    description: string;
+  };
+  metaData: {
+    date: {
+      created: string;
+      modified: string;
+    };
+    slug: string;
+    imageCount: number;
+    hasThumbnail?: boolean;
+    tags: string[];
+    collection: string;
+    collectionName: string;
+    author: {
+      name: string;
+      image: {
+        webpURL: string;
+        jpgURL: string;
+      };
+    };
+  };
+};
+
 export type ProjectItem = {
   data: {
     title: string;

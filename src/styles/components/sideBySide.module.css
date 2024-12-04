@@ -14,9 +14,9 @@
     grid-template-columns: 1fr;
   }
 
-  .sideBySide > :first-child {
+  /* .sideBySide > :first-child {
     max-width: var(--_width);
-  }
+  } */
 }
 
 

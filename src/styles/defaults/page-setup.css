@@ -57,7 +57,7 @@ html {
   /* grid */
   display: grid;
   grid-template-columns: [nav-start] 250px [nav-end main-start footer-start] 1fr [main-end footer-end];
-  grid-template-rows: [nav-start main-start] auto [nav-end main-end footer-start] auto [footer-end];
+  grid-template-rows: [nav-start main-start] auto [main-end footer-start] auto [nav-end footer-end];
   gap: 1rem;
   column-gap: 0;
 }

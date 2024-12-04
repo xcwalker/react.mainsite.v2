@@ -13,14 +13,19 @@ const navItems = [
     gficon: "home",
   },
   {
-    title: "Recipes",
-    href: "recipe",
-    gficon: "menu_book",
-  },
-  {
     title: "Projects",
     href: "project",
-    gficon: "code",
+    gficon: "design_services",
+  },
+  {
+    title: "Blog",
+    href: "blog",
+    gficon: "text_snippet",
+  },
+  {
+    title: "Recipes",
+    href: "recipe",
+    gficon: "stockpot",
   },
   {
     title: "account",
@@ -69,7 +74,7 @@ export default function Header() {
 
     if (window.scrollY > navScrollLastKnown) {
       document.body.classList.remove("scrolledUp");
-    } else if (window.scrollY < navScrollLastKnown - 25) {
+    } else if (window.scrollY < navScrollLastKnown - 5) {
       document.body.classList.add("scrolledUp");
     }
 

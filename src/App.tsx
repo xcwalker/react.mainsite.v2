@@ -25,6 +25,8 @@ import UserIndex from "./pages/user/Index";
 import UserPage from "./pages/user/User";
 import DashboardIndex from "./pages/dashboard/Index";
 import HideComponent from "./components/HideComponent";
+import BlogPage from "./pages/Blog";
+import BlogIndex from "./pages/blog/Index";
 
 export default function App() {
   return (
@@ -51,6 +53,12 @@ export default function App() {
         <Main>
           <Routes>
             <Route path="/" element={<HomeIndex />} />
+
+            {/* blog */}
+            <Route path="blog">
+              <Route index element={<BlogPage />} />
+              <Route path=":slug" element={<BlogIndex />} />
+            </Route>
 
             {/* projects */}
             <Route path="project">

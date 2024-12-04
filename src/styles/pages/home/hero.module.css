@@ -3,8 +3,9 @@
   position: relative;
 
   /* sizing */
-  height: 250px;
-  max-height: 60vmin;
+
+  min-height: 250px;
+  height: 35vmin;
   margin: 0;
   padding: 2rem;
 
