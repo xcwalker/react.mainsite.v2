@@ -18,125 +18,58 @@
 
   /* sizing */
   width: 100%;
-  height: 400px;
-  padding: 0.5rem;
+  height: fit-content;
+  padding: 1rem;
 
   /* flex */
-  display: flex;;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 
   /* styling */
   border-radius: 1rem;
+  border: 1px solid var(--secondary);
   overflow: clip;
   color: white;
 
   /* text */
   text-decoration: none;
-
-  /* hover effect */
-  position: relative;
-  
-  transition-duration: 300ms;
-  transition-property: transform, box-shadow;
-  transition-timing-function: ease-out;
-  transform: rotate3d(0);
 }
 
-.site:hover {
-  transition-duration: 150ms;
-  box-shadow: 0 5px 20px 5px #00000044;
-}
-
-.site:hover .container {
+.site:hover,
+.site:focus-visible {
   outline: 2px solid currentColor;
+  outline-offset: -2px;
 }
 
 .site .icon {
-  /* position */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  z-index: 1;
-
   /* sizing */
-  --_size: 100px;
+  --_size: 30px;
   width: var(--_size);
   height: var(--_size);
-}
-
-.site .background {
-  /* variables */
-  --_extend: 4rem;
-
-  /* position */
-  position: absolute;
-  inset: calc(var(--_extend) * -1);
-  z-index: -1;
-
-  /* sizing */
-  width: calc(100% + (var(--_extend) * 2));
-  height: calc(100% + (var(--_extend) * 2));
-  object-fit: cover;
-
-  /* styling */
-  filter: brightness(0.6);
+  font-size: var(--_size);
 }
 
 .site .container {
-  /* sizing */
-  width: 100%;
-  height: 100%;
-
-  /* flex */
-  display: flex;
-  align-items: flex-end;
-
-  /* styling */
-  border-radius: 0.5rem;
-  border: 1px solid white;
-}
-
-.site .container .info {
-  /* sizing */
-  padding: 1rem;
-
   /* flex */
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-
-  /* hiding */
-  translate: 0 1.5rem;
-  transition: translate 300ms ease;
+  gap: 0.25rem;
 }
 
-.site .container .info h3 {
+.site .container h3 {
   /* spacing */
   margin: 0;
-  
+
   /* text */
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1;
 }
 
-.site .container .info span {
+.site .container span {
   /* text */
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 600;
   line-height: 1;
-
-  /* hiding */
-  opacity: 0;
-  transition: opacity 300ms ease;
-}
-
-
-.site:hover .container .info,
-.site:focus-visible .container .info {
-  translate: 0 0;
-}
-.site:hover .container .info span,
-.site:focus-visible .container .info span {
-  opacity: 1;
 }

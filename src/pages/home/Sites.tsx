@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Section from "../../components/Section";
 import css from "../../styles/pages/home/sites.module.css";
 import { Fragment } from "react/jsx-runtime";
+import GFIcon from "../../components/GFIcon";
 
 export default function HomeSites() {
   return (
@@ -21,38 +22,32 @@ export default function HomeSites() {
 }
 
 function SiteItem(props: {
-  site: { icon: string; background: string; name: string; url: string };
+  site: { icon: string; name: string; url: string };
 }) {
   return (
-      <Link className={css.site} to={"https://" + props.site.url}>
-        <img src={props.site.icon} className={css.icon} alt="" />
-        <img src={props.site.background} className={css.background} alt="" />
-        <div className={css.container}>
-          <div className={css.info}>
-            <h3>{props.site.name}</h3>
-            <span>{props.site.url}</span>
-          </div>
-        </div>
-      </Link>
+    <Link className={css.site} to={"https://" + props.site.url}>
+      <GFIcon className={css.icon}>{props.site.icon}</GFIcon>
+      <div className={css.container}>
+        <h3>{props.site.name}</h3>
+        <span>{props.site.url}</span>
+      </div>
+    </Link>
   );
 }
 
 const websites = [
   {
-    icon: "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
-    background: "https://images.unsplash.com/photo-1501854140801-50d01698950b",
+    icon: "grid_view",
     name: "Immersion",
     url: "immersion.xcwalker.dev",
   },
   {
-    icon: "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Searrson.svg",
-    background: "https://images.unsplash.com/photo-1531265726475-52ad60219627",
+    icon: "wallpaper_slideshow",
     name: "Searrson",
     url: "searrson.xcwalker.dev",
   },
   {
-    icon: "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Therwim.svg",
-    background: "https://images.unsplash.com/photo-1512850183-6d7990f42385",
+    icon: "web",
     name: "Therwim",
     url: "therwim.xcwalker.dev",
   },

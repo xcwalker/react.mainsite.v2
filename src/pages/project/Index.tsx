@@ -18,6 +18,8 @@ import css from "../../styles/pages/project.module.css";
 export default function ProjectIndex() {
   const { slug } = useParams();
   const [item, setItem] = useState<ProjectItem | undefined>(undefined);
+  const [error, setError] = useState(false);
+  const [canPassLoading, setCanPassLoading] = useState<boolean>(false);
 
   useEffect(() => {
     fetch(
@@ -42,10 +44,21 @@ export default function ProjectIndex() {
       setError(false);
     };
   }, [slug]);
-  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setCanPassLoading(true);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeout)
+      setCanPassLoading(false);
+    };
+  }, [slug]);
+
   return (
     <>
-      {item && !error && slug && (
+      {item && !error && slug && canPassLoading && (
         <>
           <Helmet>
             <title>
@@ -153,8 +166,8 @@ export default function ProjectIndex() {
           </Section>
         </>
       )}
-      {item === undefined && !error && <LoadingPage />}
-      {error && <ErrorPage code={404} error="Project Not Found" />}
+      {((item === undefined && !error) || !canPassLoading) && <LoadingPage />}
+      {error && canPassLoading && <ErrorPage code={404} error="Project Not Found" />}
     </>
   );
 }

@@ -3,6 +3,7 @@
 
   /* position */
   position: relative;
+  z-index: 1;
 
   /* sizing */
   width: 100%;

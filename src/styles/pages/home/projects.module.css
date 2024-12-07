@@ -3,7 +3,13 @@
 }
 
 .container a.titleLink {
+  /* position */
   z-index: 1;
+
+  /* sizing */
+  width: fit-content;
+
+  /* styling */
   color: inherit;
   text-decoration: underline dashed;
 }

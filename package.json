@@ -12,6 +12,7 @@
   "dependencies": {
     "@darenft/react-3d-hover-card": "^1.0.9",
     "firebase": "^10.12.3",
+    "html-entities": "^2.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",

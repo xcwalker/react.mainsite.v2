@@ -14,6 +14,7 @@ import Stack from "../../components/Stack";
 import { RecipePrintSidebar } from "./PrintSidebar";
 import ErrorPage from "../../ErrorPage";
 import LoadingPage from "../../components/Loading";
+import { decode } from "html-entities";
 
 import css from "../../styles/pages/recipe.module.css";
 
@@ -21,6 +22,7 @@ export default function RecipeIndex() {
   const { slug } = useParams<string>();
   const [item, setItem] = useState<RecipeItem | undefined>(undefined);
   const [error, setError] = useState(false);
+  const [canPassLoading, setCanPassLoading] = useState<boolean>(false);
 
   useEffect(() => {
     fetch(
@@ -46,9 +48,20 @@ export default function RecipeIndex() {
     };
   }, [slug]);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setCanPassLoading(true);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeout);
+      setCanPassLoading(false);
+    };
+  }, [slug]);
+
   return (
     <>
-      {item !== undefined && !error && slug && (
+      {item !== undefined && !error && slug && canPassLoading && (
         <>
           <Helmet>
             <title>
@@ -144,7 +157,7 @@ export default function RecipeIndex() {
                   <ul>
                     {item.data.ingredients &&
                       item.data.ingredients.map((item, index) => {
-                        return <li key={index}>{item}</li>;
+                        return <li key={index}>{decode(item)}</li>;
                       })}
                   </ul>
                 </div>
@@ -153,7 +166,7 @@ export default function RecipeIndex() {
                   <ul>
                     {item.data.instructions.prep &&
                       item.data.instructions.prep.map((item, index) => {
-                        return <li key={index}>{item}</li>;
+                        return <li key={index}>{decode(item)}</li>;
                       })}
                   </ul>
                 </div>
@@ -165,7 +178,7 @@ export default function RecipeIndex() {
                   <ul>
                     {item.data.instructions.cook &&
                       item.data.instructions.cook.map((item, index) => {
-                        return <li key={index}>{item}</li>;
+                        return <li key={index}>{decode(item)}</li>;
                       })}
                   </ul>
                 </div>
@@ -218,8 +231,8 @@ export default function RecipeIndex() {
           />
         </>
       )}
-      {item === undefined && !error && <LoadingPage />}
-      {(slug === undefined || error) && (
+      {((item === undefined && !error) || !canPassLoading) && <LoadingPage />}
+      {(slug === undefined || error) && canPassLoading && (
         <ErrorPage code={404} error="Recipe Not Found" />
       )}
     </>
