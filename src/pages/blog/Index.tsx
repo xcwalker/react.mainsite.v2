@@ -14,6 +14,9 @@ import LoadingPage from "../../components/Loading";
 import { BlogItem } from "../../types";
 
 import css from "../../styles/pages/project.module.css";
+import cssMarkdown from "../../styles/components/markdown.module.css";
+import remarkGfm from "remark-gfm";
+import supersub from "remark-supersub";
 
 export default function BlogIndex() {
   const { slug } = useParams();
@@ -130,8 +133,15 @@ export default function BlogIndex() {
             <SideBySide leftWidth="350px">
               <BlogSidebar item={item} slug={slug} />
               <main className={css.main}>
-                <Markdown className={css.description}>
-                  {item.data.description}
+                <Markdown
+                  remarkPlugins={[
+                    [remarkGfm, { singleTilde: false }],
+                    supersub,
+                  ]}
+                  className={css.description + " " + cssMarkdown.markdown}
+                >
+                  {/* {item.data.description} */}
+                  {testData}
                 </Markdown>
                 <BlogImages item={item} slug={slug} />
               </main>
@@ -158,3 +168,6 @@ export default function BlogIndex() {
     </>
   );
 }
+
+const testData =
+  "*Emphasize*  _emphasize_\n\n**Strong**  __strong__\n\n==Marked text.==\n\n~~Mistaken text.~~\n\nH~2~O is a liquid.\n\n2^10^ is 1024.\n\n[This is a link](https://www.google.com)\n\n# Heading 1\n\n## Heading 2\n\n### Heading 3\n\n#### Heading 4\n\n##### Heading 5\n\n###### Heading 6\n\n\n\n - Unordered List item 1\n\n - Unordered List item 2\n\n\n\n 1. Ordered List item 1\n\n 2. Ordered List item 2\n\n\n\n - [X] Checlist Item List item 1\n\n - [ ] Checlist Item List item 2\n\n\n\n> Blockquote\n\n\n\n    asdasd\n\n| 1 | 2 |\n|--|--|\n|a|b|\n\n![random unsplash image](https://images.unsplash.com/photo-1733234976396-87cf34ae6038?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb)";

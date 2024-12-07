@@ -162,19 +162,33 @@
 }
 
 @media (max-width: 625px) {
+  .header {
+    background-color: transparent;
+    border-right: 2px solid transparent;
+  }
+
   .header .container {
+    height: 100dvh;
     width: calc(32px + 2rem);
     /* position */
-    position: absolute;
+    position: sticky;
     inset: 0;
     left: auto;
 
-    translate: 0 0;
+    /* hiding */
     transition: translate 250ms ease;
+
+    /* styling */
+    background-color: var(--background);
+    border-right: 2px solid var(--text-100);
+  }
+
+  body:global(.scrolled) .header .container {
+    translate: -100% 0;
   }
 
   body:global(.scrolled.scrolledUp) .header .container {
-    translate: 100% 0;
+    translate: 0 0;
   }
 
   .container {

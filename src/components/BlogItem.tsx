@@ -1,6 +1,6 @@
 import { ProjectItem as ProjectItemType } from "../types";
 import { Link } from "react-router-dom";
-import css from "../styles/components/projectItem.module.css";
+import css from "../styles/components/blogItem.module.css";
 import { useEffect, useState } from "react";
 
 export default function BlogItem(props: {
@@ -34,7 +34,7 @@ export default function BlogItem(props: {
     <>
       {item && (
         <Link
-          className={css.project}
+          className={css.blog}
           to={"/blog/" + item.metaData.slug}
           style={props.style}
         >
