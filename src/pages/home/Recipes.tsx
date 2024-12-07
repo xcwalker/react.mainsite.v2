@@ -4,10 +4,16 @@ import { Fragment } from "react/jsx-runtime";
 import RecipeItem from "../../components/RecipeItem";
 import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-export default function HomeRecipes(props: { limit?: number; title: string }) {
-  const [recipesArray, setRecipesArray] =
-    useState<[{ slug: string; collection: string }] | undefined>();
+export default function HomeRecipes(props: {
+  limit?: number;
+  title: string;
+  titleLink: boolean;
+}) {
+  const [recipesArray, setRecipesArray] = useState<
+    [{ slug: string; collection: string }] | undefined
+  >();
 
   useEffect(() => {
     fetch(
@@ -27,7 +33,12 @@ export default function HomeRecipes(props: { limit?: number; title: string }) {
 
   return (
     <Section id="projects" container={{ className: css.container }}>
-      <h2>{props.title}</h2>
+      {!props.titleLink && <h2>{props.title}</h2>}
+      {props.titleLink && (
+        <Link to="/recipe" className={css.titleLink}>
+          <h2>{props.title}</h2>
+        </Link>
+      )}
       <div className={css.slider}>
         {recipesArray &&
           recipesArray.map((item, index) => {
@@ -42,7 +53,7 @@ export default function HomeRecipes(props: { limit?: number; title: string }) {
           })}
       </div>
       {props.limit && recipesArray && recipesArray.length > props.limit && (
-        <ButtonLink href="/recipes" className={css.viewMore}>
+        <ButtonLink href="/recipe" className={css.viewMore}>
           View More
         </ButtonLink>
       )}

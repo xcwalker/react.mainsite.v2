@@ -24,7 +24,7 @@ export default function BlogPage() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://xcwalker.dev/Blog/" />
       </Helmet>
-      <HomeBlog title={"Blog"} />
+      <HomeBlog title={"Blog"} titleLink={false} />
     </>
   );
 }

@@ -24,7 +24,7 @@ export default function ProjectsPage() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://xcwalker.dev/projects/" />
       </Helmet>
-      <HomeProjects title={"Projects"} />
+      <HomeProjects title={"Projects"} titleLink={false} />
     </>
   );
 }

@@ -4,8 +4,13 @@ import { Fragment } from "react/jsx-runtime";
 import ProjectItem from "../../components/ProjectItem";
 import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-export default function HomeProjects(props: { limit?: number; title: string }) {
+export default function HomeProjects(props: {
+  limit?: number;
+  title: string;
+  titleLink: boolean;
+}) {
   const [projectsArray, setProjectsArray] = useState<
     [{ slug: string; collection: string }] | undefined
   >();
@@ -28,7 +33,12 @@ export default function HomeProjects(props: { limit?: number; title: string }) {
 
   return (
     <Section id="projects" container={{ className: css.container }}>
-      <h2>{props.title}</h2>
+      {!props.titleLink && <h2>{props.title}</h2>}
+      {props.titleLink && (
+        <Link to="/project" className={css.titleLink}>
+          <h2>{props.title}</h2>
+        </Link>
+      )}
       <div className={css.slider}>
         {projectsArray &&
           projectsArray.map((item, index) => {
@@ -43,7 +53,7 @@ export default function HomeProjects(props: { limit?: number; title: string }) {
           })}
       </div>
       {props.limit && projectsArray && projectsArray.length > props.limit && (
-        <ButtonLink href="/projects" className={css.viewMore}>
+        <ButtonLink href="/project" className={css.viewMore}>
           View More
         </ButtonLink>
       )}

@@ -2,6 +2,21 @@
   gap: 0.5rem;
 }
 
+.container a.titleLink {
+  z-index: 1;
+  color: inherit;
+  text-decoration: underline dashed;
+}
+
+.container a.titleLink:hover,
+.container a.titleLink:focus-visible {
+  text-decoration: underline solid;
+}
+
+.container a.titleLink h2 {
+  margin: 0;
+}
+
 .slider {
   /* grid */
   display: grid;

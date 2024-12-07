@@ -16,10 +16,10 @@ export default function HomeIndex() {
         </title>
       </Helmet>
       <HomeHero />
-      <HomeProjects limit={3} title="My projects" />
+      <HomeProjects limit={3} title="My Projects" titleLink={true} />
       <HomeRadio />
-      <HomeBlog limit={3} title="My Blog" />
-      <HomeRecipes limit={3} title="Some recipes" />
+      <HomeBlog limit={3} title="My Blog" titleLink={true} />
+      <HomeRecipes limit={3} title="Some Recipes" titleLink={true} />
       <HomeSites />
     </>
   );

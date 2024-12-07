@@ -24,7 +24,7 @@ export default function RecipesPage() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={"https://xcwalker.dev/recipes/"} />
       </Helmet>
-      <HomeRecipes title="Recipes" />
+      <HomeRecipes title="Recipes" titleLink={false} />
     </>
   );
 }

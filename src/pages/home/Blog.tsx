@@ -4,8 +4,13 @@ import { Fragment } from "react/jsx-runtime";
 import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
 import BlogItem from "../../components/BlogItem";
+import { Link } from "react-router-dom";
 
-export default function HomeBlog(props: { limit?: number; title: string }) {
+export default function HomeBlog(props: {
+  limit?: number;
+  title: string;
+  titleLink: boolean;
+}) {
   const [projectsArray, setProjectsArray] = useState<
     [{ slug: string; collection: string }] | undefined
   >();
@@ -28,7 +33,12 @@ export default function HomeBlog(props: { limit?: number; title: string }) {
 
   return (
     <Section id="blog" container={{ className: css.container }}>
-      <h2>{props.title}</h2>
+      {!props.titleLink && <h2>{props.title}</h2>}
+      {props.titleLink && (
+        <Link to="/blog" className={css.titleLink}>
+          <h2>{props.title}</h2>
+        </Link>
+      )}
       <div className={css.slider}>
         {projectsArray &&
           projectsArray.map((item, index) => {
