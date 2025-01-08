@@ -17,6 +17,7 @@ import LoadingPage from "../../components/Loading";
 import { decode } from "html-entities";
 
 import css from "../../styles/pages/recipe.module.css";
+import getRecipe from "../../functions/firebase/storage/extra/getRecipe";
 
 export default function RecipeIndex() {
   const { slug } = useParams<string>();
@@ -25,14 +26,16 @@ export default function RecipeIndex() {
   const [canPassLoading, setCanPassLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/" +
-        slug?.toLowerCase() +
-        "/recipe.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
+    // fetch(
+    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/" +
+    //     slug?.toLowerCase() +
+    //     "/recipe.json"
+    // )
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+
+    getRecipe(slug?.toLowerCase() as string)
       .then((data) => {
         console.log(data);
         setItem(data);

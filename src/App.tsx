@@ -38,11 +38,11 @@ export default function App() {
         </Helmet>
 
         <Toaster
-          position="top-left"
+          position="top-right"
           reverseOrder={true}
           containerStyle={{
-            top: "calc(50px + 1rem)",
-            left: "min(3rem, max(4vw, 1rem))",
+            top: "1rem",
+            right: "1rem",
           }}
         />
 

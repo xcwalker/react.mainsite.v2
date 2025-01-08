@@ -1,5 +1,5 @@
 import { doc, getDoc } from "firebase/firestore";
-import { firebaseDB } from "../storages/setup";
+import { firebaseDB } from "../storage/setup";
 import { UserType } from "../../../types";
 
 export default async function firebaseGetUserData(userID: string) {

@@ -3,6 +3,10 @@ import Section from "../../components/Section";
 import css from "../../styles/pages/project/related.module.css";
 import RecipeItem from "../../components/RecipeItem";
 import { useEffect, useState } from "react";
+import getRecipesByDateExcludeSlugAndSameCollection from "../../functions/firebase/storage/extra/getRecipesByDateExcludeSlugAndSameCollection";
+import getRecipesByDateExcludeSlugAndDifferentCollection from "../../functions/firebase/storage/extra/getRecipesByDateExcludeSlugAndDifferentCollection";
+import getRecipesByDateExcludeSlug from "../../functions/firebase/storage/extra/getRecipesByDateExcludeSlug";
+import { RecipeItem as RecipeItemType } from "../../types";
 
 export default function RecipeRelated(props: {
   slug: string;
@@ -11,29 +15,35 @@ export default function RecipeRelated(props: {
   title: string;
 }) {
   const [otherRecipes, setOtherRecipes] = useState<
-    { slug: string; collection: string }[] | undefined
+    { id: string; value: RecipeItemType }[] | undefined
   >();
 
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/index.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setOtherRecipes(
-          data.filter(
-            (recipe: { slug: string; collection: string }) =>
-              props.slug &&
-              recipe.slug.toLowerCase() !== props.slug.toLowerCase() &&
-              ((!props.sameCollection &&
-                recipe.collection !== props.collection) ||
-                (props.sameCollection &&
-                  recipe.collection === props.collection))
-          )
-        );
+    // fetch(
+    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/index.json"
+    // )
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    if (props.collection && props.sameCollection === true) {
+      getRecipesByDateExcludeSlugAndSameCollection(
+        props.slug,
+        props.collection
+      ).then((data) => {
+        setOtherRecipes(data);
       });
+    } else if (props.collection && props.sameCollection === false) {
+      getRecipesByDateExcludeSlugAndDifferentCollection(
+        props.slug,
+        props.collection
+      ).then((data) => {
+        setOtherRecipes(data);
+      });
+    } else {
+      getRecipesByDateExcludeSlug(props.slug).then((data) => {
+        setOtherRecipes(data);
+      });
+    }
 
     return () => {
       setOtherRecipes(undefined);
@@ -49,7 +59,7 @@ export default function RecipeRelated(props: {
             {otherRecipes.map((item, index) => {
               return (
                 <Fragment key={index}>
-                  <RecipeItem slug={item.slug} />
+                  <RecipeItem slug={item.id} item={item.value} />
                 </Fragment>
               );
             })}

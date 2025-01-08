@@ -153,8 +153,8 @@ export default function BlogIndex() {
                   ]}
                   className={css.description + " " + cssMarkdown.markdown}
                 >
-                  {/* {item.data.description} */}
-                  {testData}
+                  {item.data.description}
+                  {/* {testData} */}
                 </Markdown>
                 <BlogImages item={item} slug={slug} />
               </main>

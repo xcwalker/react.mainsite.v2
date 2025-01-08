@@ -5,6 +5,8 @@ import RecipeItem from "../../components/RecipeItem";
 import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import getRecipesByDate from "../../functions/firebase/storage/extra/getRecipesByDate";
+import { RecipeItem as RecipeItemType } from "../../types";
 
 export default function HomeRecipes(props: {
   limit?: number;
@@ -12,16 +14,18 @@ export default function HomeRecipes(props: {
   titleLink: boolean;
 }) {
   const [recipesArray, setRecipesArray] = useState<
-    [{ slug: string; collection: string }] | undefined
+    { id: string; value: RecipeItemType }[] | undefined
   >();
 
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/index.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
+    // fetch(
+    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/index.json"
+    // )
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+
+    getRecipesByDate()
       .then((data) => {
         setRecipesArray(data);
       });
@@ -47,7 +51,7 @@ export default function HomeRecipes(props: {
             else
               return (
                 <Fragment key={index}>
-                  <RecipeItem slug={item.slug} />
+                  <RecipeItem item={item.value} slug={item.id} />
                 </Fragment>
               );
           })}

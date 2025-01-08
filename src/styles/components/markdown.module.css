@@ -98,6 +98,7 @@
 .markdown td {
   min-width: 200px;
   padding: 0.25rem 0.75rem;
+  text-align: left;
 }
 
 .markdown thead tr :first-child {

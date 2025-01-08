@@ -5,35 +5,35 @@ import { useEffect, useState } from "react";
 import Logo from "./Logo";
 
 export default function RecipeItem(props: {
+  item: RecipeItemType;
   slug: string;
   style?: React.CSSProperties;
 }) {
-  const [item, setItem] = useState<RecipeItemType | undefined>(undefined);
   const [date, setDate] = useState<Date>();
 
-  useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/" +
-        props.slug?.toLowerCase() +
-        "/recipe.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setItem(data);
-        setDate(new Date(data.metaData.date.modified));
-      });
+  // useEffect(() => {
+  //   fetch(
+  //     "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/" +
+  //       props.slug?.toLowerCase() +
+  //       "/recipe.json"
+  //   )
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setItem(data);
+  //       setDate(new Date(data.metaData.date.modified));
+  //     });
 
-    return () => {
-      setItem(undefined);
-      setDate(undefined);
-    };
-  }, [props.slug]);
+  //   return () => {
+  //     setItem(undefined);
+  //     setDate(undefined);
+  //   };
+  // }, [props.slug]);
 
   return (
     <>
-      {item && (
+      {props.item && (
         <Link
           className={css.recipe}
           to={"/recipe/" + props.slug}
@@ -96,17 +96,20 @@ export default function RecipeItem(props: {
                 </svg>
               </div>
             </picture>
-            {item.metaData.collection && (
-              <span className={css.collection}>{item.metaData.collection}</span>
+            {props.item.metaData.collection && (
+              <span className={css.collection}>
+                {props.item.metaData.collection}
+              </span>
             )}
-            {item.metaData.author &&
-              item.metaData.author.name.toLowerCase() === "xander walker" && (
+            {props.item.metaData.author &&
+              props.item.metaData.author.name.toLowerCase() ===
+                "xander walker" && (
                 <div
                   className={css.logo}
                   style={
                     {
-                      "--_color-dark": item.metaData.colors.dark,
-                      "--_color-light": item.metaData.colors.light,
+                      "--_color-dark": props.item.metaData.colors.dark,
+                      "--_color-light": props.item.metaData.colors.light,
                     } as React.CSSProperties
                   }
                 >
@@ -115,9 +118,9 @@ export default function RecipeItem(props: {
               )}
           </div>
           <div className={css.details}>
-            <h3>{item.data.title}</h3>
+            <h3>{props.item.data.title}</h3>
             <h4>
-              {item.data.subTitle} |{" "}
+              {props.item.data.subTitle} |{" "}
               {date &&
                 date.toLocaleDateString(undefined, {
                   weekday: undefined,
@@ -131,8 +134,8 @@ export default function RecipeItem(props: {
             className={css.background}
             style={
               {
-                "--_color-dark": item.metaData.colors.dark,
-                "--_color-light": item.metaData.colors.light,
+                "--_color-dark": props.item.metaData.colors.dark,
+                "--_color-light": props.item.metaData.colors.light,
               } as React.CSSProperties
             }
           />
