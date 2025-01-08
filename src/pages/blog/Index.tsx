@@ -34,15 +34,11 @@ export default function BlogIndex() {
     //   .then((res) => {
     //     return res.json();
     //   })
-    getBlog(slug?.toLowerCase() as string)
-      .then((data) => {
-        console.log(data);
-        setItem(data);
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(true);
-      });
+    getBlog(slug?.toLowerCase() as string).then((data) => {
+      console.log(data);
+      if (data === undefined) setError(true);
+      else setItem(data);
+    });
 
     return () => {
       setItem(undefined);
@@ -180,7 +176,7 @@ export default function BlogIndex() {
       )}
       {((item === undefined && !error) || !canPassLoading) && <LoadingPage />}
       {error && canPassLoading && (
-        <ErrorPage code={404} error="Project Not Found" />
+        <ErrorPage code={404} error="Blog Post Not Found" />
       )}
     </>
   );

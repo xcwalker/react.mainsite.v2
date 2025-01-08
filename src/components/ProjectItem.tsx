@@ -6,36 +6,40 @@ import { useEffect, useState } from "react";
 export default function ProjectItem(props: {
   slug: string;
   style?: React.CSSProperties;
+  item: ProjectItemType;
 }) {
-  const [item, setItem] = useState<ProjectItemType | undefined>(undefined);
+  // const [item, setItem] = useState<ProjectItemType | undefined>(undefined);
   const [date, setDate] = useState<Date>();
 
+  // useEffect(() => {
+  //   fetch(
+  //     "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
+  //       props.slug?.toLowerCase() +
+  //       "/project.json"
+  //   )
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setItem(data);
+  //       setDate(new Date(data.metaData.date.modified));
+  //     });
+
+  //   return () => {
+  //     setItem(undefined);
+  //     setDate(undefined);
+  //   };
+  // }, [props.slug]);
+ 
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
-        props.slug?.toLowerCase() +
-        "/project.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setItem(data);
-        setDate(new Date(data.metaData.date.modified));
-      });
-
-    return () => {
-      setItem(undefined);
-      setDate(undefined);
-    };
-  }, [props.slug]);
-
+   setDate(new Date(props.item.metaData.date.modified));
+ }, [props.item]);
   return (
     <>
-      {item && (
+      {props.item && (
         <Link
           className={css.project}
-          to={"/project/" + item.metaData.slug}
+          to={"/project/" + props.item.metaData.slug}
           style={props.style}
         >
           <div className={css.thumbnail}>
@@ -47,20 +51,23 @@ export default function ProjectItem(props: {
               }
               alt="Thumbnail"
             />
-            {item.metaData.collection && (
-              <span className={css.collection}>{item.metaData.collection}</span>
+            {props.item.metaData.collection && (
+              <span className={css.collection}>
+                {props.item.metaData.collection}
+              </span>
             )}
           </div>
           <div className={css.details}>
-            <h3>{item.data.title}</h3>
+            <h3>{props.item.data.title}</h3>
             <h4>
-              {item.data.subTitle} |{" "}
-              {date && date.toLocaleDateString(undefined, {
-                weekday: undefined,
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+              {props.item.data.subTitle} |{" "}
+              {date &&
+                date.toLocaleDateString(undefined, {
+                  weekday: undefined,
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
             </h4>
           </div>
         </Link>

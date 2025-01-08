@@ -5,6 +5,8 @@ import ProjectItem from "../../components/ProjectItem";
 import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import getDataByDate from "../../functions/firebase/storage/getDataByDate";
+import { ProjectItem as ProjectItemType } from "../../types";
 
 export default function HomeProjects(props: {
   limit?: number;
@@ -12,18 +14,13 @@ export default function HomeProjects(props: {
   titleLink: boolean;
 }) {
   const [projectsArray, setProjectsArray] = useState<
-    [{ slug: string; collection: string }] | undefined
+    { id: string; value: ProjectItemType }[] | undefined
   >();
 
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/index.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
+    getDataByDate("projects")
       .then((data) => {
-        setProjectsArray(data);
+        setProjectsArray(data as { id: string; value: ProjectItemType }[]);
       });
 
     return () => {
@@ -47,7 +44,7 @@ export default function HomeProjects(props: {
             else
               return (
                 <Fragment key={index}>
-                  <ProjectItem slug={item.slug} />
+                  <ProjectItem slug={item.id} item={item.value} />
                 </Fragment>
               );
           })}

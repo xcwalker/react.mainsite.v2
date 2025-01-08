@@ -27,7 +27,7 @@ export default function HomeRecipes(props: {
 
     getDataByDate("recipes")
       .then((data) => {
-        setRecipesArray(data);
+        setRecipesArray(data as { id: string; value: RecipeItemType }[]);
       });
 
     return () => {

@@ -5,6 +5,8 @@ import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
 import BlogItem from "../../components/BlogItem";
 import { Link } from "react-router-dom";
+import getDataByDate from "../../functions/firebase/storage/getDataByDate";
+import { BlogItem as BlogItemType } from "../../types";
 
 export default function HomeBlog(props: {
   limit?: number;
@@ -12,18 +14,19 @@ export default function HomeBlog(props: {
   titleLink: boolean;
 }) {
   const [projectsArray, setProjectsArray] = useState<
-    [{ slug: string; collection: string }] | undefined
+    { id: string; value: BlogItemType }[] | undefined
   >();
 
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/blog/index.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
+    // fetch(
+    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/blog/index.json"
+    // )
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    getDataByDate("blog")
       .then((data) => {
-        setProjectsArray(data);
+        setProjectsArray(data as { id: string; value: BlogItemType }[]);
       });
 
     return () => {
@@ -47,7 +50,7 @@ export default function HomeBlog(props: {
             else
               return (
                 <Fragment key={index}>
-                  <BlogItem slug={item.slug} />
+                  <BlogItem slug={item.id} item={item.value} />
                 </Fragment>
               );
           })}
