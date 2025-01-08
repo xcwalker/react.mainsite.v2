@@ -1,5 +1,6 @@
+import { BlogItem } from "../../../../types";
 import firebaseGetData from "../getData";
 
 export default function getBlog(slug: string) {
-  firebaseGetData("blog", slug);
+  return firebaseGetData("blog", slug) as Promise<BlogItem | undefined>;
 }

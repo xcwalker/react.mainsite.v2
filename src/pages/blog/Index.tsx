@@ -17,6 +17,7 @@ import css from "../../styles/pages/project.module.css";
 import cssMarkdown from "../../styles/components/markdown.module.css";
 import remarkGfm from "remark-gfm";
 import supersub from "remark-supersub";
+import getBlog from "../../functions/firebase/storage/extra/getBlog";
 
 export default function BlogIndex() {
   const { slug } = useParams();
@@ -25,14 +26,15 @@ export default function BlogIndex() {
   const [canPassLoading, setCanPassLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/blog/" +
-        slug?.toLowerCase() +
-        "/blog.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
+    // fetch(
+    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/blog/" +
+    //     slug?.toLowerCase() +
+    //     "/blog.json"
+    // )
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    getBlog(slug?.toLowerCase() as string)
       .then((data) => {
         console.log(data);
         setItem(data);
@@ -183,6 +185,3 @@ export default function BlogIndex() {
     </>
   );
 }
-
-const testData =
-  "*Emphasize*  _emphasize_\n\n**Strong**  __strong__\n\n==Marked text.==\n\n~~Mistaken text.~~\n\nH~2~O is a liquid.\n\n2^10^ is 1024.\n\n[This is a link](https://www.google.com)\n\n# Heading 1\n\n## Heading 2\n\n### Heading 3\n\n#### Heading 4\n\n##### Heading 5\n\n###### Heading 6\n\n\n\n - Unordered List item 1\n\n - Unordered List item 2\n\n\n\n 1. Ordered List item 1\n\n 2. Ordered List item 2\n\n\n\n - [X] Checlist Item List item 1\n\n - [ ] Checlist Item List item 2\n\n\n\n> Blockquote\n\n\n\n    asdasd\n\n| 1 | 2 |\n|--|--|\n|a|b|\n\n![random unsplash image](https://images.unsplash.com/photo-1733234976396-87cf34ae6038?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb)";

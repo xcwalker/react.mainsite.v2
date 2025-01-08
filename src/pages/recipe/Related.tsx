@@ -3,10 +3,10 @@ import Section from "../../components/Section";
 import css from "../../styles/pages/project/related.module.css";
 import RecipeItem from "../../components/RecipeItem";
 import { useEffect, useState } from "react";
-import getRecipesByDateExcludeSlugAndSameCollection from "../../functions/firebase/storage/extra/getRecipesByDateExcludeSlugAndSameCollection";
-import getRecipesByDateExcludeSlugAndDifferentCollection from "../../functions/firebase/storage/extra/getRecipesByDateExcludeSlugAndDifferentCollection";
-import getRecipesByDateExcludeSlug from "../../functions/firebase/storage/extra/getRecipesByDateExcludeSlug";
 import { RecipeItem as RecipeItemType } from "../../types";
+import getDataByDateExcludeSlugAndSameCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndSameCollection";
+import getDataByDateExcludeSlugAndDifferentCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndDifferentCollection";
+import getDataByDateExcludeSlug from "../../functions/firebase/storage/getDataByDateExcludeSlug";
 
 export default function RecipeRelated(props: {
   slug: string;
@@ -26,21 +26,23 @@ export default function RecipeRelated(props: {
     //     return res.json();
     //   })
     if (props.collection && props.sameCollection === true) {
-      getRecipesByDateExcludeSlugAndSameCollection(
+      getDataByDateExcludeSlugAndSameCollection(
+        "recipes",
         props.slug,
         props.collection
       ).then((data) => {
         setOtherRecipes(data);
       });
     } else if (props.collection && props.sameCollection === false) {
-      getRecipesByDateExcludeSlugAndDifferentCollection(
+      getDataByDateExcludeSlugAndDifferentCollection(
+        "recipes",
         props.slug,
         props.collection
       ).then((data) => {
         setOtherRecipes(data);
       });
     } else {
-      getRecipesByDateExcludeSlug(props.slug).then((data) => {
+      getDataByDateExcludeSlug("recipes", props.slug).then((data) => {
         setOtherRecipes(data);
       });
     }

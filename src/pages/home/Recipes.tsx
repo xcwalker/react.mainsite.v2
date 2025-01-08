@@ -5,8 +5,8 @@ import RecipeItem from "../../components/RecipeItem";
 import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import getRecipesByDate from "../../functions/firebase/storage/extra/getRecipesByDate";
 import { RecipeItem as RecipeItemType } from "../../types";
+import getDataByDate from "../../functions/firebase/storage/getDataByDate";
 
 export default function HomeRecipes(props: {
   limit?: number;
@@ -25,7 +25,7 @@ export default function HomeRecipes(props: {
     //     return res.json();
     //   })
 
-    getRecipesByDate()
+    getDataByDate("recipes")
       .then((data) => {
         setRecipesArray(data);
       });

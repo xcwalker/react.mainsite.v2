@@ -8,7 +8,7 @@ import HomeRecipes from "./Recipes";
 import HomeBlog from "./Blog";
 import { useState } from "react";
 import getRecipe from "../../functions/firebase/storage/extra/getRecipe";
-import getRecipesByDate from "../../functions/firebase/storage/extra/getRecipesByDate";
+import getRecipesByDate from "../../functions/firebase/storage/getDataByDate";
 import { doc, setDoc } from "firebase/firestore";
 import { firebaseDB } from "../../functions/firebase/storage/setup";
 
