@@ -3,6 +3,10 @@ import Section from "../../components/Section";
 import ProjectItem from "../../components/ProjectItem";
 import css from "../../styles/pages/project/related.module.css";
 import { useEffect, useState } from "react";
+import getDataByDateExcludeSlugAndSameCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndSameCollection";
+import getDataByDateExcludeSlugAndDifferentCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndDifferentCollection";
+import getDataByDateExcludeSlug from "../../functions/firebase/storage/getDataByDateExcludeSlug";
+import { ProjectItem as ProjectItemType } from "../../types";
 
 export default function ProjectRelated(props: {
   slug: string;
@@ -11,29 +15,31 @@ export default function ProjectRelated(props: {
   title: string;
 }) {
   const [otherProjects, setOtherProjects] = useState<
-    { slug: string; collection: string }[] | undefined
+    { id: string; value: ProjectItemType }[] | undefined
   >();
 
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/index.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setOtherProjects(
-          data.filter(
-            (project: { slug: string; collection: string }) =>
-              props.slug &&
-              project.slug.toLowerCase() !== props.slug.toLowerCase() &&
-              ((!props.sameCollection &&
-                project.collection !== props.collection) ||
-                (props.sameCollection &&
-                  project.collection === props.collection))
-          )
-        );
-      });
+    if (props.collection && props.sameCollection === true) {
+          getDataByDateExcludeSlugAndSameCollection(
+            "projects",
+            props.slug,
+            props.collection
+          ).then((data) => {
+            setOtherProjects(data as { id: string; value: ProjectItemType }[]);
+          });
+        } else if (props.collection && props.sameCollection === false) {
+          getDataByDateExcludeSlugAndDifferentCollection(
+            "projects",
+            props.slug,
+            props.collection
+          ).then((data) => {
+            setOtherProjects(data as { id: string; value: ProjectItemType }[]);
+          });
+        } else {
+          getDataByDateExcludeSlug("projects", props.slug).then((data) => {
+            setOtherProjects(data as { id: string; value: ProjectItemType }[]);
+          });
+        }
 
     return () => {
       setOtherProjects(undefined);
@@ -47,12 +53,9 @@ export default function ProjectRelated(props: {
           <h2>{props.title}</h2>
           <div className={css.scroller}>
             {otherProjects.map((item, index) => {
-              {
-                console.log(item.collection, props.collection);
-              }
               return (
                 <Fragment key={index}>
-                  <ProjectItem slug={item.slug} />
+                  <ProjectItem slug={item.id} item={item.value} />
                 </Fragment>
               );
             })}

@@ -46,9 +46,7 @@ export default function App() {
           }}
         />
 
-        <HideComponent paths={["/dashboard"]}>
-          <Header />
-        </HideComponent>
+        <Header />
 
         <Main>
           <Routes>

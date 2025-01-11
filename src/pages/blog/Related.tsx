@@ -1,8 +1,12 @@
 import { Fragment } from "react/jsx-runtime";
 import Section from "../../components/Section";
-import ProjectItem from "../../components/ProjectItem";
 import css from "../../styles/pages/project/related.module.css";
 import { useEffect, useState } from "react";
+import { BlogItem as BlogItemType } from "../../types";
+import getDataByDateExcludeSlugAndSameCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndSameCollection";
+import getDataByDateExcludeSlugAndDifferentCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndDifferentCollection";
+import getDataByDateExcludeSlug from "../../functions/firebase/storage/getDataByDateExcludeSlug";
+import BlogItem from "../../components/BlogItem";
 
 export default function BlogRelated(props: {
   slug: string;
@@ -10,49 +14,48 @@ export default function BlogRelated(props: {
   sameCollection: boolean;
   title: string;
 }) {
-  const [otherProjects, setOtherProjects] = useState<
-    { slug: string; collection: string }[] | undefined
+  const [otherBlogPosts, setOtherBlogPosts] = useState<
+    { id: string; value: BlogItemType }[] | undefined
   >();
 
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/blog/index.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setOtherProjects(
-          data.filter(
-            (project: { slug: string; collection: string }) =>
-              props.slug &&
-              project.slug.toLowerCase() !== props.slug.toLowerCase() &&
-              ((!props.sameCollection &&
-                project.collection !== props.collection) ||
-                (props.sameCollection &&
-                  project.collection === props.collection))
-          )
-        );
+    if (props.collection && props.sameCollection === true) {
+      getDataByDateExcludeSlugAndSameCollection(
+        "blog",
+        props.slug,
+        props.collection
+      ).then((data) => {
+        setOtherBlogPosts(data as { id: string; value: BlogItemType }[]);
       });
+    } else if (props.collection && props.sameCollection === false) {
+      getDataByDateExcludeSlugAndDifferentCollection(
+        "blog",
+        props.slug,
+        props.collection
+      ).then((data) => {
+        setOtherBlogPosts(data as { id: string; value: BlogItemType }[]);
+      });
+    } else {
+      getDataByDateExcludeSlug("blog", props.slug).then((data) => {
+        setOtherBlogPosts(data as { id: string; value: BlogItemType }[]);
+      });
+    }
 
     return () => {
-      setOtherProjects(undefined);
+      setOtherBlogPosts(undefined);
     };
   }, [props]);
 
   return (
     <>
-      {otherProjects && otherProjects.length != 0 && (
+      {otherBlogPosts && otherBlogPosts.length != 0 && (
         <Section id="related" container={{ className: css.container }}>
           <h2>{props.title}</h2>
           <div className={css.scroller}>
-            {otherProjects.map((item, index) => {
-              {
-                console.log(item.collection, props.collection);
-              }
+            {otherBlogPosts.map((item, index) => {
               return (
                 <Fragment key={index}>
-                  <ProjectItem slug={item.slug} />
+                  <BlogItem slug={item.id} item={item.value} />
                 </Fragment>
               );
             })}

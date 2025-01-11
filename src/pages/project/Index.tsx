@@ -14,6 +14,7 @@ import { ProjectItem } from "../../types";
 import LoadingPage from "../../components/Loading";
 
 import css from "../../styles/pages/project.module.css";
+import firebaseGetData from "../../functions/firebase/storage/getData";
 
 export default function ProjectIndex() {
   const { slug } = useParams();
@@ -22,22 +23,22 @@ export default function ProjectIndex() {
   const [canPassLoading, setCanPassLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
-        slug?.toLowerCase() +
-        "/project.json"
-    )
-      .then((res) => {
-        return res.json();
-      })
+    // fetch(
+    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
+    //     slug?.toLowerCase() +
+    //     "/project.json"
+    // )
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    firebaseGetData("projects", slug as string)
       .then((data) => {
-        console.log(data);
-        setItem(data);
+        if (data === undefined) {
+          setError(true);
+          return;
+        }
+        setItem(data as ProjectItem);
       })
-      .catch((error) => {
-        console.log(error);
-        setError(true);
-      });
 
     return () => {
       setItem(undefined);

@@ -12,7 +12,7 @@ export default async function getDataByDate(firebaseCollection: string) {
   const output: { id: string; value: unknown }[] = [];
 
   querySnapshot.forEach((doc) => {
-    output.push({ id: doc.id, value: doc.data() as unknown });
+    output.push({ id: doc.id, value: doc.data() });
   });
 
   return output;

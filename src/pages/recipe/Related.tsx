@@ -31,7 +31,7 @@ export default function RecipeRelated(props: {
         props.slug,
         props.collection
       ).then((data) => {
-        setOtherRecipes(data);
+        setOtherRecipes(data as { id: string; value: RecipeItemType }[]);
       });
     } else if (props.collection && props.sameCollection === false) {
       getDataByDateExcludeSlugAndDifferentCollection(
@@ -39,11 +39,11 @@ export default function RecipeRelated(props: {
         props.slug,
         props.collection
       ).then((data) => {
-        setOtherRecipes(data);
+        setOtherRecipes(data as { id: string; value: RecipeItemType }[]);
       });
     } else {
       getDataByDateExcludeSlug("recipes", props.slug).then((data) => {
-        setOtherRecipes(data);
+        setOtherRecipes(data as { id: string; value: RecipeItemType }[]);
       });
     }
 

@@ -5,6 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import css from "../styles/components/header.module.css";
 import GFIcon from "./GFIcon";
 import { SocialsList } from "./Socials";
+import Protect from "./Security/Protect";
 
 const navItems = [
   {
@@ -31,6 +32,12 @@ const navItems = [
     title: "account",
     href: "account",
     gficon: "person",
+  },
+  {
+    title: "dashboard",
+    href: "dashboard",
+    gficon: "dashboard",
+    requireUser: true,
   },
   {
     title: "Contact",
@@ -104,6 +111,11 @@ export default function Header() {
         <ul className={css.links}>
           {navItems &&
             navItems.map((item, index) => {
+              if (item.requireUser) return <Fragment key={index}>
+                <Protect>
+                  <NavLinkInternal {...item} />
+                </Protect>
+              </Fragment>;
               return (
                 <Fragment key={index}>
                   <NavLinkInternal {...item} />

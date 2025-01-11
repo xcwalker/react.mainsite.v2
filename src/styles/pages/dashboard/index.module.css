@@ -1,22 +1,17 @@
 .dashboard {
   /* sizing */
   width: 100%;
-  max-width: 100% !important;
-  height: 100vh;
 }
 
-.dashboard :global(.mosaic) {
-  /* sizing */
-  width: 100%;
-  max-width: 100% !important;
-  height: calc(100vh - 52px);
-
-  /* styling */
-  background: transparent;
+.dashboard .container {
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(282px, 100%), 1fr));
+  grid-template-rows: repeat(auto-fill, 400px);
+  gap: 0.5rem;
 }
-.dashboard :global(.mosaic-tile) {
-  /* styling */
+
+.dashboard .container > * {
   border-radius: 0.5rem;
-  background-color: var(--background-100);
+  overflow: hidden;
 }
-.dashboard :global(.mosaic-split) {}

@@ -4,7 +4,7 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 export default function Protect(props: {
   children: ReactNode;
   isLoginPage?: boolean;
-  redirect: ReactNode;
+  redirect?: ReactNode;
 }) {
   const user = useAuth(null);
 
@@ -13,12 +13,12 @@ export default function Protect(props: {
       {props.isLoginPage && (
         <>
           {user === null && <>{props.children}</>}
-          {user && <>{props.redirect}</>}
+          {user && props.redirect && <>{props.redirect}</>}
         </>
       )}
       {(props.isLoginPage === undefined || !props.isLoginPage) && (
         <>
-          {user === null && <>{props.redirect}</>}
+          {user === null && props.redirect && <>{props.redirect}</>}
           {user && <>{props.children}</>}
         </>
       )}
