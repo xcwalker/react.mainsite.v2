@@ -3,6 +3,9 @@
 }
 
 .account .container {
+  /* position */
+  position: relative;
+
   /* sizing  */
   width: 100%;
   height: 100%;
@@ -68,4 +71,23 @@
 
   /* styling */
   border-radius: 50%;
+  --_border-width: 0.25rem;
+  outline: var(--_border-width) solid var(--background);
+}
+
+
+.account .container img.headerImage {
+  /* position */
+  position: absolute;
+  --_outer-spacing: 0.5rem;
+  inset: var(--_outer-spacing);
+  bottom: auto;
+  z-index: -1;
+
+  /* sizing */
+  width: calc(100% - var(--_outer-spacing) * 2);
+  height: 150px;
+
+  /* styling */
+  border-radius: 0.25rem;
 }

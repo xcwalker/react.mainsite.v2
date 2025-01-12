@@ -1,0 +1,55 @@
+.create {
+  border: 1px solid var(--secondary);
+}
+
+.create .container {
+  /* sizing */
+  padding: 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.create .container h2 {
+  /* spacing */
+  margin: 0;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.create .container .links {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  list-style: none;
+}
+
+.create .container .links a {
+  /* sizing */
+  margin: 0;
+  padding: 0.5rem 1rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+
+  /* styling */
+  background-color: var(--primary);
+  border-radius: 0.25rem;
+  color: var(--text);
+}
+
+.create .container .links a:hover,
+.create .container .links a:focus-visible {
+  /* styling */
+  background-color: var(--secondary);
+}

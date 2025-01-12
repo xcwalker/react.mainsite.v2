@@ -8,6 +8,11 @@ export default function DashboardAccount(props: { userData: UserType | null }) {
       {props.userData !== null && (
         <div className={css.container}>
           <img
+            src={props.userData.images.header}
+            alt=""
+            className={css.headerImage}
+          />
+          <img
             src={props.userData.images.profile}
             alt=""
             className={css.profileImage}

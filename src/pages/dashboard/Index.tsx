@@ -6,6 +6,7 @@ import DashboardBanner from "./Banner";
 import DashboardCreate from "./Create";
 import firebaseGetUserData from "../../functions/firebase/user/getUserData";
 import { UserType } from "../../types";
+import DashboardWeather from "./Weather";
 
 export default function DashboardIndex() {
   const user = useAuth(null);
@@ -27,6 +28,7 @@ export default function DashboardIndex() {
         <DashboardBanner />
         <DashboardAccount userData={userData} />
         <DashboardCreate />
+        <DashboardWeather />
       </div>
     </section>
   );

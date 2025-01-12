@@ -1,0 +1,343 @@
+.weather {
+  border: 1px solid var(--secondary);
+  grid-column: span 2;
+}
+
+.weather .container {
+  /* sizing */
+  padding: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.weather .container .header {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.weather .container .header h2 {
+  /* spacing */
+  margin: 0;
+
+  /* text */
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.weather .container .header button {
+  /* sizing */
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  width: 135px;
+
+  /* flex */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.25rem;
+
+  /* text */
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  /* styling */
+  background-color: var(--primary);
+  border-radius: 0.25rem;
+  color: var(--text);
+  border: none;
+  cursor: pointer;
+}
+
+.weather .container .main {
+  /* sizing */
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.weather .container .forecast {
+  /* sizing */
+  width: calc(100% - 125px);
+  padding-left: 0.5rem;
+
+  /* styling */
+  border-left: 2px solid var(--secondary);
+}
+
+.weather .container .forecast .scroller {
+  /* sizing */
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  padding-right: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+
+.weather .card {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 125px;
+  height: 100%;
+  flex-shrink: 0;
+  padding: 0.125rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  /* text */
+  text-align: center;
+
+  /* styling */
+  border-radius: 0.25rem;
+  background-color: var(--secondary);
+  overflow: hidden;
+}
+
+.weather .card .iconContainer {
+  /* sizing */
+  width: 100%;
+  aspect-ratio: 1/1;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
+  background-color: var(--background);
+  border-radius: 0.25rem;
+}
+
+.weather .card .icon {
+  /* sizing */
+  --_size: 4rem;
+  width: var(--_size);
+  height: var(--_size);
+  font-size: var(--_size);
+}
+
+.weather .card .time {
+  /* position */
+  position: absolute;
+  top: -0.25rem;
+  left: 0.5rem;
+
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+  rotate: 90deg;
+  transform-origin: bottom left;
+}
+
+.weather .card .iconContainer .temperature {
+  /* position */
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.weather .card .compass {
+  /* sizing */
+  --_size: 1.25rem;
+  width: var(--_size);
+  height: var(--_size);
+
+  /* styling */
+  border-radius: 100rem;
+  border: 1px solid var(--text);
+}
+
+.weather .card .compass::after {
+  content: "";
+
+  /* position */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  rotate: var(--_direction);
+
+  /* sizing */
+  width: 0.25rem;
+  height: 75%;
+
+  /* styling */
+  background: var(--text);
+  background: linear-gradient(
+    0deg,
+    transparent 0%,
+    transparent 50%,
+    var(--text) 50%,
+    var(--text) 100%
+  );
+  border-radius: 100rem;
+}
+
+.weather .card .compass::before {
+  content: "";
+
+  /* position */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  /* sizing */
+  width: 0.25rem;
+  height: 0.25rem;
+
+  /* styling */
+  background: var(--text);
+  border-radius: 100rem;
+}
+
+.weather .card .iconContainer .compass {
+  /* position */
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.weather.showDetails .card .detailed {
+  opacity: 1;
+}
+
+.weather .card .detailed {
+  /* position */
+  position: absolute;
+  inset: 0.125rem;
+  top: auto;
+  z-index: 1;
+
+  /* sizing */
+  padding: 0.5rem;
+  aspect-ratio: 1/1;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  place-items: center;
+  
+
+  /* styling */
+  background-color: var(--primary);
+  transition: opacity 0.25s ease-in-out;
+  opacity: 0;
+  border-radius: 0.25rem;
+}
+
+.weather .card .detailed::after,
+.weather .card .detailed::before {
+  content: "";
+
+  /* position */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 1;
+
+  /* sizing */
+  width: 1px;
+  height: 80%;
+  background-color: var(--text);
+}
+
+.weather .card .detailed::before {
+  rotate: 90deg;
+}
+
+.weather .card .detailed > * {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* flex */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.125rem;
+
+  /* styling */
+  outline: 1px solid transparent;
+  outline-offset: -0.5px;
+
+  /* hiding */
+  opacity: 1;
+  transition: outline-color 0.25s ease-in-out;
+}
+
+.weather .card .detailed > * .unit {
+  /* position */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  /* sizing */
+  width: 100%;
+
+  /* hiding */
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.weather.showDetails .card .detailed > *:hover {
+  cursor: none;
+  outline-color: var(--text);
+}
+
+.weather.showDetails .card .detailed > * .value {
+  opacity: 1;
+  transition: opacity 0.25s ease-in-out;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.weather.showDetails .card .detailed > *:hover .value {
+  opacity: 0;
+}
+
+.weather.showDetails .card .detailed > *:hover .unit {
+  opacity: 1;
+}

@@ -149,7 +149,7 @@ export default function Header() {
   );
 }
 
-function NavLinkInternal(props: {
+export function NavLinkInternal(props: {
   href: string;
   title: string;
   gficon: string;
