@@ -48,8 +48,12 @@ export default function Sidebar(props: { user: UserType }) {
             {props.user.about.displayName}
           </span>
           <span className={css.userName}>
-            @{props.user.about.userName}
-            {/* ● {props.user.about.firstName}{" "}{props.user.about.lastName} */}
+            @
+            {props.user.about.userName +
+              " | " +
+              props.user.about.firstName +
+              " " +
+              props.user.about.lastName}
           </span>
         </div>
         <img src={props.user.images.profile} alt="" className={css.profile} />

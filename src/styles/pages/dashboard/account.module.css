@@ -76,7 +76,7 @@
 }
 
 
-.account .container img.headerImage {
+.account .container .headerImage {
   /* position */
   position: absolute;
   --_outer-spacing: 0.5rem;
@@ -90,4 +90,5 @@
 
   /* styling */
   border-radius: 0.25rem;
+  object-fit: cover;
 }

@@ -44,6 +44,7 @@ export type BlogItem = {
     tags: string[];
     collection: string;
     collectionName: string;
+    authorID: string;
     author: {
       name: string;
       image: {
@@ -73,6 +74,7 @@ export type ProjectItem = {
     repoName: string;
     subRepo?: boolean;
     workshop: string;
+    authorID: string;
     author: {
       name: string;
       image: {
@@ -105,7 +107,7 @@ export type RecipeItem = {
       modified: string;
     };
     imageCount: number;
-    youtube?: string
+    youtube?: string;
     tags: string[];
     collection: string;
     collectionName: string;
@@ -113,6 +115,7 @@ export type RecipeItem = {
       dark: string;
       light: string;
     };
+    authorID: string;
     author: {
       name: string;
       image?: {

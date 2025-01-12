@@ -1,0 +1,121 @@
+.radio {
+
+}
+
+.radio .container {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  --_image-size: 125px;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: [art-start links-start] var(--_image-size) [art-end text-start] 1fr [text-end links-end];
+  grid-template-rows: [art-start text-start] var(--_image-size) [art-end text-end links-start] auto [links-end];
+  gap: 1rem;
+}
+
+.radio .container .logo {
+  /* position */
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  /* sizing */
+  width: 1.25rem;
+  height: 1.25rem;
+
+  /* styling */
+  fill: var(--text);
+}
+
+.radio .container .background {
+  /* position */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* styling */
+  object-fit: cover;
+  filter: blur(10px) brightness(0.5);
+}
+
+.radio .container .image {
+  /* position */
+  grid-area: art;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* styling */
+  border-radius: 0.5rem;
+}
+
+.radio .container .text {
+  /* position */
+  grid-area: text;
+
+  /* styling */
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  gap: 0.25rem;
+}
+
+.radio .container .text .title {
+  /* text */
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.radio .container .text .subTitle {
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+}
+
+.radio .container .links {
+  /* position */
+  grid-area: links;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.25rem;
+}
+
+.radio .container .links .link {
+  /* sizing */
+  margin: 0;
+  padding: 0.5rem 1rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+
+  /* styling */
+  background-color: var(--primary);
+  border-radius: 0.25rem;
+  color: var(--text);
+}
+
+.radio .container .links .link:hover,
+.radio .container .links .link:focus-visible {
+  /* styling */
+  background-color: var(--secondary);
+}

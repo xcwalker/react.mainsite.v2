@@ -3,6 +3,7 @@ import css from "../../styles/pages/project/sidebar.module.css";
 import { ButtonLink } from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
+import SidebarUser from "../../components/SidebarUser";
 
 export function ProjectSidebar(props: { item: ProjectItem; slug: string }) {
   const item = props.item;
@@ -65,35 +66,8 @@ export function ProjectSidebar(props: { item: ProjectItem; slug: string }) {
           );
         })}
       </div>
-
-      {item.metaData.author && (
-        <div className={css.author}>
-          <picture>
-            <source
-              srcSet={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                item.metaData.author.image.webpURL
-              }
-              type="image/webp"
-            />
-            <source
-              srcSet={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                item.metaData.author.image.webpURL
-              }
-              type="image/jpg"
-            />
-            <img
-              src={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                item.metaData.author.image.webpURL
-              }
-              className={css.profile}
-              alt="Thumbnail"
-            />
-          </picture>
-          <span className={css.title}>{item.metaData.author.name}</span>
-        </div>
+      {item.metaData.authorID && (
+        <SidebarUser userId={item.metaData.authorID} />
       )}
       <div className={css.links}>
         <ButtonLink

@@ -7,11 +7,30 @@ export default function DashboardAccount(props: { userData: UserType | null }) {
     <section className={css.account}>
       {props.userData !== null && (
         <div className={css.container}>
-          <img
-            src={props.userData.images.header}
-            alt=""
-            className={css.headerImage}
-          />
+          {props.userData.images.background && (
+            <>
+              {props.userData.images.backgroundType === "image" && (
+                <img
+                  src={props.userData.images.background}
+                  alt=""
+                  className={css.headerImage}
+                />
+              )}
+              {props.userData.images.backgroundType === "video" && (
+                <video
+                  src={props.userData.images.background}
+                  className={css.headerImage}
+                  autoPlay
+                  loop
+                  muted
+                  controls={false}
+                />
+              )}
+            </>
+          )}
+          {!props.userData.images.background && (
+            <div className={css.headerImage} />
+          )}
           <img
             src={props.userData.images.profile}
             alt=""

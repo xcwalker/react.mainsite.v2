@@ -96,9 +96,7 @@ export default function App() {
           </Routes>
         </Main>
 
-        <HideComponent paths={["/dashboard"]}>
           <Footer />
-        </HideComponent>
       </BrowserRouter>
     </>
   );

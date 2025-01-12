@@ -1,6 +1,7 @@
 import { BlogItem } from "../../types";
 import css from "../../styles/pages/project/sidebar.module.css";
 import GFIcon from "../../components/GFIcon";
+import SidebarUser from "../../components/SidebarUser";
 
 export function BlogSidebar(props: { item: BlogItem; slug: string }) {
   const item = props.item;
@@ -19,15 +20,17 @@ export function BlogSidebar(props: { item: BlogItem; slug: string }) {
   };
   return (
     <div className={css.sidebar}>
-      {props.item.metaData.hasThumbnail && <img
-        src={
-          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
-          props.slug.toLowerCase() +
-          "/images/thumbnail.jpg"
-        }
-        className={css.thumbnail}
-        alt="Thumbnail"
-      />}
+      {props.item.metaData.hasThumbnail && (
+        <img
+          src={
+            "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
+            props.slug.toLowerCase() +
+            "/images/thumbnail.jpg"
+          }
+          className={css.thumbnail}
+          alt="Thumbnail"
+        />
+      )}
       <div className={css.details}>
         <h3>{item.data.title}</h3>
         <h4>{item.data.subTitle}</h4>
@@ -63,38 +66,10 @@ export function BlogSidebar(props: { item: BlogItem; slug: string }) {
           );
         })}
       </div>
-
-      {item.metaData.author && (
-        <div className={css.author}>
-          <picture>
-            <source
-              srcSet={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                item.metaData.author.image.webpURL
-              }
-              type="image/webp"
-            />
-            <source
-              srcSet={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                item.metaData.author.image.webpURL
-              }
-              type="image/jpg"
-            />
-            <img
-              src={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                item.metaData.author.image.webpURL
-              }
-              className={css.profile}
-              alt="Thumbnail"
-            />
-          </picture>
-          <span className={css.title}>{item.metaData.author.name}</span>
-        </div>
+      {item.metaData.authorID && (
+        <SidebarUser userId={item.metaData.authorID} />
       )}
-      <div className={css.links}>
-      </div>
+      <div className={css.links}></div>
     </div>
   );
 }

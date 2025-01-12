@@ -1,4 +1,9 @@
-import { getFirestore } from "firebase/firestore";
+import { initializeFirestore } from "firebase/firestore";
 import { firebaseApp } from "../config";
+import { CACHE_SIZE_UNLIMITED, persistentLocalCache } from "firebase/firestore";
 
-export const firebaseDB = getFirestore(firebaseApp);
+
+
+export const firebaseDB = initializeFirestore(firebaseApp, {
+  localCache: persistentLocalCache({ cacheSizeBytes: CACHE_SIZE_UNLIMITED }) 
+});

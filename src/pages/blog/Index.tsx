@@ -23,7 +23,6 @@ export default function BlogIndex() {
   const { slug } = useParams();
   const [item, setItem] = useState<BlogItem | undefined>(undefined);
   const [error, setError] = useState(false);
-  const [canPassLoading, setCanPassLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // fetch(
@@ -46,20 +45,9 @@ export default function BlogIndex() {
     };
   }, [slug]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setCanPassLoading(true);
-    }, 2000);
-
-    return () => {
-      clearTimeout(timeout);
-      setCanPassLoading(false);
-    };
-  }, [slug]);
-
   return (
     <>
-      {item && !error && slug && canPassLoading && (
+      {item && !error && slug && (
         <>
           <Helmet>
             <title>
@@ -174,8 +162,8 @@ export default function BlogIndex() {
           </Section>
         </>
       )}
-      {((item === undefined && !error) || !canPassLoading) && <LoadingPage />}
-      {error && canPassLoading && (
+      {((item === undefined && !error)) && <LoadingPage />}
+      {error && (
         <ErrorPage code={404} error="Blog Post Not Found" />
       )}
     </>

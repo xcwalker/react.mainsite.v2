@@ -23,7 +23,6 @@ export default function RecipeIndex() {
   const { slug } = useParams<string>();
   const [item, setItem] = useState<RecipeItem | undefined>(undefined);
   const [error, setError] = useState(false);
-  const [canPassLoading, setCanPassLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // fetch(
@@ -51,20 +50,9 @@ export default function RecipeIndex() {
     };
   }, [slug]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setCanPassLoading(true);
-    }, 2000);
-
-    return () => {
-      clearTimeout(timeout);
-      setCanPassLoading(false);
-    };
-  }, [slug]);
-
   return (
     <>
-      {item !== undefined && !error && slug && canPassLoading && (
+      {item !== undefined && !error && slug && (
         <>
           <Helmet>
             <title>
@@ -234,8 +222,8 @@ export default function RecipeIndex() {
           />
         </>
       )}
-      {((item === undefined && !error) || !canPassLoading) && <LoadingPage />}
-      {(slug === undefined || error) && canPassLoading && (
+      {item === undefined && !error && <LoadingPage />}
+      {(slug === undefined || error) && (
         <ErrorPage code={404} error="Recipe Not Found" />
       )}
     </>

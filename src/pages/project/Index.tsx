@@ -20,7 +20,6 @@ export default function ProjectIndex() {
   const { slug } = useParams();
   const [item, setItem] = useState<ProjectItem | undefined>(undefined);
   const [error, setError] = useState(false);
-  const [canPassLoading, setCanPassLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // fetch(
@@ -31,14 +30,13 @@ export default function ProjectIndex() {
     //   .then((res) => {
     //     return res.json();
     //   })
-    firebaseGetData("projects", slug as string)
-      .then((data) => {
-        if (data === undefined) {
-          setError(true);
-          return;
-        }
-        setItem(data as ProjectItem);
-      })
+    firebaseGetData("projects", slug as string).then((data) => {
+      if (data === undefined) {
+        setError(true);
+        return;
+      }
+      setItem(data as ProjectItem);
+    });
 
     return () => {
       setItem(undefined);
@@ -46,20 +44,9 @@ export default function ProjectIndex() {
     };
   }, [slug]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setCanPassLoading(true);
-    }, 2000);
-
-    return () => {
-      clearTimeout(timeout)
-      setCanPassLoading(false);
-    };
-  }, [slug]);
-
   return (
     <>
-      {item && !error && slug && canPassLoading && (
+      {item && !error && slug && (
         <>
           <Helmet>
             <title>
@@ -167,8 +154,8 @@ export default function ProjectIndex() {
           </Section>
         </>
       )}
-      {((item === undefined && !error) || !canPassLoading) && <LoadingPage />}
-      {error && canPassLoading && <ErrorPage code={404} error="Project Not Found" />}
+      {item === undefined && !error && <LoadingPage />}
+      {error && <ErrorPage code={404} error="Project Not Found" />}
     </>
   );
 }

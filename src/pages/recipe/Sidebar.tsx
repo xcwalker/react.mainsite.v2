@@ -3,7 +3,7 @@ import css from "../../styles/pages/recipe/sidebar.module.css";
 import Button, { ButtonLink } from "../../components/Button";
 import GFIcon from "../../components/GFIcon";
 import { SocialIcon } from "../../components/SocialIcon";
-import { Link } from "react-router-dom";
+import SidebarUser from "../../components/SidebarUser";
 
 export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
   const item = props.item;
@@ -119,49 +119,6 @@ export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
           );
         })}
       </div>
-      {item.metaData.author && (
-        <div className={css.author}>
-          <picture className={css.image}>
-            {item.metaData.author.image && (
-              <>
-                <source
-                  srcSet={
-                    "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                    item.metaData.author.image.webpURL
-                  }
-                  type="image/webp"
-                />
-                <source
-                  srcSet={
-                    "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                    item.metaData.author.image.webpURL
-                  }
-                  type="image/jpg"
-                />
-                <img
-                  src={
-                    "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                    item.metaData.author.image.webpURL
-                  }
-                  className={css.profile}
-                  alt="Thumbnail"
-                />
-              </>
-            )}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 340 340"
-              className={css.profile + " " + css.placeholder}
-            >
-              <path
-                fill="#DDD"
-                d="M169 .5a169 169 0 1 0 2 0zm0 86a76 76 0 1 1-2 0zM57 287q27-35 67-35h92q40 0 67 35a164 164 0 0 1-226 0"
-              />
-            </svg>
-          </picture>
-          <span className={css.title}>{item.metaData.author.name}</span>
-        </div>
-      )}
       <div className={css.information}>
         <div className={css.info}>
           <span>Prep Time</span>
@@ -176,6 +133,9 @@ export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
           <span>{item.data.information.serves}</span>
         </div>
       </div>
+      {item.metaData.authorID && (
+        <SidebarUser userId={item.metaData.authorID} />
+      )}
       <div className={css.quickLinks}>
         <span className={css.title}>Quick Links</span>
         <div className={css.container}>

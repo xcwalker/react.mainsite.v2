@@ -1,0 +1,96 @@
+.links {
+  /* sizing */
+  padding: 1rem;
+  grid-column: 1/-1;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* styling */
+  border: 1px solid var(--primary);
+}
+
+.links h2 {
+  /* sizing */
+  margin: 0;
+  
+  /* text */
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.links .container {
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr));
+  gap: 0.5rem;
+}
+
+.links .container .link {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  margin: 0;
+  padding: 0.5rem 1rem;
+  height: 200px;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+
+  /* styling */
+  border: 1px solid var(--primary);
+  border-radius: 0.25rem;
+  color: var(--text);
+}
+
+.links .container .link img.favicon {
+  /* sizing */
+  --_size: 50px;
+  width: var(--_size);
+  height: var(--_size);
+
+}
+
+.links .container .link .title {
+  /* text */
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.links .container .link .domain {
+  /* position */
+  position: absolute;
+  inset: 0.5rem;
+  top: auto;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+  text-align: center;
+}
+
+.links .container .link:hover,
+.links .container .link:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: -2px;
+}
