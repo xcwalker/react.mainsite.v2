@@ -1,0 +1,200 @@
+import css from "../styles/components/libraryCarousel.module.css";
+import GFIcon from "./GFIcon";
+import { ReactNode, useEffect, useRef, useState } from "react";
+
+export default function Carousel(props: { children: ReactNode; listView?: ReactNode; title: string; multipleViews: boolean; className: string }) {
+  const carouselRef = useRef<HTMLElement>(null);
+  const [scrolledDistance, setScrolledDistance] = useState(0);
+  const [scrollDistance, setScrollDistance] = useState(0);
+  const [view, setView] = useState("column");
+  const [childView, setChildView] = useState("grid");
+
+  function scrollRef(pixels: number) {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy(pixels, 0);
+    }
+  }
+
+  function scrollRefTo(pixels: number) {
+    if (carouselRef.current) {
+    carouselRef.current.scrollTo(pixels, 0);
+    }
+  }
+
+  function scrolled(e) {
+    setScrolledDistance(e.currentTarget.scrollLeft);
+  }
+
+  useEffect(() => {
+    if (carouselRef.current) {
+    setScrollDistance(carouselRef.current.scrollLeftMax);
+    }
+
+    return () => {
+      setScrollDistance(0);
+    };
+  }, [view]);
+
+  return (
+    <section className={css.carouselContainer}>
+      <header className={css.header + " view-" + view}>
+        {props.title && <h3>{props.title}</h3>}
+        <div className={css.controls}>
+          {view === "list" && (
+            <div className={css.group} id={css.childView}>
+              <button
+                className={css.button}
+                onClick={() => setChildView("column")}
+                disabled={childView === "column"}
+              >
+                <GFIcon className={css.icon}>view_column</GFIcon>
+              </button>
+              <button
+                className={css.button}
+                onClick={() => setChildView("grid")}
+                disabled={childView === "grid"}
+              >
+                <GFIcon className={css.icon}>calendar_view_month</GFIcon>
+              </button>
+              {props.listView && (
+                <button
+                  className={css.button}
+                  onClick={() => setChildView("list")}
+                  disabled={childView === "list"}
+                >
+                  <GFIcon className={css.icon}>view_list</GFIcon>
+                </button>
+              )}
+            </div>
+          )}
+          {props.multipleViews && (
+            <div className={css.group}>
+              <button
+                className={css.button}
+                onClick={() => setView("column")}
+                disabled={view === "column"}
+              >
+                <GFIcon className={css.icon}>view_column</GFIcon>
+              </button>
+              <button
+                className={css.button}
+                onClick={() => setView("grid")}
+                disabled={view === "grid"}
+              >
+                <GFIcon className={css.icon}>calendar_view_month</GFIcon>
+              </button>
+              {props.listView && (
+                <button
+                  className={css.button}
+                  onClick={() => setView("list")}
+                  disabled={view === "list"}
+                >
+                  <GFIcon className={css.icon}>view_list</GFIcon>
+                </button>
+              )}
+            </div>
+          )}
+          {view !== "column" && (
+            <div className={css.group}>
+              <button
+                className={css.button}
+                id={css.toTop}
+                onClick={() => {
+                  carouselRef.current.firstChild.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                  });
+                }}
+              >
+                <GFIcon className={css.icon}>first_page</GFIcon>
+              </button>
+              <button
+                className={css.button}
+                id={css.toBottom}
+                onClick={() => {
+                  if (carouselRef.current?.lastChild) {
+                    (carouselRef.current.lastChild as HTMLElement).scrollIntoView({
+                      behavior: "smooth",
+                      block: "center",
+                    });
+                  }
+                }}
+              >
+                <GFIcon className={css.icon}>last_page</GFIcon>
+              </button>
+            </div>
+          )}
+          {view === "column" && (
+            <div className={css.group}>
+              {scrollDistance >= 4000 && (
+                <button
+                  className={css.button}
+                  onClick={() => scrollRefTo(0)}
+                  disabled={scrolledDistance === 0}
+                >
+                  <GFIcon className={css.icon}>first_page</GFIcon>
+                </button>
+              )}
+              {scrollDistance >= 4000 && (
+                <button
+                  className={css.button}
+                  onClick={() => scrollRef(-2000)}
+                  disabled={scrolledDistance === 0}
+                >
+                  <GFIcon className={css.icon}>
+                    keyboard_double_arrow_left
+                  </GFIcon>
+                </button>
+              )}
+              <button
+                className={css.button}
+                onClick={() => scrollRef(-1000)}
+                disabled={scrolledDistance === 0}
+              >
+                <GFIcon className={css.icon}>keyboard_arrow_left</GFIcon>
+              </button>
+              <button
+                className={css.button}
+                onClick={() => scrollRef(1000)}
+                disabled={scrolledDistance === scrollDistance}
+              >
+                <GFIcon className={css.icon}>keyboard_arrow_right</GFIcon>
+              </button>
+              {scrollDistance >= 4000 && (
+                <button
+                  className={css.button}
+                  onClick={() => scrollRef(2000)}
+                  disabled={scrolledDistance === scrollDistance}
+                >
+                  <GFIcon className={css.icon}>
+                    keyboard_double_arrow_right
+                  </GFIcon>
+                </button>
+              )}
+              {scrollDistance >= 4000 && (
+                <button
+                  className={css.button}
+                  onClick={() => scrollRefTo(scrollDistance)}
+                  disabled={scrolledDistance === scrollDistance}
+                >
+                  <GFIcon className={css.icon}>last_page</GFIcon>
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </header>
+      <main
+        className={css.carousel + " view-" + view + " " + props.className}
+        ref={carouselRef}
+        onScroll={(e) => scrolled(e)}
+        onLoad={() => {
+          setScrollDistance(carouselRef.current.scrollLeftMax);
+        }}
+      >
+        {view !== "list" && props.children}
+        {view === "list" && props.listView}
+      </main>
+    </section>
+  );
+}

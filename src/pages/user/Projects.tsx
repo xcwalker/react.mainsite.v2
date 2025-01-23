@@ -1,10 +1,10 @@
-import Section from "../../components/Section";
 import css from "../../styles/pages/home/recipes.module.css";
 import { Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
 import { ProjectItem as ProjectItemType } from "../../types";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
 import ProjectItem from "../../components/ProjectItem";
+import Carousel from "../../components/Carousel";
 
 export default function UserProjects(props: { userID: string }) {
   const [projectsArray, setProjectsArray] = useState<
@@ -24,9 +24,7 @@ export default function UserProjects(props: { userID: string }) {
   return (
     <>
       {projectsArray && projectsArray.length > 0 && (
-        <Section id="projects" container={{ className: css.container }}>
-          <h2>Projects</h2>
-          <div className={css.slider}>
+          <Carousel className={css.slider} title="Projects" multipleViews={true}>
             {projectsArray.map((item, index) => {
               return (
                 <Fragment key={index}>
@@ -34,8 +32,7 @@ export default function UserProjects(props: { userID: string }) {
                 </Fragment>
               );
             })}
-          </div>
-        </Section>
+          </Carousel>
       )}
     </>
   );

@@ -24,9 +24,10 @@ import { Toaster } from "react-hot-toast";
 import UserIndex from "./pages/user/Index";
 import UserPage from "./pages/user/User";
 import DashboardIndex from "./pages/dashboard/Index";
-import HideComponent from "./components/HideComponent";
 import BlogPage from "./pages/Blog";
 import BlogIndex from "./pages/blog/Index";
+import RecipeCreate from "./pages/recipe/Create";
+import Protect from "./components/Security/Protect";
 
 export default function App() {
   return (
@@ -55,18 +56,42 @@ export default function App() {
             {/* blog */}
             <Route path="blog">
               <Route index element={<BlogPage />} />
+              <Route
+                path="create"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <RecipeCreate />
+                  </Protect>
+                }
+              />
               <Route path=":slug" element={<BlogIndex />} />
             </Route>
 
             {/* projects */}
             <Route path="project">
               <Route index element={<ProjectsPage />} />
+              <Route
+                path="create"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <RecipeCreate />
+                  </Protect>
+                }
+              />
               <Route path=":slug" element={<ProjectIndex />} />
             </Route>
 
             {/* recipes */}
             <Route path="recipe">
               <Route index element={<RecipesPage />} />
+              <Route
+                path="create"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <RecipeCreate />
+                  </Protect>
+                }
+              />
               <Route path=":slug" element={<RecipeIndex />} />
             </Route>
 
@@ -96,7 +121,7 @@ export default function App() {
           </Routes>
         </Main>
 
-          <Footer />
+        <Footer />
       </BrowserRouter>
     </>
   );

@@ -1,10 +1,10 @@
-import Section from "../../components/Section";
 import css from "../../styles/pages/home/recipes.module.css";
 import { Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
 import { BlogItem as BlogItemType } from "../../types";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
 import BlogItem from "../../components/BlogItem";
+import Carousel from "../../components/Carousel";
 
 export default function UserBlog(props: { userID: string }) {
   const [BlogPosts, setBlogPosts] = useState<
@@ -24,9 +24,7 @@ export default function UserBlog(props: { userID: string }) {
   return (
     <>
       {BlogPosts && BlogPosts.length > 0 && (
-        <Section id="projects" container={{ className: css.container }}>
-          <h2>Blog</h2>
-          <div className={css.slider}>
+          <Carousel className={css.slider} title="Projects" multipleViews={true}>
             {BlogPosts.map((item, index) => {
               return (
                 <Fragment key={index}>
@@ -34,8 +32,7 @@ export default function UserBlog(props: { userID: string }) {
                 </Fragment>
               );
             })}
-          </div>
-        </Section>
+          </Carousel>
       )}
     </>
   );

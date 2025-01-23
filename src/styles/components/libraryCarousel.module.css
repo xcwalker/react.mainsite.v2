@@ -1,0 +1,145 @@
+.carouselContainer {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.header {
+  &:global(.view-list) {
+    /* position */
+    position: sticky;
+    top: 52px;
+    z-index: 1;
+    margin-left: -2rem;
+
+    /* sizing */
+    width: 100vw;
+    padding: 0.625rem 2rem;
+
+    /* styling */
+    background: var(--background);
+    border-bottom: 2px solid var(--primary);
+  }
+
+  /* sizing */
+  width: 100%;
+  padding-top: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  & h3 {
+    /* spacing */
+    margin: 0;
+
+    /* text */
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  & .controls {
+    /* flex */
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 1.5rem;
+
+    & .group {
+      /* flex */
+      display: flex;
+      flex-direction: row;
+      justify-content: end;
+      gap: 0.5rem;
+
+      &#childView {
+        outline: 2px solid var(--primary);
+        padding: 0.0625rem 0.5rem;
+        border-radius: 0.5rem;
+      }
+    }
+
+    & .button {
+      /* sizing */
+      --_size: 1.5rem;
+      width: var(--_size);
+      height: var(--_size);
+
+      /* flex */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      /* styling */
+      border: none;
+      background: transparent;
+      color: var(--text);
+      border-radius: 50%;
+
+      &:disabled {
+        color: var(--secondary);
+      }
+
+      &:hover {
+        outline: 2px solid currentColor;
+        outline-offset: 1px;
+      }
+
+      &#toTop,
+      &#toBottom {
+        rotate: 90deg;
+      }
+    }
+  }
+}
+
+.carousel:global(.view-column) {
+  /* spacing */
+  padding: 0;
+  margin: 0;
+
+  width: calc(100% + 4rem);
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  gap: 1rem;
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  scroll-behavior: smooth;
+
+  > * {
+    max-width: 350px;
+  }
+
+  > :last-child {
+    margin-right: 4rem;
+  }
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel:global(.view-grid) {
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
+  gap: 1rem;
+}
+
+.carousel:global(.view-list) {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}

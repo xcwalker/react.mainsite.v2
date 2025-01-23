@@ -21,13 +21,32 @@
 
   /* flex */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
 
   /* styling */
   text-align: center;
+}
+
+.column {
+  /* sizing */
+  height: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.column:first-of-type {
+  align-items: flex-start;
+}
+
+.column:last-of-type {
+  align-items: flex-end;
 }
 
 .svg {
@@ -50,6 +69,13 @@
 .span a {
   /* styling */
   color: inherit;
+}
+
+.build {
+  /* text */
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
 @media print {

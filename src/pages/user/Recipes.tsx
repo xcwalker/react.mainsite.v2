@@ -1,10 +1,10 @@
-import Section from "../../components/Section";
 import css from "../../styles/pages/home/recipes.module.css";
 import { Fragment } from "react/jsx-runtime";
 import RecipeItem from "../../components/RecipeItem";
 import { useEffect, useState } from "react";
 import { RecipeItem as RecipeItemType } from "../../types";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
+import Carousel from "../../components/Carousel";
 
 export default function UserRecipes(props: { userID: string }) {
   const [recipesArray, setRecipesArray] = useState<
@@ -24,9 +24,7 @@ export default function UserRecipes(props: { userID: string }) {
   return (
     <>
       {recipesArray && recipesArray.length > 0 && (
-        <Section id="recipes" container={{ className: css.container }}>
-          <h2>Recipes</h2>
-          <div className={css.slider}>
+          <Carousel className={css.slider} title="Recipes" multipleViews={true}>
             {recipesArray.map((item, index) => {
               return (
                 <Fragment key={index}>
@@ -34,8 +32,7 @@ export default function UserRecipes(props: { userID: string }) {
                 </Fragment>
               );
             })}
-          </div>
-        </Section>
+          </Carousel>
       )}
     </>
   );
