@@ -28,6 +28,7 @@ import BlogPage from "./pages/Blog";
 import BlogIndex from "./pages/blog/Index";
 import RecipeCreate from "./pages/recipe/Create";
 import Protect from "./components/Security/Protect";
+import { atomWithStorage } from "jotai/utils";
 
 export default function App() {
   return (
@@ -141,3 +142,21 @@ function ScrollToTop() {
 
 export const title = "xcwalker";
 export const separator = "|";
+
+export const RadioAtom = atomWithStorage("radioSettings", {
+  volume: 50,
+  inSidebar: false,
+  showDJ: true,
+  state: "paused",
+  nowPlaying: {
+    title: "Steve’s Going to London",
+    artist: "AJR",
+    artwork: "https://i.scdn.co/image/ab67616d00001e0204a3ca0d3bf91c88f969f905",
+  },
+  dj: {
+    name: "MadMatt",
+    show: "Retro Requests",
+    image:
+      "https://simulatorradio.com/processor/avatar?size=256&name=1726140003584.png",
+  },
+});

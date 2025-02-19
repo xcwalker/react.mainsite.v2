@@ -16,7 +16,7 @@
   display: grid;
   grid-template-columns: [art-start links-start] var(--_image-size) [art-end text-start] 1fr [text-end links-end];
   grid-template-rows: [art-start text-start] var(--_image-size) [art-end text-end links-start] auto [links-end];
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .radio .container .logo {
@@ -101,6 +101,11 @@
   /* sizing */
   margin: 0;
   padding: 0.5rem 1rem;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   /* text */
   font-size: 1rem;

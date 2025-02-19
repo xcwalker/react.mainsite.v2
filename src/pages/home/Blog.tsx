@@ -1,33 +1,35 @@
 import Section from "../../components/Section";
 import css from "../../styles/pages/home/projects.module.css";
 import { Fragment } from "react/jsx-runtime";
-import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
 import BlogItem from "../../components/BlogItem";
-import { Link } from "react-router-dom";
-import getDataByDate from "../../functions/firebase/storage/getDataByDate";
 import { BlogItem as BlogItemType } from "../../types";
+import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
+import Carousel from "../../components/Carousel";
+import getDataByDate from "../../functions/firebase/storage/getDataByDate";
+import ListItem from "../../components/ListItem";
 
 export default function HomeBlog(props: {
-  limit?: number;
   title: string;
   titleLink: boolean;
+  onHome?: boolean;
 }) {
   const [projectsArray, setProjectsArray] = useState<
     { id: string; value: BlogItemType }[] | undefined
   >();
 
   useEffect(() => {
-    // fetch(
-    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/blog/index.json"
-    // )
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    getDataByDate("blog")
-      .then((data) => {
+    if (props.onHome) {
+    getDataByDateFromUser("blog", import.meta.env.VITE_MAIN_USER_ID).then(
+      (data) => {
         setProjectsArray(data as { id: string; value: BlogItemType }[]);
-      });
+      }
+    );
+  } else {
+    getDataByDate("blog").then((data) => {
+      setProjectsArray(data as { id: string; value: BlogItemType }[]);
+    });
+  }
 
     return () => {
       setProjectsArray(undefined);
@@ -36,30 +38,43 @@ export default function HomeBlog(props: {
 
   return (
     <Section id="blog" container={{ className: css.container }}>
-      {!props.titleLink && <h2>{props.title}</h2>}
-      {props.titleLink && (
-        <Link to="/blog" className={css.titleLink}>
-          <h2>{props.title}</h2>
-        </Link>
-      )}
-      <div className={css.slider}>
-        {projectsArray &&
-          projectsArray.map((item, index) => {
-            if (props.limit && index >= props.limit)
-              return <Fragment key={index} />;
-            else
-              return (
-                <Fragment key={index}>
-                  <BlogItem slug={item.id} item={item.value} />
-                </Fragment>
-              );
-          })}
-      </div>
-      {props.limit && projectsArray && projectsArray.length > props.limit && (
-        <ButtonLink href="/blog" className={css.viewMore}>
-          View More
-        </ButtonLink>
-      )}
+      <Carousel
+        className={css.slider}
+        title={props.title}
+        multipleViews={true}
+        defaultView={props.onHome ? "column" : "grid"}
+        titleLink={
+          props.titleLink ? { text: "View All", href: "/blog" } : undefined
+        }
+                listView={
+                  <>
+                    {projectsArray &&
+                      projectsArray.map((item, index) => {
+                        return (
+                          <Fragment key={index}>
+                            <ListItem
+                              title={item.value.data.title}
+                              subTitle={item.value.data.subTitle}
+                              date={item.value.metaData.date.created}
+                              href={"/blog/" + item.id}
+                            />
+                          </Fragment>
+                        );
+                      })}
+                  </>
+                }
+      >
+        <>
+          {projectsArray &&
+            projectsArray.map((item, index) => {
+                return (
+                  <Fragment key={index}>
+                    <BlogItem slug={item.id} item={item.value} />
+                  </Fragment>
+                );
+            })}
+        </>
+      </Carousel>
     </Section>
   );
 }

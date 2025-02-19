@@ -24,7 +24,7 @@ export default function UserProjects(props: { userID: string }) {
   return (
     <>
       {projectsArray && projectsArray.length > 0 && (
-          <Carousel className={css.slider} title="Projects" multipleViews={true}>
+          <Carousel className={css.slider} title="Projects" multipleViews={true} defaultView="column">
             {projectsArray.map((item, index) => {
               return (
                 <Fragment key={index}>

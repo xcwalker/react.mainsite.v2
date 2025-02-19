@@ -25,15 +25,6 @@ export default function RecipeIndex() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // fetch(
-    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/" +
-    //     slug?.toLowerCase() +
-    //     "/recipe.json"
-    // )
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-
     getRecipe(slug?.toLowerCase() as string)
       .then((data) => {
         console.log(data);

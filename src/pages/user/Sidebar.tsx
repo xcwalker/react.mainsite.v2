@@ -92,7 +92,8 @@ export default function Sidebar(props: { user: UserType }) {
         </div>
       </div>
       <ul className={css.links}>
-        {props.user.links.length > 0 &&
+        {props.user.links &&
+          props.user.links.length > 0 &&
           props.user.links.map((item, index) => {
             const matches = item.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i);
             const domain = matches && matches[1];

@@ -1,0 +1,234 @@
+.radio {
+  /* variables */
+  --_container-height: 3.5rem;
+  --_container-padding: 0.5rem;
+
+  /* position */
+  position: fixed;
+  --_offset: 0.5rem;
+  right: var(--_offset);
+  bottom: var(--_offset);
+
+  /* sizing */
+  height: calc(var(--_container-height) * 1);
+  width: 500px;
+  max-width: calc(100vw - 2rem);
+
+  /* styling */
+  border-radius: 0.5rem;
+  overflow: clip;
+
+  /* transition */
+  transition: height 0.25s ease-in-out;
+}
+
+@media (max-width: 625px) {
+  .radio {
+    display: none;
+  }
+}
+
+.radio .container {
+  /* position */
+  position: absolute;
+  inset: 0;
+
+  /* sizing */
+  height: var(--_container-height);
+  padding: var(--_container-padding);
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+
+  /* styling */
+  overflow: clip;
+}
+
+.radio .dj {
+  bottom: auto;
+  z-index: -1;
+}
+
+.radio .nowPlaying {
+  top: auto;
+} 
+
+.radio.showDJ {
+  height: calc(var(--_container-height) * 2);
+}
+
+.radio .container .background {
+  /* position */
+  position: absolute;
+  inset: -1rem;
+  z-index: -1;
+
+  /* sizing */
+  width: calc(100% + 2rem);
+  height: calc(100% + 2rem);
+  object-fit: cover;
+
+  /* filter */
+  filter: blur(5px) brightness(0.25);
+}
+
+.radio .container .image {
+  /* sizing */
+  --_size: calc(var(--_container-height) - var(--_container-padding) * 2);
+  width: var(--_size);
+  aspect-ratio: 1/1;
+  flex-shrink: 0;
+
+  /* styling */
+  border-radius: 0.25rem;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.radio .container .text {
+  /* sizing */
+  width: 100%;
+  flex-shrink: 1;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.radio .container .text .title {
+  /* max-width */
+  max-width: min(70vw, 25ch, 90%);
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* overflow */
+  text-wrap: nowrap;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.radio .container .text .subTitle {
+  /* max-width */
+  max-width: min(70vw, 25ch, 90%);
+
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--foreground-color-300);
+
+  /* overflow */
+  text-wrap: nowrap;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.radio .container .controls {
+  /* position */
+  margin-left: auto;
+  flex-shrink: 0;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.radio .container .controls button {
+  /* sizing */
+  aspect-ratio: 1/1;
+  padding: 0.25rem;
+
+  /* styling */
+  border-radius: 0.25rem;
+  overflow: hidden;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid transparent;
+}
+
+.radio .container .controls button:hover,
+.radio .container .controls button:focus-visible {
+  border-color: currentColor !important;
+}
+
+/*** Sidebar ***/
+.radio.inSidebar {
+  /* position */
+  position: static;
+
+  /* sizing */
+  width: 100%;
+  height: auto;
+}
+
+.radio.inSidebar .dj {
+  display: none;
+}
+
+.radio.inSidebar .container {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  height: auto;
+  
+  /* flex */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.radio.inSidebar .container .image {
+  /* sizing */
+  --_size: 100%;
+  
+} 
+
+.radio.inSidebar .container .text {
+  /* sizing */
+  width: 100%;
+}
+
+
+.radio.inSidebar .container .text .title {
+  /* max-width */
+  max-width: min(70vw, 20ch, 90%);
+}
+
+.radio.inSidebar .container .text .subTitle {
+  /* max-width */
+  max-width: min(70vw, 20ch, 90%);
+}
+
+.radio.inSidebar .container .controls {
+  /* sizing */
+  width: 100%;
+  margin-left: 0;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.radio.inSidebar .container .controls button {
+  /* sizing */
+  aspect-ratio: unset;
+
+  /* styling */
+  border: 1px solid var(--primary);
+}

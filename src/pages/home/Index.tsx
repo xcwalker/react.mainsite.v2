@@ -51,13 +51,12 @@ export default function HomeIndex() {
         </title>
       </Helmet>
       <HomeHero />
-      <HomeProjects limit={3} title="My Projects" titleLink={true} />
+      <HomeProjects title="My Projects" titleLink={true} onHome={true} />
       <HomeRadio />
-      <HomeBlog limit={3} title="My Blog" titleLink={true} />
-      <HomeRecipes limit={3} title="Some Recipes" titleLink={true} />
+      <HomeBlog title="My Blog" titleLink={true} onHome={true} />
+      <HomeRecipes title="My Recipes" titleLink={true} onHome={true} />
       <HomeSites />
 
-      
       <button
         onClick={() => {
           firebaseSetData("projects", "xcw-dodge_ram", data).then((res) =>

@@ -1,12 +1,13 @@
+import { Link } from "react-router-dom";
 import css from "../styles/components/libraryCarousel.module.css";
 import GFIcon from "./GFIcon";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
-export default function Carousel(props: { children: ReactNode; listView?: ReactNode; title: string; multipleViews: boolean; className: string }) {
+export default function Carousel(props: { children: ReactNode; listView?: ReactNode; title: string; multipleViews: boolean; hasChildViews?: boolean; className: string; titleLink?: {text: string; href: string}; defaultView: string}) {
   const carouselRef = useRef<HTMLElement>(null);
   const [scrolledDistance, setScrolledDistance] = useState(0);
   const [scrollDistance, setScrollDistance] = useState(0);
-  const [view, setView] = useState("column");
+  const [view, setView] = useState(props.defaultView);
   const [childView, setChildView] = useState("grid");
 
   function scrollRef(pixels: number) {
@@ -38,9 +39,12 @@ export default function Carousel(props: { children: ReactNode; listView?: ReactN
   return (
     <section className={css.carouselContainer}>
       <header className={css.header + " view-" + view}>
+        <div className={css.title}>
         {props.title && <h3>{props.title}</h3>}
+        {props.titleLink && <Link to={props.titleLink.href}>{props.titleLink.text}</Link>}
+        </div>
         <div className={css.controls}>
-          {view === "list" && (
+          {view === "list" && props.hasChildViews && (
             <div className={css.group} id={css.childView}>
               <button
                 className={css.button}

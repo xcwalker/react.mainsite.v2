@@ -47,6 +47,7 @@
 
 .column:last-of-type {
   align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .svg {

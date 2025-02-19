@@ -1,0 +1,59 @@
+.listItem {
+  list-style: none;
+}
+
+.listItem a {
+  /* sizing */
+  width: 100%;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  /* styling */
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--primary);
+}
+
+.listItem a:hover,
+.listItem a:focus-visible {
+  border-color: currentColor;
+}
+
+.listItem a .info {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.listItem a .info span.title {
+  /* text */
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.listItem a .info .subTitle {
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.listItem a .extraInfo {}
+
+.listItem a .extraInfo .date {
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}

@@ -24,7 +24,7 @@ export default function UserBlog(props: { userID: string }) {
   return (
     <>
       {BlogPosts && BlogPosts.length > 0 && (
-          <Carousel className={css.slider} title="Projects" multipleViews={true}>
+          <Carousel className={css.slider} title="Blog" multipleViews={true} defaultView="column">
             {BlogPosts.map((item, index) => {
               return (
                 <Fragment key={index}>

@@ -1,21 +1,64 @@
 import { CSSProperties, useEffect, useState } from "react";
 import GFIcon from "../../components/GFIcon";
 import css from "../../styles/pages/dashboard/weather.module.css";
+import LoadingPage from "../../components/Loading";
 
 export default function DashboardWeather() {
   const [weather, setWeather] = useState<weatherType | undefined>();
   const [showDetails, setShowDetails] = useState(false);
+  const [location, setLocation] = useState<GeolocationPosition | undefined>();
+  const [refreshLocation, setRefreshLocation] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [ticking] = useState(true);
+  const [count, setCount] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        setLocation(pos);
+      }, error);
+    } else {
+      console.log("Geolocation not supported");
+    }
+
+    function error() {
+      console.log("Unable to retrieve your location");
+      setError(true);
+      setLoading(false);
+    }
+
+    return () => {
+      setLocation(undefined);
+    };
+  }, [refreshLocation]);
+
+  useEffect(() => {
+    if (!location) return;
+
     fetch(
-      "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m&wind_speed_unit=mph&forecast_days=1"
+      "https://api.open-meteo.com/v1/forecast?latitude=" +
+        location?.coords.latitude +
+        "&longitude=" +
+        location?.coords.longitude +
+        "&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m&wind_speed_unit=mph&forecast_days=1"
     )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         setWeather(data);
+        setLoading(false);
       });
-  }, []);
+  }, [location, count]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => ticking && setCount(count + 1), 900000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [count, ticking]);
 
   return (
     <section
@@ -38,40 +81,73 @@ export default function DashboardWeather() {
                   </>
                 )}
               </button>
-            </header>
-            <main className={css.main}>
-              <WeatherCard
-                units={weather.current_units}
-                weather={weather.current}
-                timeOverride="Now"
-              />
-              <div className={css.forecast}>
-                <div className={css.scroller}>
-                  {weather.hourly.time.map((time, index) => (
-                    <WeatherCard
-                      units={weather.hourly_units}
-                      weather={{
-                        time: time,
-                        interval: index,
-                        temperature_2m: weather.hourly.temperature_2m[index],
-                        precipitation: weather.hourly.precipitation[index],
-                        precipitation_probability:
-                          weather.hourly.precipitation_probability[index],
-                        weather_code: weather.hourly.weather_code[index],
-                        wind_speed_10m: weather.hourly.wind_speed_10m[index],
-                        wind_direction_10m:
-                          weather.hourly.wind_direction_10m[index],
-                        relative_humidity_2m:
-                          weather.hourly.relative_humidity_2m[index],
-                      }}
-                    />
-                  ))}
-                </div>
+              <div className={css.extraControls}>
+                <button
+                  className={css.control}
+                  onClick={() => {
+                    setRefreshLocation((prev) => prev + 1);
+                  }}
+                >
+                  <GFIcon className={css.icon}>my_location</GFIcon>
+                </button>
+                <button
+                  className={css.control}
+                  onClick={() => {
+                    setCount((count) => count + 1);
+                  }}
+                >
+                  <GFIcon className={css.icon}>refresh</GFIcon>
+                </button>
               </div>
-            </main>
+            </header>
+            {!loading && (
+              <main className={css.main}>
+                <WeatherCard
+                  units={weather.current_units}
+                  weather={weather.current}
+                  timeOverride="Now"
+                />
+                <div className={css.forecast}>
+                  <div className={css.scroller}>
+                    {weather.hourly.time.map((time, index) => (
+                      <WeatherCard
+                        units={weather.hourly_units}
+                        weather={{
+                          time: time,
+                          interval: index,
+                          temperature_2m: weather.hourly.temperature_2m[index],
+                          precipitation: weather.hourly.precipitation[index],
+                          precipitation_probability:
+                            weather.hourly.precipitation_probability[index],
+                          weather_code: weather.hourly.weather_code[index],
+                          wind_speed_10m: weather.hourly.wind_speed_10m[index],
+                          wind_direction_10m:
+                            weather.hourly.wind_direction_10m[index],
+                          relative_humidity_2m:
+                            weather.hourly.relative_humidity_2m[index],
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </main>
+            )}
           </>
         )}
-        {!weather && <span>Loading</span>}
+        {!weather && loading && <LoadingPage className={css.loading}/>}
+        {!weather && error && (
+          <div className={css.loadText}>
+            <span>Unable to retrieve location</span>
+            <button
+              className={css.control}
+              onClick={() => {
+                setRefreshLocation((prev) => prev + 1);
+              }}
+            >Retry
+              <GFIcon className={css.icon}>my_location</GFIcon>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

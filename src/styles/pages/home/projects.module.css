@@ -23,14 +23,6 @@
   margin: 0;
 }
 
-.slider {
-  /* grid */
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
-  gap: 1rem;
-
-}
-
 .viewMore {
   /* sizing */
   margin-inline: auto;

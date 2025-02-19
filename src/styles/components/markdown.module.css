@@ -89,6 +89,8 @@
 }
 
 .markdown table {
+  /* sizing */
+  max-width: 100%;
   margin-block: 1rem;
   border-spacing: 0; 
   border-radius: var(--_radius);
@@ -96,7 +98,6 @@
 
 .markdown th,
 .markdown td {
-  min-width: 200px;
   padding: 0.25rem 0.75rem;
   text-align: left;
 }

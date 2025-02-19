@@ -1,7 +1,6 @@
 import { RecipeItem as RecipeItemType } from "../types";
 import { Link } from "react-router-dom";
 import css from "../styles/components/recipeItem.module.css";
-import { useEffect, useState } from "react";
 import Logo from "./Logo";
 
 export default function RecipeItem(props: {
@@ -9,27 +8,7 @@ export default function RecipeItem(props: {
   slug: string;
   style?: React.CSSProperties;
 }) {
-  const [date, setDate] = useState<Date>();
-
-  // useEffect(() => {
-  //   fetch(
-  //     "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/" +
-  //       props.slug?.toLowerCase() +
-  //       "/recipe.json"
-  //   )
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setItem(data);
-  //       setDate(new Date(data.metaData.date.modified));
-  //     });
-
-  //   return () => {
-  //     setItem(undefined);
-  //     setDate(undefined);
-  //   };
-  // }, [props.slug]);
+  const date = new Date(props.item.metaData.date.created);
 
   return (
     <>

@@ -2,33 +2,34 @@ import Section from "../../components/Section";
 import css from "../../styles/pages/home/recipes.module.css";
 import { Fragment } from "react/jsx-runtime";
 import RecipeItem from "../../components/RecipeItem";
-import { ButtonLink } from "../../components/Button";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { RecipeItem as RecipeItemType } from "../../types";
+import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
+import Carousel from "../../components/Carousel";
 import getDataByDate from "../../functions/firebase/storage/getDataByDate";
+import ListItem from "../../components/ListItem";
 
 export default function HomeRecipes(props: {
-  limit?: number;
   title: string;
   titleLink: boolean;
+  onHome?: boolean;
 }) {
   const [recipesArray, setRecipesArray] = useState<
     { id: string; value: RecipeItemType }[] | undefined
   >();
 
   useEffect(() => {
-    // fetch(
-    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/index.json"
-    // )
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-
-    getDataByDate("recipes")
-      .then((data) => {
+    if (props.onHome) {
+      getDataByDateFromUser("recipes", import.meta.env.VITE_MAIN_USER_ID).then(
+        (data) => {
+          setRecipesArray(data as { id: string; value: RecipeItemType }[]);
+        }
+      );
+    } else {
+      getDataByDate("recipes").then((data) => {
         setRecipesArray(data as { id: string; value: RecipeItemType }[]);
       });
+    }
 
     return () => {
       setRecipesArray(undefined);
@@ -36,31 +37,37 @@ export default function HomeRecipes(props: {
   }, []);
 
   return (
-    <Section id="projects" container={{ className: css.container }}>
-      {!props.titleLink && <h2>{props.title}</h2>}
-      {props.titleLink && (
-        <Link to="/recipe" className={css.titleLink}>
-          <h2>{props.title}</h2>
-        </Link>
-      )}
-      <div className={css.slider}>
-        {recipesArray &&
-          recipesArray.map((item, index) => {
-            if (props.limit && index >= props.limit)
-              return <Fragment key={index} />;
-            else
+    <Section id="recipes" container={{ className: css.container }}>
+      <Carousel
+        className={css.slider}
+        title={props.title}
+        multipleViews={true}
+        defaultView={props.onHome ? "column" : "grid"}
+        titleLink={
+          props.titleLink ? { text: "View All", href: "/recipe" } : undefined
+        }
+        listView={<>
+          {recipesArray &&
+            recipesArray.map((item, index) => {
+              return (
+                <Fragment key={index}>
+                  <ListItem title={item.value.data.title} subTitle={item.value.data.subTitle} date={item.value.metaData.date.created} href={"/recipe/" + item.id}/>
+                </Fragment>
+              );
+            })}
+        </>}
+      >
+        <>
+          {recipesArray &&
+            recipesArray.map((item, index) => {
               return (
                 <Fragment key={index}>
                   <RecipeItem item={item.value} slug={item.id} />
                 </Fragment>
               );
-          })}
-      </div>
-      {props.limit && recipesArray && recipesArray.length > props.limit && (
-        <ButtonLink href="/recipe" className={css.viewMore}>
-          View More
-        </ButtonLink>
-      )}
+            })}
+        </>
+      </Carousel>
     </Section>
   );
 }

@@ -1,5 +1,4 @@
 import { Fragment } from "react/jsx-runtime";
-import Section from "../../components/Section";
 import css from "../../styles/pages/project/related.module.css";
 import RecipeItem from "../../components/RecipeItem";
 import { useEffect, useState } from "react";
@@ -7,6 +6,8 @@ import { RecipeItem as RecipeItemType } from "../../types";
 import getDataByDateExcludeSlugAndSameCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndSameCollection";
 import getDataByDateExcludeSlugAndDifferentCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndDifferentCollection";
 import getDataByDateExcludeSlug from "../../functions/firebase/storage/getDataByDateExcludeSlug";
+import Carousel from "../../components/Carousel";
+import ListItem from "../../components/ListItem";
 
 export default function RecipeRelated(props: {
   slug: string;
@@ -19,12 +20,6 @@ export default function RecipeRelated(props: {
   >();
 
   useEffect(() => {
-    // fetch(
-    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/index.json"
-    // )
-    //   .then((res) => {
-    //     return res.json();
-    //   })
     if (props.collection && props.sameCollection === true) {
       getDataByDateExcludeSlugAndSameCollection(
         "recipes",
@@ -55,18 +50,36 @@ export default function RecipeRelated(props: {
   return (
     <>
       {otherRecipes && otherRecipes.length != 0 && (
-        <Section id="related" container={{ className: css.container }}>
-          <h2>{props.title}</h2>
-          <div className={css.scroller}>
-            {otherRecipes.map((item, index) => {
-              return (
-                <Fragment key={index}>
-                  <RecipeItem slug={item.id} item={item.value} />
-                </Fragment>
-              );
-            })}
-          </div>
-        </Section>
+        <Carousel
+          className={css.scroller}
+          title={props.title}
+          multipleViews={true}
+          defaultView="column"
+          listView={
+            <>
+              {otherRecipes.map((item, index) => {
+                return (
+                  <Fragment key={index}>
+                    <ListItem
+                      date={item.value.metaData.date.created}
+                      title={item.value.data.title}
+                      subTitle={item.value.data.subTitle}
+                      href={"/recipe/" + item.id}
+                    />
+                  </Fragment>
+                );
+              })}
+            </>
+          }
+        >
+          {otherRecipes.map((item, index) => {
+            return (
+              <Fragment key={index}>
+                <RecipeItem slug={item.id} item={item.value} />
+              </Fragment>
+            );
+          })}
+        </Carousel>
       )}
     </>
   );

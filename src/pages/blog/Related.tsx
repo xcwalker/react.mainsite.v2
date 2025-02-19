@@ -1,5 +1,4 @@
 import { Fragment } from "react/jsx-runtime";
-import Section from "../../components/Section";
 import css from "../../styles/pages/project/related.module.css";
 import { useEffect, useState } from "react";
 import { BlogItem as BlogItemType } from "../../types";
@@ -7,6 +6,8 @@ import getDataByDateExcludeSlugAndSameCollection from "../../functions/firebase/
 import getDataByDateExcludeSlugAndDifferentCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndDifferentCollection";
 import getDataByDateExcludeSlug from "../../functions/firebase/storage/getDataByDateExcludeSlug";
 import BlogItem from "../../components/BlogItem";
+import Carousel from "../../components/Carousel";
+import ListItem from "../../components/ListItem";
 
 export default function BlogRelated(props: {
   slug: string;
@@ -49,18 +50,36 @@ export default function BlogRelated(props: {
   return (
     <>
       {otherBlogPosts && otherBlogPosts.length != 0 && (
-        <Section id="related" container={{ className: css.container }}>
-          <h2>{props.title}</h2>
-          <div className={css.scroller}>
-            {otherBlogPosts.map((item, index) => {
-              return (
-                <Fragment key={index}>
-                  <BlogItem slug={item.id} item={item.value} />
-                </Fragment>
-              );
-            })}
-          </div>
-        </Section>
+        <Carousel
+          className={css.scroller}
+          title={props.title}
+          multipleViews={true}
+          defaultView="column"
+          listView={
+            <>
+              {otherBlogPosts.map((item, index) => {
+                return (
+                  <Fragment key={index}>
+                    <ListItem
+                      date={item.value.metaData.date.created}
+                      title={item.value.data.title}
+                      subTitle={item.value.data.subTitle}
+                      href={"/recipe/" + item.id}
+                    />
+                  </Fragment>
+                );
+              })}
+            </>
+          }
+        >
+          {otherBlogPosts.map((item, index) => {
+            return (
+              <Fragment key={index}>
+                <BlogItem slug={item.id} item={item.value} />
+              </Fragment>
+            );
+          })}
+        </Carousel>
       )}
     </>
   );

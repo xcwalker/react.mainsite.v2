@@ -27,11 +27,20 @@
   gap: 0.25rem;
 }
 
-.account .container h2 {
+.account .container a {
   /* text */
   font-size: 1.2rem;
   font-weight: 600;
   margin: 0;
+
+  /* styling */
+  color: inherit;
+  text-decoration: none;
+}
+
+.account .container a:hover,
+.account .container a:focus-visible {
+  text-decoration: underline solid;
 }
 
 .account .container h3 {
@@ -41,7 +50,7 @@
   margin: 0;
 }
 
-.account .container a {
+.account .container .button {
   /* sizing */
   margin: 0;
   padding: 0.5rem 1rem;
@@ -57,8 +66,8 @@
   color: var(--text);
 }
 
-.account .container a:hover,
-.account .container a:focus-visible {
+.account .container .button:hover,
+.account .container .button:focus-visible {
   /* styling */
   background-color: var(--secondary);
 }

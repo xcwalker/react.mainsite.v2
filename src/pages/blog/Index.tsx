@@ -25,14 +25,6 @@ export default function BlogIndex() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // fetch(
-    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/blog/" +
-    //     slug?.toLowerCase() +
-    //     "/blog.json"
-    // )
-    //   .then((res) => {
-    //     return res.json();
-    //   })
     getBlog(slug?.toLowerCase() as string).then((data) => {
       console.log(data);
       if (data === undefined) setError(true);

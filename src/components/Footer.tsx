@@ -19,7 +19,7 @@ export default function Footer() {
 
         <div className={css.column}>
           <span className={css.build}>
-            Build #{buildDate.getFullYear().toString().substr(-2)}W
+            Build {buildDate.getFullYear().toString().substr(-2)}W
             {pad(getWeekNumber(buildDate), 2)}
             {alphabet[import.meta.env.VITE_APP_VERSION]}
           </span>
