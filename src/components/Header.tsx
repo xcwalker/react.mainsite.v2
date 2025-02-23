@@ -347,18 +347,21 @@ export default function Header() {
 export function NavLinkInternal(props: {
   href: string;
   title: string;
-  gficon: string;
+  gficon?: string;
+  className?: string;
+  gficonClassname?: string;
 }) {
   return (
     <li className={css.link}>
       <NavLink to={props.href}>
-        <div className={css.content}>
+        <div className={css.content + " " + props.className}>
           {props.gficon && props.gficon !== "" && (
-            <GFIcon className={css.icon}>{props.gficon}</GFIcon>
+            <GFIcon className={css.icon + " " + props.gficonClassname}>
+              {props.gficon}
+            </GFIcon>
           )}
           <span className={css.text}>{props.title}</span>
         </div>
-        <div />
       </NavLink>
     </li>
   );

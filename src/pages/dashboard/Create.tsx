@@ -26,7 +26,7 @@ export default function DashboardCreate() {
         <h2>Create New:</h2>
         <div className={css.links}>
           {links.map((link) => (
-            <NavLinkInternal href={link.href} title={link.title} gficon={link.gficon}/>
+            <NavLinkInternal href={link.href} title={link.title} gficon={link.gficon} className={css.content} gficonClassname={css.icon}/>
           ))}
         </div>
       </div>

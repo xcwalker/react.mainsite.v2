@@ -5,6 +5,7 @@
 .create .container {
   /* sizing */
   padding: 1rem;
+  height: 100%;
 
   /* flex */
   display: flex;
@@ -23,9 +24,12 @@
 }
 
 .create .container .links {
-  /* flex */
-  display: flex;
-  flex-direction: column;
+  /* sizing */
+  height: 100%;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.25rem;
 
   /* styling */
@@ -35,7 +39,8 @@
 .create .container .links a {
   /* sizing */
   margin: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
+  height: 100%;
 
   /* text */
   font-size: 1rem;
@@ -52,4 +57,21 @@
 .create .container .links a:focus-visible {
   /* styling */
   background-color: var(--secondary);
+}
+
+.create .container .links a .content {
+  /* sizing */
+  height: 100%;
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.create .container .links a .content .icon {
+  --_size: 1.5rem;
 }

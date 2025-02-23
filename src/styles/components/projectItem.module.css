@@ -36,7 +36,15 @@
 
 .project .thumbnail img {
   width: 100%;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
   object-fit: cover;
+  text-align: center;
 }
 
 .project .thumbnail > span.collection {
