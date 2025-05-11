@@ -1,4 +1,4 @@
-import { RecipeItem } from "../../types";
+import { ProjectItem } from "../../types";
 import css from "../../styles/pages/itemPage/images.module.css";
 import { useEffect, useState } from "react";
 import Button from "../../components/Button";
@@ -8,7 +8,11 @@ import { Download, Zoom } from "yet-another-react-lightbox/plugins";
 import PhotoAlbum, { Photo } from "react-photo-album";
 import GFIcon from "../../components/GFIcon";
 
-export default function RecipeImages(props: { item: RecipeItem, slug: string }) {
+export default function ItemImages(props: {
+  item: ProjectItem;
+  slug: string;
+  itemType: "projects" | "recipes" | "albums" | "blog";
+}) {
   const item = props.item;
   const [open, setOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -21,7 +25,7 @@ export default function RecipeImages(props: { item: RecipeItem, slug: string }) 
       .fill(1)
       .map((unused, index) => {
         const string =
-          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/" +
+          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" + props.itemType + "/" +
           props.slug.toLowerCase() +
           "/images/image-" +
           index +
@@ -57,10 +61,7 @@ export default function RecipeImages(props: { item: RecipeItem, slug: string }) 
     return () => {
       setImages([]);
     };
-  }, [
-    item.metaData.imageCount,
-    props.slug,
-  ]);
+  }, [item.metaData.imageCount, props.slug, props.itemType]);
 
   return (
     <div className={css.images}>
@@ -70,7 +71,7 @@ export default function RecipeImages(props: { item: RecipeItem, slug: string }) 
       <PhotoAlbum
         layout="rows"
         photos={images}
-        targetRowHeight={300}
+        targetRowHeight={200}
         breakpoints={[300, 600, 900, 1200, 1500, 1800, 2100]}
         onClick={({ index: current }) => {
           setSlideIndex(current);

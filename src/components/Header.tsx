@@ -19,7 +19,7 @@ const navItems = [
   },
   {
     title: "Projects",
-    href: "project",
+    href: "projects",
     gficon: "design_services",
   },
   {
@@ -29,8 +29,13 @@ const navItems = [
   },
   {
     title: "Recipes",
-    href: "recipe",
+    href: "recipes",
     gficon: "stockpot",
+  },
+  {
+    title: "Albums",
+    href: "albums",
+    gficon: "image",
   },
   {
     title: "account",
@@ -86,6 +91,9 @@ export default function Header() {
 
   const [navScrollLastKnown, setNavScrollLastKnown] = useState(0);
   const [radio, setRadio] = useAtom(RadioAtom);
+  const [showRadioVolume, setShowRadioVolume] = useState(false);
+
+  const audio = document.querySelector("audio#audioPlayer") as HTMLAudioElement;
 
   useEffect(() => {
     if (fetching || fetchCount === count) return;
@@ -131,11 +139,15 @@ export default function Header() {
               outNow.artwork = "";
             }
 
+            if (outNow.title === radio.nowPlaying.title) {
+              return
+            }
+
             const outDJ = {
               name: "",
               show: "",
               image: "",
-            }
+            };
 
             if (res?.djs?.now?.displayname) {
               outDJ.name = res.djs.now.displayname;
@@ -151,7 +163,8 @@ export default function Header() {
               outDJ.show = res.djs.now.details;
             }
 
-            setRadio({...radio, nowPlaying: outNow, dj: outDJ});
+
+            setRadio((radio) => ({ ...radio, nowPlaying: outNow, dj: outDJ }));
           });
         },
         (error) => {
@@ -165,7 +178,7 @@ export default function Header() {
         setFetching(false);
         setFetchCount(count);
       });
-  }, [count, fetching, fetchCount, api]);
+  }, [count, fetching, fetchCount, api, setRadio, radio.nowPlaying.title]);
 
   useEffect(() => {
     const timer = setTimeout(
@@ -176,6 +189,18 @@ export default function Header() {
       clearTimeout(timer);
     };
   }, [count, ticking]);
+
+  useEffect(() => {
+    if (!audio) return;
+
+    if (radio.state === "playing") {
+      audio.src = "https://stream.simulatorradio.com/320";
+      audio.play();
+    } else if (radio.state === "paused") {
+      audio.pause();
+      audio.src = "";
+    }
+  }, [audio, radio.state]);
 
   const navScroll = useCallback(() => {
     if (navScrollLastKnown === window.scrollY) return;
@@ -257,6 +282,32 @@ export default function Header() {
             (radio.showDJ ? radioCSS.showDJ : "")
           }
         >
+          <div
+            className={
+              radioCSS.volume + " " + (showRadioVolume ? radioCSS.show : "")
+            }
+          >
+            <input
+              type="range"
+              name=""
+              id=""
+              value={radio.volume}
+              min={0}
+              max={100}
+              step={1}
+              onChange={(e) => {
+                setRadio({
+                  ...radio,
+                  volume: parseInt(e.target.value),
+                });
+                const audio = document.querySelector("audio");
+                if (audio) {
+                  audio.volume = parseInt(e.target.value) / 100;
+                }
+              }}
+              title="Volume"
+            />
+          </div>
           <div className={radioCSS.dj + " " + radioCSS.container}>
             <img src={radio.dj.image} alt="" className={radioCSS.background} />
             <img src={radio.dj.image} alt="" className={radioCSS.image} />
@@ -288,7 +339,12 @@ export default function Header() {
               alt=""
               className={radioCSS.image}
             />
-            <div className={radioCSS.text}>
+            <div
+              className={
+                radioCSS.text
+                // + " " + (showRadioVolume ? radioCSS.hidden : "")
+              }
+            >
               <span className={radioCSS.title}>{radio.nowPlaying.title}</span>
               <span className={radioCSS.subTitle}>
                 {radio.nowPlaying.artist}
@@ -304,7 +360,18 @@ export default function Header() {
                 }}
                 title={radio.state === "playing" ? "Pause" : "Play"}
               >
-                <GFIcon>{radio.state === "playing" ? "pause" : "play_arrow"}</GFIcon>
+                <GFIcon>
+                  {radio.state === "playing" ? "pause" : "play_arrow"}
+                </GFIcon>
+              </button>
+              {/* volume control */}
+              <button
+                onClick={() => {
+                  setShowRadioVolume(!showRadioVolume);
+                }}
+                title="Volume"
+              >
+                <GFIcon>volume_up</GFIcon>
               </button>
               <button
                 onClick={() => {
@@ -336,9 +403,6 @@ export default function Header() {
             </div>
           </div>
         </div>
-        {radio.state === "playing" && (
-          <audio src="https://simulatorradio.stream/320" autoPlay />
-        )}
       </div>
     </header>
   );

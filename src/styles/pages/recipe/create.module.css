@@ -1,0 +1,202 @@
+/* inputs */
+.create .textInput {
+  /* sizing */
+  width: 100%;
+  height: fit-content;
+}
+
+.create .textInput input {
+  /* sizing */
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+
+  /* styling */
+  border-radius: 0.25rem;
+  border: 1px solid var(--primary);
+  background-color: transparent;
+  color: var(--text);
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.create .textInput input:focus-visible {
+  border-color: var(--text);
+  outline: none;
+}
+
+.create .textInputList {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+  height: fit-content;
+}
+
+.create .textInputList input {
+  /* sizing */
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+
+  /* styling */
+  border-radius: 0.25rem;
+  border: 1px solid var(--primary);
+  background-color: transparent;
+  color: var(--text);
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.create .textInputList input:focus-visible {
+  border-color: var(--text);
+  outline: none;
+}
+
+.create .textInputList button {
+  /* position */
+  position: absolute;
+  inset: 0.25rem;
+  left: auto;
+
+  /* sizing */
+  aspect-ratio: 1/1;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
+  border-radius: 0.125rem;
+  background: rgba(255, 0,0 ,0.25);
+  border: 1px solid rgba(255, 0,0 ,0.5);
+  color: var(--text);
+}
+
+.create .addButton {
+  /* sizing */
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
+  border-radius: 0.125rem;
+  background: rgba(0, 255, 0 ,0.25);
+  border: 1px solid rgba(0, 255, 0 ,0.5);
+  color: var(--text);
+}
+
+.create .publish {
+  /* sizing */
+  width: 100%;
+  padding: 0.5rem 0.5rem;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
+  border-radius: 0.125rem;
+  background-color: transparent;
+  border: 1px solid var(--primary);
+  color: var(--text);
+
+  /* text */
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.create .textInputLarge {
+  /* sizing */
+  width: 100%;
+  height: fit-content;
+}
+
+.create .textInputLarge textarea {
+  /* sizing */
+  width: 100%;
+  padding: 0.5rem 0.5rem;
+  resize: vertical;
+
+  /* styling */
+  border-radius: 0.25rem;
+  border: 1px solid var(--primary);
+  background-color: transparent;
+  color: var(--text);
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.create .textInputLarge textarea:focus-visible {
+  border-color: var(--text);
+  outline: none;
+}
+
+/* layout */
+.create {
+  /* sizing */
+  height: 100%;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1rem;
+}
+
+.create .sidebar {
+  /* position */
+  position: sticky;
+  top: 1rem;
+
+  /* sizing */
+  height: fit-content;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.create .sidebar .collection,
+.create .sidebar .tags,
+.create .sidebar .information,
+.create .main .ingredients,
+.create .main .prep,
+.create .main .cook {
+  /* sizing */
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  border-radius: 0.25rem;
+  border: 1px solid var(--secondary);
+
+  &:focus-within {
+    border-color: var(--text);
+  }
+}
+
+.create .main {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}

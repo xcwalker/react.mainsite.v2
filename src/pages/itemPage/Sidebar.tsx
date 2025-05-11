@@ -1,16 +1,18 @@
-import { RecipeItem } from "../../types";
-import css from "../../styles/pages/recipe/sidebar.module.css";
-import Button, { ButtonLink } from "../../components/Button";
-import GFIcon from "../../components/GFIcon";
+import { ProjectItem, RecipeItem } from "../../types";
+import { ButtonLink } from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
+import GFIcon from "../../components/GFIcon";
 import SidebarUser from "../../components/SidebarUser";
 
-export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
+import css from "../../styles/pages/itemPage/sidebar.module.css";
+import cssRecipeContent from "../../styles/pages/itemPage/sidebarRecipeContent.module.css";
+
+export function ItemSidebar(props: {
+  item: ProjectItem;
+  slug: string;
+  itemType: "projects" | "recipes" | "albums" | "blog";
+}) {
   const item = props.item;
-  const shareOutput = {
-    title: item.data.title + " | " + item.data.subTitle,
-    url: "https://xcwalker.dev/recipes/" + props.slug.toLowerCase(),
-  };
   const dateModified = new Date(item.metaData.date.modified);
   const dateCreated = new Date(item.metaData.date.created);
   const dateOptions: Intl.DateTimeFormatOptions = {
@@ -28,27 +30,13 @@ export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
     <div className={css.sidebar}>
       <div className={css.thumbnail}>
         <picture className={css.image}>
-          <source
-            srcSet={
-              "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/" +
-              props.slug.toLowerCase() +
-              "/images/thumbnail.webp"
-            }
-            type="image/webp"
-          />
-          <source
-            srcSet={
-              "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/" +
-              props.slug.toLowerCase() +
-              "/images/thumbnail.jpg"
-            }
-            type="image/jpg"
-          />
           <img
             src={
-              "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/recipes/" +
+              "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
+              props.itemType +
+              "/" +
               props.slug.toLowerCase() +
-              "/images/thumbnail.webp"
+              "/images/thumbnail.jpg"
             }
             className={css.thumbnail}
             alt=""
@@ -78,18 +66,10 @@ export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
           </div>
         </picture>
       </div>
+
       <div className={css.details}>
-        <h2
-          style={
-            {
-              "--_color-dark": item.metaData.colors.dark,
-              "--_color-light": item.metaData.colors.light,
-            } as React.CSSProperties
-          }
-        >
-          {item.data.title}
-        </h2>
-        <span>Recipe • {item.data.subTitle}</span>
+        <h3>{item.data.title}</h3>
+        <h4>{item.data.subTitle}</h4>
       </div>
       <div className={css.dates}>
         <div className={css.created}>
@@ -107,6 +87,7 @@ export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
           </div>
         )}
       </div>
+
       <div className={css.tags}>
         <div className={css.collection}>
           <GFIcon className={css.icon}>category</GFIcon>
@@ -121,49 +102,79 @@ export function RecipeSidebar(props: { item: RecipeItem; slug: string }) {
           );
         })}
       </div>
-      <div className={css.information}>
-        <div className={css.info}>
-          <span>Prep Time</span>
-          <span>{item.data.information.prepTime}</span>
-        </div>
-        <div className={css.info}>
-          <span>Cook Time</span>
-          <span>{item.data.information.cookTime}</span>
-        </div>
-        <div className={css.info}>
-          <span>Serves</span>
-          <span>{item.data.information.serves}</span>
-        </div>
-      </div>
       {item.metaData.authorID && (
         <SidebarUser userId={item.metaData.authorID} />
       )}
-      <div className={css.quickLinks}>
-        <span className={css.title}>Quick Links</span>
-        <div className={css.container}>
+      {props.itemType === "recipes" && (
+        <RecipeSidebarContent item={item as RecipeItem} />
+      )}
+      <div className={css.links}>
+        {item.metaData.repoName && (
+          <ButtonLink
+            href={
+              "https://github.com/xcwalker/" +
+              item.metaData.repoName +
+              (item.metaData.subRepo ? "/tree/main/" + item.metaData.slug : "")
+            }
+            className={css.github}
+            type="newTab"
+          >
+            <SocialIcon social="github" />
+            Github Repo
+            <GFIcon className={css.icon}>open_in_new</GFIcon>
+          </ButtonLink>
+        )}
+        {item.metaData.workshop && (
+          <ButtonLink
+            href={item.metaData.workshop}
+            className={css.steam}
+            type="newTab"
+          >
+            <SocialIcon social="steam" />
+            Workshop Page
+            <GFIcon className={css.icon}>open_in_new</GFIcon>
+          </ButtonLink>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function RecipeSidebarContent(props: { item: RecipeItem }) {
+  return (
+    <>
+      {props.item.data.information.prepTime &&
+        props.item.data.information.cookTime &&
+        props.item.data.information.serves && (
+          <div className={cssRecipeContent.information}>
+            {props.item.data.information.prepTime && (
+              <div className={cssRecipeContent.info}>
+                <span>Prep Time</span>
+                <span>{props.item.data.information.prepTime}</span>
+              </div>
+            )}
+            {props.item.data.information.cookTime && (
+              <div className={cssRecipeContent.info}>
+                <span>Cook Time</span>
+                <span>{props.item.data.information.cookTime}</span>
+              </div>
+            )}
+            {props.item.data.information.serves && (
+              <div className={cssRecipeContent.info}>
+                <span>Serves</span>
+                <span>{props.item.data.information.serves}</span>
+              </div>
+            )}
+          </div>
+        )}
+      <div className={cssRecipeContent.quickLinks}>
+        <span className={cssRecipeContent.title}>Quick Links</span>
+        <div className={cssRecipeContent.container}>
           <a href="#ingredients">Ingredients</a>
           <a href="#prep">Prep</a>
           <a href="#instructions">Instructions</a>
         </div>
       </div>
-      <div className={css.links}>
-        {navigator.canShare && navigator.canShare(shareOutput) && (
-          <Button
-            onClick={() => {
-              navigator.share(shareOutput);
-            }}
-          >
-            <GFIcon className={css.gficon}>share</GFIcon>
-            Share
-          </Button>
-        )}
-        {item.metaData.youtube && (
-          <ButtonLink href={item.metaData.youtube}>
-            <SocialIcon social="youtube" />
-            YouTube
-          </ButtonLink>
-        )}
-      </div>
-    </div>
+    </>
   );
 }

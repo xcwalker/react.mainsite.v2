@@ -1,52 +1,56 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Section from "../../components/Section";
 import SideBySide from "../../components/SideBySide";
-import { ProjectSidebar } from "./Sidebar";
+import { AlbumSidebar } from "./Sidebar";
 import Markdown from "react-markdown";
-import ProjectImages from "./Images";
-import ProjectRelated from "./Related";
+import AlbumImages from "./Images";
+import AlbumRelated from "./Related";
 import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
 import ErrorPage from "../../ErrorPage";
 import { useEffect, useState } from "react";
-import { ProjectItem } from "../../types";
+import { AlbumItem } from "../../types";
 import LoadingPage from "../../components/Loading";
 
 import css from "../../styles/pages/project.module.css";
-import firebaseGetData from "../../functions/firebase/storage/getData";
+import { firebaseGetDataWithKey } from "../../functions/firebase/storage/getData";
 
-export default function ProjectIndex() {
+export default function AlbumIndex() {
   const { slug } = useParams();
-  const [item, setItem] = useState<ProjectItem | undefined>(undefined);
+  const [params] = useSearchParams();
+  const [item, setItem] = useState<AlbumItem | undefined>(undefined);
   const [error, setError] = useState(false);
+  const [key, setKey] = useState(params.get("key") || "");
+  const [input, setInput] = useState(true);
 
   useEffect(() => {
-    // fetch(
-    //   "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
-    //     slug?.toLowerCase() +
-    //     "/project.json"
-    // )
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    firebaseGetData("projects", slug as string).then((data) => {
-      if (data === undefined) {
-        setError(true);
-        return;
+    firebaseGetDataWithKey("albums", slug as string, key as string).then(
+      (data) => {
+        console.log(data);
+        if (data === undefined) {
+          console.log("Album not found");
+          setTimeout(() => {
+          console.log("reset");
+            setError(true);
+            setInput(true);
+          }, 2500);
+          return;
+        }
+        setItem(data as AlbumItem);
       }
-      setItem(data as ProjectItem);
-    });
+    );
 
     return () => {
       setItem(undefined);
       setError(false);
+      setInput(true);
     };
-  }, [slug]);
+  }, [slug, key]);
 
   return (
     <>
-      {item && !error && slug && (
+      {item && !error && slug && !input && (
         <>
           <Helmet>
             <title>
@@ -127,17 +131,17 @@ export default function ProjectIndex() {
               }
             />
           </Helmet>
-          <Section id="project">
+          <Section id="album">
             <SideBySide leftWidth="350px">
-              <ProjectSidebar item={item} slug={slug} />
+              <AlbumSidebar item={item} slug={slug} />
               <main className={css.main}>
                 <Markdown className={css.description}>
                   {item.data.description}
                 </Markdown>
-                <ProjectImages item={item} slug={slug} />
+                <AlbumImages item={item} slug={slug} />
               </main>
             </SideBySide>
-            <ProjectRelated
+            <AlbumRelated
               slug={slug}
               collection={item.metaData.collection}
               sameCollection={true}
@@ -145,7 +149,7 @@ export default function ProjectIndex() {
                 "More from the " + item.metaData.collectionName + " collection"
               }
             />
-            <ProjectRelated
+            <AlbumRelated
               slug={slug}
               collection={item.metaData.collection}
               sameCollection={false}
@@ -154,8 +158,30 @@ export default function ProjectIndex() {
           </Section>
         </>
       )}
-      {item === undefined && !error && <LoadingPage />}
-      {error && <ErrorPage code={404} error="Project Not Found" />}
+      {item === undefined && !error && !input && <LoadingPage />}
+      {/* {error && !input && <ErrorPage code={404} error="Project Not Found" />} */}
+      {console.log(error, input)}
+      {(error || input) && (
+        <Section id="album-secure">
+          <input
+            type="text"
+            name=""
+            id=""
+            value={key}
+            onChange={(e) => {
+              setKey(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              setInput(false);
+              setError(false);
+            }}
+          >
+            Submit
+          </button>
+        </Section>
+      )}
     </>
   );
 }

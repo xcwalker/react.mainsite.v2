@@ -1,0 +1,86 @@
+
+
+.information {
+  /* sizing */
+  margin-inline: 0.5rem;
+  padding: 0.5rem;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  /* styling */
+  background-color: var(--background-100);
+  border-radius: 0.5rem;
+}
+
+.information > .info {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+
+  /* styling */
+  border-right: 1px solid var(--text-200);
+}
+
+.information > .info:last-child {
+  border: none;
+}
+
+.information > .info span:first-child {
+  /* text */
+  font-weight: 500;
+  font-size: 0.7rem;
+  line-height: 1;
+  color: var(--text-800);
+}
+
+.information > .info span:last-child {
+  /* text */
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1;
+  text-transform: capitalize;
+}
+
+.quickLinks {
+  /* sizing */
+  padding-inline: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quickLinks .title {
+  /* text */
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.quickLinks .container {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.quickLinks .container a {
+  /* text */
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline solid;
+}
+
+
+.quickLinks .container a:hover,
+.quickLinks .container a:focus-visible {
+  text-decoration: underline dashed;
+}

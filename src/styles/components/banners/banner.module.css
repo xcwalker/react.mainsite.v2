@@ -1,0 +1,24 @@
+.banner {
+  --_banner-color: gray;
+  --_text-color: black;
+  --_width: 1rem;
+
+  /* sizing */
+  padding-block: 0.35rem;
+
+  /* text */
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  /* Styling */
+  background-color: var(--_banner-color);
+  color: var(--_text-color);
+}
+
+a.banner {
+  text-decoration: underline dashed;
+}

@@ -3,7 +3,7 @@ import { Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
 import { ProjectItem as ProjectItemType } from "../../types";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
-import ProjectItem from "../../components/ProjectItem";
+import GridItem from "../../components/GridItem";
 import Carousel from "../../components/Carousel";
 
 export default function UserProjects(props: { userID: string }) {
@@ -28,7 +28,7 @@ export default function UserProjects(props: { userID: string }) {
             {projectsArray.map((item, index) => {
               return (
                 <Fragment key={index}>
-                  <ProjectItem item={item.value} slug={item.id} />
+                  <GridItem itemType="projects" item={item.value} slug={item.id} href="projects" />
                 </Fragment>
               );
             })}

@@ -27,6 +27,22 @@ export type StackType = {
   gap?: string;
 };
 
+export type GridItem = {
+  data: {
+    title: string;
+    subTitle: string;
+  };
+  metaData: {
+    date: {
+      created: string;
+      modified: string;
+    };
+    slug: string;
+    tags: string[];
+    collection: string;
+  };
+};
+
 export type BlogItem = {
   data: {
     title: string;
@@ -91,10 +107,10 @@ export type RecipeItem = {
     subTitle: string;
     description?: string;
     instructions: {
-      prep?: [];
-      cook: [];
+      prep?: string[];
+      cook: string[];
     };
-    ingredients: [];
+    ingredients: string[];
     information: {
       prepTime: string;
       cookTime: string;
@@ -123,6 +139,28 @@ export type RecipeItem = {
         jpgURL: string;
       };
     };
+  };
+};
+
+
+export type AlbumItem = {
+  data: {
+    title: string;
+    subTitle: string;
+    description: string;
+  };
+  metaData: {
+    date: {
+      created: string;
+      modified: string;
+    };
+    slug: string;
+    imageCount: number;
+    tags: string[];
+    collection: string;
+    collectionName: string;
+    authorID: string;
+    key: string;
   };
 };
 

@@ -10,7 +10,7 @@ import HomeIndex from "./pages/home/Index";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Main from "./components/Main";
-import ProjectIndex from "./pages/project/Index";
+import ItemPage from "./pages/itemPage/Index";
 import { Helmet } from "react-helmet";
 import ErrorPage from "./ErrorPage";
 import RecipeIndex from "./pages/recipe/Index";
@@ -29,6 +29,9 @@ import BlogIndex from "./pages/blog/Index";
 import RecipeCreate from "./pages/recipe/Create";
 import Protect from "./components/Security/Protect";
 import { atomWithStorage } from "jotai/utils";
+import BannerContainer from "./components/Banners/BannerContainer";
+import AlbumsPage from "./pages/Albums";
+import AlbumIndex from "./pages/album/Index";
 
 export default function App() {
   return (
@@ -51,6 +54,7 @@ export default function App() {
         <Header />
 
         <Main>
+          <BannerContainer />
           <Routes>
             <Route path="/" element={<HomeIndex />} />
 
@@ -65,11 +69,12 @@ export default function App() {
                   </Protect>
                 }
               />
-              <Route path=":slug" element={<BlogIndex />} />
+
+              <Route path=":slug" element={<ItemPage itemType="blog" />} />
             </Route>
 
             {/* projects */}
-            <Route path="project">
+            <Route path="projects">
               <Route index element={<ProjectsPage />} />
               <Route
                 path="create"
@@ -79,11 +84,11 @@ export default function App() {
                   </Protect>
                 }
               />
-              <Route path=":slug" element={<ProjectIndex />} />
+              <Route path=":slug" element={<ItemPage itemType="projects" />} />
             </Route>
 
             {/* recipes */}
-            <Route path="recipe">
+            <Route path="recipes">
               <Route index element={<RecipesPage />} />
               <Route
                 path="create"
@@ -93,7 +98,22 @@ export default function App() {
                   </Protect>
                 }
               />
-              <Route path=":slug" element={<RecipeIndex />} />
+
+              <Route path=":slug" element={<ItemPage itemType="recipes" />} />
+            </Route>
+
+            {/* album */}
+            <Route path="albums">
+              <Route index element={<AlbumsPage />} />
+              <Route
+                path="create"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <RecipeCreate />
+                  </Protect>
+                }
+              />
+              <Route path=":slug" element={<ItemPage itemType="albums" />} />
             </Route>
 
             {/* accounts */}

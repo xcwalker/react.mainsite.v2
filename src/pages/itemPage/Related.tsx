@@ -1,6 +1,6 @@
 import { Fragment } from "react/jsx-runtime";
-import ProjectItem from "../../components/ProjectItem";
-import css from "../../styles/pages/project/related.module.css";
+import GridItem from "../../components/GridItem";
+import css from "../../styles/pages/itemPage/related.module.css";
 import { useEffect, useState } from "react";
 import getDataByDateExcludeSlugAndSameCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndSameCollection";
 import getDataByDateExcludeSlugAndDifferentCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndDifferentCollection";
@@ -9,11 +9,12 @@ import { ProjectItem as ProjectItemType } from "../../types";
 import Carousel from "../../components/Carousel";
 import ListItem from "../../components/ListItem";
 
-export default function ProjectRelated(props: {
+export default function ItemRelated(props: {
   slug: string;
   collection?: string;
   sameCollection: boolean;
   title: string;
+  itemType: "projects" | "recipes" | "albums" | "blog";
 }) {
   const [otherProjects, setOtherProjects] = useState<
     { id: string; value: ProjectItemType }[] | undefined
@@ -22,7 +23,7 @@ export default function ProjectRelated(props: {
   useEffect(() => {
     if (props.collection && props.sameCollection === true) {
           getDataByDateExcludeSlugAndSameCollection(
-            "projects",
+            props.itemType,
             props.slug,
             props.collection
           ).then((data) => {
@@ -30,14 +31,14 @@ export default function ProjectRelated(props: {
           });
         } else if (props.collection && props.sameCollection === false) {
           getDataByDateExcludeSlugAndDifferentCollection(
-            "projects",
+            props.itemType,
             props.slug,
             props.collection
           ).then((data) => {
             setOtherProjects(data as { id: string; value: ProjectItemType }[]);
           });
         } else {
-          getDataByDateExcludeSlug("projects", props.slug).then((data) => {
+          getDataByDateExcludeSlug(props.itemType, props.slug).then((data) => {
             setOtherProjects(data as { id: string; value: ProjectItemType }[]);
           });
         }
@@ -64,7 +65,7 @@ export default function ProjectRelated(props: {
                       date={item.value.metaData.date.created}
                       title={item.value.data.title}
                       subTitle={item.value.data.subTitle}
-                      href={"/recipe/" + item.id}
+                      href={"/" + props.itemType + "/" + item.id}
                     />
                   </Fragment>
                 );
@@ -73,9 +74,10 @@ export default function ProjectRelated(props: {
           }
         >
           {otherProjects.map((item, index) => {
+            console.log(item.id);
             return (
               <Fragment key={index}>
-                <ProjectItem slug={item.id} item={item.value} />
+                <GridItem itemType="recipes" slug={item.id} item={item.value} href={props.itemType} />
               </Fragment>
             );
           })}

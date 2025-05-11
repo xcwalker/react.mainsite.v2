@@ -11,6 +11,7 @@
 body {
   /* sizing */
   width: 100%;
+  max-width: 100vw;
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
@@ -63,9 +64,15 @@ html {
 }
 
 #root > main {
+  /* fix for carousel and still allowing body based sticky positioning */
+  --_margin-inline: 1rem;
+  max-width: calc(100vw - (2 * var(--_margin-inline)) - 250px);
   min-height: 85vh;
-  margin-inline: 1rem;
+  margin-inline: var(--_margin-inline);
   margin-top: 1rem;
+  /* overflow: hidden; */
+
+  transition: all 250ms ease;
 }
 
 .material-symbols-outlined {
@@ -90,12 +97,23 @@ h6 {
     grid-template-columns: [nav-start] calc(32px + 2rem) [nav-end main-start footer-start] 1fr [main-end footer-end];
     transition: 250ms ease;
   }
-  
+
+  #root > main {
+    /* prevents issues from occurring with the carousel and sticky based elements */
+    max-width: calc(100vw - (32px + 2rem) - (2 * var(--_margin-inline)));
+  }
+
   body.scrolled #root {
-    grid-template-columns: [nav-start] 0 [nav-end  main-start footer-start] 1fr [main-end footer-end];
+    grid-template-columns: [nav-start] 0 [nav-end main-start footer-start] 1fr [main-end footer-end];
+  }
+
+  body.scrolled #root > main {
+    /* prevents issues from occurring with the carousel and sticky based elements */
+    max-width: calc(100vw - (2 * var(--_margin-inline)));
   }
 
   #root > main {
-    margin-inline: 0.5rem;
+    --_margin-inline: 0.5rem;
+    /* overflow: hidden; */
   }
 }

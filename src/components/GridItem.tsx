@@ -1,12 +1,14 @@
-import { ProjectItem as ProjectItemType } from "../types";
+import { GridItem as GridItemType } from "../types";
 import { Link } from "react-router-dom";
 import css from "../styles/components/projectItem.module.css";
 import { useEffect, useState } from "react";
 
-export default function ProjectItem(props: {
+export default function GridItem(props: {
   slug: string;
   style?: React.CSSProperties;
-  item: ProjectItemType;
+  item: GridItemType;
+  href?: string;
+  itemType: "projects" | "recipes" | "albums" | "blog";
 }) {
   // const [item, setItem] = useState<ProjectItemType | undefined>(undefined);
   const [date, setDate] = useState<Date>();
@@ -39,13 +41,13 @@ export default function ProjectItem(props: {
       {props.item && (
         <Link
           className={css.project}
-          to={"/project/" + props.item.metaData.slug}
+          to={"/" + props.href + "/" + props.slug}
           style={props.style}
         >
           <div className={css.thumbnail}>
             <img
               src={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
+                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" + props.itemType + "/" +
                 props.slug.toLowerCase() +
                 "/images/thumbnail.jpg"
               }

@@ -25,7 +25,7 @@ export default function RecipeIndex() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    getRecipe(slug?.toLowerCase() as string)
+    getRecipe(slug as string)
       .then((data) => {
         console.log(data);
         setItem(data);
@@ -131,39 +131,7 @@ export default function RecipeIndex() {
                 <Markdown className={css.description}>
                   {item.data.description}
                 </Markdown>
-                <div
-                  className={css.instructions + " " + css.ingredients}
-                  id="ingredients"
-                >
-                  <h3>Ingredients</h3>
-                  <ul>
-                    {item.data.ingredients &&
-                      item.data.ingredients.map((item, index) => {
-                        return <li key={index}>{decode(item)}</li>;
-                      })}
-                  </ul>
-                </div>
-                <div className={css.instructions + " " + css.prep} id="prep">
-                  <h3>Prep</h3>
-                  <ul>
-                    {item.data.instructions.prep &&
-                      item.data.instructions.prep.map((item, index) => {
-                        return <li key={index}>{decode(item)}</li>;
-                      })}
-                  </ul>
-                </div>
-                <div
-                  className={css.instructions + " " + css.cook}
-                  id="instructions"
-                >
-                  <h3>Instructions</h3>
-                  <ul>
-                    {item.data.instructions.cook &&
-                      item.data.instructions.cook.map((item, index) => {
-                        return <li key={index}>{decode(item)}</li>;
-                      })}
-                  </ul>
-                </div>
+                
                 <RecipeImages item={item} slug={slug} />
               </main>
             </SideBySide>

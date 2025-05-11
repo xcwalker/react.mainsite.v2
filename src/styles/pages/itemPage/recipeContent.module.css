@@ -1,0 +1,51 @@
+
+.instructions {
+  scroll-margin-top: 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.instructions h3 {
+  margin: 0;
+}
+
+.instructions ul {
+  /* spacing */
+  margin: 0;
+  padding: 0;
+  margin-left: 2rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  list-style: none;
+  counter-reset: counter;
+}
+
+.instructions li {
+  /* position */
+  position: relative;
+
+  /* counter */
+  counter-increment: counter;
+}
+
+.instructions li::before {
+  /* position */
+  position: absolute;
+  left: -1.5rem;
+  top: 0.125rem;
+
+  /* counter */
+  content: counters(counter, ".", decimal-leading-zero);
+  font-weight: bold;
+  font-size: 0.75rem;
+  margin-right: 0.5rem;
+  line-height: 1;
+}

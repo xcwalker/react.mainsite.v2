@@ -2,6 +2,9 @@ import { Fragment, useState } from "react";
 import css from "../../styles/pages/recipe/create.module.css";
 import { RecipeItem } from "../../types";
 import GFIcon from "../../components/GFIcon";
+import firebaseSetData from "../../functions/firebase/storage/setData";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../functions/firebase/authentication/useAuth";
 
 export default function RecipeCreate() {
   const [recipe, setRecipe] = useState<RecipeItem>({
@@ -46,7 +49,7 @@ export default function RecipeCreate() {
   });
 
   return (
-    <section>
+    <section className={css.create}>
       <Sidebar recipe={recipe} setRecipe={setRecipe} />
       <Main recipe={recipe} setRecipe={setRecipe} />
     </section>
@@ -57,6 +60,10 @@ function Sidebar(props: {
   recipe: RecipeItem;
   setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
 }) {
+  const [slug, setSlug] = useState<string>("");
+  const navigate = useNavigate();
+  const currentUser = useAuth(null);
+
   return (
     <div className={css.sidebar}>
       {/* image */}
@@ -78,6 +85,18 @@ function Sidebar(props: {
         title="SubTitle"
         className={css.subTitle}
       />
+      <div className={css.textInput}>
+        <input
+          type="text"
+          value={slug}
+          onChange={(e) => {
+            setSlug(e.target.value);
+          }}
+          title="Slug"
+          placeholder="Slug"
+          className={css.slug}
+        />
+      </div>
       <div className={css.collection}>
         <TextInput
           value={props.recipe.metaData.collection}
@@ -103,7 +122,7 @@ function Sidebar(props: {
         {props.recipe.metaData.tags.map((tag, index) => {
           return (
             <Fragment key={index}>
-              <TextInput
+              <TextInputList
                 value={tag}
                 valueName={index.toString()}
                 classification="tag"
@@ -127,6 +146,7 @@ function Sidebar(props: {
               return newValue;
             });
           }}
+          className={css.addButton}
         >
           <GFIcon>add</GFIcon>
         </button>
@@ -135,32 +155,49 @@ function Sidebar(props: {
       <div className={css.information}>
         <TextInput
           value={props.recipe.data.information.serves}
-          valueName="serves"
-          classification="information"
+          valueName="information"
+          classification="data"
           placeholder="Serves"
           setRecipe={props.setRecipe}
           title="Serves"
           className={css.serves}
+          subValueName="serves"
         />
         <TextInput
           value={props.recipe.data.information.prepTime}
-          valueName="prepTime"
-          classification="information"
+          valueName="information"
+          classification="data"
           placeholder="Prep Time"
           setRecipe={props.setRecipe}
           title="Prep Time"
           className={css.prepTime}
+          subValueName="prepTime"
         />
         <TextInput
           value={props.recipe.data.information.cookTime}
-          valueName="cookTime"
-          classification="information"
+          valueName="information"
+          classification="data"
           placeholder="Cook Time"
           setRecipe={props.setRecipe}
           title="Cook Time"
           className={css.cookTime}
+          subValueName="cookTime"
         />
       </div>
+      <button
+        onClick={() =>
+          firebaseSetData("recipes", slug, {data: {...props.recipe.data}, metaData: {...props.recipe.metaData, authorID: currentUser.uid ,  date: {
+            created: new Date().toJSON(),
+            modified: new Date().toJSON()
+          }}}).then((res) => {
+            console.log(res);
+            navigate("/recipe/" + slug.toString());
+          })
+        }
+        className={css.publish}
+      >
+        Publish
+      </button>
     </div>
   );
 }
@@ -173,7 +210,7 @@ function Main(props: {
     <div className={css.main}>
       {/* description */}
       <TextInputLarge
-        value={props.recipe.data.description}
+        value={props.recipe.data.description?.toString() || ""}
         valueName="description"
         classification="data"
         placeholder="Description"
@@ -186,7 +223,7 @@ function Main(props: {
         {props.recipe.data.ingredients.map((ingredient, index) => {
           return (
             <Fragment key={index}>
-              <TextInput
+              <TextInputList
                 value={ingredient}
                 valueName={index.toString()}
                 classification="ingredients"
@@ -210,59 +247,63 @@ function Main(props: {
               return newValue;
             });
           }}
+          className={css.addButton}
         >
           <GFIcon>add</GFIcon>
         </button>
       </div>
-      
+
       {/* prep */}
-      <div className={css.prep}>
-        {props.recipe.data.instructions.prep.map((instruction, index) => {
-          return (
-            <Fragment key={index}>
-              <TextInput
-                value={instruction}
-                valueName={index.toString()}
-                classification="instructions"
-                instructionTag="prep"
-                placeholder={"Prep " + (index + 1)}
-                setRecipe={props.setRecipe}
-                title="Prep"
-                className={css.instruction}
-                recipe={props.recipe}
-              />
-            </Fragment>
-          );
-        })}
-        <button
-          onClick={() => {
-            const instructionLength =
-              props.recipe.data.instructions.prep.length;
-            props.setRecipe((prev) => {
-              const newValue = { ...prev };
-              if (
-                instructionLength + 1 !==
-                newValue.data.instructions.prep.length
-              ) {
-                newValue.data.instructions.prep = [
-                  ...prev.data.instructions.prep,
-                  "",
-                ];
-              }
-              return newValue;
-            });
-          }}
-        >
-          <GFIcon>add</GFIcon>
-        </button>
-      </div>
+      {props.recipe.data.instructions.prep && (
+        <div className={css.prep}>
+          {props.recipe.data.instructions.prep.map((instruction, index) => {
+            return (
+              <Fragment key={index}>
+                <TextInputList
+                  value={instruction}
+                  valueName={index.toString()}
+                  classification="instructions"
+                  instructionTag="prep"
+                  placeholder={"Prep " + (index + 1)}
+                  setRecipe={props.setRecipe}
+                  title="Prep"
+                  className={css.instruction}
+                  recipe={props.recipe}
+                />
+              </Fragment>
+            );
+          })}
+          <button
+            onClick={() => {
+              const instructionLength =
+                props.recipe.data.instructions.prep?.length || 0;
+              props.setRecipe((prev) => {
+                const newValue = { ...prev };
+                if (
+                  instructionLength + 1 !==
+                  newValue.data.instructions.prep?.length
+                ) {
+                  newValue.data.instructions.prep = [
+                    ...(prev.data.instructions.prep ?? []),
+                    "",
+                  ];
+                }
+                return newValue;
+              });
+            }}
+            className={css.addButton}
+          >
+            <GFIcon>add</GFIcon>
+          </button>
+        </div>
+      )}
 
       {/* cook */}
       <div className={css.cook}>
         {props.recipe.data.instructions.cook.map((instruction, index) => {
           return (
             <Fragment key={index}>
-              <TextInput
+              <TextInputList
                 value={instruction}
                 valueName={index.toString()}
                 classification="instructions"
@@ -294,6 +335,7 @@ function Main(props: {
               return newValue;
             });
           }}
+          className={css.addButton}
         >
           <GFIcon>add</GFIcon>
         </button>
@@ -305,13 +347,49 @@ function Main(props: {
 
 function TextInput(props: {
   value: string;
-  classification:
-    | "data"
-    | "metaData"
-    | "information"
-    | "tag"
-    | "ingredients"
-    | "instructions";
+  classification: keyof RecipeItem;
+  valueName: keyof RecipeItem["data"] | keyof RecipeItem["metaData"];
+  setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
+  recipe?: RecipeItem;
+  subValueName?: string;
+
+  title: string;
+  placeholder: string;
+  className: string;
+}) {
+  return (
+    <div className={css.textInput}>
+      <input
+        type="text"
+        value={props.value}
+        onChange={(e) => {
+          props.setRecipe((prev) => {
+            const newValue = { ...prev };
+
+            if (!props.subValueName) {
+              newValue[props.classification][props.valueName] = e.target.value;
+            } else {
+              newValue[props.classification][props.valueName][
+                props.subValueName
+              ] = e.target.value;
+            }
+
+            return newValue;
+          });
+        }}
+        title={props.title}
+        placeholder={props.placeholder}
+        className={props.className}
+      />
+    </div>
+  );
+
+  // props.classification === "ingredients" ||
+}
+
+function TextInputList(props: {
+  value: string;
+  classification: "information" | "tag" | "ingredients" | "instructions";
   valueName: string;
   setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
   recipe?: RecipeItem;
@@ -322,7 +400,7 @@ function TextInput(props: {
   className: string;
 }) {
   return (
-    <div>
+    <div className={css.textInputList}>
       <input
         type="text"
         value={props.value}
@@ -330,12 +408,7 @@ function TextInput(props: {
           props.setRecipe((prev) => {
             const newValue = { ...prev };
 
-            if (
-              props.classification === "data" ||
-              props.classification === "metaData"
-            ) {
-              newValue[props.classification][props.valueName] = e.target.value;
-            } else if (props.classification === "information") {
+            if (props.classification === "information") {
               newValue.data.information[props.valueName] = e.target.value;
             } else if (props.classification === "tag") {
               newValue.metaData.tags[parseInt(props.valueName)] =
@@ -404,7 +477,7 @@ function TextInput(props: {
           <button
             onClick={() => {
               const tagLength =
-                props.recipe.data.instructions[props.instructionTag].length;
+                props.recipe?.data.instructions[props.instructionTag].length;
               props.setRecipe((prev) => {
                 const newValue = { ...prev };
                 if (
@@ -433,8 +506,8 @@ function TextInput(props: {
 
 function TextInputLarge(props: {
   value: string;
-  classification: "data" | "metaData";
-  valueName: string;
+  classification: keyof RecipeItem;
+  valueName: keyof RecipeItem["data"] | keyof RecipeItem["metaData"];
   setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
 
   title: string;
@@ -442,13 +515,14 @@ function TextInputLarge(props: {
   className: string;
 }) {
   return (
-    <div>
+    <div className={css.textInputLarge}>
       <textarea
         value={props.value}
         onChange={(e) => {
           props.setRecipe((prev) => {
             const newValue = { ...prev };
 
+            /* eslint-disable-next-line no-alert */
             newValue[props.classification][props.valueName] = e.target.value;
 
             return newValue;

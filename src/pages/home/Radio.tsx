@@ -18,7 +18,9 @@ export function HomeRadio() {
           <img
             src={radio.nowPlaying.artwork}
             alt=""
-            className={css.background + " " + css.animated}
+            className={css.background
+              //  + " " + css.animated
+              }
           />
           <SideBySide leftWidth="250px">
             <img src={radio.nowPlaying.artwork} alt="" className={css.image} />

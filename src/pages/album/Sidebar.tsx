@@ -1,11 +1,9 @@
-import { ProjectItem } from "../../types";
+import { AlbumItem } from "../../types";
 import css from "../../styles/pages/project/sidebar.module.css";
-import { ButtonLink } from "../../components/Button";
-import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
 import SidebarUser from "../../components/SidebarUser";
 
-export function ProjectSidebar(props: { item: ProjectItem; slug: string }) {
+export function AlbumSidebar(props: { item: AlbumItem; slug: string }) {
   const item = props.item;
   const dateModified = new Date(item.metaData.date.modified);
   const dateCreated = new Date(item.metaData.date.created);
@@ -22,15 +20,43 @@ export function ProjectSidebar(props: { item: ProjectItem; slug: string }) {
   };
   return (
     <div className={css.sidebar}>
-      <img
-        src={
-          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
-          props.slug.toLowerCase() +
-          "/images/thumbnail.jpg"
-        }
-        className={css.thumbnail}
-        alt="Thumbnail"
-      />
+      <div className={css.thumbnail}>
+        <picture className={css.image}>
+          <img
+            src={
+              "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
+              props.slug.toLowerCase() +
+              "/images/thumbnail.jpg"
+            }
+            className={css.thumbnail}
+            alt=""
+          />
+          <div className={css.thumbnail + " " + css.placeholder}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180.12 139.79">
+              <g
+                paintOrder="fill markers stroke"
+                transform="translate(-13.59 -66.639)"
+              >
+                <path fill="#d0d0d0" d="M13.591 66.639h180.12v139.79H13.591z" />
+                <path
+                  fill="#fff"
+                  d="m118.51 133.51-34.249 34.249-15.968-15.968-41.938 41.937h152.37z"
+                  opacity={0.675}
+                />
+                <circle
+                  cx={58.217}
+                  cy={108.56}
+                  r={11.773}
+                  fill="#fff"
+                  opacity={0.675}
+                />
+                <path fill="none" d="M26.111 77.634h152.61v116.1H26.111z" />
+              </g>
+            </svg>
+          </div>
+        </picture>
+      </div>
+
       <div className={css.details}>
         <h3>{item.data.title}</h3>
         <h4>{item.data.subTitle}</h4>
@@ -69,32 +95,6 @@ export function ProjectSidebar(props: { item: ProjectItem; slug: string }) {
       {item.metaData.authorID && (
         <SidebarUser userId={item.metaData.authorID} />
       )}
-      <div className={css.links}>
-        <ButtonLink
-          href={
-            "https://github.com/xcwalker/" +
-            item.metaData.repoName +
-            (item.metaData.subRepo ? "/tree/main/" + item.metaData.slug : "")
-          }
-          className={css.github}
-          type="newTab"
-        >
-          <SocialIcon social="github" />
-          Github Repo
-          <GFIcon className={css.icon}>open_in_new</GFIcon>
-        </ButtonLink>
-        {item.metaData.workshop && (
-          <ButtonLink
-            href={item.metaData.workshop}
-            className={css.steam}
-            type="newTab"
-          >
-            <SocialIcon social="steam" />
-            Workshop Page
-            <GFIcon className={css.icon}>open_in_new</GFIcon>
-          </ButtonLink>
-        )}
-      </div>
     </div>
   );
 }

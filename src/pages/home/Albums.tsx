@@ -3,38 +3,38 @@ import css from "../../styles/pages/home/projects.module.css";
 import { Fragment } from "react/jsx-runtime";
 import GridItem from "../../components/GridItem";
 import { useEffect, useState } from "react";
-import { ProjectItem as ProjectItemType } from "../../types";
+import { AlbumItem as AlbumItemType } from "../../types";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
 import Carousel from "../../components/Carousel";
 import getDataByDate from "../../functions/firebase/storage/getDataByDate";
 import ListItem from "../../components/ListItem";
 
-export default function HomeProjects(props: {
+export default function HomeAlbums(props: {
   title: string;
   titleLink: boolean;
   onHome?: boolean;
 }) {
-  const [projectsArray, setProjectsArray] = useState<
-    { id: string; value: ProjectItemType }[] | undefined
+  const [albumsArray, setAlbumsArray] = useState<
+    { id: string; value: AlbumItemType }[] | undefined
   >();
 
   useEffect(() => {
     if (props.onHome) {
     getDataByDateFromUser("projects", import.meta.env.VITE_MAIN_USER_ID).then(
       (data) => {
-        setProjectsArray(data as { id: string; value: ProjectItemType }[]);
+        setAlbumsArray(data as { id: string; value: AlbumItemType }[]);
       }
     );
   } else {
     getDataByDate("projects").then((data) => {
-      setProjectsArray(data as { id: string; value: ProjectItemType }[]);
+      setAlbumsArray(data as { id: string; value: AlbumItemType }[]);
     });
   }
 
     return () => {
-      setProjectsArray(undefined);
+      setAlbumsArray(undefined);
     };
-  }, []);
+  }, [props.onHome]);
 
   return (
     <Section id="projects" container={{ className: css.container }}>
@@ -44,19 +44,19 @@ export default function HomeProjects(props: {
         multipleViews={true}
         defaultView={props.onHome ? "column" : "grid"}
         titleLink={
-          props.titleLink ? { text: "View All", href: "/projects" } : undefined
+          props.titleLink ? { text: "View All", href: "/albums" } : undefined
         }
         listView={
           <>
-            {projectsArray &&
-              projectsArray.map((item, index) => {
+            {albumsArray &&
+              albumsArray.map((item, index) => {
                 return (
                   <Fragment key={index}>
                     <ListItem
                       title={item.value.data.title}
                       subTitle={item.value.data.subTitle}
                       date={item.value.metaData.date.created}
-                      href={"/projects/" + item.id}
+                      href={"/albums/" + item.id}
                     />
                   </Fragment>
                 );
@@ -65,11 +65,11 @@ export default function HomeProjects(props: {
         }
       >
         <>
-          {projectsArray &&
-            projectsArray.map((item, index) => {
+          {albumsArray &&
+            albumsArray.map((item, index) => {
               return (
                 <Fragment key={index}>
-                  <GridItem itemType="projects" slug={item.id} item={item.value} href="projects" />
+                  <GridItem itemType="albums" slug={item.id} item={item.value} href="albums" />
                 </Fragment>
               );
             })}

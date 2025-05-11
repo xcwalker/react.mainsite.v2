@@ -16,7 +16,7 @@
 
   /* styling */
   border-radius: 0.5rem;
-  overflow: clip;
+  /* overflow: clip; */
 
   /* transition */
   transition: height 0.25s ease-in-out;
@@ -47,6 +47,8 @@
 
   /* styling */
   overflow: clip;
+  border-radius: 0.5rem;
+  transition: border-radius 0.25s ease-in-out;
 }
 
 .radio .dj {
@@ -56,10 +58,20 @@
 
 .radio .nowPlaying {
   top: auto;
-} 
+}
 
 .radio.showDJ {
   height: calc(var(--_container-height) * 2);
+}
+
+.radio.showDJ .dj {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.radio.showDJ .nowPlaying {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .radio .container .background {
@@ -92,6 +104,7 @@
 
 .radio .container .text {
   /* sizing */
+  max-width: min(70vw, 25ch, 90%);
   width: 100%;
   flex-shrink: 1;
 
@@ -100,6 +113,16 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+
+  /* visibility */
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.radio .container .text.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .radio .container .text .title {
@@ -144,6 +167,7 @@
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+  flex-wrap: nowrap;
 }
 
 .radio .container .controls button {
@@ -165,10 +189,47 @@
   border-color: currentColor !important;
 }
 
+.radio .volume {
+  --_height: 2.5rem;
+
+  /* position */
+  position: absolute;
+  top: calc(-0.25rem - var(--_height));
+  bottom: auto;
+  right: 3.5rem;
+  z-index: 2;
+
+  /* sizing */
+  margin: 0;
+  padding: 0.5rem 1rem;
+  height: var(--_height);
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
+  border-radius: 0.25rem;
+  background-color: var(--primary);
+
+  /* hiding */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.radio .volume.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /*** Sidebar ***/
 .radio.inSidebar {
   /* position */
-  position: static;
+  position: relative;
+  --_offset: 0;
 
   /* sizing */
   width: 100%;
@@ -179,31 +240,39 @@
   display: none;
 }
 
+.radio.inSidebar .volume {
+  top: auto;
+  bottom: calc(-0.25rem - var(--_height));
+  left: 0;
+  right: 0;
+}
+
 .radio.inSidebar .container {
   /* position */
   position: relative;
 
   /* sizing */
   height: auto;
-  
+
   /* flex */
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+
+  /* styling */
+  border-radius: 0.5rem;
 }
 
 .radio.inSidebar .container .image {
   /* sizing */
   --_size: 100%;
-  
-} 
+}
 
 .radio.inSidebar .container .text {
   /* sizing */
   width: 100%;
 }
-
 
 .radio.inSidebar .container .text .title {
   /* max-width */

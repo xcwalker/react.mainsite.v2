@@ -8,6 +8,7 @@ import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDat
 import Carousel from "../../components/Carousel";
 import getDataByDate from "../../functions/firebase/storage/getDataByDate";
 import ListItem from "../../components/ListItem";
+import GridItem from "../../components/GridItem";
 
 export default function HomeRecipes(props: {
   title: string;
@@ -44,14 +45,14 @@ export default function HomeRecipes(props: {
         multipleViews={true}
         defaultView={props.onHome ? "column" : "grid"}
         titleLink={
-          props.titleLink ? { text: "View All", href: "/recipe" } : undefined
+          props.titleLink ? { text: "View All", href: "/recipes" } : undefined
         }
         listView={<>
           {recipesArray &&
             recipesArray.map((item, index) => {
               return (
                 <Fragment key={index}>
-                  <ListItem title={item.value.data.title} subTitle={item.value.data.subTitle} date={item.value.metaData.date.created} href={"/recipe/" + item.id}/>
+                  <ListItem title={item.value.data.title} subTitle={item.value.data.subTitle} date={item.value.metaData.date.created} href={"/recipes/" + item.id}/>
                 </Fragment>
               );
             })}
@@ -62,7 +63,7 @@ export default function HomeRecipes(props: {
             recipesArray.map((item, index) => {
               return (
                 <Fragment key={index}>
-                  <RecipeItem item={item.value} slug={item.id} />
+                  <GridItem itemType="recipes" item={item.value} slug={item.id} href="recipes" />
                 </Fragment>
               );
             })}

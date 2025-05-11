@@ -1,4 +1,4 @@
-import { ProjectItem } from "../../types";
+import { AlbumItem } from "../../types";
 import css from "../../styles/pages/project/images.module.css";
 import { useEffect, useState } from "react";
 import Button from "../../components/Button";
@@ -8,7 +8,7 @@ import { Download, Zoom } from "yet-another-react-lightbox/plugins";
 import PhotoAlbum, { Photo } from "react-photo-album";
 import GFIcon from "../../components/GFIcon";
 
-export default function ProjectImages(props: { item: ProjectItem; slug: string }) {
+export default function AlbumImages(props: { item: AlbumItem; slug: string }) {
   const item = props.item;
   const [open, setOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { RecipeItem as RecipeItemType } from "../../types";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
 import Carousel from "../../components/Carousel";
+import GridItem from "../../components/GridItem";
 
 export default function UserRecipes(props: { userID: string }) {
   const [recipesArray, setRecipesArray] = useState<
@@ -28,7 +29,7 @@ export default function UserRecipes(props: { userID: string }) {
             {recipesArray.map((item, index) => {
               return (
                 <Fragment key={index}>
-                  <RecipeItem item={item.value} slug={item.id} />
+                  <GridItem itemType="recipes" item={item.value} slug={item.id} href="recipes" />
                 </Fragment>
               );
             })}
