@@ -1,12 +1,12 @@
 import { Fragment, useState } from "react";
-import css from "../../styles/pages/recipe/create.module.css";
+import css from "../../styles/pages/itemPage/create.module.css";
 import { RecipeItem } from "../../types";
 import GFIcon from "../../components/GFIcon";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 
-export default function RecipeCreate() {
+export default function ItemCreate() {
   const [recipe, setRecipe] = useState<RecipeItem>({
     data: {
       title: "",

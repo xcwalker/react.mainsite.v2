@@ -13,7 +13,6 @@ import Main from "./components/Main";
 import ItemPage from "./pages/itemPage/Index";
 import { Helmet } from "react-helmet";
 import ErrorPage from "./ErrorPage";
-import RecipeIndex from "./pages/recipe/Index";
 import ProjectsPage from "./pages/Projects";
 import RecipesPage from "./pages/Recipes";
 import ManagePage from "./pages/account/Manage";
@@ -25,13 +24,11 @@ import UserIndex from "./pages/user/Index";
 import UserPage from "./pages/user/User";
 import DashboardIndex from "./pages/dashboard/Index";
 import BlogPage from "./pages/Blog";
-import BlogIndex from "./pages/blog/Index";
-import RecipeCreate from "./pages/recipe/Create";
+import ItemCreate from "./pages/itemPage/Create";
 import Protect from "./components/Security/Protect";
 import { atomWithStorage } from "jotai/utils";
 import BannerContainer from "./components/Banners/BannerContainer";
 import AlbumsPage from "./pages/Albums";
-import AlbumIndex from "./pages/album/Index";
 
 export default function App() {
   return (
@@ -65,7 +62,7 @@ export default function App() {
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <RecipeCreate />
+                    <ItemCreate />
                   </Protect>
                 }
               />
@@ -80,7 +77,7 @@ export default function App() {
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <RecipeCreate />
+                    <ItemCreate />
                   </Protect>
                 }
               />
@@ -94,7 +91,7 @@ export default function App() {
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <RecipeCreate />
+                    <ItemCreate />
                   </Protect>
                 }
               />
@@ -109,7 +106,7 @@ export default function App() {
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <RecipeCreate />
+                    <ItemCreate />
                   </Protect>
                 }
               />
