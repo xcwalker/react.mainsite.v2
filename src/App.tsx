@@ -56,7 +56,13 @@ export default function App() {
             <Route path="blog">
               <Route
                 index
-                element={<ViewAllPage itemType="blog" title="My Blog" />}
+                element={
+                  <ViewAllPage
+                    itemType="blog"
+                    title="My Blog"
+                    hasThumbnail={false}
+                  />
+                }
               />
               <Route
                 path="create"
@@ -75,7 +81,11 @@ export default function App() {
               <Route
                 index
                 element={
-                  <ViewAllPage itemType="projects" title="My Projects" />
+                  <ViewAllPage
+                    itemType="projects"
+                    title="My Projects"
+                    hasThumbnail={true}
+                  />
                 }
               />
               <Route
@@ -93,7 +103,13 @@ export default function App() {
             <Route path="recipes">
               <Route
                 index
-                element={<ViewAllPage itemType="recipes" title="My Recipes" />}
+                element={
+                  <ViewAllPage
+                    itemType="recipes"
+                    title="My Recipes"
+                    hasThumbnail={true}
+                  />
+                }
               />
               <Route
                 path="create"
@@ -111,7 +127,13 @@ export default function App() {
             <Route path="albums">
               <Route
                 index
-                element={<ViewAllPage itemType="albums" title="My Albums" />}
+                element={
+                  <ViewAllPage
+                    itemType="albums"
+                    title="My Albums"
+                    hasThumbnail={true}
+                  />
+                }
               />
               <Route
                 path="create"

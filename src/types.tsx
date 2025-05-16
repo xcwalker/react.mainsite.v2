@@ -30,7 +30,7 @@ export type GridItem = {
     };
     tags: string[];
     collection: string;
-    hasThumbnail?: boolean;
+    thumbnail: string;
   };
 };
 
@@ -56,6 +56,7 @@ export type ItemType = {
       created: string;
       modified: string;
     };
+    thumbnail: string;
     imageCount: number;
     youtube?: string;
     tags: string[];
@@ -70,7 +71,6 @@ export type ItemType = {
     repoName?: string;
     subRepo?: boolean;
     workshop?: string;
-    hasThumbnail?: boolean;
   };
 };
 

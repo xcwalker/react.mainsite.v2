@@ -3,7 +3,16 @@ import css from "../styles/components/libraryCarousel.module.css";
 import GFIcon from "./GFIcon";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
-export default function Carousel(props: { children: ReactNode; listView?: ReactNode; title: string; multipleViews: boolean; hasChildViews?: boolean; className: string; titleLink?: {text: string; href: string}; defaultView: string}) {
+export default function Carousel(props: {
+  children: ReactNode;
+  listView?: ReactNode;
+  title: string;
+  multipleViews: boolean;
+  hasChildViews?: boolean;
+  className: string;
+  titleLink?: { text: string; href: string };
+  defaultView: string;
+}) {
   const carouselRef = useRef<HTMLElement>(null);
   const [scrolledDistance, setScrolledDistance] = useState(0);
   const [scrollDistance, setScrollDistance] = useState(0);
@@ -18,7 +27,7 @@ export default function Carousel(props: { children: ReactNode; listView?: ReactN
 
   function scrollRefTo(pixels: number) {
     if (carouselRef.current) {
-    carouselRef.current.scrollTo(pixels, 0);
+      carouselRef.current.scrollTo(pixels, 0);
     }
   }
 
@@ -28,7 +37,7 @@ export default function Carousel(props: { children: ReactNode; listView?: ReactN
 
   useEffect(() => {
     if (carouselRef.current) {
-    setScrollDistance(carouselRef.current.scrollLeftMax);
+      setScrollDistance(carouselRef.current.scrollLeftMax);
     }
 
     return () => {
@@ -40,8 +49,10 @@ export default function Carousel(props: { children: ReactNode; listView?: ReactN
     <section className={css.carouselContainer}>
       <header className={css.header + " view-" + view}>
         <div className={css.title}>
-        {props.title && <h3>{props.title}</h3>}
-        {props.titleLink && <Link to={props.titleLink.href}>{props.titleLink.text}</Link>}
+          {props.title && <h3>{props.title}</h3>}
+          {props.titleLink && (
+            <Link to={props.titleLink.href}>{props.titleLink.text}</Link>
+          )}
         </div>
         <div className={css.controls}>
           {view === "list" && props.hasChildViews && (
@@ -117,7 +128,9 @@ export default function Carousel(props: { children: ReactNode; listView?: ReactN
                 id={css.toBottom}
                 onClick={() => {
                   if (carouselRef.current?.lastChild) {
-                    (carouselRef.current.lastChild as HTMLElement).scrollIntoView({
+                    (
+                      carouselRef.current.lastChild as HTMLElement
+                    ).scrollIntoView({
                       behavior: "smooth",
                       block: "center",
                     });

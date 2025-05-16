@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 export default function HomeHero() {
   const date = new Date();
   const [slideshowIndex, setSlideshowIndex] = useState(0);
-  const [slideshowItems, setSlideshowItems] = useState([
+  const slideshowItems = [
     {
       // This is a placeholder for the christmas theme
       id: 2,
@@ -43,8 +43,9 @@ export default function HomeHero() {
       id: 5,
       component: <DefaultHero />,
     },
-  ]);
-  const [slideshowActive, setSlideshowActive] = useState<number[]>(
+  ]
+  
+  const slideshowActive =
     slideshowItems
       .filter((item) => {
         return item.dateRange
@@ -53,7 +54,6 @@ export default function HomeHero() {
           : true;
       })
       .map((item) => item.id)
-  );
 
   return (
     <>

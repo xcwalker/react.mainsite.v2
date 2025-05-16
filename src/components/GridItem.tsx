@@ -10,6 +10,7 @@ export default function GridItem(props: {
   item: GridItemType;
   href?: string;
   itemType: "projects" | "recipes" | "albums" | "blog";
+  hasThumbnail?: boolean;
 }) {
   const [date, setDate] = useState<Date>();
 
@@ -24,21 +25,17 @@ export default function GridItem(props: {
           className={
             css.gridItem +
             " " +
-            (props.item.metaData.hasThumbnail === false ? css.noThumbnail : "")
+            (props.hasThumbnail === false && props.hasThumbnail !== undefined
+              ? css.noThumbnail
+              : "")
           }
           to={"/" + props.href + "/" + props.slug}
           style={props.style}
         >
-          {(props.item.metaData?.hasThumbnail === undefined ||
-            props.item.metaData.hasThumbnail === true) && (
+          {(props.hasThumbnail === undefined ||
+            props.hasThumbnail === true) && (
             <Image
-              src={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                props.itemType +
-                "/" +
-                props.slug.toLowerCase() +
-                "/images/thumbnail.jpg"
-              }
+              src={props.item.metaData?.thumbnail}
               alt="Thumbnail"
               className={css.thumbnail}
             >

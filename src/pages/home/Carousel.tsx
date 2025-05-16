@@ -14,6 +14,7 @@ export default function HomeCarousel(props: {
   titleLink?: "projects" | "albums" | "recipes" | "blog";
   onHome?: boolean;
   itemType: "projects" | "albums" | "recipes" | "blog";
+  hasThumbnail: boolean;
 }) {
   const [projectsArray, setProjectsArray] = useState<
     { id: string; value: ItemType }[] | undefined
@@ -78,6 +79,7 @@ export default function HomeCarousel(props: {
                     slug={item.id}
                     item={item.value}
                     href={props.itemType}
+                    hasThumbnail={props.hasThumbnail}
                   />
                 </Fragment>
               );

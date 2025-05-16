@@ -29,16 +29,7 @@ export function ItemSidebar(props: {
   };
   return (
     <div className={css.sidebar}>
-      <Image
-        src={
-          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-          props.itemType +
-          "/" +
-          props.slug.toLowerCase() +
-          "/images/thumbnail.jpg"
-        }
-        alt="Thumbnail"
-      />
+      <Image src={props.item.metaData?.thumbnail} alt="Thumbnail" />
       <div className={css.details}>
         <h3>{item.data.title}</h3>
         <h4>{item.data.subTitle}</h4>
@@ -119,7 +110,7 @@ function RecipeSidebarContent(props: { item: RecipeItem }) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-  
+
   return (
     <>
       {props.item.data.information.prepTime &&
@@ -153,7 +144,7 @@ function RecipeSidebarContent(props: { item: RecipeItem }) {
             Ingredients
           </button>
           <button onClick={() => handleQuickLink("prep")}>Prep</button>
-          <button onClick={() => handleQuickLink("instructions")} >
+          <button onClick={() => handleQuickLink("instructions")}>
             Instructions
           </button>
         </div>

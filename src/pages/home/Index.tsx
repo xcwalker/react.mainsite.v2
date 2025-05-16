@@ -19,6 +19,7 @@ export default function HomeIndex() {
         titleLink={"projects"}
         onHome={true}
         itemType="projects"
+        hasThumbnail={true}
       />
       <HomeRadio />
       <HomeCarousel
@@ -26,12 +27,14 @@ export default function HomeIndex() {
         titleLink={"blog"}
         onHome={true}
         itemType="blog"
+        hasThumbnail={false}
       />
       <HomeCarousel
         title="My Recipes"
         titleLink={"recipes"}
         onHome={true}
         itemType="recipes"
+        hasThumbnail={true}
       />
       <HomeSites />
     </>

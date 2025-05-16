@@ -5,6 +5,7 @@ import HomeCarousel from "./home/Carousel";
 export default function ViewAllPage(props: {
   itemType: "recipes" | "blog" | "projects" | "albums";
   title: string;
+  hasThumbnail: boolean;
 }) {
   return (
     <>
