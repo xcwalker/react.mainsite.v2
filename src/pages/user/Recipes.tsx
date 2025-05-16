@@ -1,6 +1,5 @@
 import css from "../../styles/pages/home/recipes.module.css";
 import { Fragment } from "react/jsx-runtime";
-import RecipeItem from "../../components/RecipeItem";
 import { useEffect, useState } from "react";
 import { RecipeItem as RecipeItemType } from "../../types";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";

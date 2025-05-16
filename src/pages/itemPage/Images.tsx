@@ -1,4 +1,4 @@
-import { ProjectItem } from "../../types";
+import { ItemType } from "../../types";
 import css from "../../styles/pages/itemPage/images.module.css";
 import { useEffect, useState } from "react";
 import Button from "../../components/Button";
@@ -9,7 +9,7 @@ import PhotoAlbum, { Photo } from "react-photo-album";
 import GFIcon from "../../components/GFIcon";
 
 export default function ItemImages(props: {
-  item: ProjectItem;
+  item: ItemType;
   slug: string;
   itemType: "projects" | "recipes" | "albums" | "blog";
 }) {

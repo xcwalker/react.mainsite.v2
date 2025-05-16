@@ -10,7 +10,7 @@ import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
 import ErrorPage from "../../ErrorPage";
 import { useEffect, useState } from "react";
-import { ProjectItem, RecipeItem } from "../../types";
+import { ItemType, ProjectItem, RecipeItem } from "../../types";
 import LoadingPage from "../../components/Loading";
 
 import css from "../../styles/pages/itemPage/index.module.css";
@@ -24,7 +24,7 @@ export default function ItemPage(
   props: {itemType: "projects" | "recipes" | "albums" | "blog"}
 ) {
   const { slug } = useParams();
-  const [item, setItem] = useState<ProjectItem | undefined>(undefined);
+  const [item, setItem] = useState<ItemType | undefined>(undefined);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function ItemPage(
       setItem(undefined);
       setError(false);
     };
-  }, [slug]);
+  }, [slug, props.itemType]);
 
   return (
     <>

@@ -1,0 +1,100 @@
+.gridItem {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  padding: 0;
+  flex-shrink: 0;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* styling */
+  border-radius: 1rem;
+  border: 0.25rem solid transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+.gridItem.noThumbnail:hover {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+
+.gridItem .thumbnail {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+  aspect-ratio: 16/9;
+
+  /* flex */
+  display: flex;
+
+  /* styling */
+  border-radius: 0.5rem;
+  overflow: clip;
+}
+
+.gridItem .thumbnail picture {
+  z-index: -1;
+}
+
+.gridItem .thumbnail span.collection {
+  /* position */
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+
+  /* styling */
+  padding: 0.25rem 0.5rem;
+  background-color: var(--background);
+  border-radius: 0.25rem;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.gridItem .details {
+  /* sizing */
+  padding-inline: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.gridItem.gridItem.noThumbnail .details {
+  padding: 0.5rem;
+}
+
+.gridItem h3 {
+  margin: 0;
+
+  /* text */
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.gridItem h4 {
+  margin: 0;
+
+  /* text */
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.gridItem:hover .thumbnail,
+.gridItem:focus-visible .thumbnail {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}

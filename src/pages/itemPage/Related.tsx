@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import getDataByDateExcludeSlugAndSameCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndSameCollection";
 import getDataByDateExcludeSlugAndDifferentCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndDifferentCollection";
 import getDataByDateExcludeSlug from "../../functions/firebase/storage/getDataByDateExcludeSlug";
-import { ProjectItem as ProjectItemType } from "../../types";
+import { ItemType } from "../../types";
 import Carousel from "../../components/Carousel";
 import ListItem from "../../components/ListItem";
 
@@ -17,7 +17,7 @@ export default function ItemRelated(props: {
   itemType: "projects" | "recipes" | "albums" | "blog";
 }) {
   const [otherProjects, setOtherProjects] = useState<
-    { id: string; value: ProjectItemType }[] | undefined
+    { id: string; value: ItemType }[] | undefined
   >();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function ItemRelated(props: {
             props.slug,
             props.collection
           ).then((data) => {
-            setOtherProjects(data as { id: string; value: ProjectItemType }[]);
+            setOtherProjects(data as { id: string; value: ItemType }[]);
           });
         } else if (props.collection && props.sameCollection === false) {
           getDataByDateExcludeSlugAndDifferentCollection(
@@ -35,11 +35,11 @@ export default function ItemRelated(props: {
             props.slug,
             props.collection
           ).then((data) => {
-            setOtherProjects(data as { id: string; value: ProjectItemType }[]);
+            setOtherProjects(data as { id: string; value: ItemType }[]);
           });
         } else {
           getDataByDateExcludeSlug(props.itemType, props.slug).then((data) => {
-            setOtherProjects(data as { id: string; value: ProjectItemType }[]);
+            setOtherProjects(data as { id: string; value: ItemType }[]);
           });
         }
 
@@ -77,7 +77,7 @@ export default function ItemRelated(props: {
             console.log(item.id);
             return (
               <Fragment key={index}>
-                <GridItem itemType="recipes" slug={item.id} item={item.value} href={props.itemType} />
+                <GridItem itemType={props.itemType} slug={item.id} item={item.value} href={props.itemType} />
               </Fragment>
             );
           })}

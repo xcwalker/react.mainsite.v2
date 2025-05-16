@@ -82,6 +82,33 @@ const navItemsSites = [
   },
 ];
 
+const rrItemsSites = [
+  {
+    title: "Desktop",
+    href: "https://reactradio.dev/",
+    type: "normal",
+    gficon: "desktop_windows",
+    // iconURL:
+    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
+  },
+  {
+    title: "Mobile",
+    href: "https://mobile.reactradio.dev/",
+    type: "normal",
+    gficon: "smartphone",
+    // iconURL:
+    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Searrson.svg",
+  },
+  {
+    title: "Legacy",
+    href: "https://legacy.reactradio.dev/",
+    type: "normal",
+    gficon: "devices",
+    // iconURL:
+    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Therwim.svg",
+  },
+];
+
 export default function Header() {
   const api = "https://apiv2.simulatorradio.com/metadata/combined";
   const [ticking] = useState(true);
@@ -140,7 +167,7 @@ export default function Header() {
             }
 
             if (outNow.title === radio.nowPlaying.title) {
-              return
+              return;
             }
 
             const outDJ = {
@@ -162,7 +189,6 @@ export default function Header() {
             if (res?.djs?.now?.details) {
               outDJ.show = res.djs.now.details;
             }
-
 
             setRadio((radio) => ({ ...radio, nowPlaying: outNow, dj: outDJ }));
           });
@@ -230,49 +256,63 @@ export default function Header() {
   }, [navScroll]);
 
   return (
-    <header className={css.header}>
+    <header className={css.header} id="header">
       <div className={css.container}>
         <Logo type="xcwalker" className={css.svg} />
         <Logo type="x" className={css.svgSmall} />
-        <ul className={css.links}>
-          {navItems &&
-            navItems.map((item, index) => {
-              if (item.requireUser)
+        <a href="#main" id={css.skip}>Jump to content</a>
+        <nav>
+          <ul className={css.links}>
+            {navItems &&
+              navItems.map((item, index) => {
+                if (item.requireUser)
+                  return (
+                    <Fragment key={index}>
+                      <Protect>
+                        <NavLinkInternal {...item} />
+                      </Protect>
+                    </Fragment>
+                  );
                 return (
                   <Fragment key={index}>
-                    <Protect>
-                      <NavLinkInternal {...item} />
-                    </Protect>
+                    <NavLinkInternal {...item} />
                   </Fragment>
                 );
-              return (
-                <Fragment key={index}>
-                  <NavLinkInternal {...item} />
-                </Fragment>
-              );
-            })}
-        </ul>
-        <span className={css.title}>Sites</span>
-        <ul className={css.links}>
-          {navItemsSites &&
-            navItemsSites.map((item, index) => {
-              return (
-                <Fragment key={index}>
-                  <NavLinkExternal {...item} />
-                </Fragment>
-              );
-            })}
-        </ul>
-        <span className={css.title}>Socials</span>
-        <SocialsList
-          listClassName={css.links}
-          buttonClassName={css.link}
-          iconClassName={css.icon}
-          externalClassName={css.external}
-          contentClassName={css.content}
-          textClassName={css.text}
-          useUnstyledButton
-        />
+              })}
+          </ul>
+          <span className={css.title}>Sites</span>
+          <ul className={css.links}>
+            {navItemsSites &&
+              navItemsSites.map((item, index) => {
+                return (
+                  <Fragment key={index}>
+                    <NavLinkExternal {...item} />
+                  </Fragment>
+                );
+              })}
+          </ul>
+          <span className={css.title}>ReactRadio</span>
+          <ul className={css.links}>
+            {rrItemsSites &&
+              rrItemsSites.map((item, index) => {
+                return (
+                  <Fragment key={index}>
+                    <NavLinkExternal {...item} />
+                  </Fragment>
+                );
+              })}
+          </ul>
+          <span className={css.title}>Socials</span>
+          <SocialsList
+            listClassName={css.links}
+            buttonClassName={css.link}
+            iconClassName={css.icon}
+            externalClassName={css.external}
+            contentClassName={css.content}
+            textClassName={css.text}
+            useUnstyledButton
+          />
+        </nav>
         <div
           className={
             radioCSS.radio +

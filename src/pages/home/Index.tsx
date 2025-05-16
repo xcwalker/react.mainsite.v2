@@ -1,11 +1,9 @@
 import HomeHero from "./Hero";
-import HomeProjects from "./Projects";
+import HomeCarousel from "./Carousel";
 import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
 import HomeSites from "./Sites";
 import { HomeRadio } from "./Radio";
-import HomeRecipes from "./Recipes";
-import HomeBlog from "./Blog";
 
 export default function HomeIndex() {
   return (
@@ -16,10 +14,25 @@ export default function HomeIndex() {
         </title>
       </Helmet>
       <HomeHero />
-      <HomeProjects title="My Projects" titleLink={true} onHome={true} />
+      <HomeCarousel
+        title="My Projects"
+        titleLink={"projects"}
+        onHome={true}
+        itemType="projects"
+      />
       <HomeRadio />
-      <HomeBlog title="My Blog" titleLink={true} onHome={true} />
-      <HomeRecipes title="My Recipes" titleLink={true} onHome={true} />
+      <HomeCarousel
+        title="My Blog"
+        titleLink={"blog"}
+        onHome={true}
+        itemType="blog"
+      />
+      <HomeCarousel
+        title="My Recipes"
+        titleLink={"recipes"}
+        onHome={true}
+        itemType="recipes"
+      />
       <HomeSites />
     </>
   );

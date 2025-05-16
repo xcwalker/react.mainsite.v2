@@ -1,4 +1,4 @@
-import { ProjectItem, RecipeItem } from "../../types";
+import { ItemType, RecipeItem } from "../../types";
 import { ButtonLink } from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
@@ -6,9 +6,10 @@ import SidebarUser from "../../components/SidebarUser";
 
 import css from "../../styles/pages/itemPage/sidebar.module.css";
 import cssRecipeContent from "../../styles/pages/itemPage/sidebarRecipeContent.module.css";
+import Image from "../../components/Image";
 
 export function ItemSidebar(props: {
-  item: ProjectItem;
+  item: ItemType;
   slug: string;
   itemType: "projects" | "recipes" | "albums" | "blog";
 }) {
@@ -28,45 +29,16 @@ export function ItemSidebar(props: {
   };
   return (
     <div className={css.sidebar}>
-      <div className={css.thumbnail}>
-        <picture className={css.image}>
-          <img
-            src={
-              "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-              props.itemType +
-              "/" +
-              props.slug.toLowerCase() +
-              "/images/thumbnail.jpg"
-            }
-            className={css.thumbnail}
-            alt=""
-          />
-          <div className={css.thumbnail + " " + css.placeholder}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180.12 139.79">
-              <g
-                paintOrder="fill markers stroke"
-                transform="translate(-13.59 -66.639)"
-              >
-                <path fill="#d0d0d0" d="M13.591 66.639h180.12v139.79H13.591z" />
-                <path
-                  fill="#fff"
-                  d="m118.51 133.51-34.249 34.249-15.968-15.968-41.938 41.937h152.37z"
-                  opacity={0.675}
-                />
-                <circle
-                  cx={58.217}
-                  cy={108.56}
-                  r={11.773}
-                  fill="#fff"
-                  opacity={0.675}
-                />
-                <path fill="none" d="M26.111 77.634h152.61v116.1H26.111z" />
-              </g>
-            </svg>
-          </div>
-        </picture>
-      </div>
-
+      <Image
+        src={
+          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
+          props.itemType +
+          "/" +
+          props.slug.toLowerCase() +
+          "/images/thumbnail.jpg"
+        }
+        alt="Thumbnail"
+      />
       <div className={css.details}>
         <h3>{item.data.title}</h3>
         <h4>{item.data.subTitle}</h4>
@@ -114,7 +86,7 @@ export function ItemSidebar(props: {
             href={
               "https://github.com/xcwalker/" +
               item.metaData.repoName +
-              (item.metaData.subRepo ? "/tree/main/" + item.metaData.slug : "")
+              (item.metaData.subRepo ? "/tree/main/" + props.slug : "")
             }
             className={css.github}
             type="newTab"
@@ -141,6 +113,13 @@ export function ItemSidebar(props: {
 }
 
 function RecipeSidebarContent(props: { item: RecipeItem }) {
+  const handleQuickLink = (link: string) => {
+    const element = document.getElementById(link);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  
   return (
     <>
       {props.item.data.information.prepTime &&
@@ -170,9 +149,13 @@ function RecipeSidebarContent(props: { item: RecipeItem }) {
       <div className={cssRecipeContent.quickLinks}>
         <span className={cssRecipeContent.title}>Quick Links</span>
         <div className={cssRecipeContent.container}>
-          <a href="#ingredients">Ingredients</a>
-          <a href="#prep">Prep</a>
-          <a href="#instructions">Instructions</a>
+          <button onClick={() => handleQuickLink("ingredients")}>
+            Ingredients
+          </button>
+          <button onClick={() => handleQuickLink("prep")}>Prep</button>
+          <button onClick={() => handleQuickLink("instructions")} >
+            Instructions
+          </button>
         </div>
       </div>
     </>

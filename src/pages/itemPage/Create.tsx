@@ -6,7 +6,9 @@ import firebaseSetData from "../../functions/firebase/storage/setData";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 
-export default function ItemCreate() {
+export default function ItemCreate(props: {
+  itemType: "projects" | "recipes" | "albums" | "blog";
+}) {
   const [recipe, setRecipe] = useState<RecipeItem>({
     data: {
       title: "",
@@ -50,13 +52,18 @@ export default function ItemCreate() {
 
   return (
     <section className={css.create}>
-      <Sidebar recipe={recipe} setRecipe={setRecipe} />
-      <Main recipe={recipe} setRecipe={setRecipe} />
+      <Sidebar
+        recipe={recipe}
+        itemType={props.itemType}
+        setRecipe={setRecipe}
+      />
+      <Main recipe={recipe} itemType={props.itemType} setRecipe={setRecipe} />
     </section>
   );
 }
 
 function Sidebar(props: {
+  itemType: "projects" | "recipes" | "albums" | "blog";
   recipe: RecipeItem;
   setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
 }) {
@@ -152,7 +159,7 @@ function Sidebar(props: {
         </button>
       </div>
 
-      <div className={css.information}>
+      {props.itemType === "recipes" && <div className={css.information}>
         <TextInput
           value={props.recipe.data.information.serves}
           valueName="information"
@@ -183,15 +190,22 @@ function Sidebar(props: {
           className={css.cookTime}
           subValueName="cookTime"
         />
-      </div>
+      </div>}
       <button
         onClick={() =>
-          firebaseSetData("recipes", slug, {data: {...props.recipe.data}, metaData: {...props.recipe.metaData, authorID: currentUser.uid ,  date: {
-            created: new Date().toJSON(),
-            modified: new Date().toJSON()
-          }}}).then((res) => {
+          firebaseSetData(props.itemType, slug, {
+            data: { ...props.recipe.data },
+            metaData: {
+              ...props.recipe.metaData,
+              authorID: currentUser.uid,
+              date: {
+                created: new Date().toJSON(),
+                modified: new Date().toJSON(),
+              },
+            },
+          }).then((res) => {
             console.log(res);
-            navigate("/recipe/" + slug.toString());
+            navigate("/" + props.itemType + "/" + slug.toString());
           })
         }
         className={css.publish}
@@ -203,6 +217,7 @@ function Sidebar(props: {
 }
 
 function Main(props: {
+  itemType: "projects" | "recipes" | "albums" | "blog";
   recipe: RecipeItem;
   setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
 }) {
@@ -219,8 +234,8 @@ function Main(props: {
         className={css.description}
       />
       {/* ingredients */}
-      <div className={css.ingredients}>
-        {props.recipe.data.ingredients.map((ingredient, index) => {
+      {props.itemType === "recipes" && <div className={css.ingredients}>
+        {props.recipe.data.ingredients && props.recipe.data.ingredients.map((ingredient, index) => {
           return (
             <Fragment key={index}>
               <TextInputList
@@ -251,12 +266,12 @@ function Main(props: {
         >
           <GFIcon>add</GFIcon>
         </button>
-      </div>
+      </div>}
 
       {/* prep */}
-      {props.recipe.data.instructions.prep && (
+      {props.itemType === "recipes" && (
         <div className={css.prep}>
-          {props.recipe.data.instructions.prep.map((instruction, index) => {
+          {props.recipe.data.instructions.prep && props.recipe.data.instructions.prep.map((instruction, index) => {
             return (
               <Fragment key={index}>
                 <TextInputList
@@ -299,8 +314,8 @@ function Main(props: {
       )}
 
       {/* cook */}
-      <div className={css.cook}>
-        {props.recipe.data.instructions.cook.map((instruction, index) => {
+      {props.itemType === "recipes" && <div className={css.cook}>
+        {props.recipe.data.instructions.cook && props.recipe.data.instructions.cook.map((instruction, index) => {
           return (
             <Fragment key={index}>
               <TextInputList
@@ -340,7 +355,7 @@ function Main(props: {
           <GFIcon>add</GFIcon>
         </button>
         {/* buttons */}
-      </div>
+      </div>}
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { GridItem as GridItemType } from "../types";
 import { Link } from "react-router-dom";
-import css from "../styles/components/projectItem.module.css";
+import css from "../styles/components/gridItem.module.css";
 import { useEffect, useState } from "react";
+import Image from "./Image";
 
 export default function GridItem(props: {
   slug: string;
@@ -10,44 +11,50 @@ export default function GridItem(props: {
   href?: string;
   itemType: "projects" | "recipes" | "albums" | "blog";
 }) {
-  // const [item, setItem] = useState<ProjectItemType | undefined>(undefined);
   const [date, setDate] = useState<Date>();
 
-  // useEffect(() => {
-  //   fetch(
-  //     "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
-  //       props.slug?.toLowerCase() +
-  //       "/project.json"
-  //   )
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setItem(data);
-  //       setDate(new Date(data.metaData.date.modified));
-  //     });
-
-  //   return () => {
-  //     setItem(undefined);
-  //     setDate(undefined);
-  //   };
-  // }, [props.slug]);
- 
   useEffect(() => {
-   setDate(new Date(props.item.metaData.date.modified));
- }, [props.item]);
+    setDate(new Date(props.item.metaData.date.modified));
+  }, [props.item]);
+
   return (
     <>
       {props.item && (
         <Link
-          className={css.project}
+          className={
+            css.gridItem +
+            " " +
+            (props.item.metaData.hasThumbnail === false ? css.noThumbnail : "")
+          }
           to={"/" + props.href + "/" + props.slug}
           style={props.style}
         >
-          <div className={css.thumbnail}>
+          {(props.item.metaData?.hasThumbnail === undefined ||
+            props.item.metaData.hasThumbnail === true) && (
+            <Image
+              src={
+                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
+                props.itemType +
+                "/" +
+                props.slug.toLowerCase() +
+                "/images/thumbnail.jpg"
+              }
+              alt="Thumbnail"
+              className={css.thumbnail}
+            >
+              {props.item.metaData.collection && (
+                <span className={css.collection}>
+                  {props.item.metaData.collection}
+                </span>
+              )}
+            </Image>
+          )}
+          {/* <div className={css.thumbnail}>
             <img
               src={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" + props.itemType + "/" +
+                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
+                props.itemType +
+                "/" +
                 props.slug.toLowerCase() +
                 "/images/thumbnail.jpg"
               }
@@ -58,7 +65,7 @@ export default function GridItem(props: {
                 {props.item.metaData.collection}
               </span>
             )}
-          </div>
+          </div> */}
           <div className={css.details}>
             <h3>{props.item.data.title}</h3>
             <h4>

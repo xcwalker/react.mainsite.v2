@@ -1,14 +1,5 @@
 import { ReactNode } from "react";
 
-export type LibraryItemType = {
-  image: LibraryImageType;
-  data: LibraryDataType;
-  metadata: LibraryMetaDataType;
-};
-export type LibraryImageType = { url: string; title: string };
-export type LibraryDataType = { title: string; subtitle?: string };
-export type LibraryMetaDataType = { route: string; url: string; date: Date };
-
 type Classes = {
   id?: string;
   className?: string;
@@ -37,9 +28,49 @@ export type GridItem = {
       created: string;
       modified: string;
     };
-    slug: string;
     tags: string[];
     collection: string;
+    hasThumbnail?: boolean;
+  };
+};
+
+export type ItemType = {
+  data: {
+    title: string;
+    subTitle: string;
+    description: string;
+
+    instructions?: {
+      prep?: string[];
+      cook: string[];
+    };
+    ingredients?: string[];
+    information?: {
+      prepTime: string;
+      cookTime: string;
+      serves: string;
+    };
+  };
+  metaData: {
+    date: {
+      created: string;
+      modified: string;
+    };
+    imageCount: number;
+    youtube?: string;
+    tags: string[];
+    collection: string;
+    collectionName: string;
+    colors?: {
+      dark: string;
+      light: string;
+    };
+    authorID: string;
+    key?: string;
+    repoName?: string;
+    subRepo?: boolean;
+    workshop?: string;
+    hasThumbnail?: boolean;
   };
 };
 
@@ -54,20 +85,12 @@ export type BlogItem = {
       created: string;
       modified: string;
     };
-    slug: string;
     imageCount: number;
     hasThumbnail?: boolean;
     tags: string[];
     collection: string;
     collectionName: string;
     authorID: string;
-    author: {
-      name: string;
-      image: {
-        webpURL: string;
-        jpgURL: string;
-      };
-    };
   };
 };
 
@@ -82,7 +105,6 @@ export type ProjectItem = {
       created: string;
       modified: string;
     };
-    slug: string;
     imageCount: number;
     tags: string[];
     collection: string;
@@ -91,13 +113,6 @@ export type ProjectItem = {
     subRepo?: boolean;
     workshop: string;
     authorID: string;
-    author: {
-      name: string;
-      image: {
-        webpURL: string;
-        jpgURL: string;
-      };
-    };
   };
 };
 
@@ -132,13 +147,6 @@ export type RecipeItem = {
       light: string;
     };
     authorID: string;
-    author: {
-      name: string;
-      image?: {
-        webpURL: string;
-        jpgURL: string;
-      };
-    };
   };
 };
 

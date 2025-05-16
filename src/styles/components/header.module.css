@@ -18,8 +18,6 @@
   /* position */
   position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 998;
 
   /* sizing */
@@ -34,6 +32,53 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 1rem;
+}
+
+.container #skip {
+  /* position */
+  position: absolute;
+  inset: 1rem;
+  bottom: auto;
+
+  /* sizing */
+  padding: 0.5rem 0.75rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  color: inherit;
+  font-size: 0.8rem;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: capitalize;
+
+  /* styling */
+  border-radius: 0.5rem;
+
+  background-color: var(--secondary);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.container #skip:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.container nav {
+  /* sizing */
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .container .svg {

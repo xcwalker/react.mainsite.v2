@@ -13,8 +13,7 @@ import Main from "./components/Main";
 import ItemPage from "./pages/itemPage/Index";
 import { Helmet } from "react-helmet";
 import ErrorPage from "./ErrorPage";
-import ProjectsPage from "./pages/Projects";
-import RecipesPage from "./pages/Recipes";
+import ViewAllPage from "./pages/ViewAll";
 import ManagePage from "./pages/account/Manage";
 import LoginPage from "./pages/account/Login";
 import RegisterPage from "./pages/account/Register";
@@ -23,12 +22,10 @@ import { Toaster } from "react-hot-toast";
 import UserIndex from "./pages/user/Index";
 import UserPage from "./pages/user/User";
 import DashboardIndex from "./pages/dashboard/Index";
-import BlogPage from "./pages/Blog";
 import ItemCreate from "./pages/itemPage/Create";
 import Protect from "./components/Security/Protect";
 import { atomWithStorage } from "jotai/utils";
 import BannerContainer from "./components/Banners/BannerContainer";
-import AlbumsPage from "./pages/Albums";
 
 export default function App() {
   return (
@@ -57,12 +54,15 @@ export default function App() {
 
             {/* blog */}
             <Route path="blog">
-              <Route index element={<BlogPage />} />
+              <Route
+                index
+                element={<ViewAllPage itemType="blog" title="My Blog" />}
+              />
               <Route
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <ItemCreate />
+                    <ItemCreate itemType="blog" />
                   </Protect>
                 }
               />
@@ -72,12 +72,17 @@ export default function App() {
 
             {/* projects */}
             <Route path="projects">
-              <Route index element={<ProjectsPage />} />
+              <Route
+                index
+                element={
+                  <ViewAllPage itemType="projects" title="My Projects" />
+                }
+              />
               <Route
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <ItemCreate />
+                    <ItemCreate itemType="projects" />
                   </Protect>
                 }
               />
@@ -86,12 +91,15 @@ export default function App() {
 
             {/* recipes */}
             <Route path="recipes">
-              <Route index element={<RecipesPage />} />
+              <Route
+                index
+                element={<ViewAllPage itemType="recipes" title="My Recipes" />}
+              />
               <Route
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <ItemCreate />
+                    <ItemCreate itemType="recipes" />
                   </Protect>
                 }
               />
@@ -101,12 +109,15 @@ export default function App() {
 
             {/* album */}
             <Route path="albums">
-              <Route index element={<AlbumsPage />} />
+              <Route
+                index
+                element={<ViewAllPage itemType="albums" title="My Albums" />}
+              />
               <Route
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <ItemCreate />
+                    <ItemCreate itemType="albums" />
                   </Protect>
                 }
               />

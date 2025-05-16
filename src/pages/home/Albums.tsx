@@ -20,13 +20,13 @@ export default function HomeAlbums(props: {
 
   useEffect(() => {
     if (props.onHome) {
-    getDataByDateFromUser("projects", import.meta.env.VITE_MAIN_USER_ID).then(
+    getDataByDateFromUser("albums", import.meta.env.VITE_MAIN_USER_ID).then(
       (data) => {
         setAlbumsArray(data as { id: string; value: AlbumItemType }[]);
       }
     );
   } else {
-    getDataByDate("projects").then((data) => {
+    getDataByDate("albums").then((data) => {
       setAlbumsArray(data as { id: string; value: AlbumItemType }[]);
     });
   }

@@ -4,18 +4,23 @@ import { NavLinkInternal } from "../../components/Header";
 const links = [
   {
     title: "Recipe",
-    href: "/recipe/create",
+    href: "/recipes/create",
     gficon: "stockpot",
   },
   {
     title: "Project",
-    href: "/project/create",
+    href: "/projects/create",
     gficon: "design_services",
   },
   {
     title: "Blog Post",
     href: "/blog/create",
     gficon: "text_snippet",
+  },
+  {
+    title: "Album",
+    href: "/albums/create",
+    gficon: "image",
   },
 ];
 
