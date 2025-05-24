@@ -6,6 +6,8 @@ import Section from "../../components/Section";
 import css from "../../styles/pages/home/hero/slideshow.module.css";
 import defaultHeroCSS from "../../styles/pages/home/hero/defaultHero.module.css";
 import christmasHeroCSS from "../../styles/pages/home/hero/christmasHero.module.css";
+import boxingDayHeroCSS from "../../styles/pages/home/hero/boxingDayHero.module.css";
+import newYearHeroCSS from "../../styles/pages/home/hero/newYearHero.module.css";
 import halloweenHeroCSS from "../../styles/pages/home/hero/halloweenHero.module.css";
 import { Link } from "react-router-dom";
 
@@ -14,46 +16,58 @@ export default function HomeHero() {
   const [slideshowIndex, setSlideshowIndex] = useState(0);
   const slideshowItems = [
     {
-      // This is a placeholder for the christmas theme
       id: 2,
       component: <ChristmasHero />,
       dateRange: {
-        start: new Date(date.getFullYear() + "-05-01"),
-        end: new Date(date.getFullYear() + "-05-25"),
+        start: new Date(date.getFullYear() + "-12-01"),
+        end: new Date(date.getFullYear() + "-12-25"),
       },
     },
     {
-      // This is a placeholder for the Halloween theme
       id: 3,
       component: <HalloweenHero />,
       dateRange: {
-        start: new Date(date.getFullYear() + "-05-01"),
-        end: new Date(date.getFullYear() + "-05-31"),
+        start: new Date(date.getFullYear() + "-10-01"),
+        end: new Date(date.getFullYear() + "-10-31"),
+      },
+    },
+    {
+      id: 4,
+      component: <NewYearsHero />,
+      dateRange: {
+        start: new Date(
+          (date.getMonth() !== 0
+            ? date.getFullYear()
+            : date.getFullYear() - 1) + "-12-31"
+        ),
+        end: new Date(
+          (date.getMonth() !== 0
+            ? date.getFullYear() + 1
+            : date.getFullYear()) + "-01-01 23:59:59"
+        ),
+      },
+    },
+    {
+      id: 5,
+      component: <BoxingDaysHero />,
+      dateRange: {
+        start: new Date(date.getFullYear() + "-12-26"),
+        end: new Date(date.getFullYear() + "-12-26 23:59:59"),
       },
     },
     {
       id: 1,
       component: <DefaultHero />,
     },
-    {
-      id: 4,
-      component: <DefaultHero />,
-    },
-    {
-      id: 5,
-      component: <DefaultHero />,
-    },
-  ]
-  
-  const slideshowActive =
-    slideshowItems
-      .filter((item) => {
-        return item.dateRange
-          ? new Date() >= item.dateRange?.start &&
-              new Date() <= item.dateRange?.end
-          : true;
-      })
-      .map((item) => item.id)
+  ];
+
+  const slideshowActive = slideshowItems
+    .filter((item) => {
+      return item.dateRange
+        ? date >= item.dateRange?.start && date <= item.dateRange?.end
+        : true;
+    })
+    .map((item) => item.id);
 
   return (
     <>
@@ -98,20 +112,17 @@ export default function HomeHero() {
             const isActive = index + 1 === slideshowIndex;
 
             const isVisible = item.dateRange
-              ? new Date() >= item.dateRange?.start &&
-                new Date() <= item.dateRange?.end
+              ? date >= item.dateRange?.start && date <= item.dateRange?.end
               : true;
-
-            console.log(item.dateRange);
 
             return (
               <Fragment key={index}>
                 {isVisible && (
-                    <section
+                  <section
                     className={`${css.hero} ${isActive ? css.active : ""}`}
-                    >
+                  >
                     {React.cloneElement(item.component, { isActive: isActive })}
-                    </section>
+                  </section>
                 )}
               </Fragment>
             );
@@ -145,7 +156,53 @@ function DefaultHero() {
   );
 }
 
-function ChristmasHero(props: {isActive?: boolean}) {
+function NewYearsHero(props: { isActive?: boolean }) {
+  return (
+    <div className={newYearHeroCSS.container}>
+      <img
+        src="/newyear_background.svg"
+        alt=""
+        className={newYearHeroCSS.background}
+      />
+      <div className={defaultHeroCSS.backdrop} />
+      <Logo type="xcwalker" className={newYearHeroCSS.logo} />
+      <h1 className={newYearHeroCSS.heading}>Happy New Year</h1>
+      {!props.isActive && (
+        <Link
+          to="https://www.freepik.com/free-vector/festive-firework-abstract-background_4429603.htm"
+          className={defaultHeroCSS.attribution}
+        >
+          Wallpaper from Freepik
+        </Link>
+      )}
+    </div>
+  );
+}
+
+function BoxingDaysHero(props: { isActive?: boolean }) {
+  return (
+    <div className={boxingDayHeroCSS.container}>
+      <img
+        src="/boxingDay_background.svg"
+        alt=""
+        className={boxingDayHeroCSS.background}
+      />
+      <div className={defaultHeroCSS.backdrop} />
+      <Logo type="xcwalker" className={boxingDayHeroCSS.logo} />
+      <h1 className={boxingDayHeroCSS.heading}>Happy Boxing Day</h1>
+      {!props.isActive && (
+        <Link
+          to="https://www.freepik.com/free-vector/festive-firework-abstract-background_4429603.htm"
+          className={defaultHeroCSS.attribution}
+        >
+          Wallpaper from Freepik
+        </Link>
+      )}
+    </div>
+  );
+}
+
+function ChristmasHero(props: { isActive?: boolean }) {
   return (
     <div className={christmasHeroCSS.container}>
       <img
@@ -156,12 +213,14 @@ function ChristmasHero(props: {isActive?: boolean}) {
       <div className={defaultHeroCSS.backdrop} />
       <Logo type="xcwalker" className={christmasHeroCSS.logo} />
       <h1 className={christmasHeroCSS.heading}>Merry Christmas</h1>
-      {!props.isActive && <Link
-        to="https://www.vecteezy.com/vector-art/7718340-hand-drawn-christmas-pattern-design-background"
-        className={defaultHeroCSS.attribution}
-      >
-        Wallpaper from Vecteezy
-      </Link>}
+      {!props.isActive && (
+        <Link
+          to="https://www.vecteezy.com/vector-art/7718340-hand-drawn-christmas-pattern-design-background"
+          className={defaultHeroCSS.attribution}
+        >
+          Wallpaper from Vecteezy
+        </Link>
+      )}
     </div>
   );
 }
