@@ -150,7 +150,6 @@ export type RecipeItem = {
   };
 };
 
-
 export type AlbumItem = {
   data: {
     title: string;
@@ -169,6 +168,37 @@ export type AlbumItem = {
     collectionName: string;
     authorID: string;
     key: string;
+  };
+};
+
+export type LinkItem = {
+  title: string;
+  url: string;
+  icon?: string;
+  color: string;
+  background: {
+    image?: string;
+    type?: string; // "image" | "color"
+    color?: string; // Hex color code if type is "color"
+  };
+};
+
+export type NewTabLinks = {
+  links: LinkItem[];
+  settings: {
+    background: {
+      image?: string;
+      type?: string; // "image" | "color"
+      color?: string; // Hex color code if type is "color"
+    };
+    showOrganization: boolean;
+    showUser: boolean;
+    showSearch: boolean;
+    search: {
+      provider: string; // "google" | "bing" | "duckduckgo"
+      queryURL: string; // URL template for search queries
+      defaultParams?: string; // Additional default parameters for the search query
+    };
   };
 };
 

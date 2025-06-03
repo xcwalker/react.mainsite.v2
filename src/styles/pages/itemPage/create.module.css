@@ -1,4 +1,18 @@
 /* inputs */
+.create .description {
+  /* sizing */
+  width: 100%;
+  height: fit-content;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  color: white;
+}
+
 .create .textInput {
   /* sizing */
   width: 100%;

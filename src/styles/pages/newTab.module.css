@@ -1,0 +1,271 @@
+.newTab {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  height: 100%;
+
+  /* styling */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.newTab .container {
+  /* position */
+  width: 100%;
+  height: 100%;
+}
+
+.newTab .container > .background {
+  /* position */
+  position: absolute;
+  inset: calc(-1 * var(--_margin-inline));
+  z-index: -2;
+
+  /* flex */
+  display: flex;
+}
+
+.newTab .container > .background img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.newTab .user {
+  /* position */
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 1;
+
+  /* sizing */
+  width: 20rem;
+}
+
+.newTab .links {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  padding: max(5vw, 2rem);
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.newTab .links ul {
+  /* sizing */
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: fit-content;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  /* styling */
+  list-style: none;
+}
+
+.newTab .links div.search {
+  /* sizing */
+  height: 3rem;
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+}
+
+.newTab .links div.search .searchWrapper {
+  /* sizing */
+  width: 100%;
+  max-width: 80ch;
+  height: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+
+  /* styling */
+  background-color: var(--primary);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  color: var(--text);
+}
+
+.newTab .links div.search .searchWrapper .icon {
+  /* sizing */
+  aspect-ratio: 1/1;
+  padding: 0.5rem;
+}
+
+.newTab .links div.search .searchWrapper .searchInput {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* text */
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  /* styling */
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+}
+
+.newTab .links div.search .searchWrapper .searchInput:focus {
+  outline: none;
+}
+
+.newTab .links div.search .searchWrapper .searchInput::placeholder {
+  text-transform: capitalize;
+}
+
+.newTab .links div.search .searchWrapper {
+  outline: 2px solid transparent;
+  outline-offset: -0px;
+  transition: outline 75ms ease-in-out, outline-offset 75ms ease-in-out;
+}
+
+.newTab .links div.search .searchWrapper:hover {
+  outline: 2px solid var(--secondary);
+  outline-offset: -0px;
+}
+
+.newTab .links div.search .searchWrapper:focus-within {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+
+.newTab .links div.search .searchWrapper .searchButton {
+  /* sizing */
+  width: 5rem;
+  height: 100%;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* text */
+  font-size: 1.2rem;
+
+  /* styling */
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+}
+.newTab .links div.search .searchWrapper .searchButton:hover {
+  /* styling */
+  background-color: var(--secondary);
+}
+
+.newTab .links ul li a {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  height: 12.5rem;
+  width: 10rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  /* text */
+  color: inherit;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: none;
+
+  /* styling */
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.newTab .links ul li a:hover {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+
+.newTab .links ul li a:hover .background {
+  filter: brightness(0.85);
+}
+
+.newTab .links ul li a:focus-visible {
+  /* outline */
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.newTab .links ul li a span.title {
+  /* text */
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 700;
+
+  /* styling */
+  color: var(--_color);
+}
+
+.newTab .links ul li a span.url {
+  /* position */
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
+
+  /* text */
+  font-size: 0.6rem;
+  line-height: 1;
+  font-weight: 700;
+  text-align: center;
+  text-transform: lowercase;
+
+  /* styling */
+  color: var(--_color);
+}
+
+.newTab .links ul li a .background {
+  /* position */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.newTab .links ul li a .background img {
+  /* position */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.newTab .links ul li a .background > div {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}

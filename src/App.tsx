@@ -26,6 +26,7 @@ import ItemCreate from "./pages/itemPage/Create";
 import Protect from "./components/Security/Protect";
 import { atomWithStorage } from "jotai/utils";
 import BannerContainer from "./components/Banners/BannerContainer";
+import NewTab from "./pages/NewTab";
 
 export default function App() {
   return (
@@ -51,7 +52,6 @@ export default function App() {
           <BannerContainer />
           <Routes>
             <Route path="/" element={<HomeIndex />} />
-
             {/* blog */}
             <Route path="blog">
               <Route
@@ -75,7 +75,6 @@ export default function App() {
 
               <Route path=":slug" element={<ItemPage itemType="blog" />} />
             </Route>
-
             {/* projects */}
             <Route path="projects">
               <Route
@@ -98,7 +97,6 @@ export default function App() {
               />
               <Route path=":slug" element={<ItemPage itemType="projects" />} />
             </Route>
-
             {/* recipes */}
             <Route path="recipes">
               <Route
@@ -122,7 +120,6 @@ export default function App() {
 
               <Route path=":slug" element={<ItemPage itemType="recipes" />} />
             </Route>
-
             {/* album */}
             <Route path="albums">
               <Route
@@ -145,7 +142,6 @@ export default function App() {
               />
               <Route path=":slug" element={<ItemPage itemType="albums" />} />
             </Route>
-
             {/* accounts */}
             <Route path="account">
               <Route index element={<Navigate to={"manage"} />} />
@@ -154,16 +150,39 @@ export default function App() {
               <Route path="register" element={<RegisterPage />} />
               <Route path="forgot" element={<ForgotPasswordPage />} />
             </Route>
-
             {/* user */}
             <Route path="user">
-              <Route index element={<UserIndex />} />
+              <Route
+                index
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <UserIndex />
+                  </Protect>
+                }
+              />
+
               <Route path=":uuid" element={<UserPage />} />
             </Route>
-
+            
             {/* dashboard */}
-            <Route path="dashboard" element={<DashboardIndex />} />
+            <Route
+              path="dashboard"
+              element={
+                <Protect redirect={<Navigate to={"/account"} />}>
+                  <DashboardIndex />
+                </Protect>
+              }
+            />
 
+            {/* new tab */}
+            <Route
+              path="newtab"
+              element={
+                <Protect redirect={<Navigate to={"/account"} />}>
+                  <NewTab />
+                </Protect>
+              }
+            />
             {/* 404 */}
             <Route
               path="*"

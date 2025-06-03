@@ -159,7 +159,12 @@
   border-radius: 0.5rem;
 }
 
-.link a:global(.active) {
+.link a.hidden {
+  display: none;
+}
+
+.link a.active,
+.link a.normal {
   background: var(--primary);
 }
 

@@ -13,45 +13,59 @@ import { RadioAtom } from "../App";
 
 const navItems = [
   {
+    title: "New Tab",
+    href: "/newtab",
+    gficon: "new_window",
+    type: "hidden",
+  },
+  {
     title: "home",
     href: "",
     gficon: "home",
+    type: "normal",
   },
   {
     title: "Projects",
     href: "projects",
     gficon: "design_services",
+    type: "normal",
   },
   {
     title: "Blog",
     href: "blog",
     gficon: "text_snippet",
+    type: "normal",
   },
   {
     title: "Recipes",
     href: "recipes",
     gficon: "stockpot",
+    type: "normal",
   },
   {
     title: "Albums",
     href: "albums",
     gficon: "image",
+    type: "normal",
   },
   {
     title: "account",
     href: "account",
     gficon: "person",
+    type: "normal",
   },
   {
     title: "dashboard",
     href: "dashboard",
     gficon: "dashboard",
     requireUser: true,
+    type: "normal",
   },
   {
     title: "Contact",
     href: "ticket",
     gficon: "contact_support",
+    type: "normal",
   },
 ];
 
@@ -454,10 +468,20 @@ export function NavLinkInternal(props: {
   gficon?: string;
   className?: string;
   gficonClassname?: string;
+  type?: string; // "normal" | "active" | "hidden"
 }) {
   return (
     <li className={css.link}>
-      <NavLink to={props.href}>
+      <NavLink
+        to={props.href}
+        className={({ isActive }) =>
+          isActive
+            ? css[props.type && props.type !== "hidden" ? props.type : "active"]
+            : props.type === "hidden"
+            ? css.hidden
+            : ""
+        }
+      >
         <div className={css.content + " " + props.className}>
           {props.gficon && props.gficon !== "" && (
             <GFIcon className={css.icon + " " + props.gficonClassname}>

@@ -233,61 +233,65 @@ function Main(props: {
         title="Description"
         className={css.description}
       />
+      
       {/* ingredients */}
-      {props.itemType === "recipes" && <div className={css.ingredients}>
-        {props.recipe.data.ingredients && props.recipe.data.ingredients.map((ingredient, index) => {
-          return (
-            <Fragment key={index}>
-              <TextInputList
-                value={ingredient}
-                valueName={index.toString()}
-                classification="ingredients"
-                placeholder={"Ingredient " + (index + 1)}
-                setRecipe={props.setRecipe}
-                title="Ingredient"
-                className={css.ingredient}
-                recipe={props.recipe}
-              />
-            </Fragment>
-          );
-        })}
-        <button
-          onClick={() => {
-            const ingredientLength = props.recipe.data.ingredients.length;
-            props.setRecipe((prev) => {
-              const newValue = { ...prev };
-              if (ingredientLength + 1 !== newValue.data.ingredients.length) {
-                newValue.data.ingredients = [...prev.data.ingredients, ""];
-              }
-              return newValue;
-            });
-          }}
-          className={css.addButton}
-        >
-          <GFIcon>add</GFIcon>
-        </button>
-      </div>}
-
+      {props.itemType === "recipes" && (
+        <div className={css.ingredients}>
+          {props.recipe.data.ingredients &&
+            props.recipe.data.ingredients.map((ingredient, index) => {
+              return (
+                <Fragment key={index}>
+                  <TextInputList
+                    value={ingredient}
+                    valueName={index.toString()}
+                    classification="ingredients"
+                    placeholder={"Ingredient " + (index + 1)}
+                    setRecipe={props.setRecipe}
+                    title="Ingredient"
+                    className={css.ingredient}
+                    recipe={props.recipe}
+                  />
+                </Fragment>
+              );
+            })}
+          <button
+            onClick={() => {
+              const ingredientLength = props.recipe.data.ingredients.length;
+              props.setRecipe((prev) => {
+                const newValue = { ...prev };
+                if (ingredientLength + 1 !== newValue.data.ingredients.length) {
+                  newValue.data.ingredients = [...prev.data.ingredients, ""];
+                }
+                return newValue;
+              });
+            }}
+            className={css.addButton}
+          >
+            <GFIcon>add</GFIcon>
+          </button>
+        </div>
+      )}
       {/* prep */}
       {props.itemType === "recipes" && (
         <div className={css.prep}>
-          {props.recipe.data.instructions.prep && props.recipe.data.instructions.prep.map((instruction, index) => {
-            return (
-              <Fragment key={index}>
-                <TextInputList
-                  value={instruction}
-                  valueName={index.toString()}
-                  classification="instructions"
-                  instructionTag="prep"
-                  placeholder={"Prep " + (index + 1)}
-                  setRecipe={props.setRecipe}
-                  title="Prep"
-                  className={css.instruction}
-                  recipe={props.recipe}
-                />
-              </Fragment>
-            );
-          })}
+          {props.recipe.data.instructions.prep &&
+            props.recipe.data.instructions.prep.map((instruction, index) => {
+              return (
+                <Fragment key={index}>
+                  <TextInputList
+                    value={instruction}
+                    valueName={index.toString()}
+                    classification="instructions"
+                    instructionTag="prep"
+                    placeholder={"Prep " + (index + 1)}
+                    setRecipe={props.setRecipe}
+                    title="Prep"
+                    className={css.instruction}
+                    recipe={props.recipe}
+                  />
+                </Fragment>
+              );
+            })}
           <button
             onClick={() => {
               const instructionLength =
@@ -312,50 +316,52 @@ function Main(props: {
           </button>
         </div>
       )}
-
       {/* cook */}
-      {props.itemType === "recipes" && <div className={css.cook}>
-        {props.recipe.data.instructions.cook && props.recipe.data.instructions.cook.map((instruction, index) => {
-          return (
-            <Fragment key={index}>
-              <TextInputList
-                value={instruction}
-                valueName={index.toString()}
-                classification="instructions"
-                instructionTag="cook"
-                placeholder={"Cook " + (index + 1)}
-                setRecipe={props.setRecipe}
-                title="Cook"
-                className={css.instruction}
-                recipe={props.recipe}
-              />
-            </Fragment>
-          );
-        })}
-        <button
-          onClick={() => {
-            const instructionLength =
-              props.recipe.data.instructions.cook.length;
-            props.setRecipe((prev) => {
-              const newValue = { ...prev };
-              if (
-                instructionLength + 1 !==
-                newValue.data.instructions.cook.length
-              ) {
-                newValue.data.instructions.cook = [
-                  ...prev.data.instructions.cook,
-                  "",
-                ];
-              }
-              return newValue;
-            });
-          }}
-          className={css.addButton}
-        >
-          <GFIcon>add</GFIcon>
-        </button>
-        {/* buttons */}
-      </div>}
+      {props.itemType === "recipes" && (
+        <div className={css.cook}>
+          {props.recipe.data.instructions.cook &&
+            props.recipe.data.instructions.cook.map((instruction, index) => {
+              return (
+                <Fragment key={index}>
+                  <TextInputList
+                    value={instruction}
+                    valueName={index.toString()}
+                    classification="instructions"
+                    instructionTag="cook"
+                    placeholder={"Cook " + (index + 1)}
+                    setRecipe={props.setRecipe}
+                    title="Cook"
+                    className={css.instruction}
+                    recipe={props.recipe}
+                  />
+                </Fragment>
+              );
+            })}
+          <button
+            onClick={() => {
+              const instructionLength =
+                props.recipe.data.instructions.cook.length;
+              props.setRecipe((prev) => {
+                const newValue = { ...prev };
+                if (
+                  instructionLength + 1 !==
+                  newValue.data.instructions.cook.length
+                ) {
+                  newValue.data.instructions.cook = [
+                    ...prev.data.instructions.cook,
+                    "",
+                  ];
+                }
+                return newValue;
+              });
+            }}
+            className={css.addButton}
+          >
+            <GFIcon>add</GFIcon>
+          </button>
+          {/* buttons */}
+        </div>
+      )}
     </div>
   );
 }

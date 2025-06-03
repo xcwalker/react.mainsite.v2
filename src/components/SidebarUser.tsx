@@ -4,7 +4,7 @@ import { UserType } from "../types";
 import firebaseGetUserData from "../functions/firebase/user/getUserData";
 import { Link } from "react-router-dom";
 
-export default function SidebarUser(props: { userId: string }) {
+export default function SidebarUser(props: { userId: string, className?: string }) {
   const [userData, setUserData] = useState<UserType | undefined>();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function SidebarUser(props: { userId: string }) {
   }, [props.userId]);
 
   return (
-    <Link className={css.author} to={"/user/" + props.userId}>
+    <Link className={css.author + (props.className ? (" " + props.className) : "")} to={"/user/" + props.userId}>
       {userData?.images.background && (
         <>
           {userData?.images.backgroundType === "image" && (
