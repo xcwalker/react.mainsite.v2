@@ -24,7 +24,7 @@ html {
   --background: #f2f2f2;
   --primary: #d3d3d3;
   --secondary: #c3c3c3;
-  --accent: #2a2a2a;
+  --accent: #0061e0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -33,7 +33,7 @@ html {
     --background: #0d0d0d;
     --primary: #2a2a2a;
     --secondary: #484848;
-    --accent: #797979;
+    --accent: #0061e0;
   }
 }
 

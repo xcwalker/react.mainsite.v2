@@ -26,7 +26,8 @@ import ItemCreate from "./pages/itemPage/Create";
 import Protect from "./components/Security/Protect";
 import { atomWithStorage } from "jotai/utils";
 import BannerContainer from "./components/Banners/BannerContainer";
-import NewTab from "./pages/NewTab";
+import NewTab from "./pages/newTab/Index";
+import NewTabEdit from "./pages/newTab/Edit";
 
 export default function App() {
   return (
@@ -163,7 +164,7 @@ export default function App() {
 
               <Route path=":uuid" element={<UserPage />} />
             </Route>
-            
+
             {/* dashboard */}
             <Route
               path="dashboard"
@@ -175,14 +176,24 @@ export default function App() {
             />
 
             {/* new tab */}
-            <Route
-              path="newtab"
-              element={
-                <Protect redirect={<Navigate to={"/account"} />}>
-                  <NewTab />
-                </Protect>
-              }
-            />
+            <Route path="newtab">
+              <Route
+                index
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <NewTab />
+                  </Protect>
+                }
+              />
+              <Route
+                path="edit"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <NewTabEdit />
+                  </Protect>
+                }
+              />
+            </Route>
             {/* 404 */}
             <Route
               path="*"

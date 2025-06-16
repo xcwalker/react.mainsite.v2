@@ -1,0 +1,91 @@
+.checkbox {
+  /* variables */
+  --_size: 1.5rem;
+  --_size_icon: 1rem;
+  --_background_checked: var(--accent);
+  --_background_unchecked: var(--secondary);
+  --_color: var(--text);
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checkbox .input {
+  /* grid */
+  display: grid;
+  grid-template-columns: [checkbox-start] var(--_size) [checkbox-end];
+}
+
+.checkbox .checked {
+}
+
+.checkbox .unchecked {
+}
+
+.checkbox .input .default {
+  /* sizing */
+  grid-area: checkbox;
+  width: var(--_size);
+  height: var(--_size);
+  margin: 0;
+  padding: 0;
+
+  /* styling */
+  opacity: 0;
+}
+
+.checkbox .input .check {
+  /* disable */
+  pointer-events: none;
+
+  /* sizing */
+  grid-area: checkbox;
+  width: var(--_size);
+  height: var(--_size);
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
+  border-radius: 0.25rem;
+  background-color: var(--_background_unchecked);
+  color: var(--_color);
+
+  transition: background-color 150ms ease-in-out, border-color 150ms ease-in-out;
+}
+
+.checkbox.checked .input .check {
+  background-color: var(--_background_checked);
+}
+
+.checkbox .input .default:hover ~ .check,
+.checkbox .input .default:focus-visible ~ .check {
+  background-color: var(--_background_unchecked);
+  outline: 2px solid var(--text);
+}
+
+.checkbox.checked .input .default:hover ~ .check,
+.checkbox.checked .input .default:focus-visible ~ .check {
+  background-color: var(--_background_checked);
+}
+
+.checkbox .input .default:focus-visible ~ .check {
+  outline: 2px solid var(--accent);
+}
+
+.checkbox .input .check .tick {
+  font-size: var(--_size_icon);
+
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+}
+
+.checkbox.checked .input .check .tick {
+  opacity: 1;
+}
+.checkbox .label {
+}

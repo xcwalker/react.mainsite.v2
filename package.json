@@ -29,6 +29,7 @@
     "html-entities": "^2.5.2",
     "jotai": "^2.12.0",
     "react": "^18.2.0",
+    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-hot-toast": "^2.4.1",
@@ -39,11 +40,13 @@
     "remark-supersub": "^1.0.0",
     "remove-markdown": "^0.5.0",
     "title-case": "^4.3.1",
+    "tlds": "^1.259.0",
     "vite-tsconfig-paths": "^5.1.4",
     "yet-another-react-lightbox": "^3.18.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
+    "@types/react-color": "^3.0.13",
     "@types/react-dom": "^18.2.22",
     "@types/react-helmet": "^6.1.11",
     "@types/remove-markdown": "^0.3.4",

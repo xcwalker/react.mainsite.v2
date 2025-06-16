@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   role="img"
+   viewBox="0 0 52 49.366997"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="plex"
+   width="52"
+   height="49.366997"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="12.080722"
+     inkscape:cx="17.507231"
+     inkscape:cy="25.453776"
+     inkscape:window-width="1680"
+     inkscape:window-height="912"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <title
+     id="title1">Plex</title>
+  <path
+     d="m 28.575607,38.612583 2.912804,4.240066 c 2.805187,4.405077 6.413907,6.5 10.704194,6.514349 4.455298,-0.08609 7.633554,-4.032009 8.795806,-5.416667 0,0 -2.202539,-1.937086 -4.921634,-5.165563 C 42.357616,34.379691 37.357064,26.193709 37.17053,25.849338 Z M 17.146799,47.838852 H 0 L 16.120861,23.933775 0,0.0071744 H 17.146799 L 33.274834,23.933775 Z M 37.177704,21.996689 52,0 H 34.846026 l -6.241721,9.27649 z"
+     id="path1"
+     sodipodi:nodetypes="ccccccccccccccccccc"
+     style="stroke-width:7.17439;fill:#e5a00d;fill-opacity:1" />
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Plex</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>
