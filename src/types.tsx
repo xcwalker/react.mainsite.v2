@@ -190,6 +190,7 @@ export type NewTabLinks = {
       image?: string;
       type?: string; // "image" | "color"
       color?: string; // Hex color code if type is "color"
+      filter?: string; // CSS filter for the background image
     };
     showOrganization: boolean;
     showUser: boolean;

@@ -52,6 +52,11 @@ export default function NewTab() {
                   src={linkData.settings.background.image}
                   alt={"Background Image"}
                   className={css.backgroundImage}
+                  style={{
+                    filter: linkData.settings.background.filter
+                      ? linkData.settings.background.filter
+                      : "unset",
+                  }}
                 />
               ) : (
                 <div
