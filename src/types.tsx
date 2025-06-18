@@ -10,6 +10,7 @@ export type SectionType = {
   className?: string;
   children: ReactNode;
   container?: Classes;
+  style?: React.CSSProperties;
 };
 
 export type StackType = {
@@ -181,6 +182,8 @@ export type LinkItem = {
     type?: string; // "image" | "color"
     color?: string; // Hex color code if type is "color"
   };
+  type?: "wide" | "narrow"; // Optional type for link display
+  showTitle?: boolean; // Optional flag to show/hide title
 };
 
 export type NewTabLinks = {
@@ -192,6 +195,7 @@ export type NewTabLinks = {
       color?: string; // Hex color code if type is "color"
       filter?: string; // CSS filter for the background image
     };
+    color?: string; // Hex color code for the text
     showOrganization: boolean;
     showUser: boolean;
     showSearch: boolean;

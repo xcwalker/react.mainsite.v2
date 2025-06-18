@@ -47,6 +47,84 @@
   max-width: 20rem;
 }
 
+.newTab .editButtonWrapper {
+  /* position */
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.newTab .editButtonWrapper .edit {
+  /* sizing */
+  width: 2rem;
+  height: 2rem;
+  padding: 0.5rem;
+
+  /* flex */
+  display: grid;
+  grid-template-columns: 1rem 6rem;
+  align-items: center;
+  gap: 0.25rem;
+
+  /* styling */
+  border-radius: 1rem;
+  background-color: var(--primary);
+  color: var(--text);
+  cursor: pointer;
+  border: none;
+  overflow: hidden;
+
+  /* transition */
+  transition: width 150ms ease-in-out, background-color 150ms ease-in-out,
+    border-radius 150ms ease-in-out;
+}
+
+.newTab .editButtonWrapper .edit .icon {
+  --_size: 1rem;
+  /* sizing */
+  width: var(--_size);
+  height: var(--_size);
+  font-size: var(--_size);
+}
+
+.newTab .editButtonWrapper .edit:hover {
+  width: 8.5rem;
+  background-color: var(--secondary);
+  border-radius: 0.5rem;
+}
+
+.newTab .editButtonWrapper .editShortcut {
+  /* transition */
+  transition: opacity 150ms ease-in-out;
+
+  /* styling */
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--_color-page);
+  opacity: 0;
+
+  /* transition */
+  transition: opacity 150ms ease-in-out;
+
+}
+
+.newTab .editButtonWrapper .editShortcut.modifier {
+  opacity: 1;
+}
+
+.newTab .editButtonWrapper:has(.edit:hover) .editShortcut {
+  opacity: 0;
+}
+
 .newTab .links {
   /* sizing */
   width: 100%;
@@ -59,6 +137,11 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
+}
+
+.newTab .links .logo {
+  /* sizing */
+  height: 3rem;
 }
 
 .newTab .links ul {
@@ -75,6 +158,7 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  row-gap: 1.5rem;
 
   /* styling */
   list-style: none;
@@ -91,6 +175,9 @@
 }
 
 .newTab .links div.search .searchWrapper {
+  /* position */
+  position: relative;
+
   /* sizing */
   width: 100%;
   max-width: 80ch;
@@ -103,14 +190,47 @@
   /* styling */
   background-color: var(--primary);
   border-radius: 0.5rem;
-  overflow: hidden;
   color: var(--text);
+}
+
+.newTab .links div.search .searchWrapper .editShortcut {
+  /* position */
+  position: absolute;
+  top: -2ch;
+  left: 0;
+
+  /* text */
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 700;
+
+  /* styling */
+  color: var(--_color-page);
+  opacity: 0;
+
+  /* transition */
+  transition: opacity 150ms ease-in-out;
+}
+
+.newTab .links div.search .searchWrapper .editShortcut.modifier {
+  opacity: 1;
+}
+
+.newTab .links div.search .searchWrapper:has(:focus) .editShortcut {
+
+  /* styling */
+  opacity: 0;
 }
 
 .newTab .links div.search .searchWrapper .icon {
   /* sizing */
   aspect-ratio: 1/1;
-  padding: 0.5rem;
+  padding: 0.75rem;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .newTab .links div.search .searchWrapper .searchInput {
@@ -177,15 +297,57 @@
   background-color: var(--secondary);
 }
 
-.newTab .links ul li a {
+.newTab .links ul li {
   /* position */
   position: relative;
 
   /* sizing */
   width: 10rem;
-  max-width: 25vw;
-  aspect-ratio: 1/1.25;
-  padding: 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.newTab .links ul li.wide {
+  width: calc(20rem + 1rem);
+}
+
+.newTab .links ul li .editShortcut {
+  /* position */
+  position: absolute;
+  top: -2ch;
+  left: 0;
+
+  /* text */
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 700;
+
+  /* styling */
+  color: var(--_color-page);
+  opacity: 0;
+
+  /* transition */
+  transition: opacity 150ms ease-in-out;
+
+}
+
+.newTab .links ul li .editShortcut.modifier {
+  opacity: 1;
+}
+
+
+.newTab .links ul li a {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  height: 12.5rem;
+  width: 100%;
 
   /* flex */
   display: flex;
@@ -195,7 +357,7 @@
   gap: 0.5rem;
 
   /* text */
-  color: inherit;
+  color: var(--_color);
   font-size: 1.2rem;
   font-weight: bold;
   text-decoration: none;
@@ -243,29 +405,28 @@
   font-weight: 700;
 
   /* styling */
-  color: var(--_color);
+  color: inherit;
 }
 
-.newTab .links ul li a span.url {
-  /* position */
-  position: absolute;
-  bottom: 0.5rem;
-  left: 0.5rem;
-  right: 0.5rem;
+.newTab .links ul li span.url {
+  /* sizing */
+  width: 100%;
 
   /* sizing */
   overflow: hidden;
   text-overflow: ellipsis;
 
   /* text */
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   line-height: 1;
   font-weight: 600;
   text-align: center;
   text-transform: lowercase;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   /* styling */
-  color: var(--_color);
+  color: var(--_color-page);
 }
 
 .newTab .links ul li a .background {
@@ -291,4 +452,17 @@
   position: absolute;
   inset: 0;
   z-index: -1;
+}
+
+.newTab .links ul li a .iconWrapper {
+  height: 56px;
+}
+
+.newTab .links ul li a .iconWrapper .iconImage {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* object-fit */
+  object-fit: contain;
 }
