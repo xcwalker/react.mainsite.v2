@@ -6,7 +6,7 @@ export default function Protect(props: {
   isLoginPage?: boolean;
   redirect?: ReactNode;
 }) {
-  const user = useAuth(null);
+  const user = useAuth();
 
   return (
     <>

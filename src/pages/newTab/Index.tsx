@@ -139,7 +139,7 @@ const bangs = [
 ];
 
 export default function NewTab() {
-  const user = useAuth(null);
+  const user = useAuth();
   const [linkData, setLinkData] = useState<NewTabLinks | undefined>();
   const [error, setError] = useState(false);
   const [searchIsWebsite, setSearchIsWebsite] = useState(false);

@@ -40,13 +40,6 @@ export default function ItemCreate(props: {
         light: "",
       },
       authorID: "",
-      author: {
-        name: "",
-        image: {
-          webpURL: "",
-          jpgURL: "",
-        },
-      },
     },
   });
 
@@ -69,7 +62,7 @@ function Sidebar(props: {
 }) {
   const [slug, setSlug] = useState<string>("");
   const navigate = useNavigate();
-  const currentUser = useAuth(null);
+  const currentUser = useAuth();
 
   return (
     <div className={css.sidebar}>
@@ -191,7 +184,7 @@ function Sidebar(props: {
           subValueName="cookTime"
         />
       </div>}
-      <button
+      {currentUser && currentUser !== null && <button
         onClick={() =>
           firebaseSetData(props.itemType, slug, {
             data: { ...props.recipe.data },
@@ -211,7 +204,7 @@ function Sidebar(props: {
         className={css.publish}
       >
         Publish
-      </button>
+      </button>}
     </div>
   );
 }

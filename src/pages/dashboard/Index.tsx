@@ -11,7 +11,7 @@ import DashboardRadio from "./Radio";
 import DashboardLinks from "./Links";
 
 export default function DashboardIndex() {
-  const user = useAuth(null);
+  const user = useAuth();
   const [userData, setUserData] = useState<UserType | null>(null);
 
   useEffect(() => {
