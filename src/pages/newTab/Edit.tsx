@@ -9,16 +9,17 @@ import LoadingPage from "../../components/Loading";
 import ErrorPage from "../../ErrorPage";
 import { Navigate } from "react-router-dom";
 
-import { BlockPicker, CompactPicker, PhotoshopPicker } from "react-color";
+import { PhotoshopPicker } from "react-color";
 import GFIcon from "../../components/GFIcon";
 import Checkbox from "../../components/Checkbox";
 
 export default function NewTabEdit() {
-  const user = useAuth(null);
+  const user = useAuth();
   const [linkData, setLinkData] = useState<NewTabLinks | undefined>();
   const [error, setError] = useState(false);
   const [editMode, setEditMode] = useState(true);
-  const [modifierPressed, setModifierPressed] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_modifierPressed, setModifierPressed] = useState(false);
 
   useEffect(() => {
     if (!user?.uid) {
@@ -43,8 +44,12 @@ export default function NewTabEdit() {
   }, [user?.uid]);
 
   useEffect(() => {
-    // updates newtab
+    if (!linkData || !user?.uid) {
+      return;
+    }
+
     console.log("Updating new tab data", linkData, user?.uid);
+    
     firebaseSetData("newtab", user?.uid, linkData)
       .then(() => {
         console.log("New tab data updated successfully");
@@ -139,14 +144,14 @@ export default function NewTabEdit() {
                             title: "New Link",
                             url: "https://example.com",
                             icon: "",
-                            type: "normal",
+                            type: "narrow",
                             background: {
                               type: "color",
                               color: "#ffffff",
                               image: "",
                             },
                             color: "#000000",
-                          },
+                          } as LinkItemType,
                         ];
                         return { ...prevLinkData, links: newLinks };
                       });

@@ -144,7 +144,7 @@ const bangs = [
 ];
 
 export default function NewTab() {
-  const user = useAuth(null);
+  const user = useAuth();
   const [linkData, setLinkData] = useState<NewTabLinks | undefined>();
   const [error, setError] = useState(false);
   const [searchIsWebsite, setSearchIsWebsite] = useState(false);
@@ -258,6 +258,11 @@ export default function NewTab() {
                   src={linkData.settings.background.image}
                   alt={"Background Image"}
                   className={css.backgroundImage}
+                  style={{
+                    filter: linkData.settings.background.filter
+                      ? linkData.settings.background.filter
+                      : "unset",
+                  }}
                 />
               ) : (
                 <div

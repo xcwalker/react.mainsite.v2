@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { firebaseAuth } from "./setup";
 import { User, onAuthStateChanged } from "firebase/auth";
 
-export function useAuth(falseValue: unknown) {
-  const [currentUser, setCurrentUser] = useState<User | typeof falseValue>(
+export function useAuth() {
+  const [currentUser, setCurrentUser] = useState<User | null | undefined>(
     undefined
   );
 
@@ -12,11 +12,11 @@ export function useAuth(falseValue: unknown) {
       if (user) {
         setCurrentUser(user);
       } else {
-        setCurrentUser(falseValue);
+        setCurrentUser(null);
       }
     });
     return unsubscribe;
-  }, [falseValue]);
+  }, []);
 
   return currentUser;
 }

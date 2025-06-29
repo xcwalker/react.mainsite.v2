@@ -40,10 +40,11 @@
   position: absolute;
   left: 1rem;
   bottom: 1rem;
+  right: 1rem;
   z-index: 1;
 
   /* sizing */
-  width: 20rem;
+  max-width: 20rem;
 }
 
 .newTab .editButtonWrapper {
@@ -381,6 +382,22 @@
   outline-offset: 2px;
 }
 
+.newTab .links ul li a .iconWrapper {
+  /* sizing */
+  padding-inline: 1rem;
+  aspect-ratio: 1/0.47971055900621;
+
+}
+
+.newTab .links ul li a .iconWrapper img {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* object fit */
+  object-fit: contain;
+}
+
 .newTab .links ul li a span.title {
   /* text */
   font-size: 1rem;
@@ -395,10 +412,14 @@
   /* sizing */
   width: 100%;
 
+  /* sizing */
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   /* text */
   font-size: 0.7rem;
   line-height: 1;
-  font-weight: 700;
+  font-weight: 600;
   text-align: center;
   text-transform: lowercase;
   text-overflow: ellipsis;
