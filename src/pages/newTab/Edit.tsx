@@ -184,6 +184,11 @@ function LinkItemEdit(props: {
     props.link.background.color || "#ffffff"
   );
 
+  useEffect(() => {
+    setColor(props.link.color || "#000000");
+    setBackgroundColor(props.link.background.color || "#ffffff");
+  }, [props.link]);
+
   return (
     <>
       <li className={props.link.type === "wide" ? " " + css.wide : ""}>

@@ -136,6 +136,11 @@ const bangs = [
     url: "https://app.plex.tv/desktop/#!/search?pivot=top&query=%s",
     icon: "plex",
   },
+  {
+    bang: "drive",
+    url: "https://drive.google.com/drive/search?q=%s",
+    icon: "google-drive",
+  }
 ];
 
 export default function NewTab() {
