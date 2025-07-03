@@ -10,7 +10,7 @@ import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
 import ErrorPage from "../../ErrorPage";
 import { useEffect, useState } from "react";
-import { ItemType, ProjectItem, RecipeItem } from "../../types";
+import { ItemType, ProjectItemProps, RecipeItem } from "../../types";
 import LoadingPage from "../../components/Loading";
 
 import css from "../../styles/pages/itemPage/index.module.css";
@@ -33,7 +33,7 @@ export default function ItemPage(
         setError(true);
         return;
       }
-      setItem(data as ProjectItem);
+      setItem(data as ProjectItemProps);
     });
 
     return () => {

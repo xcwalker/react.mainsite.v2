@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import getDataByDateExcludeSlugAndSameCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndSameCollection";
 import getDataByDateExcludeSlugAndDifferentCollection from "../../functions/firebase/storage/getDataByDateExcludeSlugAndDifferentCollection";
 import getDataByDateExcludeSlug from "../../functions/firebase/storage/getDataByDateExcludeSlug";
-import { ProjectItem as ProjectItemType } from "../../types";
+import { ProjectItemProps } from "../../types";
 import Carousel from "../../components/Carousel";
 import ListItem from "../../components/ListItem";
 
@@ -16,7 +16,7 @@ export default function AlbumRelated(props: {
   title: string;
 }) {
   const [otherProjects, setOtherProjects] = useState<
-    { id: string; value: ProjectItemType }[] | undefined
+    { id: string; value: ProjectItemProps }[] | undefined
   >();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function AlbumRelated(props: {
             props.slug,
             props.collection
           ).then((data) => {
-            setOtherProjects(data as { id: string; value: ProjectItemType }[]);
+            setOtherProjects(data as { id: string; value: ProjectItemProps }[]);
           });
         } else if (props.collection && props.sameCollection === false) {
           getDataByDateExcludeSlugAndDifferentCollection(
@@ -34,11 +34,11 @@ export default function AlbumRelated(props: {
             props.slug,
             props.collection
           ).then((data) => {
-            setOtherProjects(data as { id: string; value: ProjectItemType }[]);
+            setOtherProjects(data as { id: string; value: ProjectItemProps }[]);
           });
         } else {
           getDataByDateExcludeSlug("projects", props.slug).then((data) => {
-            setOtherProjects(data as { id: string; value: ProjectItemType }[]);
+            setOtherProjects(data as { id: string; value: ProjectItemProps }[]);
           });
         }
 
@@ -75,7 +75,7 @@ export default function AlbumRelated(props: {
           {otherProjects.map((item, index) => {
             return (
               <Fragment key={index}>
-                <GridItem slug={item.id} item={item.value} href="album" />
+                <GridItem slug={item.id} item={item.value} href="album" itemType="albums" />
               </Fragment>
             );
           })}

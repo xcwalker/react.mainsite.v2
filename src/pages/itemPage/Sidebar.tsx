@@ -1,5 +1,5 @@
 import { ItemType, RecipeItem } from "../../types";
-import { ButtonLink } from "../../components/Button";
+import Button from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
 import SidebarUser from "../../components/SidebarUser";
@@ -73,31 +73,48 @@ export function ItemSidebar(props: {
       )}
       <div className={css.links}>
         {item.metaData.repoName && (
-          <ButtonLink
+          <Button
             href={
               "https://github.com/xcwalker/" +
               item.metaData.repoName +
               (item.metaData.subRepo ? "/tree/main/" + props.slug : "")
             }
-            className={css.github}
-            type="newTab"
+            external
+            title="Github Repo"
+            icon={{ inline: <SocialIcon social="github" /> }}
+            style="secondary"
           >
-            <SocialIcon social="github" />
             Github Repo
-            <GFIcon className={css.icon}>open_in_new</GFIcon>
-          </ButtonLink>
+          </Button>
         )}
         {item.metaData.workshop && (
-          <ButtonLink
+          <Button
             href={item.metaData.workshop}
-            className={css.steam}
-            type="newTab"
+            external
+            title="Steam Workshop Page"
+            icon={{ inline: <SocialIcon social="steam" /> }}
+            style="secondary"
           >
-            <SocialIcon social="steam" />
             Workshop Page
-            <GFIcon className={css.icon}>open_in_new</GFIcon>
-          </ButtonLink>
+          </Button>
         )}
+        {navigator.canShare() && (
+          <Button
+            onClick={async () => {
+              await navigator.share({
+                title: item.data.title,
+                text: item.data.subTitle,
+                url: window.location.href,
+              });
+            }}
+            title="Share"
+            icon={{ gficon: "share" }}
+            style="secondary"
+          >
+            Share
+          </Button>
+          )}
+        
       </div>
     </div>
   );

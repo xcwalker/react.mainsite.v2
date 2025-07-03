@@ -1,4 +1,4 @@
-import { GridItem as GridItemType } from "../types";
+import { ItemProps } from "../types";
 import { Link } from "react-router-dom";
 import css from "../styles/components/gridItem.module.css";
 import { useEffect, useState } from "react";
@@ -7,7 +7,7 @@ import Image from "./Image";
 export default function GridItem(props: {
   slug: string;
   style?: React.CSSProperties;
-  item: GridItemType;
+  item: ItemProps;
   href?: string;
   itemType: "projects" | "recipes" | "albums" | "blog";
   hasThumbnail?: boolean;

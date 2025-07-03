@@ -1,6 +1,5 @@
 import { Fragment, useCallback, useEffect, useState } from "react";
 import Logo from "./Logo";
-import { Link, NavLink } from "react-router-dom";
 
 import css from "../styles/components/header.module.css";
 import radioCSS from "../styles/components/header/radio.module.css";
@@ -10,62 +9,55 @@ import Protect from "./Security/Protect";
 import { useAtom } from "jotai";
 
 import { RadioAtom } from "../App";
+import Button from "./Button";
 
 const navItems = [
   {
     title: "New Tab",
     href: "/newtab",
     gficon: "new_window",
-    type: "hidden",
+    hidden: true,
   },
   {
     title: "home",
     href: "",
     gficon: "home",
-    type: "normal",
   },
   {
     title: "Projects",
     href: "projects",
     gficon: "design_services",
-    type: "normal",
   },
   {
     title: "Blog",
     href: "blog",
     gficon: "text_snippet",
-    type: "normal",
   },
   {
     title: "Recipes",
     href: "recipes",
     gficon: "stockpot",
-    type: "normal",
   },
   {
     title: "Albums",
     href: "albums",
     gficon: "image",
-    type: "normal",
   },
   {
     title: "account",
     href: "account",
     gficon: "person",
-    type: "normal",
   },
   {
     title: "dashboard",
     href: "dashboard",
     gficon: "dashboard",
     requireUser: true,
-    type: "normal",
   },
   {
     title: "Contact",
     href: "ticket",
     gficon: "contact_support",
-    type: "normal",
   },
 ];
 
@@ -73,7 +65,6 @@ const navItemsSites = [
   {
     title: "Immersion",
     href: "https://immersion.xcwalker.dev/",
-    type: "normal",
     gficon: "grid_view",
     // iconURL:
     // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
@@ -81,7 +72,6 @@ const navItemsSites = [
   {
     title: "Searrson",
     href: "https://searrson.xcwalker.dev/",
-    type: "normal",
     gficon: "wallpaper_slideshow",
     // iconURL:
     // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Searrson.svg",
@@ -89,7 +79,6 @@ const navItemsSites = [
   {
     title: "Therwim",
     href: "https://therwim.xcwalker.dev/",
-    type: "normal",
     gficon: "web",
     // iconURL:
     // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Therwim.svg",
@@ -100,7 +89,6 @@ const rrItemsSites = [
   {
     title: "Desktop",
     href: "https://reactradio.dev/",
-    type: "normal",
     gficon: "desktop_windows",
     // iconURL:
     // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
@@ -108,7 +96,6 @@ const rrItemsSites = [
   {
     title: "Mobile",
     href: "https://mobile.reactradio.dev/",
-    type: "normal",
     gficon: "smartphone",
     // iconURL:
     // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Searrson.svg",
@@ -116,7 +103,6 @@ const rrItemsSites = [
   {
     title: "Legacy",
     href: "https://legacy.reactradio.dev/",
-    type: "normal",
     gficon: "devices",
     // iconURL:
     // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Therwim.svg",
@@ -283,13 +269,15 @@ export default function Header() {
                   return (
                     <Fragment key={index}>
                       <Protect>
-                        <NavLinkInternal {...item} />
+                        <Button {...item} icon={{ gficon: item.gficon }}>
+                          {item.title}
+                        </Button>
                       </Protect>
                     </Fragment>
                   );
                 return (
                   <Fragment key={index}>
-                    <NavLinkInternal {...item} />
+                    <Button {...item} icon={{gficon: item.gficon}}>{item.title}</Button>
                   </Fragment>
                 );
               })}
@@ -300,7 +288,9 @@ export default function Header() {
               navItemsSites.map((item, index) => {
                 return (
                   <Fragment key={index}>
-                    <NavLinkExternal {...item} />
+                    <Button {...item} icon={{ gficon: item.gficon }} external>
+                      {item.title}
+                    </Button>
                   </Fragment>
                 );
               })}
@@ -311,7 +301,9 @@ export default function Header() {
               rrItemsSites.map((item, index) => {
                 return (
                   <Fragment key={index}>
-                    <NavLinkExternal {...item} />
+                    <Button {...item} icon={{ gficon: item.gficon }} external>
+                      {item.title}
+                    </Button>
                   </Fragment>
                 );
               })}
@@ -459,63 +451,6 @@ export default function Header() {
         </div>
       </div>
     </header>
-  );
-}
-
-export function NavLinkInternal(props: {
-  href: string;
-  title: string;
-  gficon?: string;
-  className?: string;
-  gficonClassname?: string;
-  type?: string; // "normal" | "active" | "hidden"
-}) {
-  return (
-    <li className={css.link}>
-      <NavLink
-        to={props.href}
-        className={({ isActive }) =>
-          isActive
-            ? css[props.type && props.type !== "hidden" ? props.type : "active"]
-            : props.type === "hidden"
-            ? css.hidden
-            : ""
-        }
-      >
-        <div className={css.content + " " + props.className}>
-          {props.gficon && props.gficon !== "" && (
-            <GFIcon className={css.icon + " " + props.gficonClassname}>
-              {props.gficon}
-            </GFIcon>
-          )}
-          <span className={css.text}>{props.title}</span>
-        </div>
-      </NavLink>
-    </li>
-  );
-}
-
-function NavLinkExternal(props: {
-  href: string;
-  title: string;
-  iconURL?: string;
-  gficon?: string;
-}) {
-  return (
-    <li className={css.link}>
-      <Link to={props.href}>
-        <div className={css.content}>
-          {props.iconURL && props.iconURL !== "" && (
-            <img className={css.icon} src={props.iconURL} />
-          )}
-          {props.gficon && props.gficon !== "" && (
-            <GFIcon className={css.icon}>{props.gficon}</GFIcon>
-          )}
-          <span className={css.text}>{props.title}</span>
-        </div>
-        <GFIcon className={css.icon + " " + css.external}>open_in_new</GFIcon>
-      </Link>
-    </li>
   );
 }
 

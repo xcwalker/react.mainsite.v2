@@ -35,6 +35,27 @@ export type GridItem = {
   };
 };
 
+export interface ItemProps {
+  data: {
+    title: string;
+    subTitle: string;
+    description: string;
+  };
+  metaData: {
+    date: {
+      created: string;
+      modified: string;
+    };
+    thumbnail: string;
+    hasThumbnail?: boolean;
+    imageCount: number;
+    tags: string[];
+    collection: string;
+    collectionName: string;
+    authorID: string;
+  };
+}
+
 export type ItemType = {
   data: {
     title: string;
@@ -75,6 +96,8 @@ export type ItemType = {
   };
 };
 
+export type BlogItemProps = ItemProps & {};
+
 export type BlogItem = {
   data: {
     title: string;
@@ -95,25 +118,33 @@ export type BlogItem = {
   };
 };
 
-export type ProjectItem = {
-  data: {
-    title: string;
-    subTitle: string;
-    description: string;
-  };
+export type ProjectItemProps = ItemProps & {
   metaData: {
-    date: {
-      created: string;
-      modified: string;
-    };
-    imageCount: number;
-    tags: string[];
-    collection: string;
-    collectionName: string;
     repoName: string;
     subRepo?: boolean;
     workshop: string;
     authorID: string;
+  };
+};
+
+export type RecipeItemProps = ItemProps & {
+  data: {
+    instructions: {
+      prep?: string[];
+      cook: string[];
+    };
+    information: {
+      prepTime: string;
+      cookTime: string;
+      serves: string;
+    };
+  };
+  metaData: {
+    youtube?: string;
+    colors?: {
+      dark: string;
+      light: string;
+    };
   };
 };
 

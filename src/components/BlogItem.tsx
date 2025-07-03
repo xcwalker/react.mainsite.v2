@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import css from "../styles/components/blogItem.module.css";
 import { useEffect, useState } from "react";
-import { BlogItem as BlogItemType } from "../types";
+import { BlogItemProps } from "../types";
 
 export default function BlogItem(props: {
   slug: string;
   style?: React.CSSProperties;
-  item: BlogItemType;
+  item: BlogItemProps;
 }) {
   // const [item, setItem] = useState<ProjectItemType | undefined>(undefined);
   const [date, setDate] = useState<Date>();

@@ -20,13 +20,14 @@ export default function Button(props: {
 }) {
   return (
     <>
-      {props.href && props.external && (
+      {props.href !== undefined && props.external && (
         <Link
           to={props.href}
           className={
             css.button +
             " " +
             props?.className +
+            " " + css.external +
             (props.icon ? " " + css.hasIcon : "") +
             (props.style ? ` ${css[props.style]}` : "")
           }
@@ -42,7 +43,7 @@ export default function Button(props: {
           <GFIcon className={css.external}>open_in_new</GFIcon>
         </Link>
       )}
-      {props.href && !props.external && (
+      {props.href !== undefined && !props.external && (
         <NavLink
           to={props.href}
           className={({ isActive }) =>
@@ -56,7 +57,9 @@ export default function Button(props: {
           target={props.target === "newTab" ? "_blank" : ""}
           title={props.title}
         >
-          {props.icon?.gficon && <GFIcon>{props.icon?.gficon}</GFIcon>}
+          {props.icon?.gficon && (
+            <GFIcon className={css.icon}>{props.icon?.gficon}</GFIcon>
+          )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
         </NavLink>
@@ -74,7 +77,9 @@ export default function Button(props: {
           tabIndex={props.tabIndex}
           title={props.title}
         >
-          {props.icon?.gficon && <GFIcon>{props.icon?.gficon}</GFIcon>}
+          {props.icon?.gficon && (
+            <GFIcon className={css.icon}>{props.icon?.gficon}</GFIcon>
+          )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
         </button>

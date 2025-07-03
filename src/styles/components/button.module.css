@@ -1,59 +1,92 @@
+
+
 .button {
   /* position */
   position: relative;
 
-  /* corner variables */
-  --_size: 10px;
-  --_border-width: 2px;
-  --_border-color: currentColor;
-  --_offset: 0px;
-  --_offset-hover: 5px;
-  --_duration: 100ms;
-  --_ease: ease;
-
   /* sizing */
-  padding: 0.5rem 1.25rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
 
-  /* text */
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1;
-  text-decoration: none;
-
-  /* flex */
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  /* grid */
+  display: grid;
+  grid-template-columns: 1fr;
   align-items: center;
   gap: 0.5rem;
 
+  /* text */
+  color: inherit;
+  font-size: 0.8rem;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: capitalize;
+
   /* styling */
-  --_border-radius: 0.5rem;
-  border-radius: var(--_border-radius);
-  background-color: var(--background-200);
-  color: var(--text);
+  border-radius: 0.5rem;
   border: none;
 }
 
-.button svg {
-  /* position */
-  position: absolute;
-  inset: 0px;
-  right: auto;
+.button.hasIcon {
+  /* grid */
+  display: grid;
+  --_icon-size: 1rem;
+  grid-template-columns: var(--_icon-size) 1fr;
+  gap: 0.5rem;
+}
 
-  /* sizing */
-  padding: 0.5rem;
-  height: 100%;
+.button.external {
+  grid-template-columns: 1fr auto;
+}
 
+.button.external.hasIcon {
+  grid-template-columns: var(--_icon-size) 1fr auto;
+}
+
+
+
+.button.primary {
   /* styling */
-  fill: currentColor;
+  background: var(--accent);
+  color: var(--text);
 }
 
-.button:hover {
-  background-color: var(--background-500);
-  /* outline: var(--_border-width) solid var(--_border-color); */
+.button.secondary {
+  /* styling */
+  background: var(--primary);
+  color: var(--text);
 }
 
+.button.hidden {
+  display: none;
+}
+
+.button.active {
+  background: var(--primary);
+}
+
+.button:hover,
 .button:focus-visible {
-  outline: var(--_border-width) solid var(--_border-color);
+  /* styling */
+  background-color: var(--secondary);
+}
+
+.button:focus {
+  outline: solid 2px var(--foreground-color-100);
+  outline-offset: 0.25rem;
+}
+
+.button .icon {
+  width: var(--_icon-size);
+  font-size: var(--_icon-size);
+  fill: currentColor;
+  color: var(--text);
+}
+
+.button .external {
+  margin-left: auto;
+  --_size: 1rem;
+  width: var(--_size);
+  font-size: var(--_size);
+  fill: currentColor;
+  color: var(--text);
 }

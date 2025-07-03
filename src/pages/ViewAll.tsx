@@ -38,6 +38,7 @@ export default function ViewAllPage(props: {
         title={props.title}
         onHome={false}
         itemType={props.itemType}
+        hasThumbnail={props.hasThumbnail}
       />
     </>
   );
