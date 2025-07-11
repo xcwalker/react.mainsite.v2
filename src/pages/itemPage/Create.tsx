@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import css from "../../styles/pages/itemPage/create.module.css";
-import { RecipeItem } from "../../types";
+import { RecipeItemProps } from "../../types";
 import GFIcon from "../../components/GFIcon";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 export default function ItemCreate(props: {
   itemType: "projects" | "recipes" | "albums" | "blog";
 }) {
-  const [recipe, setRecipe] = useState<RecipeItem>({
+  const [recipe, setRecipe] = useState<RecipeItemProps>({
     data: {
       title: "",
       subTitle: "",
@@ -40,6 +40,8 @@ export default function ItemCreate(props: {
         light: "",
       },
       authorID: "",
+      thumbnail: "",
+      hasThumbnail: false,
     },
   });
 
@@ -57,8 +59,8 @@ export default function ItemCreate(props: {
 
 function Sidebar(props: {
   itemType: "projects" | "recipes" | "albums" | "blog";
-  recipe: RecipeItem;
-  setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
+  recipe: RecipeItemProps;
+  setRecipe: React.Dispatch<React.SetStateAction<RecipeItemProps>>;
 }) {
   const [slug, setSlug] = useState<string>("");
   const navigate = useNavigate();
@@ -211,8 +213,8 @@ function Sidebar(props: {
 
 function Main(props: {
   itemType: "projects" | "recipes" | "albums" | "blog";
-  recipe: RecipeItem;
-  setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
+  recipe: RecipeItemProps;
+  setRecipe: React.Dispatch<React.SetStateAction<RecipeItemProps>>;
 }) {
   return (
     <div className={css.main}>
@@ -361,10 +363,10 @@ function Main(props: {
 
 function TextInput(props: {
   value: string;
-  classification: keyof RecipeItem;
-  valueName: keyof RecipeItem["data"] | keyof RecipeItem["metaData"];
-  setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
-  recipe?: RecipeItem;
+  classification: keyof RecipeItemProps;
+  valueName: keyof RecipeItemProps["data"] | keyof RecipeItemProps["metaData"];
+  setRecipe: React.Dispatch<React.SetStateAction<RecipeItemProps>>;
+  recipe?: RecipeItemProps;
   subValueName?: string;
 
   title: string;
@@ -405,8 +407,8 @@ function TextInputList(props: {
   value: string;
   classification: "information" | "tag" | "ingredients" | "instructions";
   valueName: string;
-  setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
-  recipe?: RecipeItem;
+  setRecipe: React.Dispatch<React.SetStateAction<RecipeItemProps>>;
+  recipe?: RecipeItemProps;
   instructionTag?: string;
 
   title: string;
@@ -520,9 +522,9 @@ function TextInputList(props: {
 
 function TextInputLarge(props: {
   value: string;
-  classification: keyof RecipeItem;
-  valueName: keyof RecipeItem["data"] | keyof RecipeItem["metaData"];
-  setRecipe: React.Dispatch<React.SetStateAction<RecipeItem>>;
+  classification: keyof RecipeItemProps;
+  valueName: keyof RecipeItemProps["data"] | keyof RecipeItemProps["metaData"];
+  setRecipe: React.Dispatch<React.SetStateAction<RecipeItemProps>>;
 
   title: string;
   placeholder: string;

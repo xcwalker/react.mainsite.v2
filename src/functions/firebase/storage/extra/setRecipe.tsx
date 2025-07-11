@@ -1,6 +1,6 @@
-import { RecipeItem } from "../../../../types";
+import { RecipeItemProps } from "../../../../types";
 import firebaseSetData from "../setData";
 
-export default function setRecipe(slug: string, data: RecipeItem) {
+export default function setRecipe(slug: string, data: RecipeItemProps) {
   return firebaseSetData("recipes", slug, data);
 }

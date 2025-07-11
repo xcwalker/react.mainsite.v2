@@ -1,4 +1,7 @@
 .accountPage {
+  /* position */
+  position: relative;
+
   /* sizing */
   width: 100%;
   height: 90svh;
@@ -7,6 +10,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.accountPage::before {
+  /* content */
+  content: "";
+  
+  /* position */
+  position: absolute;
+  inset: -1rem;
+
+  /* styling */
+  background-image: url("/backdrop.svg");
+  background-size: 20rem;
 }
 
 .accountPage .content {
@@ -39,8 +55,8 @@
 
 
   /* styling */
-  background-color: var(--background);
-  border: 2px solid var(--background-200);
+  border: 0.25rem solid var(--background);
   border-radius: 2rem;
   overflow: hidden;
+  backdrop-filter: blur(0.25rem) brightness(0.75);
 }

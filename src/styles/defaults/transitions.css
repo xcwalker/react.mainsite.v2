@@ -1,4 +1,6 @@
 body {
+    --header-transition: 125ms cubic-bezier(0.8, 0.25, 0.2, 0.75);
+
     --transition-duration-600: 0.5s;
     --transition-duration-500: 0.25s;
     --transition-duration-400: 0.125s;

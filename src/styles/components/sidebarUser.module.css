@@ -3,12 +3,11 @@
   position: relative;
 
   /* sizing */
-  margin-inline: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.75rem;
 
   /* grid */
   display: grid;
-  grid-template-columns: 50px 1fr;
+  grid-template-columns: 3rem 1fr;
   gap: 1rem;
   place-items: center left;
 
@@ -57,6 +56,17 @@
   /* styling */
   border-radius: 0.25rem;
   grid-area: 1 / 1;
+
+  outline: 0.125rem solid var(--form-color-invalid);
+  outline-offset: 0.125rem;
+}
+
+.author .profile.online {
+  outline-color: var(--form-color-valid);
+}
+
+.author .profile.away {
+  outline-color: var(--form-color-invalid-hold);
 }
 
 .author .placeholder {

@@ -4,7 +4,7 @@ import { firebaseDB } from "./setup";
 export default async function firebaseSetData(
   pathID: string,
   docID: string,
-  data: any
+  data: unknown
 ) {
   try {
     await setDoc(doc(firebaseDB, pathID, docID), data);

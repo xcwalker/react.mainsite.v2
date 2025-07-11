@@ -1,10 +1,10 @@
 import { decode } from "html-entities";
-import { RecipeItem } from "../../types";
+import { RecipeItemProps } from "../../types";
 
 import css from "../../styles/pages/itemPage/recipeContent.module.css";
 
 export default function RecipeContent(props: {
-  item: RecipeItem;
+  item: RecipeItemProps;
 }) {
   return (
     <>

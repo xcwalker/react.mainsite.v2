@@ -3,7 +3,7 @@ import css from "../../styles/pages/home/projects.module.css";
 import { Fragment } from "react/jsx-runtime";
 import GridItem from "../../components/GridItem";
 import { useEffect, useState } from "react";
-import { AlbumItem as AlbumItemType } from "../../types";
+import { AlbumItemProps as AlbumItemType } from "../../types";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
 import Carousel from "../../components/Carousel";
 import getDataByDate from "../../functions/firebase/storage/getDataByDate";

@@ -6,6 +6,8 @@ import GFIcon from "./GFIcon";
 export default function Button(props: {
   children: ReactNode;
   onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  // type is used to determine the type of button, e.g. submit for forms
   className?: string;
   tabIndex?: number;
   href?: string;
@@ -13,37 +15,98 @@ export default function Button(props: {
   target?: string;
   icon?: {
     gficon?: string;
+    gfClassName?: string;
     inline?: ReactNode;
   };
   external?: boolean;
+  externalClassName?: string;
   style?: "primary" | "secondary" | "danger";
+  pageNavigation?: boolean;
+  // pageNavigation is used to determine if the button is used for page navigation with # links
+  hidden?: "siteNavigation" | "pageNavigation";
+  // hidden is used to hide the button, e.g. for the jump to content or new tab buttons
+  loading?: boolean;
+  // loading is used to show a loading state for the button
+  width?: string;
+  // width is used to set the width of the button
 }) {
   return (
     <>
-      {props.href !== undefined && props.external && (
+      {props.href !== undefined && props.pageNavigation && (
+        <a
+          href={props.href}
+          className={
+            css.button +
+            " " +
+            props?.className +
+            (props.icon ? " " + css.hasIcon : "") +
+            (props.style ? ` ${css[props.style]}` : "") +
+            (props.hidden === "siteNavigation" ? " " + css.siteHidden : "") +
+            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "")
+          }
+          style={{ width: props.width ? props.width : "" }}
+          tabIndex={props.tabIndex}
+          target={props.target === "newTab" ? "_blank" : ""}
+          title={props.title}
+          aria-disabled={props.loading ? "true" : "false"}
+        >
+          {props.icon?.gficon && (
+            <GFIcon
+              className={
+                css.icon +
+                (props.icon.gfClassName ? " " + props.icon.gfClassName : "")
+              }
+            >
+              {props.icon?.gficon}
+            </GFIcon>
+          )}
+          {props.icon?.inline && <>{props.icon?.inline}</>}
+          {props.children}
+        </a>
+      )}
+      {props.href !== undefined && props.external && !props.pageNavigation && (
         <Link
           to={props.href}
           className={
             css.button +
             " " +
             props?.className +
-            " " + css.external +
+            " " +
+            css.external +
             (props.icon ? " " + css.hasIcon : "") +
-            (props.style ? ` ${css[props.style]}` : "")
+            (props.style ? ` ${css[props.style]}` : "") +
+            (props.hidden === "siteNavigation" ? " " + css.siteHidden : "") +
+            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "")
           }
+          style={{ width: props.width ? props.width : "" }}
           tabIndex={props.tabIndex}
           target={props.target === "newTab" ? "_blank" : ""}
           title={props.title}
+          aria-disabled={props.loading ? "true" : "false"}
         >
           {props.icon?.gficon && (
-            <GFIcon className={css.icon}>{props.icon?.gficon}</GFIcon>
+            <GFIcon
+              className={
+                css.icon +
+                (props.icon.gfClassName ? " " + props.icon.gfClassName : "")
+              }
+            >
+              {props.icon?.gficon}
+            </GFIcon>
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
-          <GFIcon className={css.external}>open_in_new</GFIcon>
+          <GFIcon
+            className={
+              css.external +
+              (props.externalClassName ? " " + props.externalClassName : "")
+            }
+          >
+            open_in_new
+          </GFIcon>
         </Link>
       )}
-      {props.href !== undefined && !props.external && (
+      {props.href !== undefined && !props.external && !props.pageNavigation && (
         <NavLink
           to={props.href}
           className={({ isActive }) =>
@@ -51,34 +114,57 @@ export default function Button(props: {
             " " +
             props?.className +
             (props.icon ? " " + css.hasIcon : "") +
-            (props.style ? ` ${css[props.style]}` : "")
+            (props.style ? ` ${css[props.style]}` : "") +
+            (props.hidden === "siteNavigation" ? " " + css.siteHidden : "") +
+            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "")
           }
+          style={{ width: props.width ? props.width : "" }}
           tabIndex={props.tabIndex}
           target={props.target === "newTab" ? "_blank" : ""}
           title={props.title}
+          aria-disabled={props.loading ? "true" : "false"}
         >
           {props.icon?.gficon && (
-            <GFIcon className={css.icon}>{props.icon?.gficon}</GFIcon>
+            <GFIcon
+              className={
+                css.icon +
+                (props.icon.gfClassName ? " " + props.icon.gfClassName : "")
+              }
+            >
+              {props.icon?.gficon}
+            </GFIcon>
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
         </NavLink>
       )}
-      {props.onClick && (
+      {(props.onClick || props.type) && (
         <button
           className={
             css.button +
             " " +
             props?.className +
             (props.icon ? " " + css.hasIcon : "") +
-            (props.style ? ` ${css[props.style]}` : "")
+            (props.style ? ` ${css[props.style]}` : "") +
+            (props.hidden === "siteNavigation" ? " " + css.siteHidden : "") +
+            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "")
           }
+          style={{ width: props.width ? props.width : "" }}
           onClick={props.onClick}
           tabIndex={props.tabIndex}
           title={props.title}
+          type={props.type ? props.type : "button"}
+          disabled={props.loading ? true : false}
         >
           {props.icon?.gficon && (
-            <GFIcon className={css.icon}>{props.icon?.gficon}</GFIcon>
+            <GFIcon
+              className={
+                css.icon +
+                (props.icon.gfClassName ? " " + props.icon.gfClassName : "")
+              }
+            >
+              {props.icon?.gficon}
+            </GFIcon>
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}

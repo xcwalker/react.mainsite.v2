@@ -49,7 +49,7 @@ export default function NewTabEdit() {
     }
 
     console.log("Updating new tab data", linkData, user?.uid);
-    
+
     firebaseSetData("newtab", user?.uid, linkData)
       .then(() => {
         console.log("New tab data updated successfully");
@@ -198,7 +198,7 @@ function LinkItemEdit(props: {
     <>
       <li className={props.link.type === "wide" ? " " + css.wide : ""}>
         <div className={css.link}>
-          <div className={css.backdrop}/>
+          <div className={css.backdrop} />
           <div className={css.iconWrapper}>
             <div className={css.positionSelector}>
               <button
@@ -251,9 +251,12 @@ function LinkItemEdit(props: {
               src={
                 props.link.icon
                   ? props.link.icon
-                  : "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-                    props.link.url +
-                    "&size=50"
+                  : // : "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
+                    //   props.link.url +
+                    //   "&size=128"
+
+                    "https://icon.horse/icon/" +
+                    new URL(props.link.url).hostname.replace(/^www\./, "")
               }
               alt={props.link.title}
               className={css.iconImage}

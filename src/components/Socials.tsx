@@ -1,9 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
-import { ButtonLink } from "./Button";
+import Button from "./Button";
 import SocialBackground, { SocialIcon } from "./SocialIcon";
 import css from "../styles/components/socials.module.css";
-import { Link } from "react-router-dom";
-import GFIcon from "./GFIcon";
 
 export default function Socials() {
   return (
@@ -27,37 +25,38 @@ export function SocialsList(props: {
       {array.map((item, index) => {
         return (
           <Fragment key={index}>
-            <li className={props.buttonClassName ? props.buttonClassName : ""}>
-              {!props.useUnstyledButton && (
-                <ButtonLink
-                  href={item.url}
-                  title={item.icon}
-                  className={props.buttonClassName ? "" : css.social}
-                >
-                  <SocialIcon
-                    social={item.icon}
-                    className={props.iconClassName}
-                  />
-                  <SocialBackground social={item.icon} />
-                </ButtonLink>
-              )}
-              {props.useUnstyledButton && (
-                <Link
-                  to={item.url}
-                  title={item.icon}
-                  className={props.buttonClassName ? "" : css.social}
-                >
-                  <div className={props.contentClassName}>
+            {!props.useUnstyledButton && (
+              <Button
+                href={item.url}
+                title={item.icon}
+                className={props.buttonClassName ? "" : css.social}
+              >
+                <SocialIcon
+                  social={item.icon}
+                  className={props.iconClassName}
+                />
+                <SocialBackground social={item.icon} />
+              </Button>
+            )}
+            {props.useUnstyledButton && (
+              <Button
+                href={item.url}
+                title={item.icon}
+                className={props.buttonClassName ? props.buttonClassName : ""}
+                icon={{
+                  inline: (
                     <SocialIcon
                       social={item.icon}
                       className={props.iconClassName}
                     />
-                    <span className={props.textClassName}>{item.icon}</span>
-                  </div>
-                  <GFIcon className={props.iconClassName + " " + props.externalClassName}>open_in_new</GFIcon>
-                </Link>
-              )}
-            </li>
+                  ),
+                }}
+                external
+                externalClassName={props.externalClassName}
+              >
+                <span className={props.textClassName ? props.textClassName : ""}>{item.icon}</span>
+              </Button>
+            )}
           </Fragment>
         );
       })}

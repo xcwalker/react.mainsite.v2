@@ -455,8 +455,12 @@ function LinkItem(props: {
   modifierPressed: boolean;
   index: number;
 }) {
-  const matches = props.link.url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i);
-  const domain = matches && matches[1];
+  // const matches = props.link.url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i);
+  // const domain = matches && matches[1];
+
+  const url = new URL(props.link.url);
+  const hostname = url.hostname.replace(/^www\./, "");
+  console.log(hostname);
 
   let shortcutIndex = props.index + 1;
   shortcutIndex === 10 && (shortcutIndex = 0); // Adjust for 0-based index
@@ -512,9 +516,10 @@ function LinkItem(props: {
             src={
               props.link.icon
                 ? props.link.icon
-                : "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-                  props.link.url +
-                  "&size=50"
+                : // : "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
+                  //   props.link.url +
+                  //   "&size=128"
+                  "https://icon.horse/icon/" + hostname
             }
             alt={props.link.title}
             className={css.iconImage}
@@ -526,8 +531,9 @@ function LinkItem(props: {
         )}
       </a>
       <span className={css.url}>
-        {domain !== null && domain.replace("www.", "")}
-        {domain === null && props.link.url}
+        {/* {domain !== null && domain.replace("www.", "")}
+        {domain === null && props.link.url} */}
+        {hostname}
       </span>
     </li>
   );

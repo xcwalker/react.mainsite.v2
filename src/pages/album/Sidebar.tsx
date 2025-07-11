@@ -1,9 +1,9 @@
-import { AlbumItem } from "../../types";
+import { AlbumItemProps } from "../../types";
 import css from "../../styles/pages/project/sidebar.module.css";
 import GFIcon from "../../components/GFIcon";
 import SidebarUser from "../../components/SidebarUser";
 
-export function AlbumSidebar(props: { item: AlbumItem; slug: string }) {
+export function AlbumSidebar(props: { item: AlbumItemProps; slug: string }) {
   const item = props.item;
   const dateModified = new Date(item.metaData.date.modified);
   const dateCreated = new Date(item.metaData.date.created);

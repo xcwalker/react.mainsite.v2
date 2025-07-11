@@ -59,9 +59,11 @@ html {
   flex-direction: column;
   gap: 1rem; */
 
+  --header-width: 250px;
+
   /* grid */
   display: grid;
-  grid-template-columns: [nav-start] 250px [nav-end main-start footer-start] 1fr [main-end footer-end];
+  grid-template-columns: [nav-start] var(--header-width) [nav-end main-start footer-start] 1fr [main-end footer-end];
   grid-template-rows: [nav-start main-start] auto [main-end footer-start] auto [nav-end footer-end];
   gap: 1rem;
   column-gap: 0;
@@ -70,7 +72,7 @@ html {
 #root > main {
   /* fix for carousel and still allowing body based sticky positioning */
   --_margin-inline: 1rem;
-  max-width: calc(100vw - (2 * var(--_margin-inline)) - 250px);
+  max-width: calc(100vw - (2 * var(--_margin-inline)) - var(--header-width));
   min-height: 85vh;
   margin-inline: var(--_margin-inline);
   margin-top: 1rem;
@@ -98,8 +100,8 @@ h6 {
 
 @media (max-width: 625px) {
   #root {
-    grid-template-columns: [nav-start] calc(32px + 2rem) [nav-end main-start footer-start] 1fr [main-end footer-end];
-    transition: 250ms ease;
+    --header-width: calc(32px + 2rem);
+    transition: var(--header-transition);
   }
 
   #root > main {
@@ -108,7 +110,8 @@ h6 {
   }
 
   body.scrolled #root {
-    grid-template-columns: [nav-start] 0 [nav-end main-start footer-start] 1fr [main-end footer-end];
+    --header-width: 0px;
+    /* grid-template-columns: [nav-start] 0 [nav-end main-start footer-start] 1fr [main-end footer-end]; */
   }
 
   body.scrolled #root > main {

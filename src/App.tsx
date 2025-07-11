@@ -5,7 +5,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import HomeIndex from "./pages/home/Index";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -28,8 +28,73 @@ import { atomWithStorage } from "jotai/utils";
 import BannerContainer from "./components/Banners/BannerContainer";
 import NewTab from "./pages/newTab/Index";
 import NewTabEdit from "./pages/newTab/Edit";
+import { useAuth } from "./functions/firebase/authentication/useAuth";
+import firebaseUpdateUserLastSeen from "./functions/firebase/user/updateUserLastSeen";
 
 export default function App() {
+  const currentUser = useAuth();
+  const [ticking] = useState(true);
+  const [count, setCount] = useState(0);
+  const [count2, setCount2] = useState(0);
+  const [xct, setxct] = useState<"online" | "away">("online");
+
+  useEffect(() => {
+    window.onbeforeunload = () => handlePageClose();
+
+    window.addEventListener("beforeunload", () => {
+      handlePageClose();
+    });
+
+    window.addEventListener("onMouseOver", () => {
+      handlePageAbandoned();
+    });
+
+    window.addEventListener("onScroll", () => {
+      handlePageAbandoned();
+    });
+
+    window.addEventListener("onKeyDown", () => {
+      handlePageAbandoned();
+    });
+
+    return () => {
+      handlePageClose();
+      document.removeEventListener("beforeunload", handlePageClose);
+    };
+  });
+
+  useEffect(() => {
+    if (currentUser === null || currentUser === undefined) return;
+
+    firebaseUpdateUserLastSeen(currentUser.uid, xct);
+  }, [currentUser, count, xct]);
+
+  const handlePageClose = () => {
+    if (currentUser === null || currentUser === undefined) return;
+
+    firebaseUpdateUserLastSeen(currentUser.uid, "offline");
+  };
+
+  const handlePageAbandoned = () => {
+    setCount2((count) => count + 1);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => ticking && setCount(count + 1), 60000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [count, ticking]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => ticking && setxct("away"), 60000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [count2, ticking]);
+
   return (
     <>
       <BrowserRouter>

@@ -15,7 +15,7 @@
 .images .image .icon {
   /* position */
   position: absolute;
-  inset: 0.5rem;
+  inset: 1rem;
   left: auto;
   bottom: auto;
   z-index: 1;
@@ -28,7 +28,12 @@
 
   /* hiding */
   opacity: 0;
-  transition: opacity 300ms ease;
+  transition: opacity 250ms ease;
+}
+
+.images .image:hover {
+  /* cursor */
+  cursor: pointer;
 }
 
 .images .image:hover .icon {
@@ -69,13 +74,18 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
 
   /* hiding */
-  transition: background-position 500ms ease;
+  transition: background-position 250ms ease;
   background-position: -200% 100%;
   background-size: 200% 200%;
+  border-radius: inherit;
 }
 
 .images .image:hover:after {
   background-position: -100% 0%;
+
+  /* styling */
+  outline: 2px solid var(--text);
+  outline-offset: -2px;
 }
 
 .images .tabButton {
@@ -85,6 +95,10 @@
   right: auto;
   bottom: auto;
 
+  /* sizing */
+  width: min(100%, 10rem);
+
+  /* hiding */
   opacity: 0;
   pointer-events: none;
 }

@@ -456,6 +456,7 @@
 
 .newTab .links ul li a .iconWrapper {
   height: 56px;
+  width: 100%;
 }
 
 .newTab .links ul li a .iconWrapper .iconImage {

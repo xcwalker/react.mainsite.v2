@@ -45,7 +45,7 @@ export default function SidebarUser(props: { userId: string, className?: string 
         {userData?.images.profile && (
           <img
             src={userData?.images.profile}
-            className={css.profile}
+            className={css.profile + " " + css[userData?.about.status]}
             alt="Profile Picture"
           />
         )}

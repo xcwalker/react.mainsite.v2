@@ -65,7 +65,7 @@ export default function ItemImages(props: {
 
   return (
     <div className={css.images}>
-      <Button onClick={() => setOpen(true)} className={css.tabButton}>
+      <Button onClick={() => setOpen(true)} title="Show Lightbox" style="primary" hidden="pageNavigation" className={css.tabButton}>
         Show Lightbox
       </Button>
       <PhotoAlbum

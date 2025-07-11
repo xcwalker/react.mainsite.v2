@@ -4,13 +4,13 @@ import SideBySide from "../../components/SideBySide";
 import { ItemSidebar } from "./Sidebar";
 import Markdown from "react-markdown";
 import ItemImages from "./Images";
-import ItemRelated from "./Related";
+import ItemCarousel from "../../components/ItemCarousel";
 import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
 import ErrorPage from "../../ErrorPage";
 import { useEffect, useState } from "react";
-import { ItemType, ProjectItemProps, RecipeItem } from "../../types";
+import { ItemType, ProjectItemProps, RecipeItemProps } from "../../types";
 import LoadingPage from "../../components/Loading";
 
 import css from "../../styles/pages/itemPage/index.module.css";
@@ -139,11 +139,11 @@ export default function ItemPage(
                   {item.data.description}
                   {/* {testData} */}
                 </Markdown>
-                {props.itemType === "recipes" && <RecipeContent item={item as RecipeItem} />}
+                {props.itemType === "recipes" && <RecipeContent item={item as RecipeItemProps} />}
                 <ItemImages item={item} slug={slug} itemType={props.itemType} />
               </main>
             </SideBySide>
-            <ItemRelated
+            <ItemCarousel
               itemType={props.itemType}
               slug={slug}
               collection={item.metaData.collection}
@@ -152,7 +152,7 @@ export default function ItemPage(
                 "More from the " + item.metaData.collectionName + " collection"
               }
             />
-            <ItemRelated
+            <ItemCarousel
               itemType={props.itemType}
               slug={slug}
               collection={item.metaData.collection}

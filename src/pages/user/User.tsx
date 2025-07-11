@@ -6,9 +6,7 @@ import { useParams } from "react-router-dom";
 import SideBySide from "../../components/SideBySide";
 import css from "../../styles/pages/user/index.module.css";
 import Sidebar from "./Sidebar";
-import UserRecipes from "./Recipes";
-import UserProjects from "./Projects";
-import UserBlog from "./BlogPosts";
+import ItemCarousel from "../../components/ItemCarousel";
 
 export default function UserPage(props: { id?: string }) {
   const { uuid } = useParams<string>();
@@ -36,7 +34,7 @@ export default function UserPage(props: { id?: string }) {
   return (
     <Section id="user">
       {userData && (
-        <SideBySide leftWidth="400px">
+        <SideBySide leftWidth="350px">
           <Sidebar user={userData} />
           <main className={css.main}>
             {userData.images.header && (
@@ -44,9 +42,34 @@ export default function UserPage(props: { id?: string }) {
             )}
             {userID && (
               <>
-                <UserProjects userID={userID} />
-                <UserRecipes userID={userID} />
-                <UserBlog userID={userID} />
+                <ItemCarousel
+                  userID={userID}
+                  itemType="projects"
+                  title={userData.about.firstName + "'s projects"}
+                  slug=""
+                  sameCollection={false}
+                />
+                <ItemCarousel
+                  userID={userID}
+                  itemType="recipes"
+                  title={userData.about.firstName + "'s recipes"}
+                  slug=""
+                  sameCollection={false}
+                />
+                <ItemCarousel
+                  userID={userID}
+                  itemType="blog"
+                  title={userData.about.firstName + "'s blog posts"}
+                  slug=""
+                  sameCollection={false}
+                />
+                <ItemCarousel
+                  userID={userID}
+                  itemType="albums"
+                  title={userData.about.firstName + "'s albums"}
+                  slug=""
+                  sameCollection={false}
+                />
               </>
             )}
           </main>

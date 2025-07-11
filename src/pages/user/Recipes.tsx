@@ -1,7 +1,7 @@
 import css from "../../styles/pages/home/recipes.module.css";
 import { Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
-import { RecipeItem as RecipeItemType } from "../../types";
+import { RecipeItemProps as RecipeItemType } from "../../types";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
 import Carousel from "../../components/Carousel";
 import GridItem from "../../components/GridItem";

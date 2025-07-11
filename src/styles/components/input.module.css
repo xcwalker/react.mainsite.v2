@@ -1,0 +1,135 @@
+.inputContainer {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--text);
+}
+
+.labels {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--background);
+}
+
+.passwordLabel {
+  /* position */
+  position: absolute;
+  top: 0.125rem;
+  right: 1rem;
+}
+
+.label {
+  opacity: 1;
+  transition: opacity 150ms ease-in-out;
+
+  color: inherit;
+}
+
+.label.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.input {
+  /* sizing */
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+  padding-right: 2.5rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+
+  /* styling */
+  background: var(--background);
+  color: var(--text);
+  border: none;
+  outline: none;
+
+  border-radius: calc(0.5rem - 0.125rem);
+}
+
+.inputContainer:has(.input:autofill) {
+  border-color: var(--selector);
+}
+
+.input:autofill {
+  color-scheme: dark;
+  filter: none;
+}
+
+@media (prefers-color-scheme: light) {
+  .input:autofill {
+    color-scheme: light;
+  }
+}
+
+.inputContainer:has(.input:invalid) {
+  background-color: darkred;
+}
+
+.inputContainer:has(.input:placeholder-shown) {
+  background-color: currentColor;
+}
+
+.inputContainer:has(.input:focus-visible) {
+  outline: 2px solid var(--selector);
+}
+
+.inputContainer .visibility {
+  /* position */
+  position: absolute;
+  bottom: calc((2.5rem - var(--_size)) / 2);
+  right: 1rem;
+
+  /* sizing */
+  --_size: 1.5rem;
+  width: var(--_size);
+  height: var(--_size);
+  padding: 0;
+  margin: 0;
+
+  /* styling */
+  background: transparent;
+  border: none;
+  color: inherit;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.inputContainer .visibility > .icon {
+  font-size: var(--_size);
+}
+
+.inputContainer .visibility:hover,
+.inputContainer .visibility:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

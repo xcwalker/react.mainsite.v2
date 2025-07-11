@@ -10,7 +10,7 @@ import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
 import ErrorPage from "../../ErrorPage";
 import { useEffect, useState } from "react";
-import { AlbumItem } from "../../types";
+import { AlbumItemProps } from "../../types";
 import LoadingPage from "../../components/Loading";
 
 import css from "../../styles/pages/project.module.css";
@@ -19,7 +19,7 @@ import { firebaseGetDataWithKey } from "../../functions/firebase/storage/getData
 export default function AlbumIndex() {
   const { slug } = useParams();
   const [params] = useSearchParams();
-  const [item, setItem] = useState<AlbumItem | undefined>(undefined);
+  const [item, setItem] = useState<AlbumItemProps | undefined>(undefined);
   const [error, setError] = useState(false);
   const [key, setKey] = useState(params.get("key") || "");
   const [input, setInput] = useState(true);
@@ -37,7 +37,7 @@ export default function AlbumIndex() {
           }, 2500);
           return;
         }
-        setItem(data as AlbumItem);
+        setItem(data as AlbumItemProps);
       }
     );
 

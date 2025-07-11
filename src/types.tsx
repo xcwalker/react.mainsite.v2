@@ -96,27 +96,7 @@ export type ItemType = {
   };
 };
 
-export type BlogItemProps = ItemProps & {};
-
-export type BlogItem = {
-  data: {
-    title: string;
-    subTitle: string;
-    description: string;
-  };
-  metaData: {
-    date: {
-      created: string;
-      modified: string;
-    };
-    imageCount: number;
-    hasThumbnail?: boolean;
-    tags: string[];
-    collection: string;
-    collectionName: string;
-    authorID: string;
-  };
-};
+export type BlogItemProps = ItemProps;
 
 export type ProjectItemProps = ItemProps & {
   metaData: {
@@ -129,6 +109,7 @@ export type ProjectItemProps = ItemProps & {
 
 export type RecipeItemProps = ItemProps & {
   data: {
+    ingredients: [];
     instructions: {
       prep?: string[];
       cook: string[];
@@ -148,57 +129,8 @@ export type RecipeItemProps = ItemProps & {
   };
 };
 
-export type RecipeItem = {
-  data: {
-    title: string;
-    subTitle: string;
-    description?: string;
-    instructions: {
-      prep?: string[];
-      cook: string[];
-    };
-    ingredients: string[];
-    information: {
-      prepTime: string;
-      cookTime: string;
-      serves: string;
-    };
-  };
+export type AlbumItemProps = ItemProps & {
   metaData: {
-    date: {
-      created: string;
-      modified: string;
-    };
-    imageCount: number;
-    youtube?: string;
-    tags: string[];
-    collection: string;
-    collectionName: string;
-    colors: {
-      dark: string;
-      light: string;
-    };
-    authorID: string;
-  };
-};
-
-export type AlbumItem = {
-  data: {
-    title: string;
-    subTitle: string;
-    description: string;
-  };
-  metaData: {
-    date: {
-      created: string;
-      modified: string;
-    };
-    slug: string;
-    imageCount: number;
-    tags: string[];
-    collection: string;
-    collectionName: string;
-    authorID: string;
     key: string;
   };
 };
@@ -244,7 +176,7 @@ export type UserType = {
     displayName: string;
     firstName: string;
     lastName: string;
-    status: string;
+    status: "online" | "offline" | "away";
     statement: string;
   };
   images: {

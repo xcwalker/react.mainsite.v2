@@ -1,4 +1,4 @@
-import { ItemType, RecipeItem } from "../../types";
+import { ItemType, RecipeItemProps } from "../../types";
 import Button from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
@@ -29,7 +29,11 @@ export function ItemSidebar(props: {
   };
   return (
     <div className={css.sidebar}>
-      <Image src={props.item.metaData?.thumbnail} alt="Thumbnail" />
+      <Image
+        src={props.item.metaData?.thumbnail}
+        alt="Thumbnail"
+        className={css.thumbnail}
+      />
       <div className={css.details}>
         <h3>{item.data.title}</h3>
         <h4>{item.data.subTitle}</h4>
@@ -69,7 +73,7 @@ export function ItemSidebar(props: {
         <SidebarUser userId={item.metaData.authorID} />
       )}
       {props.itemType === "recipes" && (
-        <RecipeSidebarContent item={item as RecipeItem} />
+        <RecipeSidebarContent item={item as RecipeItemProps} />
       )}
       <div className={css.links}>
         {item.metaData.repoName && (
@@ -98,7 +102,11 @@ export function ItemSidebar(props: {
             Workshop Page
           </Button>
         )}
-        {navigator.canShare() && (
+        {navigator.canShare({
+          title: item.data.title,
+          text: item.data.subTitle,
+          url: window.location.href,
+        }) && (
           <Button
             onClick={async () => {
               await navigator.share({
@@ -113,14 +121,13 @@ export function ItemSidebar(props: {
           >
             Share
           </Button>
-          )}
-        
+        )}
       </div>
     </div>
   );
 }
 
-function RecipeSidebarContent(props: { item: RecipeItem }) {
+function RecipeSidebarContent(props: { item: RecipeItemProps }) {
   const handleQuickLink = (link: string) => {
     const element = document.getElementById(link);
     if (element) {

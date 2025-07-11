@@ -1,6 +1,6 @@
 import { UserType } from "../../types";
 import css from "../../styles/pages/user/sidebar.module.css";
-import { Link } from "react-router-dom";
+import Button from "../../components/Button";
 
 export default function Sidebar(props: { user: UserType }) {
   const dateOptions: Intl.DateTimeFormatOptions = {
@@ -17,7 +17,6 @@ export default function Sidebar(props: { user: UserType }) {
   const dateJoined = new Date(props.user.info.joined);
   const dateOnline = new Date(props.user.info.lastOnline);
   const dateNow = new Date();
-  console.log(props.user.info.lastOnline);
 
   return (
     <div className={css.sidebar}>
@@ -95,25 +94,44 @@ export default function Sidebar(props: { user: UserType }) {
         {props.user.links &&
           props.user.links.length > 0 &&
           props.user.links.map((item, index) => {
-            const matches = item.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i);
-            const domain = matches && matches[1];
-            console.log(domain);
+            // const matches = item.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i);
+            // const domain = matches && matches[1];
+            // console.log(domain);
+
+            const url = new URL(item);
+            const hostname = url.hostname.replace(/^www\./, "");
+
             return (
-              <Link key={index} to={item} className={css.link}>
-                <img
-                  src={
-                    "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-                    item +
-                    "&size=50"
-                  }
-                  alt=""
-                  className={css.favicon}
-                />
-                {domain !== null && domain.replace("www.", "")}
-                {domain === null && item}
-              </Link>
+              <Button
+                key={index}
+                href={item}
+                title={hostname}
+                style="secondary"
+                className={css.linkButton}
+                icon={{
+                  inline: (
+                    <img
+                      src={
+                        // old gstatic implementation
+                        // "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
+                        // item +
+                        // "&size=128"
+                        "https://icon.horse/icon/" + hostname
+                      }
+                      alt=""
+                    />
+                  ),
+                }}
+              >
+                {/* {domain !== null && domain.replace("www.", "")}
+                {domain === null && item} */}
+                {hostname}
+              </Button>
             );
           })}
+        {props.user.links && props.user.links.length % 2 != 0 && (
+          <div className={css.innerCorner} />
+        )}
       </ul>
     </div>
   );

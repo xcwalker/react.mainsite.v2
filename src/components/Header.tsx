@@ -44,15 +44,21 @@ const navItems = [
     gficon: "image",
   },
   {
-    title: "account",
-    href: "account",
+    title: "Profile",
+    href: "user",
     gficon: "person",
+    requireUser: true,
   },
   {
     title: "dashboard",
     href: "dashboard",
     gficon: "dashboard",
     requireUser: true,
+  },
+  {
+    title: "account",
+    href: "account",
+    gficon: "settings",
   },
   {
     title: "Contact",
@@ -211,6 +217,7 @@ export default function Header() {
       () => ticking && setCount(count + 1),
       Math.min(6000, count * 1000)
     );
+
     return () => {
       clearTimeout(timer);
     };
@@ -260,7 +267,24 @@ export default function Header() {
       <div className={css.container}>
         <Logo type="xcwalker" className={css.svg} />
         <Logo type="x" className={css.svgSmall} />
-        <a href="#main" id={css.skip}>Jump to content</a>
+        <Button
+          href="#main"
+          className={css.skip}
+          title="Jump to content"
+          pageNavigation
+          hidden="pageNavigation"
+        >
+          Jump to content
+        </Button>
+        <Button
+          href="#player"
+          className={css.skip}
+          title="Jump to player"
+          pageNavigation
+          hidden="pageNavigation"
+        >
+          Jump to Player
+        </Button>
         <nav>
           <ul className={css.links}>
             {navItems &&
@@ -269,53 +293,73 @@ export default function Header() {
                   return (
                     <Fragment key={index}>
                       <Protect>
-                        <Button {...item} icon={{ gficon: item.gficon }}>
-                          {item.title}
+                        <Button
+                          {...item}
+                          icon={{ gficon: item.gficon, gfClassName: css.icon }}
+                          hidden={item.hidden ? "siteNavigation" : undefined}
+                        >
+                          <span className={css.title}>{item.title}</span>
                         </Button>
                       </Protect>
                     </Fragment>
                   );
                 return (
                   <Fragment key={index}>
-                    <Button {...item} icon={{gficon: item.gficon}}>{item.title}</Button>
+                    <Button
+                      {...item}
+                      icon={{ gficon: item.gficon, gfClassName: css.icon }}
+                      hidden={item.hidden ? "siteNavigation" : undefined}
+                    >
+                      <span className={css.title}>{item.title}</span>
+                    </Button>
                   </Fragment>
                 );
               })}
           </ul>
-          <span className={css.title}>Sites</span>
+          <span className={css.listTitle}>Sites</span>
           <ul className={css.links}>
             {navItemsSites &&
               navItemsSites.map((item, index) => {
                 return (
                   <Fragment key={index}>
-                    <Button {...item} icon={{ gficon: item.gficon }} external>
-                      {item.title}
+                    <Button
+                      {...item}
+                      icon={{ gficon: item.gficon, gfClassName: css.icon }}
+                      external
+                      externalClassName={css.external}
+                    >
+                      <span className={css.title}>{item.title}</span>
                     </Button>
                   </Fragment>
                 );
               })}
           </ul>
-          <span className={css.title}>ReactRadio</span>
+          <span className={css.listTitle}>ReactRadio</span>
           <ul className={css.links}>
             {rrItemsSites &&
               rrItemsSites.map((item, index) => {
                 return (
                   <Fragment key={index}>
-                    <Button {...item} icon={{ gficon: item.gficon }} external>
-                      {item.title}
+                    <Button
+                      {...item}
+                      icon={{ gficon: item.gficon, gfClassName: css.icon }}
+                      external
+                      externalClassName={css.external}
+                    >
+                      <span className={css.title}>{item.title}</span>
                     </Button>
                   </Fragment>
                 );
               })}
           </ul>
-          <span className={css.title}>Socials</span>
+          <span className={css.listTitle}>Socials</span>
           <SocialsList
             listClassName={css.links}
             buttonClassName={css.link}
             iconClassName={css.icon}
             externalClassName={css.external}
             contentClassName={css.content}
-            textClassName={css.text}
+            textClassName={css.title}
             useUnstyledButton
           />
         </nav>
@@ -327,6 +371,7 @@ export default function Header() {
             " " +
             (radio.showDJ ? radioCSS.showDJ : "")
           }
+          id="player"
         >
           <div
             className={
@@ -349,6 +394,12 @@ export default function Header() {
                 const audio = document.querySelector("audio");
                 if (audio) {
                   audio.volume = parseInt(e.target.value) / 100;
+                }
+              }}
+              onLoad={() => {
+                const audio = document.querySelector("audio");
+                if (audio) {
+                  audio.volume = radio.volume / 100;
                 }
               }}
               title="Volume"
@@ -416,6 +467,7 @@ export default function Header() {
                   setShowRadioVolume(!showRadioVolume);
                 }}
                 title="Volume"
+                tabIndex={-1}
               >
                 <GFIcon>volume_up</GFIcon>
               </button>

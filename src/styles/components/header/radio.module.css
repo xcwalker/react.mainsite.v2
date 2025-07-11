@@ -220,7 +220,8 @@
   transition: opacity 0.25s ease-in-out;
 }
 
-.radio .volume.show {
+.radio .volume.show,
+.radio .volume:focus-within {
   opacity: 1;
   pointer-events: auto;
 }

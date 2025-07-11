@@ -3,16 +3,16 @@ import AccountPage from "../../components/Security/AccountPage";
 import css from "../../styles/pages/account/index.module.css";
 import { SocialIcon } from "../../components/SocialIcon";
 import { useState } from "react";
-import GFIcon from "../../components/GFIcon";
 import firebaseLogin from "../../functions/firebase/authentication/login";
 import Protect from "../../components/Security/Protect";
 import firebaseProviderLogin from "../../functions/firebase/authentication/loginWithProvider";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   function submit(e: React.MouseEvent) {
@@ -29,93 +29,65 @@ export default function RegisterPage() {
     <Protect isLoginPage={true} redirect={<Navigate to={"../manage"} />}>
       <AccountPage id="accountRegister" onSubmit={(e) => submit(e)}>
         <h2 className={css.title}>Welcome To Awesome</h2>
-        <div className={css.inputContainer}>
-          <label htmlFor="email" className={css.label}>
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className={css.input}
-            required
-            placeholder="email@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.currentTarget.value)}
-            disabled={loading}
-          />
-        </div>
-        <div className={css.inputContainer}>
-          <label htmlFor="password" className={css.label}>
-            Password
-          </label>
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            id="password"
-            className={css.input + " " + css.password}
-            required
-            placeholder="●●●●●●●●●●●"
-            value={password}
-            onChange={(e) => setPassword(e.currentTarget.value)}
-            disabled={loading}
-          />
-          <button
-            onClick={() => setShowPassword((prev) => !prev)}
-            className={css.visibility}
-          >
-            <GFIcon className={css.icon}>
-              {showPassword ? "visibility_off" : "visibility"}
-            </GFIcon>
-          </button>
-        </div>
-        <div className={css.inputContainer}>
-          <label htmlFor="password" className={css.label}>
-            Repeat Password
-          </label>
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password2"
-            id="password2"
-            className={css.input + " " + css.password}
-            required
-            placeholder="●●●●●●●●●●●"
-            value={passwordCheck}
-            onChange={(e) => setPasswordCheck(e.currentTarget.value)}
-            disabled={loading}
-          />
-          <button
-            onClick={() => setShowPassword((prev) => !prev)}
-            className={css.visibility}
-          >
-            <GFIcon className={css.icon}>
-              {showPassword ? "visibility_off" : "visibility"}
-            </GFIcon>
-          </button>
-        </div>
-        <button type="submit" className={css.submit}>
+
+        <Input
+          type="email"
+          name="email"
+          label="Email"
+          id="email"
+          required
+          placeholder="email@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.currentTarget.value)}
+          disabled={loading}
+        />
+        <Input
+          type="password"
+          name="password"
+          id="password"
+          label="Password"
+          required
+          placeholder="●●●●●●●●●●●"
+          value={password}
+          onChange={(e) => setPassword(e.currentTarget.value)}
+          disabled={loading}
+        />
+        <Input
+          type="password"
+          name="password2"
+          id="password2"
+          label="Repeat Password"
+          required
+          placeholder="●●●●●●●●●●●"
+          value={passwordCheck}
+          onChange={(e) => setPasswordCheck(e.currentTarget.value)}
+          disabled={loading}
+        />
+        <Button type="submit" style="primary" title="Register">
           Register
-        </button>
+        </Button>
         <div className={css.divider}>
           <span>OR</span>
         </div>
         <div className={css.socials}>
-          <button
-            className={css.social}
+          <Button
+            style="secondary"
             onClick={() => {
               firebaseProviderLogin("google");
             }}
+            title="Register With Google"
           >
-            <SocialIcon social="google" />
-          </button>
-          <button
-            className={css.social}
+            <SocialIcon social="google" className={css.socialIcon} />
+          </Button>
+          <Button
+            style="secondary"
             onClick={() => {
               firebaseProviderLogin("github");
             }}
+            title="Register With GitHub"
           >
-            <SocialIcon social="github" />
-          </button>
+            <SocialIcon social="github" className={css.socialIcon} />
+          </Button>
         </div>
         <span>
           Existing User?{" "}

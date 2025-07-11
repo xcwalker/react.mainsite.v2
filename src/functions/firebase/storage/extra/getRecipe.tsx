@@ -1,6 +1,6 @@
-import { RecipeItem } from "../../../../types";
+import { RecipeItemProps } from "../../../../types";
 import firebaseGetData from "../getData";
 
 export default function getRecipe(slug: string) {
-  return firebaseGetData("recipes", slug) as Promise<RecipeItem | undefined>;
+  return firebaseGetData("recipes", slug) as Promise<RecipeItemProps | undefined>;
 }
