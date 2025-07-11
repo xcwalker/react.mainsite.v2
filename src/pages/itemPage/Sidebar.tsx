@@ -7,12 +7,14 @@ import SidebarUser from "../../components/SidebarUser";
 import css from "../../styles/pages/itemPage/sidebar.module.css";
 import cssRecipeContent from "../../styles/pages/itemPage/sidebarRecipeContent.module.css";
 import Image from "../../components/Image";
+import { useAuth } from "../../functions/firebase/authentication/useAuth";
 
 export function ItemSidebar(props: {
   item: ItemType;
   slug: string;
   itemType: "projects" | "recipes" | "albums" | "blog";
 }) {
+  const currentUser = useAuth();
   const item = props.item;
   const dateModified = new Date(item.metaData.date.modified);
   const dateCreated = new Date(item.metaData.date.created);
@@ -117,11 +119,19 @@ export function ItemSidebar(props: {
             }}
             title="Share"
             icon={{ gficon: "share" }}
-            style="secondary"
+            style={currentUser?.uid === props.item.metaData.authorID ? "secondary" : "primary"}
           >
             Share
           </Button>
         )}
+        {currentUser?.uid === props.item.metaData.authorID && <Button
+          href={"./edit"}
+          title={"Edit " + item.data.title}
+          icon={{ gficon: "edit" }}
+          style="primary"
+        >
+          Edit
+        </Button>}
       </div>
     </div>
   );

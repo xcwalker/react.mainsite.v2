@@ -96,6 +96,8 @@ export type ItemType = {
   };
 };
 
+export type CombinedItemProps = ItemProps & BlogItemProps & ProjectItemProps & RecipeItemProps & AlbumItemProps;
+
 export type BlogItemProps = ItemProps;
 
 export type ProjectItemProps = ItemProps & {

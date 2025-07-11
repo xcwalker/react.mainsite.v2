@@ -1,66 +1,78 @@
 import { Fragment, useState } from "react";
 import css from "../../styles/pages/itemPage/create.module.css";
-import { RecipeItemProps } from "../../types";
+import {
+  AlbumItemProps,
+  BlogItemProps,
+  CombinedItemProps,
+  ProjectItemProps,
+  RecipeItemProps,
+} from "../../types";
 import GFIcon from "../../components/GFIcon";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
+import Button from "../../components/Button";
 
 export default function ItemCreate(props: {
   itemType: "projects" | "recipes" | "albums" | "blog";
+  dataInput?: CombinedItemProps;
 }) {
-  const [recipe, setRecipe] = useState<RecipeItemProps>({
-    data: {
-      title: "",
-      subTitle: "",
-      description: "",
-      instructions: {
-        prep: [],
-        cook: [],
-      },
-      ingredients: [],
-      information: {
-        prepTime: "",
-        cookTime: "",
-        serves: "",
-      },
-    },
-    metaData: {
-      date: {
-        created: "",
-        modified: "",
-      },
-      imageCount: 0,
-      youtube: "",
-      tags: [],
-      collection: "",
-      collectionName: "",
-      colors: {
-        dark: "",
-        light: "",
-      },
-      authorID: "",
-      thumbnail: "",
-      hasThumbnail: false,
-    },
-  });
+  const [data, setData] = useState<CombinedItemProps>(
+    props.dataInput
+      ? props.dataInput
+      : {
+          data: {
+            title: "",
+            subTitle: "",
+            description: "",
+            instructions: {
+              prep: [],
+              cook: [],
+            },
+            ingredients: [],
+            information: {
+              prepTime: "",
+              cookTime: "",
+              serves: "",
+            },
+          },
+          metaData: {
+            date: {
+              created: "",
+              modified: "",
+            },
+            imageCount: 0,
+            youtube: "",
+            tags: [],
+            key: "",
+            collection: "",
+            collectionName: "",
+            colors: {
+              dark: "",
+              light: "",
+            },
+            authorID: "",
+            thumbnail: "",
+            hasThumbnail: false,
+            repoName: "",
+            subRepo: false,
+            workshop: "",
+          },
+        } as CombinedItemProps
+  );
 
   return (
     <section className={css.create}>
-      <Sidebar
-        recipe={recipe}
-        itemType={props.itemType}
-        setRecipe={setRecipe}
-      />
-      <Main recipe={recipe} itemType={props.itemType} setRecipe={setRecipe} />
+      <Sidebar data={data} itemType={props.itemType} setData={setData} />
+      <Main data={data} itemType={props.itemType} setData={setData} />
     </section>
   );
 }
 
 function Sidebar(props: {
   itemType: "projects" | "recipes" | "albums" | "blog";
-  recipe: RecipeItemProps;
-  setRecipe: React.Dispatch<React.SetStateAction<RecipeItemProps>>;
+  data: CombinedItemProps;
+  setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
 }) {
   const [slug, setSlug] = useState<string>("");
   const navigate = useNavigate();
@@ -70,20 +82,20 @@ function Sidebar(props: {
     <div className={css.sidebar}>
       {/* image */}
       <TextInput
-        value={props.recipe.data.title}
+        value={props.data.data.title}
         valueName="title"
         classification="data"
         placeholder="title"
-        setRecipe={props.setRecipe}
+        setData={props.setData}
         title="Title"
         className={css.title}
       />
       <TextInput
-        value={props.recipe.data.subTitle}
+        value={props.data.data.subTitle}
         valueName="subTitle"
         classification="data"
         placeholder="SubTitle"
-        setRecipe={props.setRecipe}
+        setData={props.setData}
         title="SubTitle"
         className={css.subTitle}
       />
@@ -101,27 +113,27 @@ function Sidebar(props: {
       </div>
       <div className={css.collection}>
         <TextInput
-          value={props.recipe.metaData.collection}
+          value={props.data.metaData.collection}
           valueName="collection"
           classification="metaData"
           placeholder="Collection"
-          setRecipe={props.setRecipe}
+          setData={props.setData}
           title="Collection"
           className={css.collectionName}
         />
         <TextInput
-          value={props.recipe.metaData.collectionName}
+          value={props.data.metaData.collectionName}
           valueName="collectionName"
           classification="metaData"
           placeholder="Collection Name"
-          setRecipe={props.setRecipe}
+          setData={props.setData}
           title="Collection Name"
           className={css.collectionName}
         />
       </div>
 
       <div className={css.tags}>
-        {props.recipe.metaData.tags.map((tag, index) => {
+        {props.data.metaData.tags.map((tag, index) => {
           return (
             <Fragment key={index}>
               <TextInputList
@@ -129,18 +141,18 @@ function Sidebar(props: {
                 valueName={index.toString()}
                 classification="tag"
                 placeholder={"Tag " + (index + 1)}
-                setRecipe={props.setRecipe}
+                setData={props.setData}
                 title="Tag"
                 className={css.tag}
-                recipe={props.recipe}
+                data={props.data}
               />
             </Fragment>
           );
         })}
         <button
           onClick={() => {
-            const tagLength = props.recipe.metaData.tags.length;
-            props.setRecipe((prev) => {
+            const tagLength = props.data.metaData.tags.length;
+            props.setData((prev) => {
               const newValue = { ...prev };
               if (tagLength + 1 !== newValue.metaData.tags.length) {
                 newValue.metaData.tags = [...prev.metaData.tags, ""];
@@ -154,86 +166,92 @@ function Sidebar(props: {
         </button>
       </div>
 
-      {props.itemType === "recipes" && <div className={css.information}>
-        <TextInput
-          value={props.recipe.data.information.serves}
-          valueName="information"
-          classification="data"
-          placeholder="Serves"
-          setRecipe={props.setRecipe}
-          title="Serves"
-          className={css.serves}
-          subValueName="serves"
-        />
-        <TextInput
-          value={props.recipe.data.information.prepTime}
-          valueName="information"
-          classification="data"
-          placeholder="Prep Time"
-          setRecipe={props.setRecipe}
-          title="Prep Time"
-          className={css.prepTime}
-          subValueName="prepTime"
-        />
-        <TextInput
-          value={props.recipe.data.information.cookTime}
-          valueName="information"
-          classification="data"
-          placeholder="Cook Time"
-          setRecipe={props.setRecipe}
-          title="Cook Time"
-          className={css.cookTime}
-          subValueName="cookTime"
-        />
-      </div>}
-      {currentUser && currentUser !== null && <button
-        onClick={() =>
-          firebaseSetData(props.itemType, slug, {
-            data: { ...props.recipe.data },
-            metaData: {
-              ...props.recipe.metaData,
-              authorID: currentUser.uid,
-              date: {
-                created: new Date().toJSON(),
-                modified: new Date().toJSON(),
+      {props.itemType === "recipes" && (
+        <div className={css.information}>
+          <TextInput
+            value={props.data.data.information.serves}
+            valueName="information"
+            classification="data"
+            placeholder="Serves"
+            setData={props.setData}
+            title="Serves"
+            className={css.serves}
+            subValueName="serves"
+          />
+          <TextInput
+            value={props.data.data.information.prepTime}
+            valueName="information"
+            classification="data"
+            placeholder="Prep Time"
+            setData={props.setData}
+            title="Prep Time"
+            className={css.prepTime}
+            subValueName="prepTime"
+          />
+          <TextInput
+            value={props.data.data.information.cookTime}
+            valueName="information"
+            classification="data"
+            placeholder="Cook Time"
+            setData={props.setData}
+            title="Cook Time"
+            className={css.cookTime}
+            subValueName="cookTime"
+          />
+        </div>
+      )}
+      {currentUser && currentUser !== null && (
+        <Button
+          onClick={() =>
+            firebaseSetData(props.itemType, slug, {
+              data: { ...props.data.data },
+              metaData: {
+                ...props.data.metaData,
+                authorID: currentUser.uid,
+                date: {
+                  created: props.data ? props.data.metaData.date.created : new Date().toJSON(),
+                  modified: new Date().toJSON(),
+                },
               },
-            },
-          }).then((res) => {
-            console.log(res);
-            navigate("/" + props.itemType + "/" + slug.toString());
-          })
-        }
-        className={css.publish}
-      >
-        Publish
-      </button>}
+            }).then((res) => {
+              console.log(res);
+              navigate("/" + props.itemType + "/" + slug.toString());
+            })
+          }
+          title={props.data ? "Save" : "Publish"}
+          icon={{ gficon: props.data ? "Save" : "Publish" }}
+          style="primary"
+        >
+          {props.data ? "Save" : "Publish"}
+        </Button>
+      )}
     </div>
   );
 }
 
 function Main(props: {
   itemType: "projects" | "recipes" | "albums" | "blog";
-  recipe: RecipeItemProps;
-  setRecipe: React.Dispatch<React.SetStateAction<RecipeItemProps>>;
+  data: CombinedItemProps;
+  setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
 }) {
   return (
     <div className={css.main}>
       {/* description */}
       <TextInputLarge
-        value={props.recipe.data.description?.toString() || ""}
+        value={props.data.data.description?.toString() || ""}
         valueName="description"
         classification="data"
         placeholder="Description"
-        setRecipe={props.setRecipe}
+        setData={props.setData}
         title="Description"
         className={css.description}
       />
-      
+
       {/* ingredients */}
       {props.itemType === "recipes" && (
         <div className={css.ingredients}>
-          {props.recipe.data.ingredients &&
-            props.recipe.data.ingredients.map((ingredient, index) => {
+          {props.data.data.ingredients &&
+            props.data.data.ingredients.map((ingredient, index) => {
               return (
                 <Fragment key={index}>
                   <TextInputList
@@ -241,18 +259,18 @@ function Main(props: {
                     valueName={index.toString()}
                     classification="ingredients"
                     placeholder={"Ingredient " + (index + 1)}
-                    setRecipe={props.setRecipe}
+                    setData={props.setData}
                     title="Ingredient"
                     className={css.ingredient}
-                    recipe={props.recipe}
+                    data={props.data}
                   />
                 </Fragment>
               );
             })}
           <button
             onClick={() => {
-              const ingredientLength = props.recipe.data.ingredients.length;
-              props.setRecipe((prev) => {
+              const ingredientLength = props.data.data.ingredients.length;
+              props.setData((prev) => {
                 const newValue = { ...prev };
                 if (ingredientLength + 1 !== newValue.data.ingredients.length) {
                   newValue.data.ingredients = [...prev.data.ingredients, ""];
@@ -269,8 +287,8 @@ function Main(props: {
       {/* prep */}
       {props.itemType === "recipes" && (
         <div className={css.prep}>
-          {props.recipe.data.instructions.prep &&
-            props.recipe.data.instructions.prep.map((instruction, index) => {
+          {props.data.data.instructions.prep &&
+            props.data.data.instructions.prep.map((instruction, index) => {
               return (
                 <Fragment key={index}>
                   <TextInputList
@@ -279,10 +297,10 @@ function Main(props: {
                     classification="instructions"
                     instructionTag="prep"
                     placeholder={"Prep " + (index + 1)}
-                    setRecipe={props.setRecipe}
+                    setData={props.setData}
                     title="Prep"
                     className={css.instruction}
-                    recipe={props.recipe}
+                    data={props.data}
                   />
                 </Fragment>
               );
@@ -290,8 +308,8 @@ function Main(props: {
           <button
             onClick={() => {
               const instructionLength =
-                props.recipe.data.instructions.prep?.length || 0;
-              props.setRecipe((prev) => {
+                props.data.data.instructions.prep?.length || 0;
+              props.setData((prev) => {
                 const newValue = { ...prev };
                 if (
                   instructionLength + 1 !==
@@ -312,10 +330,10 @@ function Main(props: {
         </div>
       )}
       {/* cook */}
-      {props.itemType === "recipes" && (
+      {props.itemType === "recipes" && props.data.data.instructions && (
         <div className={css.cook}>
-          {props.recipe.data.instructions.cook &&
-            props.recipe.data.instructions.cook.map((instruction, index) => {
+          {props.data.data.instructions.cook &&
+            props.data.data.instructions.cook.map((instruction, index) => {
               return (
                 <Fragment key={index}>
                   <TextInputList
@@ -324,10 +342,10 @@ function Main(props: {
                     classification="instructions"
                     instructionTag="cook"
                     placeholder={"Cook " + (index + 1)}
-                    setRecipe={props.setRecipe}
+                    setData={props.setData}
                     title="Cook"
                     className={css.instruction}
-                    recipe={props.recipe}
+                    data={props.data}
                   />
                 </Fragment>
               );
@@ -335,8 +353,8 @@ function Main(props: {
           <button
             onClick={() => {
               const instructionLength =
-                props.recipe.data.instructions.cook.length;
-              props.setRecipe((prev) => {
+                props.data.data.instructions.cook.length;
+              props.setData((prev) => {
                 const newValue = { ...prev };
                 if (
                   instructionLength + 1 !==
@@ -363,10 +381,27 @@ function Main(props: {
 
 function TextInput(props: {
   value: string;
-  classification: keyof RecipeItemProps;
-  valueName: keyof RecipeItemProps["data"] | keyof RecipeItemProps["metaData"];
-  setRecipe: React.Dispatch<React.SetStateAction<RecipeItemProps>>;
-  recipe?: RecipeItemProps;
+  classification: keyof (
+    | ProjectItemProps
+    | RecipeItemProps
+    | BlogItemProps
+    | AlbumItemProps
+  );
+  valueName:
+    | keyof (
+        | ProjectItemProps
+        | RecipeItemProps
+        | BlogItemProps
+        | AlbumItemProps
+      )["data"]
+    | keyof (
+        | ProjectItemProps
+        | RecipeItemProps
+        | BlogItemProps
+        | AlbumItemProps
+      )["metaData"];
+  setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
+  data?: CombinedItemProps;
   subValueName?: string;
 
   title: string;
@@ -379,7 +414,7 @@ function TextInput(props: {
         type="text"
         value={props.value}
         onChange={(e) => {
-          props.setRecipe((prev) => {
+          props.setData((prev) => {
             const newValue = { ...prev };
 
             if (!props.subValueName) {
@@ -407,8 +442,8 @@ function TextInputList(props: {
   value: string;
   classification: "information" | "tag" | "ingredients" | "instructions";
   valueName: string;
-  setRecipe: React.Dispatch<React.SetStateAction<RecipeItemProps>>;
-  recipe?: RecipeItemProps;
+  setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
+  data?: CombinedItemProps;
   instructionTag?: string;
 
   title: string;
@@ -421,7 +456,7 @@ function TextInputList(props: {
         type="text"
         value={props.value}
         onChange={(e) => {
-          props.setRecipe((prev) => {
+          props.setData((prev) => {
             const newValue = { ...prev };
 
             if (props.classification === "information") {
@@ -447,11 +482,11 @@ function TextInputList(props: {
         placeholder={props.placeholder}
         className={props.className}
       />
-      {props.classification === "tag" && props.recipe !== undefined && (
+      {props.classification === "tag" && props.data !== undefined && (
         <button
           onClick={() => {
-            const tagLength = props.recipe.metaData.tags.length;
-            props.setRecipe((prev) => {
+            const tagLength = props.data.metaData.tags.length;
+            props.setData((prev) => {
               const newValue = { ...prev };
               if (tagLength - 1 !== newValue.metaData.tags.length) {
                 newValue.metaData.tags = prev.metaData.tags.filter(
@@ -467,11 +502,11 @@ function TextInputList(props: {
           <GFIcon>remove</GFIcon>
         </button>
       )}
-      {props.classification === "ingredients" && props.recipe !== undefined && (
+      {props.classification === "ingredients" && props.data !== undefined && (
         <button
           onClick={() => {
-            const tagLength = props.recipe?.data.ingredients.length;
-            props.setRecipe((prev) => {
+            const tagLength = props.data?.data.ingredients.length;
+            props.setData((prev) => {
               const newValue = { ...prev };
               if (tagLength - 1 !== newValue.data.ingredients.length) {
                 newValue.data.ingredients = prev.data.ingredients.filter(
@@ -489,12 +524,12 @@ function TextInputList(props: {
       )}
       {props.classification === "instructions" &&
         props.instructionTag &&
-        props.recipe !== undefined && (
+        props.data !== undefined && (
           <button
             onClick={() => {
               const tagLength =
-                props.recipe?.data.instructions[props.instructionTag].length;
-              props.setRecipe((prev) => {
+                props.data?.data.instructions[props.instructionTag].length;
+              props.setData((prev) => {
                 const newValue = { ...prev };
                 if (
                   tagLength - 1 !==
@@ -524,7 +559,7 @@ function TextInputLarge(props: {
   value: string;
   classification: keyof RecipeItemProps;
   valueName: keyof RecipeItemProps["data"] | keyof RecipeItemProps["metaData"];
-  setRecipe: React.Dispatch<React.SetStateAction<RecipeItemProps>>;
+  setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
 
   title: string;
   placeholder: string;
@@ -535,7 +570,7 @@ function TextInputLarge(props: {
       <textarea
         value={props.value}
         onChange={(e) => {
-          props.setRecipe((prev) => {
+          props.setData((prev) => {
             const newValue = { ...prev };
 
             /* eslint-disable-next-line no-alert */

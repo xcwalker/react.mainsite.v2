@@ -10,15 +10,15 @@ import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
 import ErrorPage from "../../ErrorPage";
 import { useEffect, useState } from "react";
-import { ItemType, ProjectItemProps, RecipeItemProps } from "../../types";
+import { ItemType, RecipeItemProps } from "../../types";
 import LoadingPage from "../../components/Loading";
 
 import css from "../../styles/pages/itemPage/index.module.css";
 import cssMarkdown from "../../styles/components/markdown.module.css";
-import firebaseGetData from "../../functions/firebase/storage/getData";
 import remarkGfm from "remark-gfm";
 import supersub from "remark-supersub";
 import RecipeContent from "./RecipeContent";
+import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 
 export default function ItemPage(
   props: {itemType: "projects" | "recipes" | "albums" | "blog"}
@@ -28,13 +28,12 @@ export default function ItemPage(
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    firebaseGetData(props.itemType, slug as string).then((data) => {
-      if (data === undefined) {
-        setError(true);
-        return;
-      }
-      setItem(data as ProjectItemProps);
-    });
+    firebaseGetRealtimeData(
+      props.itemType,
+      slug as string,
+      setItem as React.Dispatch<React.SetStateAction<unknown>>,
+      setError
+    );
 
     return () => {
       setItem(undefined);

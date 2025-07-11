@@ -5,7 +5,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import HomeIndex from "./pages/home/Index";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -30,6 +30,7 @@ import NewTab from "./pages/newTab/Index";
 import NewTabEdit from "./pages/newTab/Edit";
 import { useAuth } from "./functions/firebase/authentication/useAuth";
 import firebaseUpdateUserLastSeen from "./functions/firebase/user/updateUserLastSeen";
+import ItemEdit from "./pages/itemPage/Edit";
 
 export default function App() {
   const currentUser = useAuth();
@@ -38,13 +39,17 @@ export default function App() {
   const [count2, setCount2] = useState(0);
   const [xct, setxct] = useState<"online" | "away">("online");
 
+  const handlePageClose = useCallback(() => {
+    if (currentUser === null || currentUser === undefined) return;
+
+    firebaseUpdateUserLastSeen(currentUser.uid, "offline");
+  }, [currentUser]);
+
+  const handlePageAbandoned = () => {
+    setCount2((count) => count + 1);
+  };
+
   useEffect(() => {
-    window.onbeforeunload = () => handlePageClose();
-
-    window.addEventListener("beforeunload", () => {
-      handlePageClose();
-    });
-
     window.addEventListener("onMouseOver", () => {
       handlePageAbandoned();
     });
@@ -57,27 +62,36 @@ export default function App() {
       handlePageAbandoned();
     });
 
+    window.addEventListener("focus", () => {
+      handlePageAbandoned();
+    });
+
     return () => {
       handlePageClose();
-      document.removeEventListener("beforeunload", handlePageClose);
+
+      window.removeEventListener("onMouseOver", () => {
+        handlePageAbandoned();
+      });
+
+      window.removeEventListener("onScroll", () => {
+        handlePageAbandoned();
+      });
+
+      window.removeEventListener("onKeyDown", () => {
+        handlePageAbandoned();
+      });
+
+      window.removeEventListener("focus", () => {
+        handlePageAbandoned();
+      });
     };
-  });
+  }, [handlePageClose]);
 
   useEffect(() => {
     if (currentUser === null || currentUser === undefined) return;
 
     firebaseUpdateUserLastSeen(currentUser.uid, xct);
   }, [currentUser, count, xct]);
-
-  const handlePageClose = () => {
-    if (currentUser === null || currentUser === undefined) return;
-
-    firebaseUpdateUserLastSeen(currentUser.uid, "offline");
-  };
-
-  const handlePageAbandoned = () => {
-    setCount2((count) => count + 1);
-  };
 
   useEffect(() => {
     const timer = setTimeout(() => ticking && setCount(count + 1), 60000);
@@ -118,6 +132,7 @@ export default function App() {
           <BannerContainer />
           <Routes>
             <Route path="/" element={<HomeIndex />} />
+
             {/* blog */}
             <Route path="blog">
               <Route
@@ -138,9 +153,12 @@ export default function App() {
                   </Protect>
                 }
               />
-
-              <Route path=":slug" element={<ItemPage itemType="blog" />} />
+              <Route path=":slug">
+                <Route index element={<ItemPage itemType="blog" />} />
+                <Route path="edit" element={<ItemEdit itemType="blog" />} />
+              </Route>
             </Route>
+
             {/* projects */}
             <Route path="projects">
               <Route
@@ -161,8 +179,12 @@ export default function App() {
                   </Protect>
                 }
               />
-              <Route path=":slug" element={<ItemPage itemType="projects" />} />
+              <Route path=":slug">
+                <Route index element={<ItemPage itemType="projects" />} />
+                <Route path="edit" element={<ItemEdit itemType="projects" />} />
+              </Route>
             </Route>
+
             {/* recipes */}
             <Route path="recipes">
               <Route
@@ -183,9 +205,12 @@ export default function App() {
                   </Protect>
                 }
               />
-
-              <Route path=":slug" element={<ItemPage itemType="recipes" />} />
+              <Route path=":slug">
+                <Route index element={<ItemPage itemType="recipes" />} />
+                <Route path="edit" element={<ItemEdit itemType="recipes" />} />
+              </Route>
             </Route>
+
             {/* album */}
             <Route path="albums">
               <Route
@@ -206,8 +231,12 @@ export default function App() {
                   </Protect>
                 }
               />
-              <Route path=":slug" element={<ItemPage itemType="albums" />} />
+              <Route path=":slug">
+                <Route index element={<ItemPage itemType="albums" />} />
+                <Route path="edit" element={<ItemEdit itemType="albums" />} />
+              </Route>
             </Route>
+
             {/* accounts */}
             <Route path="account">
               <Route index element={<Navigate to={"manage"} />} />
