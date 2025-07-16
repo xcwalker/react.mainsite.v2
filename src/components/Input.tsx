@@ -15,6 +15,8 @@ export default function Input(props: {
   onSubmit?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   forgotPasswordHref?: string;
+  maxLength?: number;
+  minLength?: number;
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordHover, setShowPasswordHover] = useState(false);
@@ -73,6 +75,8 @@ export default function Input(props: {
         value={props.value}
         onChange={props.onChange}
         disabled={props.disabled}
+        maxLength={props.maxLength}
+        minLength={props.minLength}
       />
       {props.type === "password" && (
         <button

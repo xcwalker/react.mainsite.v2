@@ -20,7 +20,7 @@ import supersub from "remark-supersub";
 import RecipeContent from "./RecipeContent";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 
-export default function ItemPage(props: { itemType: ItemTypes}) {
+export default function ItemPage(props: { itemType: ItemTypes }) {
   const { slug } = useParams();
   const [item, setItem] = useState<ItemType | undefined>(undefined);
   const [error, setError] = useState(false);
@@ -90,7 +90,9 @@ export default function ItemPage(props: { itemType: ItemTypes}) {
             <meta
               name="twitter:image"
               content={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
+                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
+                props.itemType +
+                "/" +
                 slug.toLowerCase() +
                 "/images/thumbnail.jpg"
               }
@@ -99,7 +101,12 @@ export default function ItemPage(props: { itemType: ItemTypes}) {
             <meta property="og:type" content="website" />
             <meta
               property="og:url"
-              content={"https://xcwalker.dev/projects/" + slug.toLowerCase()}
+              content={
+                "https://xcwalker.dev/" +
+                props.itemType +
+                "/" +
+                slug.toLowerCase()
+              }
             />
             <meta
               property="og:title"
@@ -116,7 +123,9 @@ export default function ItemPage(props: { itemType: ItemTypes}) {
             <meta
               property="og:image"
               content={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
+                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
+                props.itemType +
+                "/" +
                 slug.toLowerCase() +
                 "/images/thumbnail.jpg"
               }
@@ -162,7 +171,12 @@ export default function ItemPage(props: { itemType: ItemTypes}) {
         </>
       )}
       {item === undefined && !error && <LoadingPage />}
-      {error && <ErrorPage code={404} error="Project Not Found" />}
+      {error && (
+        <ErrorPage
+          code={404}
+          error={props.itemType.substring(0, props.itemType.length - 1) + " Not Found"}
+        />
+      )}
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { DocumentReference } from "firebase/firestore";
 import { ReactNode } from "react";
 
 type Classes = {
@@ -95,6 +96,42 @@ export type ItemType = {
     workshop?: string;
   };
 };
+
+export type VehicleItemType = {
+  data: {
+    description: string;
+    make: string;
+    model: string;
+    year: number;
+    engine: {
+      size: number;
+      fuel: "petrol" | "diesel" | "electric" | "hybrid";
+    }
+    transmission: "manual" | "automatic" | "semi-automatic";
+    history: VehicleHistoryType;
+  };
+  metaData: {
+    date: {
+      created: string;
+      modified: string;
+    };
+    authorID: string;
+    key: string;
+    vin: string;
+  };
+};
+
+export type VehicleHistoryType = {
+  date: string;
+  location: string;
+  notes: string;
+  technicianRef: DocumentReference;
+  technician?: UserType;
+  work: string[];
+  isFleetService: boolean;
+  isFleetEnrollment: boolean;
+}[];
+
 
 export type ItemTypes = "projects" | "recipes" | "albums" | "blog" | "vehicles";
 

@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, documentId, getDoc, getDocs, limit, query, where } from "firebase/firestore";
 import { firebaseDB } from "./setup";
 
 export default async function firebaseGetData(
@@ -19,7 +19,9 @@ export default async function firebaseGetData(
 export async function firebaseGetDataWithKey(pathID: string, docID: string, key: string) {
   const q = query(
     collection(firebaseDB, pathID),
-    where("metaData.key", "==", key)
+    where(documentId(), "==", docID),
+    where("metaData.key", "==", key),
+    limit(1) // Limit to one document
   );
   
     const querySnapshot = await getDocs(q);
@@ -30,6 +32,8 @@ export async function firebaseGetDataWithKey(pathID: string, docID: string, key:
       if (doc.id !== docID) return;
       output = doc.data();
     });
+
+    console.log("Current data: ", output);
 
   return output;
 }

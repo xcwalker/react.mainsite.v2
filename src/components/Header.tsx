@@ -44,6 +44,11 @@ const navItems = [
     gficon: "image",
   },
   {
+    title: "Fleet",
+    href: "vehicles",
+    gficon: "directions_car",
+  },
+  {
     title: "Profile",
     href: "user",
     gficon: "person",

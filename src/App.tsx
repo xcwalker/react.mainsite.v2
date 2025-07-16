@@ -31,6 +31,8 @@ import NewTabEdit from "./pages/newTab/Edit";
 import { useAuth } from "./functions/firebase/authentication/useAuth";
 import firebaseUpdateUserLastSeen from "./functions/firebase/user/updateUserLastSeen";
 import ItemEdit from "./pages/itemPage/Edit";
+import VehiclePage from "./pages/vehiclePage/Index";
+import { FindVehiclePage } from "./pages/vehiclePage/Find";
 
 export default function App() {
   const currentUser = useAuth();
@@ -213,12 +215,7 @@ export default function App() {
 
             {/* vehicles */}
             <Route path="vehicles">
-              <Route
-                index
-                element={
-                  <>Search for vehicle</>
-                }
-              />
+              <Route index element={<FindVehiclePage />} />
               <Route
                 path="create"
                 element={
@@ -227,8 +224,8 @@ export default function App() {
                   </Protect>
                 }
               />
-              <Route path=":vrn:vin6">
-                <Route index element={<ItemPage itemType="vehicles" />} />
+              <Route path=":vrn/:vin6">
+                <Route index element={<VehiclePage itemType="vehicles" />} />
                 <Route path="edit" element={<ItemEdit itemType="vehicles" />} />
               </Route>
             </Route>

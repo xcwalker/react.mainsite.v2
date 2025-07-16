@@ -460,7 +460,6 @@ function LinkItem(props: {
 
   const url = new URL(props.link.url);
   const hostname = url.hostname.replace(/^www\./, "");
-  console.log(hostname);
 
   let shortcutIndex = props.index + 1;
   shortcutIndex === 10 && (shortcutIndex = 0); // Adjust for 0-based index
