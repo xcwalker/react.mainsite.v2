@@ -10,7 +10,7 @@ import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
 import ErrorPage from "../../ErrorPage";
 import { useEffect, useState } from "react";
-import { ItemType, RecipeItemProps } from "../../types";
+import { ItemType, ItemTypes, RecipeItemProps } from "../../types";
 import LoadingPage from "../../components/Loading";
 
 import css from "../../styles/pages/itemPage/index.module.css";
@@ -20,9 +20,7 @@ import supersub from "remark-supersub";
 import RecipeContent from "./RecipeContent";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 
-export default function ItemPage(
-  props: {itemType: "projects" | "recipes" | "albums" | "blog"}
-) {
+export default function ItemPage(props: { itemType: ItemTypes}) {
   const { slug } = useParams();
   const [item, setItem] = useState<ItemType | undefined>(undefined);
   const [error, setError] = useState(false);
@@ -138,7 +136,9 @@ export default function ItemPage(
                   {item.data.description}
                   {/* {testData} */}
                 </Markdown>
-                {props.itemType === "recipes" && <RecipeContent item={item as RecipeItemProps} />}
+                {props.itemType === "recipes" && (
+                  <RecipeContent item={item as RecipeItemProps} />
+                )}
                 <ItemImages item={item} slug={slug} itemType={props.itemType} />
               </main>
             </SideBySide>

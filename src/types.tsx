@@ -96,6 +96,8 @@ export type ItemType = {
   };
 };
 
+export type ItemTypes = "projects" | "recipes" | "albums" | "blog" | "vehicles";
+
 export type CombinedItemProps = ItemProps & BlogItemProps & ProjectItemProps & RecipeItemProps & AlbumItemProps;
 
 export type BlogItemProps = ItemProps;

@@ -3,18 +3,17 @@ import LoadingPage from "../../components/Loading";
 import firebaseGetData from "../../functions/firebase/storage/getData";
 import ItemCreate from "./Create";
 import { useParams } from "react-router-dom";
-import { CombinedItemProps } from "../../types";
+import { CombinedItemProps, ItemTypes } from "../../types";
 import ErrorPage from "../../ErrorPage";
 
-export default function ItemEdit(props: {
-  itemType: "projects" | "recipes" | "albums" | "blog";
-}) {
-  const { slug } = useParams();
+export default function ItemEdit(props: { itemType: ItemTypes}) {
+  const { slug, vrn, vin6 } = useParams();
   const [data, setData] = useState<CombinedItemProps | undefined>(undefined);
   const [error, setError] = useState(false);
 
-
   useEffect(() => {
+    console.log(slug, vrn, vin6);
+
     firebaseGetData(props.itemType, slug as string).then((data) => {
       if (data === undefined) {
         setError(true);
@@ -32,12 +31,8 @@ export default function ItemEdit(props: {
   return (
     <>
       {data && <ItemCreate itemType={props.itemType} dataInput={data} />}
-      {!data && (
-        <LoadingPage />
-      )}
-      {error && (
-        <ErrorPage error="Item Not Found" code={404} />
-      )}
+      {!data && <LoadingPage />}
+      {error && <ErrorPage error="Item Not Found" code={404} />}
     </>
   );
 }

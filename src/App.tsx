@@ -37,7 +37,7 @@ export default function App() {
   const [ticking] = useState(true);
   const [count, setCount] = useState(0);
   const [count2, setCount2] = useState(0);
-  const [xct, setxct] = useState<"online" | "away">("online");
+  const [focusState, setFocusState] = useState<"online" | "away">("online");
 
   const handlePageClose = useCallback(() => {
     if (currentUser === null || currentUser === undefined) return;
@@ -90,8 +90,8 @@ export default function App() {
   useEffect(() => {
     if (currentUser === null || currentUser === undefined) return;
 
-    firebaseUpdateUserLastSeen(currentUser.uid, xct);
-  }, [currentUser, count, xct]);
+    firebaseUpdateUserLastSeen(currentUser.uid, focusState);
+  }, [currentUser, count, focusState]);
 
   useEffect(() => {
     const timer = setTimeout(() => ticking && setCount(count + 1), 60000);
@@ -102,7 +102,7 @@ export default function App() {
   }, [count, ticking]);
 
   useEffect(() => {
-    const timer = setTimeout(() => ticking && setxct("away"), 60000);
+    const timer = setTimeout(() => ticking && setFocusState("away"), 60000);
 
     return () => {
       clearTimeout(timer);
@@ -208,6 +208,28 @@ export default function App() {
               <Route path=":slug">
                 <Route index element={<ItemPage itemType="recipes" />} />
                 <Route path="edit" element={<ItemEdit itemType="recipes" />} />
+              </Route>
+            </Route>
+
+            {/* vehicles */}
+            <Route path="vehicles">
+              <Route
+                index
+                element={
+                  <>Search for vehicle</>
+                }
+              />
+              <Route
+                path="create"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <ItemCreate itemType="vehicles" />
+                  </Protect>
+                }
+              />
+              <Route path=":vrn:vin6">
+                <Route index element={<ItemPage itemType="vehicles" />} />
+                <Route path="edit" element={<ItemEdit itemType="vehicles" />} />
               </Route>
             </Route>
 

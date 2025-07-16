@@ -4,6 +4,7 @@ import {
   AlbumItemProps,
   BlogItemProps,
   CombinedItemProps,
+  ItemTypes,
   ProjectItemProps,
   RecipeItemProps,
 } from "../../types";
@@ -14,13 +15,13 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import Button from "../../components/Button";
 
 export default function ItemCreate(props: {
-  itemType: "projects" | "recipes" | "albums" | "blog";
+  itemType: ItemTypes;
   dataInput?: CombinedItemProps;
 }) {
   const [data, setData] = useState<CombinedItemProps>(
     props.dataInput
       ? props.dataInput
-      : {
+      : ({
           data: {
             title: "",
             subTitle: "",
@@ -58,7 +59,7 @@ export default function ItemCreate(props: {
             subRepo: false,
             workshop: "",
           },
-        } as CombinedItemProps
+        } as CombinedItemProps)
   );
 
   return (
@@ -70,7 +71,7 @@ export default function ItemCreate(props: {
 }
 
 function Sidebar(props: {
-  itemType: "projects" | "recipes" | "albums" | "blog";
+  itemType: ItemTypes;
   data: CombinedItemProps;
   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
 }) {
@@ -209,7 +210,9 @@ function Sidebar(props: {
                 ...props.data.metaData,
                 authorID: currentUser.uid,
                 date: {
-                  created: props.data ? props.data.metaData.date.created : new Date().toJSON(),
+                  created: props.data
+                    ? props.data.metaData.date.created
+                    : new Date().toJSON(),
                   modified: new Date().toJSON(),
                 },
               },
@@ -230,7 +233,7 @@ function Sidebar(props: {
 }
 
 function Main(props: {
-  itemType: "projects" | "recipes" | "albums" | "blog";
+  itemType: ItemTypes;
   data: CombinedItemProps;
   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
 }) {

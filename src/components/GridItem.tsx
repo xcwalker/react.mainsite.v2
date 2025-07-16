@@ -1,4 +1,4 @@
-import { ItemProps } from "../types";
+import { ItemProps, ItemTypes } from "../types";
 import { Link } from "react-router-dom";
 import css from "../styles/components/gridItem.module.css";
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ export default function GridItem(props: {
   style?: React.CSSProperties;
   item: ItemProps;
   href?: string;
-  itemType: "projects" | "recipes" | "albums" | "blog";
+  itemType: ItemTypes;
   hasThumbnail?: boolean;
 }) {
   const [date, setDate] = useState<Date>();

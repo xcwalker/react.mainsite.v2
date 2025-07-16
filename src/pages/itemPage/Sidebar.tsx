@@ -1,4 +1,4 @@
-import { ItemType, RecipeItemProps } from "../../types";
+import { ItemType, ItemTypes, RecipeItemProps } from "../../types";
 import Button from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
@@ -12,7 +12,7 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 export function ItemSidebar(props: {
   item: ItemType;
   slug: string;
-  itemType: "projects" | "recipes" | "albums" | "blog";
+  itemType: ItemTypes;
 }) {
   const currentUser = useAuth();
   const item = props.item;
@@ -119,19 +119,25 @@ export function ItemSidebar(props: {
             }}
             title="Share"
             icon={{ gficon: "share" }}
-            style={currentUser?.uid === props.item.metaData.authorID ? "secondary" : "primary"}
+            style={
+              currentUser?.uid === props.item.metaData.authorID
+                ? "secondary"
+                : "primary"
+            }
           >
             Share
           </Button>
         )}
-        {currentUser?.uid === props.item.metaData.authorID && <Button
-          href={"./edit"}
-          title={"Edit " + item.data.title}
-          icon={{ gficon: "edit" }}
-          style="primary"
-        >
-          Edit
-        </Button>}
+        {currentUser?.uid === props.item.metaData.authorID && (
+          <Button
+            href={"./edit"}
+            title={"Edit " + item.data.title}
+            icon={{ gficon: "edit" }}
+            style="primary"
+          >
+            Edit
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { ItemType } from "../../types";
+import { ItemType, ItemTypes } from "../../types";
 import css from "../../styles/pages/itemPage/images.module.css";
 import { useEffect, useState } from "react";
 import Button from "../../components/Button";
@@ -11,7 +11,7 @@ import GFIcon from "../../components/GFIcon";
 export default function ItemImages(props: {
   item: ItemType;
   slug: string;
-  itemType: "projects" | "recipes" | "albums" | "blog";
+  itemType: ItemTypes;
 }) {
   const item = props.item;
   const [open, setOpen] = useState(false);
@@ -25,7 +25,9 @@ export default function ItemImages(props: {
       .fill(1)
       .map((unused, index) => {
         const string =
-          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" + props.itemType + "/" +
+          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
+          props.itemType +
+          "/" +
           props.slug.toLowerCase() +
           "/images/image-" +
           index +
@@ -65,7 +67,13 @@ export default function ItemImages(props: {
 
   return (
     <div className={css.images}>
-      <Button onClick={() => setOpen(true)} title="Show Lightbox" style="primary" hidden="pageNavigation" className={css.tabButton}>
+      <Button
+        onClick={() => setOpen(true)}
+        title="Show Lightbox"
+        style="primary"
+        hidden="pageNavigation"
+        className={css.tabButton}
+      >
         Show Lightbox
       </Button>
       <PhotoAlbum

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import getDataByDateExcludeSlugAndSameCollection from "../functions/firebase/storage/getDataByDateExcludeSlugAndSameCollection";
 import getDataByDateExcludeSlugAndDifferentCollection from "../functions/firebase/storage/getDataByDateExcludeSlugAndDifferentCollection";
 import getDataByDateExcludeSlug from "../functions/firebase/storage/getDataByDateExcludeSlug";
-import { ItemType } from "../types";
+import { ItemType, ItemTypes } from "../types";
 import Carousel from "./Carousel";
 import ListItem from "./ListItem";
 import getRealtimeDataByDateFromUser from "../functions/firebase/storage/useRealtimeDataByDateFromUser";
@@ -16,7 +16,7 @@ export default function ItemCarousel(props: {
   sameCollection: boolean;
   userID?: string;
   title: string;
-  itemType: "projects" | "recipes" | "albums" | "blog";
+  itemType: ItemTypes;
 }) {
   const [carouselItems, setCarouselItems] = useState<
     { id: string; value: ItemType }[] | undefined
@@ -24,7 +24,11 @@ export default function ItemCarousel(props: {
 
   useEffect(() => {
     if (props.userID) {
-      getRealtimeDataByDateFromUser(props.itemType, props.userID, setCarouselItems as React.Dispatch<React.SetStateAction<unknown>>);
+      getRealtimeDataByDateFromUser(
+        props.itemType,
+        props.userID,
+        setCarouselItems as React.Dispatch<React.SetStateAction<unknown>>
+      );
       return;
     } else if (props.collection && props.sameCollection === true) {
       getDataByDateExcludeSlugAndSameCollection(
