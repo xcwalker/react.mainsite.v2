@@ -106,7 +106,7 @@ export type VehicleItemType = {
     engine: {
       size: number;
       fuel: "petrol" | "diesel" | "electric" | "hybrid";
-    }
+    };
     transmission: "manual" | "automatic" | "semi-automatic";
     history: VehicleHistoryType;
   };
@@ -118,11 +118,13 @@ export type VehicleItemType = {
     authorID: string;
     key: string;
     vin: string;
+    thumbnail?: string;
   };
 };
 
 export type VehicleHistoryType = {
   date: string;
+  milage_miles: number;
   location: string;
   notes: string;
   technicianRef: DocumentReference;
@@ -132,10 +134,13 @@ export type VehicleHistoryType = {
   isFleetEnrollment: boolean;
 }[];
 
-
 export type ItemTypes = "projects" | "recipes" | "albums" | "blog" | "vehicles";
 
-export type CombinedItemProps = ItemProps & BlogItemProps & ProjectItemProps & RecipeItemProps & AlbumItemProps;
+export type CombinedItemProps = ItemProps &
+  BlogItemProps &
+  ProjectItemProps &
+  RecipeItemProps &
+  AlbumItemProps;
 
 export type BlogItemProps = ItemProps;
 
@@ -241,5 +246,51 @@ export type UserType = {
     id: string;
     title: string;
     email: string;
+  };
+};
+
+type Overlay_PositionType = "top left" | "top right" | "top center" | "bottom left" | "bottom right" | "bottom center" | "center left" | "center right" | "center";
+type Overlay_DirectionType = "row" | "column" | "row-reverse" | "column-reverse";
+
+export type OverlayType = {
+  data: {
+    title: string;
+    style: number;
+    colorScheme: "light" | "dark" | "custom";
+    customColor?: string; // Hex color code for custom color scheme
+    logo?: string; // URL or path to a logo image
+    logoPosition: Overlay_PositionType | "main header" | "sub header";
+    socials: {
+      items: {
+        handle: string;
+        platform: string; // e.g., "github", "twitter", "linkedin"
+      }[];
+      position: Overlay_PositionType;
+      direction: Overlay_DirectionType;
+    };
+    header: {
+      main: string;
+      sub: string;
+      position: Overlay_PositionType;
+      direction: Overlay_DirectionType;
+    };
+    radio: {
+      visibility: boolean;
+      style: string;
+      position: Overlay_PositionType;
+      station: "SR" | "SR Rock" | "SR Dance" | "SR Xmas";
+      duration: number; // in seconds | -1 for infinite
+      durationBar: boolean; // whether to show a duration bar
+      showDJ: boolean; // whether to show the DJ name
+      showStation: boolean; // whether to show the station name
+    };
+  };
+  metaData: {
+    date: {
+      created: string;
+      modified: string;
+    };
+    thumbnail?: string;
+    authorID: string;
   };
 };

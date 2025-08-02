@@ -4,6 +4,7 @@ import SidebarUser from "../../components/SidebarUser";
 
 import css from "../../styles/pages/itemPage/sidebar.module.css";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
+import Image from "../../components/Image";
 
 export function ItemSidebar(props: {
   item: VehicleItemType;
@@ -27,11 +28,11 @@ export function ItemSidebar(props: {
   };
   return (
     <div className={css.sidebar}>
-      {/* <Image
-        src={props.item.metaData?.thumbnail}
+      {props.item.metaData.thumbnail && <Image
+        src={props.item.metaData.thumbnail}
         alt="Thumbnail"
         className={css.thumbnail}
-      /> */}
+      />}
       <div className={css.details}>
         <h3>
           {item.data.make} {item.data.model}

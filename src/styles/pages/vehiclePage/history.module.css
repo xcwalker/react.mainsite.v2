@@ -1,0 +1,177 @@
+.historyList {
+  /* spacing */
+  margin: 0;
+  padding: 0;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.entry {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* styling */
+  padding-left: 2rem;
+}
+
+.entry::after {
+  /* content */
+  content: "";
+
+  /* position */
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+  z-index: -2;
+
+  /* sizing */
+  width: 0.25rem;
+  height: calc(100% + 2rem);
+
+  /* styling */
+  border-left: 0.25rem dashed var(--primary);
+}
+
+.entry::before {
+  /* content */
+  content: "";
+
+  /* position */
+  position: absolute;
+  top: calc((3.25rem - 1rem) / 2);
+  left: 0.5rem;
+  z-index: 1;
+
+  /* sizing */
+  width: 1rem;
+  height: 1rem;
+
+  /* styling */
+  border-radius: 50%;
+  background-color: var(--accent);
+  border: 0.125rem solid var(--text);
+}
+
+.entry:last-of-type::after {
+  /* content */
+  content: none;
+}
+
+.entry .header {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+  padding: 0.5rem 1rem;
+  height: 3.25rem;
+  
+  /* flex */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background-color: var(--primary);
+}
+
+.entry .header::before {
+  /* content */
+  content: "";
+
+  /* position */
+  position: absolute;
+  top: 0;
+  left: -2rem;
+  z-index: -1;
+
+  /* sizing */
+  width: 3rem;
+  height: 100%;
+
+  /* styling */
+  border-radius: 0.5rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: var(--accent);
+}
+
+.entry .header .left {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.entry .header .left .location {
+  /* text */
+  color: var(--text);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.entry .header .left .date {
+  /* text */
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.entry .header .right {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.entry .header .right .technician {
+  /* text */
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.entry .header .right .fleetService {
+  /* sizing */
+  padding: 0.5rem;
+
+  /* flex */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* styling */
+  color: var(--text);
+  font-size: 1.5rem;
+  border-radius: 0.25rem;
+  background-color: var(--background);
+}
+
+.entry .header .right .fleetService .logo {
+  /* sizing */
+  width: 1.25rem;
+  height: 1.25rem;
+
+  /* flex */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* styling */
+  color: inherit;
+  font-size: 1.5rem;
+  fill: currentColor;
+}

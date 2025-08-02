@@ -49,6 +49,11 @@ const navItems = [
     gficon: "directions_car",
   },
   {
+    title: "Overlay",
+    href: "overlay",
+    gficon: "layers",
+  },
+  {
     title: "Profile",
     href: "user",
     gficon: "person",
@@ -73,6 +78,13 @@ const navItems = [
 ];
 
 const navItemsSites = [
+  {
+    title: "Immersion V2",
+    href: "https://v2.immersion.xcwalker.dev/",
+    gficon: "auto_awesome_mosaic",
+    // iconURL:
+    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
+  },
   {
     title: "Immersion",
     href: "https://immersion.xcwalker.dev/",

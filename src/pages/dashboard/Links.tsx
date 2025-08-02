@@ -1,48 +1,60 @@
+import { useEffect, useState } from "react";
 import css from "../../styles/pages/dashboard/links.module.css";
-
-const links = [
-  {
-    title: "MOT Check",
-    href: "https://www.check-mot.service.gov.uk/",
-  },
-  {
-    title: "Met Office",
-    href: "https://www.metoffice.gov.uk/",
-  },
-  {
-    title: "Novo Auto",
-    href: "https://www.novoautoltd.co.uk/",
-  },
-];
+import { useAuth } from "../../functions/firebase/authentication/useAuth";
+import { NewTabLinks } from "../../types";
+import firebaseGetData from "../../functions/firebase/storage/getData";
+import LoadingPage from "../../components/Loading";
+import ErrorPage from "../../ErrorPage";
+import { LinkItem as NewTabLinkItem } from "../newTab/Index";
 
 export default function DashboardLinks() {
+  const user = useAuth();
+  const [linkData, setLinkData] = useState<NewTabLinks | undefined>();
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (!user?.uid) {
+      console.error("User not authenticated");
+      return;
+    }
+
+    firebaseGetData("newtab", user?.uid).then((data) => {
+      if (data === undefined) {
+        console.error("User data not found");
+        setError(true);
+        return;
+      }
+      setLinkData(data as NewTabLinks);
+      setError(false);
+      return;
+    });
+    return () => {
+      setLinkData(undefined);
+      setError(false);
+    };
+  }, [user?.uid]);
+
   return (
     <section className={css.links}>
-      <h2>Your Links</h2>
-      <div className={css.container}>
-        {links.map((link, index) => {
-          const matches = link.href.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i);
-          const domain = matches && matches[1];
-          return (
-            <a href={link.href} key={index} className={css.link}>
-              <img
-                src={
-                  "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-                  link.href +
-                  "&size=50"
-                }
-                alt=""
-                className={css.favicon}
-              />
-              <span className={css.title}>{link.title}</span>
-              <span className={css.domain}>
-                {domain !== null && domain.replace("www.", "")}
-                {domain === null && link.href}
-              </span>
-            </a>
-          );
-        })}
-      </div>
+      {!error && linkData && (
+        <>
+          <h2>Your Links</h2>
+          <div className={css.container}>
+            {linkData.links.map((item, index) => {
+              return (
+                <NewTabLinkItem
+                  hasCMDKey={false}
+                  link={item}
+                  index={index}
+                  modifierPressed={false}
+                />
+              );
+            })}
+          </div>
+        </>
+      )}
+      {!error && !linkData && <LoadingPage />}
+      {error && <ErrorPage code={204} error="No Content" />}
     </section>
   );
 }

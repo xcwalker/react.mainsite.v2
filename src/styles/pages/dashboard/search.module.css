@@ -1,0 +1,17 @@
+.search {
+  /* sizing */
+  grid-column: 1/-2;
+  /* padding: 1rem; */
+
+  /* styling */
+  /* border: 1px solid var(--secondary); */
+}
+
+.search > * {
+  height: 3rem;
+  width: 100%;
+}
+
+.search > * > * {
+  max-width: 100%;
+}

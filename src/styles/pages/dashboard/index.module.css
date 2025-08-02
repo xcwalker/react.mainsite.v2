@@ -6,7 +6,8 @@
 .dashboard .container {
   /* grid */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(282px, 100%), 1fr));
+  --_column-width: repeat(auto-fit, minmax(min(282px, 100%), 1fr));
+  grid-template-columns: var(--_column-width);
   grid-template-rows: 400px auto auto;
   gap: 0.5rem;
 }

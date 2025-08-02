@@ -171,6 +171,11 @@
   gap: 0.25rem;
 }
 
+.weather .container .forecast .scroller .divider {
+  border-left: 2px solid var(--secondary);
+  margin-inline: 0.25rem;
+}
+
 .weather .card {
   /* position */
   position: relative;

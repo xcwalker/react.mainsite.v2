@@ -43,7 +43,7 @@ export default function DashboardWeather() {
         location?.coords.latitude +
         "&longitude=" +
         location?.coords.longitude +
-        "&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m&wind_speed_unit=mph&forecast_days=1"
+        "&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_direction_10m&wind_speed_unit=mph&forecast_days=2"
     )
       .then((response) => response.json())
       .then((data) => {
@@ -109,32 +109,56 @@ export default function DashboardWeather() {
                 />
                 <div className={css.forecast}>
                   <div className={css.scroller}>
-                    {weather.hourly.time.map((time, index) => (
-                      <WeatherCard
-                        units={weather.hourly_units}
-                        weather={{
-                          time: time,
-                          interval: index,
-                          temperature_2m: weather.hourly.temperature_2m[index],
-                          precipitation: weather.hourly.precipitation[index],
-                          precipitation_probability:
-                            weather.hourly.precipitation_probability[index],
-                          weather_code: weather.hourly.weather_code[index],
-                          wind_speed_10m: weather.hourly.wind_speed_10m[index],
-                          wind_direction_10m:
-                            weather.hourly.wind_direction_10m[index],
-                          relative_humidity_2m:
-                            weather.hourly.relative_humidity_2m[index],
-                        }}
-                      />
-                    ))}
+                    {weather.hourly.time.map((time, index) => {
+                      const currentDate = new Date();
+                      const weatherDate = new Date(time)
+                      
+                      const timetime = weatherDate.toLocaleTimeString(
+                        "locale",
+                        {
+                          hour: "numeric",
+                          minute: "numeric",
+                        }
+                      );
+
+                      console.log(timetime);
+
+                      return (
+                        <>
+                          {weatherDate > currentDate &&
+                            timetime === "00:00" && (
+                              <div className={css.divider} />
+                            )}
+                          <WeatherCard
+                            units={weather.hourly_units}
+                            weather={{
+                              time: time,
+                              interval: index,
+                              temperature_2m:
+                                weather.hourly.temperature_2m[index],
+                              precipitation:
+                                weather.hourly.precipitation[index],
+                              precipitation_probability:
+                                weather.hourly.precipitation_probability[index],
+                              weather_code: weather.hourly.weather_code[index],
+                              wind_speed_10m:
+                                weather.hourly.wind_speed_10m[index],
+                              wind_direction_10m:
+                                weather.hourly.wind_direction_10m[index],
+                              relative_humidity_2m:
+                                weather.hourly.relative_humidity_2m[index],
+                            }}
+                          />
+                        </>
+                      );
+                    })}
                   </div>
                 </div>
               </main>
             )}
           </>
         )}
-        {!weather && loading && <LoadingPage className={css.loading}/>}
+        {!weather && loading && <LoadingPage className={css.loading} />}
         {!weather && error && (
           <div className={css.loadText}>
             <span>Unable to retrieve location</span>
@@ -143,7 +167,8 @@ export default function DashboardWeather() {
               onClick={() => {
                 setRefreshLocation((prev) => prev + 1);
               }}
-            >Retry
+            >
+              Retry
               <GFIcon className={css.icon}>my_location</GFIcon>
             </button>
           </div>

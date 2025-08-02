@@ -1,5 +1,5 @@
 .radio {
-
+  grid-row: span 2;
 }
 
 .radio .container {

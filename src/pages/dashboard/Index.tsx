@@ -9,6 +9,7 @@ import { UserType } from "../../types";
 import DashboardWeather from "./Weather";
 import DashboardRadio from "./Radio";
 import DashboardLinks from "./Links";
+import DashboardSearch from "./Search";
 
 export default function DashboardIndex() {
   const user = useAuth();
@@ -29,9 +30,10 @@ export default function DashboardIndex() {
       <div className={css.container}>
         <DashboardBanner />
         <DashboardAccount userData={userData} />
+        <DashboardSearch />
+        <DashboardRadio />
         <DashboardCreate />
         <DashboardWeather />
-        <DashboardRadio />
         <DashboardLinks />
       </div>
     </section>
