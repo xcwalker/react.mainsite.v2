@@ -23,7 +23,7 @@ import UserIndex from "./pages/user/Index";
 import UserPage from "./pages/user/User";
 import DashboardIndex from "./pages/dashboard/Index";
 import ItemCreate from "./pages/itemPage/Create";
-import Protect from "./components/Security/Protect";
+import Protect, { RoleProtect } from "./components/Security/Protect";
 import { atomWithStorage } from "jotai/utils";
 import BannerContainer from "./components/Banners/BannerContainer";
 import NewTab from "./pages/newTab/Index";
@@ -40,6 +40,7 @@ export default function App() {
   const [count, setCount] = useState(0);
   const [count2, setCount2] = useState(0);
   const [focusState, setFocusState] = useState<"online" | "away">("online");
+  const [focusUpdate, setFocusUpdate] = useState(true);
 
   const handlePageClose = useCallback(() => {
     if (currentUser === null || currentUser === undefined) return;
@@ -92,8 +93,14 @@ export default function App() {
   useEffect(() => {
     if (currentUser === null || currentUser === undefined) return;
 
-    firebaseUpdateUserLastSeen(currentUser.uid, focusState);
-  }, [currentUser, count, focusState]);
+    if (focusState === "away" && focusUpdate) {
+      firebaseUpdateUserLastSeen(currentUser.uid, "away");
+      setFocusUpdate(false);
+    } else if (focusState !== "away" && focusUpdate) {
+      firebaseUpdateUserLastSeen(currentUser.uid, focusState);
+      setFocusUpdate(true);
+    }
+  }, [currentUser, count, focusState, focusUpdate]);
 
   useEffect(() => {
     const timer = setTimeout(() => ticking && setCount(count + 1), 60000);
@@ -151,13 +158,45 @@ export default function App() {
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <ItemCreate itemType="blog" />
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemCreate itemType="blog" />
+                    </RoleProtect>
                   </Protect>
                 }
               />
               <Route path=":slug">
                 <Route index element={<ItemPage itemType="blog" />} />
-                <Route path="edit" element={<ItemEdit itemType="blog" />} />
+                <Route
+                  path="edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="blog" />
+                    </RoleProtect>
+                  }
+                />
+                <Route
+                  path="admin-edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="blog" admin />
+                    </RoleProtect>
+                  }
+                />
               </Route>
             </Route>
 
@@ -177,13 +216,45 @@ export default function App() {
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <ItemCreate itemType="projects" />
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemCreate itemType="projects" />
+                    </RoleProtect>
                   </Protect>
                 }
               />
               <Route path=":slug">
                 <Route index element={<ItemPage itemType="projects" />} />
-                <Route path="edit" element={<ItemEdit itemType="projects" />} />
+                <Route
+                  path="edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="projects" />
+                    </RoleProtect>
+                  }
+                />
+                <Route
+                  path="admin-edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="projects" admin />
+                    </RoleProtect>
+                  }
+                />
               </Route>
             </Route>
 
@@ -203,13 +274,45 @@ export default function App() {
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <ItemCreate itemType="recipes" />
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemCreate itemType="recipes" />
+                    </RoleProtect>
                   </Protect>
                 }
               />
               <Route path=":slug">
                 <Route index element={<ItemPage itemType="recipes" />} />
-                <Route path="edit" element={<ItemEdit itemType="recipes" />} />
+                <Route
+                  path="edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="recipes" />
+                    </RoleProtect>
+                  }
+                />
+                <Route
+                  path="admin-edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="recipes" admin />
+                    </RoleProtect>
+                  }
+                />
               </Route>
             </Route>
 
@@ -246,13 +349,45 @@ export default function App() {
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <ItemCreate itemType="albums" />
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemCreate itemType="albums" />
+                    </RoleProtect>
                   </Protect>
                 }
               />
               <Route path=":slug">
                 <Route index element={<ItemPage itemType="albums" />} />
-                <Route path="edit" element={<ItemEdit itemType="albums" />} />
+                <Route
+                  path="edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="albums" />
+                    </RoleProtect>
+                  }
+                />
+                <Route
+                  path="admin-edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="albums" admin />
+                    </RoleProtect>
+                  }
+                />
               </Route>
             </Route>
 

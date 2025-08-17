@@ -1,4 +1,4 @@
-import { ItemType, ItemTypes, RecipeItemProps } from "../../types";
+import { ItemType, ItemTypes, RecipeItemProps, UserType } from "../../types";
 import Button from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
@@ -8,6 +8,8 @@ import css from "../../styles/pages/itemPage/sidebar.module.css";
 import cssRecipeContent from "../../styles/pages/itemPage/sidebarRecipeContent.module.css";
 import Image from "../../components/Image";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
+import { useEffect, useState } from "react";
+import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 
 export function ItemSidebar(props: {
   item: ItemType;
@@ -15,6 +17,7 @@ export function ItemSidebar(props: {
   itemType: ItemTypes;
 }) {
   const currentUser = useAuth();
+  const [currentUserData, setCurrentUserData] = useState<UserType | undefined>();
   const item = props.item;
   const dateModified = new Date(item.metaData.date.modified);
   const dateCreated = new Date(item.metaData.date.created);
@@ -29,6 +32,17 @@ export function ItemSidebar(props: {
     minute: "numeric",
     hour: "numeric",
   };
+
+  useEffect(() => {
+    if (currentUser?.uid) {
+      firebaseGetRealtimeData(
+        "users",
+        currentUser.uid,
+        setCurrentUserData as React.Dispatch<React.SetStateAction<unknown>>
+      );
+    }
+  }, [currentUser?.uid]);
+
   return (
     <div className={css.sidebar}>
       <Image
@@ -138,6 +152,18 @@ export function ItemSidebar(props: {
             Edit
           </Button>
         )}
+        {currentUserData?.info.role &&
+          currentUserData?.info.role !== "user" &&
+          currentUserData?.info.role !== "unverified" && (
+            <Button
+              href={"./admin-edit"}
+              title={"Edit " + item.data.title}
+              icon={{ gficon: "person_edit" }}
+              style="primary"
+            >
+              Admin Edit
+            </Button>
+          )}
       </div>
     </div>
   );
