@@ -23,6 +23,12 @@ export default function Sidebar(props: { user: UserType }) {
       <div className={css.user}>
         {props.user.images.background && (
           <>
+            {props.user.images.backgroundType === "color" && (
+              <div
+                className={css.background}
+                style={{ backgroundColor: props.user.images.background }}
+              />
+            )}
             {props.user.images.backgroundType === "image" && (
               <img
                 src={props.user.images.background}

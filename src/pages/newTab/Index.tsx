@@ -12,6 +12,7 @@ import GFIcon from "../../components/GFIcon";
 import Logo from "../../components/Logo";
 import { Navigate } from "react-router-dom";
 import { NewTabSearch } from "./Search";
+import firebaseSetupNewTabData from "../../functions/firebase/storage/extra/setupNewTabData";
 
 export default function NewTab() {
   const user = useAuth();
@@ -64,7 +65,7 @@ export default function NewTab() {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [linkData?.links]);
+  }, [linkData?.links, hasCMDKey]);
 
   useEffect(() => {
     if (!user?.uid) {
@@ -74,8 +75,13 @@ export default function NewTab() {
 
     firebaseGetData("newtab", user?.uid).then((data) => {
       if (data === undefined) {
-        console.error("User data not found");
-        setError(true);
+        firebaseSetupNewTabData(user?.uid).then(() => {
+          firebaseGetData("newtab", user?.uid).then((data) => {
+            setLinkData(data as NewTabLinks);
+            setError(false);
+            return;
+          });
+        });
         return;
       }
       setLinkData(data as NewTabLinks);

@@ -6,6 +6,8 @@ import firebaseGetData from "../../functions/firebase/storage/getData";
 import LoadingPage from "../../components/Loading";
 import ErrorPage from "../../ErrorPage";
 import { LinkItem as NewTabLinkItem } from "../newTab/Index";
+import firebaseSetupNewTabData from "../../functions/firebase/storage/extra/setupNewTabData";
+import { Link } from "react-router-dom";
 
 export default function DashboardLinks() {
   const user = useAuth();
@@ -13,6 +15,11 @@ export default function DashboardLinks() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    if (user === undefined) {
+      console.error("User authentication state is undefined");
+      return
+    }
+    
     if (!user?.uid) {
       console.error("User not authenticated");
       return;
@@ -20,8 +27,13 @@ export default function DashboardLinks() {
 
     firebaseGetData("newtab", user?.uid).then((data) => {
       if (data === undefined) {
-        console.error("User data not found");
-        setError(true);
+        firebaseSetupNewTabData(user?.uid).then(() => {
+          firebaseGetData("newtab", user?.uid).then((data) => {
+            setLinkData(data as NewTabLinks);
+            setError(false);
+            return;
+          });
+        });
         return;
       }
       setLinkData(data as NewTabLinks);
@@ -50,6 +62,7 @@ export default function DashboardLinks() {
                 />
               );
             })}
+            {linkData.links.length === 0 && <Link to={"/newtab/edit"}>Add Links</Link>}
           </div>
         </>
       )}

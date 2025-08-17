@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties, Fragment, useEffect, useState } from "react";
 import GFIcon from "../../components/GFIcon";
 import css from "../../styles/pages/dashboard/weather.module.css";
 import LoadingPage from "../../components/Loading";
@@ -107,12 +107,13 @@ export default function DashboardWeather() {
                   weather={weather.current}
                   timeOverride="Now"
                 />
+                <div className={css.divider} />
                 <div className={css.forecast}>
                   <div className={css.scroller}>
                     {weather.hourly.time.map((time, index) => {
                       const currentDate = new Date();
-                      const weatherDate = new Date(time)
-                      
+                      const weatherDate = new Date(time);
+
                       const timetime = weatherDate.toLocaleTimeString(
                         "locale",
                         {
@@ -121,10 +122,8 @@ export default function DashboardWeather() {
                         }
                       );
 
-                      console.log(timetime);
-
                       return (
-                        <>
+                        <Fragment key={index}>
                           {weatherDate > currentDate &&
                             timetime === "00:00" && (
                               <div className={css.divider} />
@@ -149,7 +148,7 @@ export default function DashboardWeather() {
                                 weather.hourly.relative_humidity_2m[index],
                             }}
                           />
-                        </>
+                        </Fragment>
                       );
                     })}
                   </div>

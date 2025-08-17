@@ -19,6 +19,7 @@ import remarkGfm from "remark-gfm";
 import supersub from "remark-supersub";
 import RecipeContent from "./RecipeContent";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
+import toTitleCase from "../../functions/toTitleCase";
 
 export default function ItemPage(props: { itemType: ItemTypes }) {
   const { slug } = useParams();
@@ -45,14 +46,17 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
         <>
           <Helmet>
             <title>
-              {item.data.title} - {item.data.subTitle} {separator} {title}
+              {toTitleCase(item.data.title)} - {item.data.subTitle} {separator}{" "}
+              {title}
             </title>
             <meta
               name="description"
               content={
                 "An " +
                 title +
-                " project. " +
+                " " +
+                toTitleCase(item.data.title) +
+                ". " +
                 removeMd(item.data.description ? item.data.description : "")
               }
             />
@@ -61,7 +65,9 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
               content={
                 "An " +
                 title +
-                " project. " +
+                " " +
+                toTitleCase(item.data.title) +
+                ". " +
                 removeMd(item.data.description ? item.data.description : "")
               }
             />
@@ -70,7 +76,9 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
               content={
                 "An " +
                 title +
-                " project. " +
+                " " +
+                toTitleCase(item.data.title) +
+                ". " +
                 removeMd(item.data.description ? item.data.description : "")
               }
             />
@@ -78,7 +86,7 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
             <meta
               name="twitter:title"
               content={
-                item.data.title +
+                toTitleCase(item.data.title) +
                 " | " +
                 item.data.subTitle +
                 " " +
@@ -111,7 +119,7 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
             <meta
               property="og:title"
               content={
-                item.data.title +
+                toTitleCase(item.data.title) +
                 " | " +
                 item.data.subTitle +
                 " " +
@@ -174,7 +182,10 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
       {error && (
         <ErrorPage
           code={404}
-          error={props.itemType.substring(0, props.itemType.length - 1) + " Not Found"}
+          error={
+            props.itemType.substring(0, props.itemType.length - 1) +
+            " Not Found"
+          }
         />
       )}
     </>

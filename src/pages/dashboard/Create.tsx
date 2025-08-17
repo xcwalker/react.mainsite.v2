@@ -1,6 +1,6 @@
 import css from "../../styles/pages/dashboard/create.module.css";
-import { NavLinkInternal } from "../../components/Header";
 import Button from "../../components/Button";
+import GFIcon from "../../components/GFIcon";
 
 const links = [
   {
@@ -35,10 +35,11 @@ export default function DashboardCreate() {
             <Button
               href={link.href}
               title={link.title}
-              icon={{ gficon: link.gficon }}
               className={css.content}
             >
-              {link.title}
+              <GFIcon>
+                {link.gficon}
+              </GFIcon>
             </Button>
           ))}
         </div>

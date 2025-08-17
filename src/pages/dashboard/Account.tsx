@@ -9,6 +9,12 @@ export default function DashboardAccount(props: { userData: UserType | null }) {
         <div className={css.container}>
           {props.userData.images.background && (
             <>
+              {props.userData.images.backgroundType === "color" && (
+                <div
+                  className={css.headerImage}
+                  style={{ backgroundColor: props.userData.images.background }}
+                />
+              )}
               {props.userData.images.backgroundType === "image" && (
                 <img
                   src={props.userData.images.background}
@@ -42,7 +48,9 @@ export default function DashboardAccount(props: { userData: UserType | null }) {
               {props.userData.about.firstName} {props.userData.about.lastName}
             </h3>
           </div>
-          <Link className={css.button} to={"/account/manage"}>Manage Account</Link>
+          <Link className={css.button} to={"/account/manage"}>
+            Manage Account
+          </Link>
         </div>
       )}
       {props.userData === null && <span>Loading</span>}

@@ -28,7 +28,7 @@ export default function DashboardIndex() {
   return (
     <section className={css.dashboard}>
       <div className={css.container}>
-        <DashboardBanner />
+        <DashboardBanner name={userData?.about.firstName} />
         <DashboardAccount userData={userData} />
         <DashboardSearch />
         <DashboardRadio />

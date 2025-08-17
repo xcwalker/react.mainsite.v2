@@ -3,11 +3,14 @@ import AccountPage from "../../components/Security/AccountPage";
 import css from "../../styles/pages/account/index.module.css";
 import { SocialIcon } from "../../components/SocialIcon";
 import { useState } from "react";
-import firebaseLogin from "../../functions/firebase/authentication/login";
 import Protect from "../../components/Security/Protect";
 import firebaseProviderLogin from "../../functions/firebase/authentication/loginWithProvider";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+import firebaseRegister from "../../functions/firebase/authentication/register";
+import toast from "react-hot-toast";
+import { toastStyleError } from "../../toast";
+import toTitleCase from "../../functions/toTitleCase";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -20,9 +23,21 @@ export default function RegisterPage() {
 
     setLoading(true);
 
-    firebaseLogin(email, password).then(() => {
-      setLoading(false);
-    });
+    firebaseRegister(email, password)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error("Registration failed:", error);
+        // Handle error (e.g., show a toast notification)
+        toast.error(
+          toTitleCase(error.code.replace("auth/", "").replaceAll("-", " ")),
+          {
+            style: toastStyleError,
+          }
+        );
+      });
   }
 
   return (

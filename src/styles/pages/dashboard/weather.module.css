@@ -1,6 +1,6 @@
 .weather {
   border: 1px solid var(--secondary);
-  grid-column: span 2;
+  grid-column: 2/-2;
 }
 
 .weather .container {
@@ -110,6 +110,11 @@
   cursor: pointer;
 }
 
+.weather .container .header button:hover,
+.weather .container .header button:focus-visible {
+  background-color: var(--secondary);
+}
+
 .weather .container .header .extraControls {
   /* sizing */
   width: 100%;
@@ -153,17 +158,14 @@
 .weather .container .forecast {
   /* sizing */
   width: calc(100% - 125px);
-
-  /* styling */
-  border-left: 2px solid var(--secondary);
 }
 
 .weather .container .forecast .scroller {
   /* sizing */
   width: 100%;
   overflow-x: auto;
-  padding-bottom: 0.25rem;
-  padding-inline: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-right: 1.5rem;
 
   /* flex */
   display: flex;
@@ -171,7 +173,7 @@
   gap: 0.25rem;
 }
 
-.weather .container .forecast .scroller .divider {
+.weather .divider {
   border-left: 2px solid var(--secondary);
   margin-inline: 0.25rem;
 }
@@ -333,7 +335,6 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   place-items: center;
-  
 
   /* styling */
   background-color: var(--primary);

@@ -8,6 +8,8 @@
 
   /* variables */
   --_transition-speed: 1s;
+  --_dot-size: 0.5rem;
+  --_dot-offset: 0.75rem;
 }
 
 .slideshow .container {
@@ -16,19 +18,28 @@
   height: 100%;
 
   /* flex */
-  gap: 0.75rem;
+  gap: var(--_dot-offset);
 }
 
-.slideshow button {
+.slideshow .buttons {
   /* position */
   position: absolute;
   z-index: 1;
-  inset: 1rem;
+  --_spacing: var(--_dot-size) + var(--_dot-offset);
+  bottom: calc(1rem + var(--_spacing));
+  right: 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.slideshow button {
 
   /* sizing */
   width: 2rem;
-  min-height: calc(250px - 2rem);
-  height: calc(35vmin - 2rem);
+  height: 2rem;
 
   /* flex */
   display: flex;
@@ -59,14 +70,6 @@
 .slideshow button:disabled:hover {
   /* styling */
   background-color: transparent;
-}
-
-.slideshow button.left {
-  right: auto;
-}
-
-.slideshow button.right {
-  left: auto;
 }
 
 .slideshow .heros {
@@ -110,8 +113,8 @@
 
 .slideshow .dots .dot {
   /* sizing */
-  width: 0.5rem;
-  height: 0.5rem;
+  width: var(--_dot-size);
+  height: var(--_dot-size);
 
   /* styling */
   background-color: var(--text-200);

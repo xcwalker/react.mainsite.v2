@@ -104,7 +104,7 @@ export function ItemSidebar(props: {
             Workshop Page
           </Button>
         )}
-        {navigator.canShare({
+        {navigator.canShare && navigator.canShare({
           title: item.data.title,
           text: item.data.subTitle,
           url: window.location.href,

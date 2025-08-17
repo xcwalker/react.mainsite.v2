@@ -200,7 +200,7 @@ export type NewTabLinks = {
   settings: {
     background: {
       image?: string;
-      type?: string; // "image" | "color"
+      type?: "image" | "color";
       color?: string; // Hex color code if type is "color"
       filter?: string; // CSS filter for the background image
     };
@@ -209,12 +209,30 @@ export type NewTabLinks = {
     showUser: boolean;
     showSearch: boolean;
     search: {
-      provider: string; // "google" | "bing" | "duckduckgo"
+      provider: "google" | "bing" | "duckduckgo";
       queryURL: string; // URL template for search queries
       defaultParams?: string; // Additional default parameters for the search query
     };
   };
 };
+
+export const NewTabLinksDefault: NewTabLinks = {
+  links: [],
+  settings: {
+    background: {
+      type: "color", // "image" | "color"
+      color: "var(--background-200)", // Hex color code if type is "color"
+    },
+    color: "var(--text)", // Hex color code for the text
+    showOrganization: false,
+    showUser: true,
+    showSearch: true,
+    search: {
+      provider: "google", // "google" | "bing" | "duckduckgo"
+      queryURL: "https://google.com/search?&q=", // URL template for search queries
+    },
+  },
+}
 
 export type UserType = {
   about: {
@@ -249,8 +267,50 @@ export type UserType = {
   };
 };
 
-type Overlay_PositionType = "top left" | "top right" | "top center" | "bottom left" | "bottom right" | "bottom center" | "center left" | "center right" | "center";
-type Overlay_DirectionType = "row" | "column" | "row-reverse" | "column-reverse";
+export const userSetup: UserType = {
+  about: {
+    userName: "Unknown",
+    displayName: "Unknown",
+    firstName: "New",
+    lastName: "User",
+    status: "away",
+    statement: "",
+  },
+  images: {
+    backgroundType: "color",
+    background: "var(--background-100)",
+    header: "/background.svg",
+    profile:
+      "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
+  },
+  info: {
+    gender: "Unknown",
+    location: "Unknown",
+    pronouns: "Unknown",
+    joined: new Date().toJSON(),
+    lastOnline: new Date().toJSON(),
+  },
+  links: [],
+  settings: {
+    showOrganization: false,
+  },
+};
+
+type Overlay_PositionType =
+  | "top left"
+  | "top right"
+  | "top center"
+  | "bottom left"
+  | "bottom right"
+  | "bottom center"
+  | "center left"
+  | "center right"
+  | "center";
+type Overlay_DirectionType =
+  | "row"
+  | "column"
+  | "row-reverse"
+  | "column-reverse";
 
 export type OverlayType = {
   data: {

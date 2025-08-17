@@ -206,7 +206,7 @@ export function NewTabSearch(props: { hasCMDKey: boolean; modifierPressed: boole
           // sorts bangs by bang length then finds the first bang that matches the search query
           const bangMatch = bangs
             .sort((a, b) => b.bang.length - a.bang.length)
-            .find((bang) => searchQuery.includes("!" + bang.bang));
+            .find((bang) => searchQuery.toLowerCase().includes("!" + bang.bang));
 
           if (bangMatch) {
             setSearchBang(bangMatch);

@@ -27,8 +27,14 @@ export default function SidebarUser(props: {
       className={css.author + (props.className ? " " + props.className : "")}
       to={"/user/" + props.userId}
     >
-      {userData?.images.background && (
+      {userData?.images?.background && (
         <>
+          {userData?.images.backgroundType === "color" && (
+            <div
+              className={css.background}
+              style={{ backgroundColor: userData?.images.background }}
+            />
+          )}
           {userData?.images.backgroundType === "image" && (
             <img
               src={userData?.images.background}
