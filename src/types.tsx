@@ -255,6 +255,7 @@ export type UserType = {
     pronouns: string;
     joined: string;
     lastOnline: string;
+    role: "unverified" | "user" | "admin" | "moderator" | "developer";
   };
   links: string[];
   settings: {

@@ -13,10 +13,13 @@ import firebaseSetData from "../../functions/firebase/storage/setData";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import Button from "../../components/Button";
+import firebaseCreateData from "../../functions/firebase/storage/createData";
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
   dataInput?: CombinedItemProps;
+  slug?: string;
+  admin?: boolean;
 }) {
   const [data, setData] = useState<CombinedItemProps>(
     props.dataInput
@@ -64,8 +67,18 @@ export default function ItemCreate(props: {
 
   return (
     <section className={css.create}>
-      <Sidebar data={data} itemType={props.itemType} setData={setData} />
-      <Main data={data} itemType={props.itemType} setData={setData} />
+      <Sidebar
+        data={data}
+        itemType={props.itemType}
+        setData={setData}
+        slug={props.slug}
+        admin={props.admin}
+      />
+      <Main
+        data={data}
+        itemType={props.itemType}
+        setData={setData}
+      />
     </section>
   );
 }
@@ -74,8 +87,9 @@ function Sidebar(props: {
   itemType: ItemTypes;
   data: CombinedItemProps;
   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
+  slug?: string;
+  admin?: boolean;
 }) {
-  const [slug, setSlug] = useState<string>("");
   const navigate = useNavigate();
   const currentUser = useAuth();
 
@@ -100,18 +114,6 @@ function Sidebar(props: {
         title="SubTitle"
         className={css.subTitle}
       />
-      <div className={css.textInput}>
-        <input
-          type="text"
-          value={slug}
-          onChange={(e) => {
-            setSlug(e.target.value);
-          }}
-          title="Slug"
-          placeholder="Slug"
-          className={css.slug}
-        />
-      </div>
       <div className={css.collection}>
         <TextInput
           value={props.data.metaData.collection}
@@ -203,29 +205,71 @@ function Sidebar(props: {
       )}
       {currentUser && currentUser !== null && (
         <Button
-          onClick={() =>
-            firebaseSetData(props.itemType, slug, {
-              data: { ...props.data.data },
-              metaData: {
-                ...props.data.metaData,
-                authorID: currentUser.uid,
-                date: {
-                  created: props.data
-                    ? props.data.metaData.date.created
-                    : new Date().toJSON(),
-                  modified: new Date().toJSON(),
+          onClick={() => {
+            if (props.slug) {
+              // update existing item
+              firebaseSetData(props.itemType, props.slug, {
+                data: { ...props.data.data },
+                metaData: {
+                  ...props.data.metaData,
+                  authorID: props.admin
+                    ? props.data.metaData.authorID
+                    : currentUser.uid,
+                  date: {
+                    created: props.data.metaData.date.created,
+                    modified: new Date().toJSON(),
+                  },
                 },
-              },
-            }).then((res) => {
-              console.log(res);
-              navigate("/" + props.itemType + "/" + slug.toString());
-            })
+              }).then((res) => {
+                console.log(res);
+                navigate("/" + props.itemType + "/" + props.slug.toString());
+              });
+            } else {
+              // create new item
+              firebaseCreateData(props.itemType, {
+                data: { ...props.data.data },
+                metaData: {
+                  ...props.data.metaData,
+                  authorID: currentUser.uid,
+                  date: {
+                    created: new Date().toJSON(),
+                    modified: new Date().toJSON(),
+                  },
+                },
+              }).then((res) => {
+                console.log(res);
+                if (!res) return;
+                navigate("/" + props.itemType + "/" + res.id);
+              });
+            }
+          }}
+          title={
+            props.admin
+              ? props.slug
+                ? "Admin Save"
+                : "Admin Publish"
+              : props.slug
+              ? "Save"
+              : "Publish"
           }
-          title={props.data ? "Save" : "Publish"}
-          icon={{ gficon: props.data ? "Save" : "Publish" }}
+          icon={{
+            gficon: props.admin
+              ? props.slug
+                ? "save_as"
+                : ""
+              : props.slug
+              ? "Save"
+              : "Publish",
+          }}
           style="primary"
         >
-          {props.data ? "Save" : "Publish"}
+          {props.admin
+            ? props.slug
+              ? "Admin Save"
+              : ""
+            : props.slug
+            ? "Save"
+            : "Publish"}
         </Button>
       )}
     </div>
@@ -236,6 +280,7 @@ function Main(props: {
   itemType: ItemTypes;
   data: CombinedItemProps;
   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
+  isEdit?: boolean;
 }) {
   return (
     <div className={css.main}>
