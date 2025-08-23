@@ -80,7 +80,7 @@
 
   /* styling */
   border-radius: 50%;
-  --_border-width: 0.25rem;
+  --_border-width: 0.5rem;
   outline: var(--_border-width) solid var(--background);
 }
 
@@ -99,5 +99,7 @@
 
   /* styling */
   border-radius: 0.25rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
   object-fit: cover;
 }

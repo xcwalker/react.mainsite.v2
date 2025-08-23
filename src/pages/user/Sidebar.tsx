@@ -1,8 +1,17 @@
 import { UserType } from "../../types";
 import css from "../../styles/pages/user/sidebar.module.css";
 import Button from "../../components/Button";
+import { useAuth } from "../../functions/firebase/authentication/useAuth";
+import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
+import { useEffect, useState } from "react";
+import firebaseSetData from "../../functions/firebase/storage/setData";
+import toTitleCase from "../../functions/toTitleCase";
 
-export default function Sidebar(props: { user: UserType }) {
+export default function Sidebar(props: { user: UserType; id: string }) {
+  const currentUser = useAuth();
+  const [currentUserData, setCurrentUserData] = useState<UserType | undefined>(
+    undefined
+  );
   const dateOptions: Intl.DateTimeFormatOptions = {
     weekday: undefined,
     year: "numeric",
@@ -17,6 +26,16 @@ export default function Sidebar(props: { user: UserType }) {
   const dateJoined = new Date(props.user.info.joined);
   const dateOnline = new Date(props.user.info.lastOnline);
   const dateNow = new Date();
+
+  useEffect(() => {
+    if (currentUser?.uid) {
+      // Assuming you have a function to get the current user's data
+      firebaseGetRealtimeUserData(
+        currentUser.uid,
+        setCurrentUserData as React.Dispatch<React.SetStateAction<unknown>>
+      );
+    }
+  }, [currentUser?.uid]);
 
   return (
     <div className={css.sidebar}>
@@ -51,6 +70,11 @@ export default function Sidebar(props: { user: UserType }) {
         <div className={css.details}>
           <span className={css.displayName}>
             {props.user.about.displayName}
+            {props.user.info.role !== "unverified" && (
+              <span className={css.role}>
+                {toTitleCase(props.user.info.role)}
+              </span>
+            )}
           </span>
           <span className={css.userName}>
             @
@@ -139,6 +163,53 @@ export default function Sidebar(props: { user: UserType }) {
           <div className={css.innerCorner} />
         )}
       </ul>
+      {currentUserData?.info.role &&
+        currentUserData?.info.role !== "user" &&
+        currentUserData?.info.role !== "unverified" && (
+          <select
+            className={css.roleSelect}
+            value={props.user.info.role}
+            onChange={(e) => {
+              const updatedUserData: UserType = { ...props.user };
+              updatedUserData.info.role = e.target
+                .value as UserType["info"]["role"];
+
+              firebaseSetData("users", props.id, updatedUserData).then(() => {
+                console.log("User role updated successfully.");
+              });
+            }}
+          >
+            <option value="unverified">Unverified</option>
+            <option value="user">User</option>
+            <option value="developer">Developer</option>
+            <option value="moderator">Moderator</option>
+            <option value="admin">Admin</option>
+            <option value="overlord">Overlord</option>
+          </select>
+        )}
+
+      {currentUser?.uid === props.id && (
+        <Button
+          href={"./edit"}
+          title={"Edit"}
+          icon={{ gficon: "edit" }}
+          style="primary"
+        >
+          Edit
+        </Button>
+      )}
+      {currentUserData?.info.role &&
+        currentUserData?.info.role !== "user" &&
+        currentUserData?.info.role !== "unverified" && (
+          <Button
+            href={"./admin-edit"}
+            title={"Admin Edit"}
+            icon={{ gficon: "person_edit" }}
+            style="primary"
+          >
+            Admin Edit
+          </Button>
+        )}
     </div>
   );
 }

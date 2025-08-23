@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import css from "../styles/components/libraryCarousel.module.css";
 import GFIcon from "./GFIcon";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, UIEvent, useEffect, useRef, useState } from "react";
 
 export default function Carousel(props: {
   children: ReactNode;
@@ -31,12 +31,13 @@ export default function Carousel(props: {
     }
   }
 
-  function scrolled(e) {
+  function scrolled(e: UIEvent) {
     setScrolledDistance(e.currentTarget.scrollLeft);
   }
 
   useEffect(() => {
     if (carouselRef.current) {
+      // @ts-expect-error is on firefox (suckers)
       setScrollDistance(carouselRef.current.scrollLeftMax);
     }
 
@@ -115,6 +116,7 @@ export default function Carousel(props: {
                 className={css.button}
                 id={css.toTop}
                 onClick={() => {
+                  // @ts-expect-error works
                   carouselRef.current.firstChild.scrollIntoView({
                     behavior: "smooth",
                     block: "center",
@@ -206,6 +208,7 @@ export default function Carousel(props: {
         ref={carouselRef}
         onScroll={(e) => scrolled(e)}
         onLoad={() => {
+          // @ts-expect-error works
           setScrollDistance(carouselRef.current.scrollLeftMax);
         }}
       >

@@ -16,6 +16,7 @@ export default function SecurityWarning(props: { setVisibility: Dispatch<SetStat
             onClick={() => {
               props.setVisibility(false);
             }}
+            title="Proceed to document"
             tabIndex={-1}
           >
             Proceed

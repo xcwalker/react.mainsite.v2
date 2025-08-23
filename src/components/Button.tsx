@@ -29,6 +29,8 @@ export default function Button(props: {
   // loading is used to show a loading state for the button
   width?: string;
   // width is used to set the width of the button
+  isBeta?: boolean;
+  // isBeta is used to show a beta tag on the button
 }) {
   return (
     <>
@@ -62,6 +64,7 @@ export default function Button(props: {
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
+          {props.isBeta && <span className={css.betaTag}>Beta</span>}
         </a>
       )}
       {props.href !== undefined && props.external && !props.pageNavigation && (
@@ -96,6 +99,7 @@ export default function Button(props: {
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
+          {props.isBeta && <span className={css.betaTag}>Beta</span>}
           <GFIcon
             className={
               css.external +
@@ -136,6 +140,7 @@ export default function Button(props: {
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
+          {props.isBeta && <span className={css.betaTag}>Beta</span>}
         </NavLink>
       )}
       {(props.onClick || props.type) && (
@@ -168,6 +173,7 @@ export default function Button(props: {
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
+          {props.isBeta && <span className={css.betaTag}>Beta</span>}
         </button>
       )}
     </>

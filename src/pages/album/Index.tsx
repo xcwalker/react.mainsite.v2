@@ -8,8 +8,7 @@ import AlbumRelated from "./Related";
 import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
-import ErrorPage from "../../ErrorPage";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { AlbumItemProps } from "../../types";
 import LoadingPage from "../../components/Loading";
 
@@ -31,7 +30,7 @@ export default function AlbumIndex() {
         if (data === undefined) {
           console.log("Album not found");
           setTimeout(() => {
-          console.log("reset");
+            console.log("reset");
             setError(true);
             setInput(true);
           }, 2500);
@@ -49,12 +48,13 @@ export default function AlbumIndex() {
   }, [slug, key]);
 
   return (
-    <>
+    <Fragment>
       {item && !error && slug && !input && (
         <>
           <Helmet>
             <title>
-              {item.data.title} - {item.data.subTitle} {separator} {title}
+              {item.data.title} - {item.data.subTitle} {separator} Albums{" "}
+              {separator} {title}
             </title>
             <meta
               name="description"
@@ -160,7 +160,6 @@ export default function AlbumIndex() {
       )}
       {item === undefined && !error && !input && <LoadingPage />}
       {/* {error && !input && <ErrorPage code={404} error="Project Not Found" />} */}
-      {console.log(error, input)}
       {(error || input) && (
         <Section id="album-secure">
           <input
@@ -182,6 +181,6 @@ export default function AlbumIndex() {
           </button>
         </Section>
       )}
-    </>
+    </Fragment>
   );
 }

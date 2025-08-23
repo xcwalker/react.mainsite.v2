@@ -11,6 +11,8 @@ import firebaseRegister from "../../functions/firebase/authentication/register";
 import toast from "react-hot-toast";
 import { toastStyleError } from "../../toast";
 import toTitleCase from "../../functions/toTitleCase";
+import { Helmet } from "react-helmet";
+import { separator, title } from "../../App";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -18,9 +20,7 @@ export default function RegisterPage() {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function submit(e: React.MouseEvent) {
-    e.preventDefault();
-
+  function submit() {
     setLoading(true);
 
     firebaseRegister(email, password)
@@ -42,7 +42,12 @@ export default function RegisterPage() {
 
   return (
     <Protect isLoginPage={true} redirect={<Navigate to={"../manage"} />}>
-      <AccountPage id="accountRegister" onSubmit={(e) => submit(e)}>
+      <Helmet>
+        <title>
+          Register {separator} Accounts {separator} {title}
+        </title>
+      </Helmet>
+      <AccountPage id="accountRegister" onSubmit={() => submit()}>
         <h2 className={css.title}>Welcome To Awesome</h2>
 
         <Input

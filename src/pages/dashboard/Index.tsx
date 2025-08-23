@@ -10,6 +10,8 @@ import DashboardWeather from "./Weather";
 import DashboardRadio from "./Radio";
 import DashboardLinks from "./Links";
 import DashboardSearch from "./Search";
+import { separator, title } from "../../App";
+import { Helmet } from "react-helmet";
 
 export default function DashboardIndex() {
   const user = useAuth();
@@ -18,24 +20,29 @@ export default function DashboardIndex() {
   useEffect(() => {
     if (user) {
       firebaseGetUserData(user.uid).then((data) => {
-
         setUserData(data as UserType);
-      })
-
+      });
     }
-  }, [user])
+  }, [user]);
 
   return (
-    <section className={css.dashboard}>
-      <div className={css.container}>
-        <DashboardBanner name={userData?.about.firstName} />
-        <DashboardAccount userData={userData} />
-        <DashboardSearch />
-        <DashboardRadio />
-        <DashboardCreate />
-        <DashboardWeather />
-        <DashboardLinks />
-      </div>
-    </section>
+    <>
+      <Helmet>
+        <title>
+          Dashboard {separator} {title}
+        </title>
+      </Helmet>
+      <section className={css.dashboard}>
+        <div className={css.container}>
+          <DashboardBanner name={userData?.about.firstName} />
+          <DashboardAccount userData={userData} />
+          <DashboardSearch />
+          <DashboardRadio />
+          <DashboardCreate />
+          <DashboardWeather />
+          <DashboardLinks />
+        </div>
+      </section>
+    </>
   );
 }

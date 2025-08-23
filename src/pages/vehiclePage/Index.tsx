@@ -45,7 +45,8 @@ export default function VehiclePage(props: { itemType: ItemTypes }) {
         <>
           <Helmet>
             <title>
-              {vrn} - {item.data.make} {item.data.model} {separator} {title}
+              {vrn} - {item.data.make} {item.data.model} {separator} Fleet {separator}{" "}
+              {title}
             </title>
           </Helmet>
           <Section id="project">

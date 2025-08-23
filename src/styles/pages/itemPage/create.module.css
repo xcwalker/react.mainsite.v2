@@ -80,6 +80,7 @@
 
   /* sizing */
   aspect-ratio: 1/1;
+  height: auto;
 
   /* flex */
   display: flex;
@@ -91,6 +92,7 @@
   background: rgba(255, 0,0 ,0.25);
   border: 1px solid rgba(255, 0,0 ,0.5);
   color: var(--text);
+  overflow: hidden;
 }
 
 .create .addButton {

@@ -4,13 +4,17 @@ import css from "../../styles/pages/account/index.module.css";
 import { useState } from "react";
 import Protect from "../../components/Security/Protect";
 import firebaseResetPassword from "../../functions/firebase/authentication/resetPassword";
+import { Helmet } from "react-helmet";
+import { separator, title } from "../../App";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function submit(e: React.MouseEvent) {
-    e.preventDefault();
+  function submit(
+    // e: React.MouseEvent
+  ) {
+      // e.preventDefault();
 
     setLoading(true);
 
@@ -21,7 +25,12 @@ export default function ForgotPasswordPage() {
 
   return (
     <Protect isLoginPage={true} redirect={<Navigate to={"../manage"} />}>
-      <AccountPage id="accountLogin" onSubmit={(e) => submit(e)}>
+      <Helmet>
+        <title>
+          Forgot Password {separator} Accounts {separator} {title}
+        </title>
+      </Helmet>
+      <AccountPage id="accountLogin" onSubmit={() => submit()}>
         <h2 className={css.title}>Forgotten Your Password</h2>
         <div className={css.inputContainer}>
           <label htmlFor="email" className={css.label}>

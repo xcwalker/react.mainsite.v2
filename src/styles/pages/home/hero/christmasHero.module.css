@@ -43,10 +43,20 @@
   font-size: 3rem;
   font-weight: 900;
   line-height: 1.1;
+  --_outline-color: black;
+  text-shadow: 
+  /* 2px 0 var(--_outline-color), 
+  -2px 0 var(--_outline-color),
+    0 2px var(--_outline-color), 
+    0 -2px var(--_outline-color), */
+    1px 1px var(--_outline-color), 
+    -1px -1px var(--_outline-color),
+    1px -1px var(--_outline-color), 
+    -1px 1px var(--_outline-color),
+    0 0 0.25rem black;
 
   /* styling */
   color: currentColor;
-  text-shadow: 0 0.125rem 0.25rem black;
   text-align: center;
 }
 
@@ -58,7 +68,6 @@
   left: 50%;
   transform: translateX(-50%);
 
-  text-shadow: 0 .125rem 0.25rem black;
+  text-shadow: 0 0.125rem 0.25rem black;
   font-size: 1.5rem;
-
 }

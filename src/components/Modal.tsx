@@ -27,6 +27,7 @@ export default function Modal(props: { setVisibility: Dispatch<SetStateAction<bo
                 onClick={() => {
                   props.setVisibility(false);
                 }}
+                title="Close Modal"
               >
                 <GFIcon>close</GFIcon>
               </Button>

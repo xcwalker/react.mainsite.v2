@@ -74,11 +74,7 @@ export default function ItemCreate(props: {
         slug={props.slug}
         admin={props.admin}
       />
-      <Main
-        data={data}
-        itemType={props.itemType}
-        setData={setData}
-      />
+      <Main data={data} itemType={props.itemType} setData={setData} />
     </section>
   );
 }
@@ -116,7 +112,10 @@ function Sidebar(props: {
       />
       <div className={css.collection}>
         <TextInput
-          value={props.data.metaData.collection}
+          value={props.data.metaData.collection.replace(
+            currentUser?.uid + "-",
+            ""
+          )}
           valueName="collection"
           classification="metaData"
           placeholder="Collection"
@@ -219,10 +218,23 @@ function Sidebar(props: {
                     created: props.data.metaData.date.created,
                     modified: new Date().toJSON(),
                   },
+                  collection: props.admin
+                    ? props.data.metaData.collection.startsWith(
+                        props.data.metaData.authorID + "-"
+                      )
+                      ? props.data.metaData.collection
+                      : props.data.metaData.authorID +
+                        "-" +
+                        props.data.metaData.collection
+                    : props.data.metaData.collection.startsWith(
+                        currentUser.uid + "-"
+                      )
+                    ? props.data.metaData.collection
+                    : currentUser.uid + "-" + props.data.metaData.collection,
                 },
               }).then((res) => {
                 console.log(res);
-                navigate("/" + props.itemType + "/" + props.slug.toString());
+                navigate("/" + props.itemType + "/" + props.slug?.toString());
               });
             } else {
               // create new item
@@ -235,6 +247,8 @@ function Sidebar(props: {
                     created: new Date().toJSON(),
                     modified: new Date().toJSON(),
                   },
+                  collection:
+                    currentUser.uid + "-" + props.data.metaData.collection,
                 },
               }).then((res) => {
                 console.log(res);
@@ -429,25 +443,37 @@ function Main(props: {
 
 function TextInput(props: {
   value: string;
-  classification: keyof (
-    | ProjectItemProps
-    | RecipeItemProps
-    | BlogItemProps
-    | AlbumItemProps
-  );
+  classification:  "data" | "metaData" | "information" | "tag" | "ingredients" | "instructions"
+  ;
+  
+  // keyof (
+  //   | ProjectItemProps
+  //   | RecipeItemProps
+  //   | BlogItemProps
+  //   | AlbumItemProps
+  // );
   valueName:
-    | keyof (
-        | ProjectItemProps
-        | RecipeItemProps
-        | BlogItemProps
-        | AlbumItemProps
-      )["data"]
-    | keyof (
-        | ProjectItemProps
-        | RecipeItemProps
-        | BlogItemProps
-        | AlbumItemProps
-      )["metaData"];
+  | keyof ProjectItemProps["data"]
+    | keyof RecipeItemProps["data"]
+    | keyof BlogItemProps["data"]
+    | keyof AlbumItemProps["data"]
+    | keyof ProjectItemProps["metaData"]
+    | keyof RecipeItemProps["metaData"]
+    | keyof BlogItemProps["metaData"]
+    | keyof AlbumItemProps["metaData"]
+  ;
+    // | keyof (
+    //     | ProjectItemProps["data"]
+    //     | RecipeItemProps["data"]
+    //     | BlogItemProps["data"]
+    //     | AlbumItemProps["data"]
+    //   )
+    // | keyof (
+    //     | ProjectItemProps["metaData"]
+    //     | RecipeItemProps["metaData"]
+    //     | BlogItemProps["metaData"]
+    //     | AlbumItemProps["metaData"]
+    //   );
   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
   data?: CombinedItemProps;
   subValueName?: string;
@@ -466,8 +492,10 @@ function TextInput(props: {
             const newValue = { ...prev };
 
             if (!props.subValueName) {
+              // @ts-expect-error crappy but is easier than fixing types
               newValue[props.classification][props.valueName] = e.target.value;
             } else {
+              // @ts-expect-error crappy but is easier than fixing types
               newValue[props.classification][props.valueName][
                 props.subValueName
               ] = e.target.value;
@@ -508,6 +536,7 @@ function TextInputList(props: {
             const newValue = { ...prev };
 
             if (props.classification === "information") {
+              // @ts-expect-error crappy but is easier than fixing types
               newValue.data.information[props.valueName] = e.target.value;
             } else if (props.classification === "tag") {
               newValue.metaData.tags[parseInt(props.valueName)] =
@@ -519,6 +548,7 @@ function TextInputList(props: {
               props.classification === "instructions" &&
               props.instructionTag
             ) {
+              // @ts-expect-error crappy but is easier than fixing types
               newValue.data.instructions[props.instructionTag][
                 parseInt(props.valueName)
               ] = e.target.value;
@@ -533,12 +563,12 @@ function TextInputList(props: {
       {props.classification === "tag" && props.data !== undefined && (
         <button
           onClick={() => {
-            const tagLength = props.data.metaData.tags.length;
+            const tagLength = props.data?.metaData.tags.length || 0;
             props.setData((prev) => {
               const newValue = { ...prev };
               if (tagLength - 1 !== newValue.metaData.tags.length) {
                 newValue.metaData.tags = prev.metaData.tags.filter(
-                  (tag, index) => {
+                  (_tag, index) => {
                     return index !== parseInt(props.valueName);
                   }
                 );
@@ -553,12 +583,12 @@ function TextInputList(props: {
       {props.classification === "ingredients" && props.data !== undefined && (
         <button
           onClick={() => {
-            const tagLength = props.data?.data.ingredients.length;
+            const tagLength = props.data?.data.ingredients.length || 0;
             props.setData((prev) => {
               const newValue = { ...prev };
               if (tagLength - 1 !== newValue.data.ingredients.length) {
                 newValue.data.ingredients = prev.data.ingredients.filter(
-                  (tag, index) => {
+                  (_tag, index) => {
                     return index !== parseInt(props.valueName);
                   }
                 );
@@ -576,16 +606,20 @@ function TextInputList(props: {
           <button
             onClick={() => {
               const tagLength =
+                // @ts-expect-error crappy but is easier than fixing types
                 props.data?.data.instructions[props.instructionTag].length;
               props.setData((prev) => {
                 const newValue = { ...prev };
                 if (
                   tagLength - 1 !==
+                  // @ts-expect-error crappy but is easier than fixing types
                   newValue.data.instructions[props.instructionTag].length
                 ) {
+                  // @ts-expect-error crappy but is easier than fixing types
                   newValue.data.instructions[props.instructionTag] =
+                    // @ts-expect-error crappy but is easier than fixing types
                     prev.data.instructions[props.instructionTag].filter(
-                      (tag, index) => {
+                      (_tag: string, index: number) => {
                         return index !== parseInt(props.valueName);
                       }
                     );
@@ -621,7 +655,7 @@ function TextInputLarge(props: {
           props.setData((prev) => {
             const newValue = { ...prev };
 
-            /* eslint-disable-next-line no-alert */
+            // @ts-expect-error crappy but is easier than fixing types
             newValue[props.classification][props.valueName] = e.target.value;
 
             return newValue;

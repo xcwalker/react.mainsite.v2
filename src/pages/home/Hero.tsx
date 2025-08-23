@@ -9,6 +9,7 @@ import christmasHeroCSS from "../../styles/pages/home/hero/christmasHero.module.
 import boxingDayHeroCSS from "../../styles/pages/home/hero/boxingDayHero.module.css";
 import newYearHeroCSS from "../../styles/pages/home/hero/newYearHero.module.css";
 import halloweenHeroCSS from "../../styles/pages/home/hero/halloweenHero.module.css";
+import birthdayHeroCSS from "../../styles/pages/home/hero/birthdayHero.module.css";
 import { Link } from "react-router-dom";
 
 export default function HomeHero() {
@@ -53,6 +54,14 @@ export default function HomeHero() {
       dateRange: {
         start: new Date(date.getFullYear() + "-12-26"),
         end: new Date(date.getFullYear() + "-12-26 23:59:59"),
+      },
+    },
+    {
+      id: 6,
+      component: <BirthdayHero />,
+      dateRange: {
+        start: new Date(date.getFullYear() + "-11-27"),
+        end: new Date(date.getFullYear() + "-11-27 23:59:59"),
       },
     },
     {
@@ -136,7 +145,7 @@ export default function HomeHero() {
           </button>
         </div>
         <div className={css.dots}>
-          {slideshowActive.map((item, index) => {
+          {slideshowActive.map((_item, index) => {
             return (
               <div
                 key={index}
@@ -250,6 +259,29 @@ function HalloweenHero(props: { isActive?: boolean }) {
         tabIndex={props.isActive ? 0 : -1}
       >
         Wallpaper from Vecteezy
+      </Link>
+    </div>
+  );
+}
+
+function BirthdayHero(props: { isActive?: boolean }) {
+  return (
+    <div className={birthdayHeroCSS.container}>
+      <img
+        src="/birthday_background.svg"
+        alt=""
+        className={defaultHeroCSS.background}
+      />
+      <div className={defaultHeroCSS.backdrop} />
+      <Logo type="xcwalker" className={birthdayHeroCSS.logo} />
+      <h1 className={birthdayHeroCSS.heading}>Oh god, I'm old.</h1>
+      <Link
+        to="https://www.freepik.com/free-vector/hand-drawn-colorful-birthday-background_18775765.htm"
+        className={defaultHeroCSS.attribution}
+        aria-hidden={!props.isActive}
+        tabIndex={props.isActive ? 0 : -1}
+      >
+        Wallpaper from Freepik
       </Link>
     </div>
   );

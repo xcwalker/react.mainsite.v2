@@ -50,6 +50,7 @@
   border-radius: 0.5rem;
   border: white solid 0.125rem;
   background: transparent;
+  backdrop-filter: brightness(0.75) blur(1px);
 
   color: white;
 

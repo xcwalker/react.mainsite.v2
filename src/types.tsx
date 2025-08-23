@@ -155,7 +155,7 @@ export type ProjectItemProps = ItemProps & {
 
 export type RecipeItemProps = ItemProps & {
   data: {
-    ingredients: [];
+    ingredients: string[];
     instructions: {
       prep?: string[];
       cook: string[];
@@ -232,7 +232,7 @@ export const NewTabLinksDefault: NewTabLinks = {
       queryURL: "https://google.com/search?&q=", // URL template for search queries
     },
   },
-}
+};
 
 export type UserType = {
   about: {
@@ -240,14 +240,13 @@ export type UserType = {
     displayName: string;
     firstName: string;
     lastName: string;
-    status: "online" | "offline" | "away";
     statement: string;
   };
   images: {
     header: string;
     profile: string;
-    background?: string;
-    backgroundType?: string;
+    background: string;
+    backgroundType: string;
   };
   info: {
     gender: string;
@@ -255,7 +254,13 @@ export type UserType = {
     pronouns: string;
     joined: string;
     lastOnline: string;
-    role: "unverified" | "user" | "admin" | "moderator" | "developer";
+    role:
+      | "unverified"
+      | "user"
+      | "admin"
+      | "moderator"
+      | "developer"
+      | "Overlord";
   };
   links: string[];
   settings: {
@@ -274,7 +279,6 @@ export const userSetup: UserType = {
     displayName: "Unknown",
     firstName: "New",
     lastName: "User",
-    status: "away",
     statement: "",
   },
   images: {
@@ -290,6 +294,7 @@ export const userSetup: UserType = {
     pronouns: "Unknown",
     joined: new Date().toJSON(),
     lastOnline: new Date().toJSON(),
+    role: "unverified",
   },
   links: [],
   settings: {

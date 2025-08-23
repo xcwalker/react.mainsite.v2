@@ -47,7 +47,7 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
           <Helmet>
             <title>
               {toTitleCase(item.data.title)} - {item.data.subTitle} {separator}{" "}
-              {title}
+              {toTitleCase(props.itemType)} {separator} {title}
             </title>
             <meta
               name="description"

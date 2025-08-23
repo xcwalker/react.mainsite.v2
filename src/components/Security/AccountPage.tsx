@@ -5,7 +5,7 @@ import css from "../../styles/components/accountPage.module.css";
 export default function AccountPage(props: {
   id: string;
   children: ReactNode;
-  onSubmit?: (e: never) => void;
+  onSubmit?: React.FormEventHandler<HTMLFormElement>;
 }) {
   return (
     <Section
@@ -18,11 +18,7 @@ export default function AccountPage(props: {
           {props.children}
         </form>
       )}
-      {!props.onSubmit && (
-        <div className={css.container}>
-          {props.children}
-        </div>
-      )}
+      {!props.onSubmit && <div className={css.container}>{props.children}</div>}
     </Section>
   );
 }

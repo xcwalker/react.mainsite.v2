@@ -3,6 +3,7 @@ import css from "../styles/components/sidebarUser.module.css";
 import { UserType } from "../types";
 import { Link } from "react-router-dom";
 import firebaseGetRealtimeData from "../functions/firebase/storage/useRealtimeData";
+import toTitleCase from "../functions/toTitleCase";
 
 export default function SidebarUser(props: {
   userId: string;
@@ -59,7 +60,10 @@ export default function SidebarUser(props: {
         {userData?.images.profile && (
           <img
             src={userData?.images.profile}
-            className={css.profile + " " + css[userData?.about.status]}
+            className={
+              css.profile
+              //  + " " + css[userData?.about.status]
+            }
             alt="Profile Picture"
           />
         )}
@@ -75,7 +79,12 @@ export default function SidebarUser(props: {
         </svg>
       </picture>
       <div className={css.text}>
-        <span className={css.title}>{userData?.about.displayName}</span>
+        <span className={css.title}>
+          {userData?.about.displayName}
+          {userData?.info.role && userData?.info.role !== "unverified" && (
+            <span className={css.role}>{toTitleCase(userData?.info.role)}</span>
+          )}
+        </span>
         <span className={css.subTitle}>
           @
           {userData?.about.userName +

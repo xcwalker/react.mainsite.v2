@@ -33,90 +33,58 @@ import firebaseUpdateUserLastSeen from "./functions/firebase/user/updateUserLast
 import ItemEdit from "./pages/itemPage/Edit";
 import VehiclePage from "./pages/vehiclePage/Index";
 import { FindVehiclePage } from "./pages/vehiclePage/Find";
+import UserEdit from "./pages/user/UserEdit";
 
 export default function App() {
   const currentUser = useAuth();
   const [ticking] = useState(true);
   const [count, setCount] = useState(0);
-  const [count2, setCount2] = useState(0);
-  const [focusState, setFocusState] = useState<"online" | "away">("online");
-  const [focusUpdate, setFocusUpdate] = useState(true);
+  const [focusTime, setFocusTime] = useState(new Date());
 
   const handlePageClose = useCallback(() => {
     if (currentUser === null || currentUser === undefined) return;
 
-    firebaseUpdateUserLastSeen(currentUser.uid, "offline");
+    firebaseUpdateUserLastSeen(currentUser.uid);
   }, [currentUser]);
-
-  const handlePageAbandoned = () => {
-    setCount2((count) => count + 1);
-  };
 
   useEffect(() => {
     window.addEventListener("onMouseOver", () => {
-      handlePageAbandoned();
+      setFocusTime(new Date());
     });
 
     window.addEventListener("onScroll", () => {
-      handlePageAbandoned();
+      setFocusTime(new Date());
     });
 
     window.addEventListener("onKeyDown", () => {
-      handlePageAbandoned();
+      setFocusTime(new Date());
     });
 
     window.addEventListener("focus", () => {
-      handlePageAbandoned();
+      setFocusTime(new Date());
     });
 
     return () => {
       handlePageClose();
-
-      window.removeEventListener("onMouseOver", () => {
-        handlePageAbandoned();
-      });
-
-      window.removeEventListener("onScroll", () => {
-        handlePageAbandoned();
-      });
-
-      window.removeEventListener("onKeyDown", () => {
-        handlePageAbandoned();
-      });
-
-      window.removeEventListener("focus", () => {
-        handlePageAbandoned();
-      });
     };
   }, [handlePageClose]);
 
   useEffect(() => {
     if (currentUser === null || currentUser === undefined) return;
 
-    if (focusState === "away" && focusUpdate) {
-      firebaseUpdateUserLastSeen(currentUser.uid, "away");
-      setFocusUpdate(false);
-    } else if (focusState !== "away" && focusUpdate) {
-      firebaseUpdateUserLastSeen(currentUser.uid, focusState);
-      setFocusUpdate(true);
-    }
-  }, [currentUser, count, focusState, focusUpdate]);
+    if (count % 5 !== 0) return; // Update every 5 minutes
+
+    firebaseUpdateUserLastSeen(currentUser.uid, focusTime);
+  }, [currentUser, count, focusTime]);
 
   useEffect(() => {
     const timer = setTimeout(() => ticking && setCount(count + 1), 60000);
+    // triggers every minute
 
     return () => {
       clearTimeout(timer);
     };
   }, [count, ticking]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => ticking && setFocusState("away"), 60000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [count2, ticking]);
 
   return (
     <>
@@ -319,14 +287,14 @@ export default function App() {
             {/* vehicles */}
             <Route path="vehicles">
               <Route index element={<FindVehiclePage />} />
-              <Route
+              {/* <Route
                 path="create"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
                     <ItemCreate itemType="vehicles" />
                   </Protect>
                 }
-              />
+              /> */}
               <Route path=":vrn/:vin6">
                 <Route index element={<VehiclePage itemType="vehicles" />} />
                 <Route path="edit" element={<ItemEdit itemType="vehicles" />} />
@@ -410,7 +378,39 @@ export default function App() {
                 }
               />
 
-              <Route path=":uuid" element={<UserPage />} />
+              <Route
+                path="edit"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <UserEdit />
+                  </Protect>
+                }
+              />
+
+              <Route path=":uuid">
+                <Route index element={<UserPage />} />
+                <Route
+                  path="edit"
+                  element={
+                    <Protect redirect={<Navigate to={"/account"} />}>
+                      <UserEdit />
+                    </Protect>
+                  }
+                />
+                <Route
+                  path="admin-edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <UserEdit admin />
+                    </RoleProtect>
+                  }
+                />
+              </Route>
             </Route>
 
             {/* dashboard */}

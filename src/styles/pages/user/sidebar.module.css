@@ -74,10 +74,33 @@
 }
 
 .user > .details span.displayName {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+
   /* text */
   font-size: 1.2rem;
   font-weight: 700;
   line-height: 1;
+}
+
+.user > .details span.displayName .role {
+  /* sizing */
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text);
+  background-color: var(--accent);
+  border-radius: 0.25rem;
 }
 
 .user > .details span.userName {

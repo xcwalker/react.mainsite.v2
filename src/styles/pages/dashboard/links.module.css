@@ -12,6 +12,15 @@
   border: 1px solid var(--primary);
 }
 
+.links header {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
 .links h2 {
   /* sizing */
   margin: 0;

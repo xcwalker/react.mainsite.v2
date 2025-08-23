@@ -19,7 +19,7 @@ export default function AlbumImages(props: { item: AlbumItemProps; slug: string 
 
     Array(item.metaData.imageCount)
       .fill(1)
-      .map((unused, index) => {
+      .map((_unused, index) => {
         
         const string =
           "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
@@ -39,7 +39,7 @@ export default function AlbumImages(props: { item: AlbumItemProps; slug: string 
         };
 
         // Use like:
-        getMeta(string, (err, img) => {
+        getMeta(string, (_err, img) => {
           setImages((prev) => {
             if (prev.some((v) => v.key === index.toString())) return [...prev];
             return [
@@ -65,7 +65,7 @@ export default function AlbumImages(props: { item: AlbumItemProps; slug: string 
 
   return (
     <div className={css.images}>
-      <Button onClick={() => setOpen(true)} className={css.tabButton}>
+      <Button onClick={() => setOpen(true)} className={css.tabButton} title="Show Lightbox">
         Show Lightbox
       </Button>
       <PhotoAlbum

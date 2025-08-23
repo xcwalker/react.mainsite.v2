@@ -2,10 +2,33 @@ import { doc, setDoc } from "firebase/firestore";
 import { firebaseDB } from "../storage/setup";
 import { userSetup } from "../../../types";
 import toast from "react-hot-toast";
-import { toastStyleDefault, toastStyleError, toastStyleSuccess } from "../../../toast";
+import {
+  toastStyleDefault,
+  toastStyleError,
+  toastStyleSuccess,
+} from "../../../toast";
+import { getAuth, updateProfile } from "firebase/auth";
 
 export default async function firebaseSetupUserData(userID: string) {
-  console.log(userSetup)
+  const auth = getAuth();
+  console.log(userSetup);
+
+  if (!auth.currentUser) {
+    console.error("No authenticated user found.");
+    return;
+  }
+
+  updateProfile(auth.currentUser, {
+    displayName: userSetup.about.displayName,
+    photoURL: userSetup.images.profile,
+  })
+    .then(() => {
+      console.info("User profile updated successfully.");
+    })
+    .catch((error) => {
+      console.error("Error updating user profile:", error);
+    });
+
   return toast.promise(
     setDoc(doc(firebaseDB, "users", userID), userSetup),
     {

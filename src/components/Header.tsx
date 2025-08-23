@@ -7,6 +7,7 @@ import GFIcon from "./GFIcon";
 import { SocialsList } from "./Socials";
 import Protect from "./Security/Protect";
 import { useAtom } from "jotai";
+import { parseEntities } from "parse-entities";
 
 import { RadioAtom } from "../App";
 import Button from "./Button";
@@ -47,11 +48,13 @@ const navItems = [
     title: "Fleet",
     href: "vehicles",
     gficon: "directions_car",
+    isBeta: true,
   },
   {
     title: "Overlay",
     href: "overlay",
     gficon: "layers",
+    isBeta: true,
   },
   {
     title: "Profile",
@@ -314,6 +317,7 @@ export default function Header() {
                           {...item}
                           icon={{ gficon: item.gficon, gfClassName: css.icon }}
                           hidden={item.hidden ? "siteNavigation" : undefined}
+                          isBeta={item.isBeta}
                         >
                           <span className={css.title}>{item.title}</span>
                         </Button>
@@ -426,8 +430,8 @@ export default function Header() {
             <img src={radio.dj.image} alt="" className={radioCSS.background} />
             <img src={radio.dj.image} alt="" className={radioCSS.image} />
             <div className={radioCSS.text}>
-              <span className={radioCSS.title}>{radio.dj.name}</span>
-              <span className={radioCSS.subTitle}>{radio.dj.show}</span>
+              <span className={radioCSS.title}>{parseEntities(radio.dj.name)}</span>
+              <span className={radioCSS.subTitle}>{parseEntities(radio.dj.show)}</span>
             </div>
             <div className={radioCSS.controls}>
               <button
@@ -459,9 +463,11 @@ export default function Header() {
                 // + " " + (showRadioVolume ? radioCSS.hidden : "")
               }
             >
-              <span className={radioCSS.title}>{radio.nowPlaying.title}</span>
+              <span className={radioCSS.title}>
+                {parseEntities(radio.nowPlaying.title)}
+              </span>
               <span className={radioCSS.subTitle}>
-                {radio.nowPlaying.artist}
+                {parseEntities(radio.nowPlaying.artist)}
               </span>
             </div>
             <div className={radioCSS.controls}>

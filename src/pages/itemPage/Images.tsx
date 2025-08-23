@@ -23,7 +23,7 @@ export default function ItemImages(props: {
 
     Array(item.metaData.imageCount)
       .fill(1)
-      .map((unused, index) => {
+      .map((_unused, index) => {
         const string =
           "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
           props.itemType +
@@ -44,7 +44,7 @@ export default function ItemImages(props: {
         };
 
         // Use like:
-        getMeta(string, (err, img) => {
+        getMeta(string, (_err, img) => {
           setImages((prev) => {
             if (prev.some((v) => v.key === index.toString())) return [...prev];
             return [
