@@ -53,7 +53,7 @@ export default function ItemCarousel(props: {
     }
 
     return () => {
-      setCarouselItems(undefined);
+      // setCarouselItems(undefined);
     };
   }, [props]);
 
