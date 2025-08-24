@@ -72,7 +72,7 @@ export default function HomeHero() {
 
   const slideshowActive = slideshowItems
     .filter((item) => {
-      if (import.meta.env.VITE_IS_DEBUG_ALL_HEROS) return true;
+      if (import.meta.env.VITE_IS_DEBUG_ALL_HEROS === true) return true;
       return item.dateRange
         ? date >= item.dateRange?.start && date <= item.dateRange?.end
         : true;
@@ -101,7 +101,7 @@ export default function HomeHero() {
               ? date >= item.dateRange?.start && date <= item.dateRange?.end
               : true;
 
-            if (import.meta.env.VITE_IS_DEBUG_ALL_HEROS) {
+            if (import.meta.env.VITE_IS_DEBUG_ALL_HEROS === true) {
               isVisible = true;
             }
 
