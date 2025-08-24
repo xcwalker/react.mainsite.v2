@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import Button from "../../components/Button";
 import firebaseCreateData from "../../functions/firebase/storage/createData";
+import Image from "../../components/Image";
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
@@ -45,7 +46,8 @@ export default function ItemCreate(props: {
               created: "",
               modified: "",
             },
-            imageCount: 0,
+            thumbnail: "",
+            images: [],
             youtube: "",
             tags: [],
             key: "",
@@ -56,7 +58,6 @@ export default function ItemCreate(props: {
               light: "",
             },
             authorID: "",
-            thumbnail: "",
             hasThumbnail: false,
             repoName: "",
             subRepo: false,
@@ -91,6 +92,22 @@ function Sidebar(props: {
 
   return (
     <div className={css.sidebar}>
+      <div className={css.thumbnailContainer}>
+        <Image
+          src={props.data.metaData.thumbnail}
+          alt="Thumbnail"
+          className={css.thumbnail}
+        />
+        <TextInput
+          value={props.data.metaData.thumbnail}
+          valueName="thumbnail"
+          classification="metaData"
+          placeholder="example.com/thumbnail.jpg"
+          setData={props.setData}
+          title="Thumbnail url"
+          className={css.thumbnailURL}
+        />
+      </div>
       {/* image */}
       <TextInput
         value={props.data.data.title}
@@ -437,15 +454,56 @@ function Main(props: {
           {/* buttons */}
         </div>
       )}
+      {/* images */}
+      <div className={css.images}>
+        {props.data.metaData.images &&
+          props.data.metaData.images.map((image, index) => {
+            return (
+              <Fragment key={index}>
+                <TextInputList
+                  value={image}
+                  valueName={index.toString()}
+                  classification="images"
+                  placeholder={"Image " + (index + 1)}
+                  setData={props.setData}
+                  title="Images"
+                  className={css.instruction}
+                  data={props.data}
+                />
+              </Fragment>
+            );
+          })}
+        <button
+          onClick={() => {
+            const imageLength = props.data.metaData.images.length || 0;
+            props.setData((prev) => {
+              const newValue = { ...prev };
+              if (imageLength + 1 !== newValue.metaData.images.length) {
+                newValue.metaData.images = [...prev.metaData.images, ""];
+              }
+              return newValue;
+            });
+          }}
+          className={css.addButton}
+        >
+          <GFIcon>add</GFIcon>
+        </button>
+        {/* buttons */}
+      </div>
     </div>
   );
 }
 
 function TextInput(props: {
   value: string;
-  classification:  "data" | "metaData" | "information" | "tag" | "ingredients" | "instructions"
-  ;
-  
+  classification:
+    | "data"
+    | "metaData"
+    | "information"
+    | "tag"
+    | "ingredients"
+    | "instructions";
+
   // keyof (
   //   | ProjectItemProps
   //   | RecipeItemProps
@@ -453,27 +511,26 @@ function TextInput(props: {
   //   | AlbumItemProps
   // );
   valueName:
-  | keyof ProjectItemProps["data"]
+    | keyof ProjectItemProps["data"]
     | keyof RecipeItemProps["data"]
     | keyof BlogItemProps["data"]
     | keyof AlbumItemProps["data"]
     | keyof ProjectItemProps["metaData"]
     | keyof RecipeItemProps["metaData"]
     | keyof BlogItemProps["metaData"]
-    | keyof AlbumItemProps["metaData"]
-  ;
-    // | keyof (
-    //     | ProjectItemProps["data"]
-    //     | RecipeItemProps["data"]
-    //     | BlogItemProps["data"]
-    //     | AlbumItemProps["data"]
-    //   )
-    // | keyof (
-    //     | ProjectItemProps["metaData"]
-    //     | RecipeItemProps["metaData"]
-    //     | BlogItemProps["metaData"]
-    //     | AlbumItemProps["metaData"]
-    //   );
+    | keyof AlbumItemProps["metaData"];
+  // | keyof (
+  //     | ProjectItemProps["data"]
+  //     | RecipeItemProps["data"]
+  //     | BlogItemProps["data"]
+  //     | AlbumItemProps["data"]
+  //   )
+  // | keyof (
+  //     | ProjectItemProps["metaData"]
+  //     | RecipeItemProps["metaData"]
+  //     | BlogItemProps["metaData"]
+  //     | AlbumItemProps["metaData"]
+  //   );
   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
   data?: CombinedItemProps;
   subValueName?: string;
@@ -516,7 +573,7 @@ function TextInput(props: {
 
 function TextInputList(props: {
   value: string;
-  classification: "information" | "tag" | "ingredients" | "instructions";
+  classification: "information" | "tag" | "ingredients" | "instructions" | "images";
   valueName: string;
   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
   data?: CombinedItemProps;
@@ -552,6 +609,9 @@ function TextInputList(props: {
               newValue.data.instructions[props.instructionTag][
                 parseInt(props.valueName)
               ] = e.target.value;
+            } else if (props.classification === "images") {
+              // @ts-expect-error crappy but is easier than fixing types
+              newValue.metaData.images[props.valueName] = e.target.value;
             }
             return newValue;
           });

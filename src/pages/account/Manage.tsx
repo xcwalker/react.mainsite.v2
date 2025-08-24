@@ -16,9 +16,6 @@ export default function ManagePage() {
         </Helmet>
         <AccountPage
           id="accountManage"
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
         >
           <h2>Manage Page</h2>
           <button

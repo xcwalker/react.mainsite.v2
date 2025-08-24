@@ -49,7 +49,7 @@ export interface ItemProps {
     };
     thumbnail: string;
     hasThumbnail?: boolean;
-    imageCount: number;
+    images: string[];
     tags: string[];
     collection: string;
     collectionName: string;
@@ -80,7 +80,7 @@ export type ItemType = {
       modified: string;
     };
     thumbnail: string;
-    imageCount: number;
+    images: string[];
     youtube?: string;
     tags: string[];
     collection: string;

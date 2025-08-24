@@ -187,12 +187,14 @@
   gap: 0.25rem;
 }
 
+.create .sidebar .thumbnailContainer,
 .create .sidebar .collection,
 .create .sidebar .tags,
 .create .sidebar .information,
 .create .main .ingredients,
 .create .main .prep,
-.create .main .cook {
+.create .main .cook,
+.create .main .images {
   /* sizing */
   padding: 0.25rem;
 

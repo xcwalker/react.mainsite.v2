@@ -143,16 +143,18 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
             <SideBySide leftWidth="350px">
               <ItemSidebar itemType={props.itemType} item={item} slug={slug} />
               <main className={css.main}>
-                <Markdown
-                  remarkPlugins={[
-                    [remarkGfm, { singleTilde: false }],
-                    supersub,
-                  ]}
-                  className={css.description + " " + cssMarkdown.markdown}
-                >
-                  {item.data.description}
-                  {/* {testData} */}
-                </Markdown>
+                {item.data.description.length > 0 && (
+                  <Markdown
+                    remarkPlugins={[
+                      [remarkGfm, { singleTilde: false }],
+                      supersub,
+                    ]}
+                    className={css.description + " " + cssMarkdown.markdown}
+                  >
+                    {item.data.description}
+                    {/* {testData} */}
+                  </Markdown>
+                )}
                 {props.itemType === "recipes" && (
                   <RecipeContent item={item as RecipeItemProps} />
                 )}

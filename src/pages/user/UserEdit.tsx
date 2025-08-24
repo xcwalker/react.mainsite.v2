@@ -27,7 +27,12 @@ export default function UserEdit(props: {
     }
 
     if (id !== currentUser?.uid) {
-      console.log("User is trying to edit another user's profile:", id, "Current user ID:", currentUser?.uid);
+      console.log(
+        "User is trying to edit another user's profile:",
+        id,
+        "Current user ID:",
+        currentUser?.uid
+      );
       // If the user is not editing their own profile, check if they are an admin
       if (!props.admin) {
         console.error("Unauthorized access: User is not an admin.");
@@ -40,7 +45,7 @@ export default function UserEdit(props: {
       if (userData === undefined) {
         console.error("User data not found for UUID:", uuid);
         setUserData(undefined);
-        setError(true)
+        setError(true);
         return;
       }
 
@@ -110,6 +115,11 @@ function Sidebar(props: {
           {props.userData.images.backgroundType !== "color" && (
             <Input
               value={props.userData?.images.background}
+              onChange={(e) => {
+                const updatedUserData: UserType = { ...props.userData };
+                updatedUserData.images.background = e.target.value;
+                props.setUserData(updatedUserData);
+              }}
               type={"url"}
               id="background"
               label={"background " + props.userData.images.backgroundType}

@@ -16,9 +16,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
-
+  async function submit() {
     setLoading(true);
 
     firebaseLogin(email, password).then((res) => {
@@ -35,7 +33,7 @@ export default function LoginPage() {
             Login {separator} Accounts {separator} {title}
           </title>
         </Helmet>
-        <AccountPage id="accountLogin" onSubmit={(e) => submit(e)}>
+        <AccountPage id="accountLogin" onSubmit={() => submit()}>
           <h2 className={css.title}>Welcome Back</h2>
           <Input
             type="email"
@@ -58,7 +56,7 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.currentTarget.value)}
             disabled={loading}
-            onSubmit={(e) => submit(e)}
+            onSubmit={() => submit()}
             forgotPasswordHref="../forgot"
           />
           <Button style="primary" type="submit" title="Login" width="14rem">

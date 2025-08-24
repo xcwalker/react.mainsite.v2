@@ -15,51 +15,44 @@ export default function AlbumImages(props: { item: AlbumItemProps; slug: string 
   const [images, setImages] = useState<Photo[]>([]);
 
   useEffect(() => {
-    if (item.metaData.imageCount === 0) return;
+    if (item.metaData.images === undefined || item.metaData.images.length === 0)
+      return;
 
-    Array(item.metaData.imageCount)
-      .fill(1)
-      .map((_unused, index) => {
-        
-        const string =
-          "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/projects/" +
-          props.slug.toLowerCase() +
-          "/images/image-" +
-          index +
-          ".jpg";
+    item.metaData.images.map((url, index) => {
+      const string = url;
 
-        const getMeta = (
-          url: string,
-          cb: (err: string | Event | null, img?: HTMLImageElement) => void
-        ) => {
-          const img = new Image();
-          img.onload = () => cb(null, img);
-          img.onerror = (err) => cb(err);
-          img.src = url;
-        };
+      const getMeta = (
+        url: string,
+        cb: (err: string | Event | null, img?: HTMLImageElement) => void
+      ) => {
+        const img = new Image();
+        img.onload = () => cb(null, img);
+        img.onerror = (err) => cb(err);
+        img.src = url;
+      };
 
-        // Use like:
-        getMeta(string, (_err, img) => {
-          setImages((prev) => {
-            if (prev.some((v) => v.key === index.toString())) return [...prev];
-            return [
-              ...prev,
-              {
-                key: index.toString(),
-                src: string,
-                height: img ? img.naturalHeight : 0,
-                width: img ? img.naturalWidth : 0,
-              },
-            ];
-          });
+      // Use like:
+      getMeta(string, (_err, img) => {
+        setImages((prev) => {
+          if (prev.some((v) => v.key === index.toString())) return [...prev];
+          return [
+            ...prev,
+            {
+              key: index.toString(),
+              src: string,
+              height: img ? img.naturalHeight : 0,
+              width: img ? img.naturalWidth : 0,
+            },
+          ];
         });
       });
+    });
 
     return () => {
       setImages([]);
     };
   }, [
-    item.metaData.imageCount,
+    item.metaData.images,
     props.slug,
   ]);
 
