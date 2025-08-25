@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import css from "../styles/components/gridItem.module.css";
 import { useEffect, useState } from "react";
 import Image from "./Image";
+import GFIcon from "./GFIcon";
 
 export default function GridItem(props: {
   slug: string;
@@ -41,7 +42,8 @@ export default function GridItem(props: {
             >
               {props.item.metaData.collection && (
                 <span className={css.collection}>
-                  {props.item.metaData.collection}
+                  <GFIcon className={css.icon}>category</GFIcon>
+                  {props.item.metaData.collectionName}
                 </span>
               )}
             </Image>

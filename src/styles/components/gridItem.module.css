@@ -48,17 +48,28 @@
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
+  z-index: 1;
 
   /* styling */
   padding: 0.25rem 0.5rem;
-  background-color: var(--background);
+  background-color: var(--background-200);
   border-radius: 0.25rem;
 
   /* text */
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 800;
   line-height: 1;
   text-transform: uppercase;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.gridItem .thumbnail span.collection .icon {
+  font-size: 1.25em;
 }
 
 .gridItem .details {
