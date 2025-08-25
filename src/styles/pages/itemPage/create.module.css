@@ -163,15 +163,6 @@
 }
 
 /* layout */
-.create {
-  /* sizing */
-  height: 100%;
-
-  /* grid */
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 1rem;
-}
 
 .create .sidebar {
   /* position */

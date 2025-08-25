@@ -15,6 +15,7 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import Button from "../../components/Button";
 import firebaseCreateData from "../../functions/firebase/storage/createData";
 import Image from "../../components/Image";
+import SideBySide from "../../components/SideBySide";
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
@@ -68,14 +69,16 @@ export default function ItemCreate(props: {
 
   return (
     <section className={css.create}>
-      <Sidebar
-        data={data}
-        itemType={props.itemType}
-        setData={setData}
-        slug={props.slug}
-        admin={props.admin}
-      />
-      <Main data={data} itemType={props.itemType} setData={setData} />
+      <SideBySide leftWidth="350px">
+        <Sidebar
+          data={data}
+          itemType={props.itemType}
+          setData={setData}
+          slug={props.slug}
+          admin={props.admin}
+        />
+        <Main data={data} itemType={props.itemType} setData={setData} />
+      </SideBySide>
     </section>
   );
 }
@@ -573,7 +576,12 @@ function TextInput(props: {
 
 function TextInputList(props: {
   value: string;
-  classification: "information" | "tag" | "ingredients" | "instructions" | "images";
+  classification:
+    | "information"
+    | "tag"
+    | "ingredients"
+    | "instructions"
+    | "images";
   valueName: string;
   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
   data?: CombinedItemProps;
