@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import css from "../styles/components/libraryCarousel.module.css";
 import GFIcon from "./GFIcon";
 import { ReactNode, UIEvent, useEffect, useRef, useState } from "react";
+import { RoleProtect } from "./Security/Protect";
+import Button from "./Button";
+import toTitleCase from "../functions/toTitleCase";
 
 export default function Carousel(props: {
   children: ReactNode;
@@ -12,6 +15,7 @@ export default function Carousel(props: {
   className: string;
   titleLink?: { text: string; href: string };
   defaultView: string;
+  showCreateButton?: "recipes" | "projects" | "albums" | "blog";
 }) {
   const carouselRef = useRef<HTMLElement>(null);
   const [scrolledDistance, setScrolledDistance] = useState(0);
@@ -55,6 +59,21 @@ export default function Carousel(props: {
             <Link to={props.titleLink.href}>{props.titleLink.text}</Link>
           )}
         </div>
+
+        {props.showCreateButton && (
+          <RoleProtect staffOnly>
+            <Button
+              href={"/" + props.showCreateButton + "/create"}
+              title={"Create " + toTitleCase(props.showCreateButton)}
+              style="primary"
+              icon={{ gficon: "add" }}
+              width="fit-content"
+              className={css.createButton}
+            >
+              Create {toTitleCase(props.showCreateButton)}
+            </Button>
+          </RoleProtect>
+        )}
         <div className={css.controls}>
           {view === "list" && props.hasChildViews && (
             <div className={css.group} id={css.childView}>

@@ -31,6 +31,7 @@ export default function Button(props: {
   // width is used to set the width of the button
   isBeta?: boolean;
   // isBeta is used to show a beta tag on the button
+  betaTagClassName?: string;
 }) {
   return (
     <>
@@ -64,7 +65,16 @@ export default function Button(props: {
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
-          {props.isBeta && <span className={css.betaTag}>Beta</span>}
+          {props.isBeta && (
+            <span
+              className={
+                css.betaTag +
+                (props.betaTagClassName ? " " + props.betaTagClassName : "")
+              }
+            >
+              Beta
+            </span>
+          )}
         </a>
       )}
       {props.href !== undefined && props.external && !props.pageNavigation && (
@@ -99,7 +109,16 @@ export default function Button(props: {
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
-          {props.isBeta && <span className={css.betaTag}>Beta</span>}
+          {props.isBeta && (
+            <span
+              className={
+                css.betaTag +
+                (props.betaTagClassName ? " " + props.betaTagClassName : "")
+              }
+            >
+              Beta
+            </span>
+          )}
           <GFIcon
             className={
               css.external +
@@ -140,7 +159,16 @@ export default function Button(props: {
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
-          {props.isBeta && <span className={css.betaTag}>Beta</span>}
+          {props.isBeta && (
+            <span
+              className={
+                css.betaTag +
+                (props.betaTagClassName ? " " + props.betaTagClassName : "")
+              }
+            >
+              Beta
+            </span>
+          )}
         </NavLink>
       )}
       {(props.onClick || props.type) && (
@@ -173,7 +201,16 @@ export default function Button(props: {
           )}
           {props.icon?.inline && <>{props.icon?.inline}</>}
           {props.children}
-          {props.isBeta && <span className={css.betaTag}>Beta</span>}
+          {props.isBeta && (
+            <span
+              className={
+                css.betaTag +
+                (props.betaTagClassName ? " " + props.betaTagClassName : "")
+              }
+            >
+              Beta
+            </span>
+          )}
         </button>
       )}
     </>

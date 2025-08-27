@@ -318,6 +318,7 @@ export default function Header() {
                           icon={{ gficon: item.gficon, gfClassName: css.icon }}
                           hidden={item.hidden ? "siteNavigation" : undefined}
                           isBeta={item.isBeta}
+                          betaTagClassName={css.betaTag}
                         >
                           <span className={css.title}>{item.title}</span>
                         </Button>
@@ -330,6 +331,8 @@ export default function Header() {
                       {...item}
                       icon={{ gficon: item.gficon, gfClassName: css.icon }}
                       hidden={item.hidden ? "siteNavigation" : undefined}
+                      isBeta={item.isBeta}
+                      betaTagClassName={css.betaTag}
                     >
                       <span className={css.title}>{item.title}</span>
                     </Button>

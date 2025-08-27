@@ -218,4 +218,10 @@
   .links a .content .text {
     display: none;
   }
+
+  .links a .betaTag {
+    padding-inline: auto;
+    margin-inline: calc(-0.75rem + 1px);
+    margin-bottom: -0.5rem;
+  }
 }

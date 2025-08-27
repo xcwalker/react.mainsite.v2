@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
 
   /* styling */
@@ -43,17 +43,59 @@
 }
 
 .listItem a .info .subTitle {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.75rem;
+
   /* text */
   font-size: 0.75rem;
   font-weight: 600;
   line-height: 1;
 }
 
-.listItem a .extraInfo {}
-
 .listItem a .extraInfo .date {
+  /* flex */
+  display: flex;
+  width: fit-content;
+
   /* text */
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1;
+  text-align: right;
+}
+
+.listItem a .shortDate {
+  display: none;
+
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  text-align: right;
+
+  /* padding: 0.12rem 0.25rem;
+  background-color: var(--accent);
+  border-radius: 0.25rem;5 */
+}
+
+@media (max-width: 1300px) {
+  .listItem a .info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+
+@media (max-width: 700px) {
+  .listItem a .shortDate {
+    display: flex;
+  }
+
+  .listItem a .extraInfo {
+    display: none;
+  }
 }

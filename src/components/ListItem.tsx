@@ -11,11 +11,20 @@ export default function ListItem(props: {
   return (
     <li className={css.listItem}>
       <Link to={props.href}>
-      <div className={css.info}>
-        <span className={css.title}>{props.title}</span>
+        <div className={css.info}>
+          <span className={css.title}>{props.title}</span>
           <span className={css.subTitle}>{props.subTitle}</span>
+        </div>
 
-      </div>
+        <div className={css.shortDate}>
+          {date &&
+            date.toLocaleDateString(undefined, {
+              weekday: undefined,
+              year: "2-digit",
+              month: "numeric",
+              day: "numeric",
+            })}
+        </div>
         <div className={css.extraInfo}>
           <span className={css.date}>
             {date &&

@@ -26,11 +26,11 @@ export default function HomeCarousel(props: {
         props.itemType,
         import.meta.env.VITE_MAIN_USER_ID
       ).then((data) => {
-        setProjectsArray(data as { id: string; value: ItemProps}[]);
+        setProjectsArray(data as { id: string; value: ItemProps }[]);
       });
     } else {
       getDataByDate(props.itemType).then((data) => {
-        setProjectsArray(data as { id: string; value: ItemProps}[]);
+        setProjectsArray(data as { id: string; value: ItemProps }[]);
       });
     }
 
@@ -42,6 +42,7 @@ export default function HomeCarousel(props: {
   return (
     <Section id={props.itemType} container={{ className: css.container }}>
       <Carousel
+        showCreateButton={props.itemType}
         className={css.slider}
         title={props.title}
         multipleViews={true}
@@ -61,7 +62,7 @@ export default function HomeCarousel(props: {
                       title={item.value.data.title}
                       subTitle={item.value.data.subTitle}
                       date={item.value.metaData.date.created}
-                      href={"/" + props.itemType+ "/" + item.id}
+                      href={"/" + props.itemType + "/" + item.id}
                     />
                   </Fragment>
                 );
