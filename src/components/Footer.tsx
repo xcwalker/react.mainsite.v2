@@ -5,6 +5,11 @@ import Socials from "./Socials";
 export default function Footer() {
   const buildDate = new Date(import.meta.env.VITE_BUILD_DATE);
 
+  console.log(
+    import.meta.env.VITE_BUILD_DATE,
+    import.meta.env.VITE_APP_VERSION
+  );
+
   return (
     <footer className={css.footer}>
       <Socials />
