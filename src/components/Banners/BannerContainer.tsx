@@ -4,6 +4,7 @@ import BigTop30Banner from "./BigTop30Banner";
 import DevBanner from "./DEVBanner";
 import NetworkLostBanner from "./NetworkLostBanner";
 import NetworkRegainedBanner from "./NetworkRegainedBanner";
+import ProtoBanner from "./ProtoBanner";
 
 export default function BannerContainer() {
   const [networkLost, setNetworkLost] = useState(false);
@@ -30,9 +31,16 @@ export default function BannerContainer() {
   return (
     <div className={css.container}>
       <DevBanner />
+      <ProtoBanner />
       <BigTop30Banner />
-      {networkLost && <NetworkLostBanner />}
-      {!networkLost && networkWasLost && <NetworkRegainedBanner />}
+      {(networkLost ||
+        import.meta.env.VITE_IS_DEBUG_ALL_BANNERS === "true") && (
+        <NetworkLostBanner />
+      )}
+      {((!networkLost && networkWasLost) ||
+        import.meta.env.VITE_IS_DEBUG_ALL_BANNERS === "true") && (
+        <NetworkRegainedBanner />
+      )}
     </div>
   );
 }

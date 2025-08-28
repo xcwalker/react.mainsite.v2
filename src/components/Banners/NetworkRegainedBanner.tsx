@@ -14,7 +14,7 @@ export default function NetworkRegainedBanner() {
 
   return (
     <>
-      {visibility && (
+      {(visibility || import.meta.env.VITE_IS_DEBUG_ALL_BANNERS === "true") && (
         <div
           className={baseCSS.banner}
           style={{ "--_banner-color": "#2a8000" } as React.CSSProperties}

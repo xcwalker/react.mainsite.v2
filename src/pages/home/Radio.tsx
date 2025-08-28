@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { ButtonLink } from "../../components/Button";
+import Button from "../../components/Button";
 import Section from "../../components/Section";
 import SideBySide from "../../components/SideBySide";
 import css from "../../styles/pages/home/radio.module.css";
@@ -18,9 +17,10 @@ export function HomeRadio() {
           <img
             src={radio.nowPlaying.artwork}
             alt=""
-            className={css.background
+            className={
+              css.background
               //  + " " + css.animated
-              }
+            }
           />
           <SideBySide leftWidth="250px">
             <img src={radio.nowPlaying.artwork} alt="" className={css.image} />
@@ -31,16 +31,31 @@ export function HomeRadio() {
               </Stack>
               <Stack direction={css.links} gap="0.5rem">
                 <Stack direction="row">
-                  <Link to="https://mobile.reactradio.dev" className={css.link}>
+                  <Button
+                    href="https://mobile.reactradio.dev"
+                    title="Listen on ReactRadio Mobile"
+                    style="secondary"
+                    width="fit-content"
+                  >
                     Mobile
-                  </Link>
-                  <Link to="https://legacy.reactradio.dev" className={css.link}>
+                  </Button>
+                  <Button
+                    href="https://legacy.reactradio.dev"
+                    title="Listen on ReactRadio Legacy"
+                    style="secondary"
+                    width="fit-content"
+                  >
                     Legacy
-                  </Link>
+                  </Button>
                 </Stack>
-                <ButtonLink href="https://www.reactradio.dev">
+                <Button
+                  href="https://www.reactradio.dev"
+                  title="Listen on ReactRadio"
+                  style="primary"
+                  width="fit-content"
+                >
                   Listen on ReactRadio
-                </ButtonLink>
+                </Button>
               </Stack>
             </Stack>
           </SideBySide>
