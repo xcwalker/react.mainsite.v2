@@ -141,10 +141,9 @@ export default function Header() {
   const [count, setCount] = useState(0);
   const [fetching, setFetching] = useState(false);
   const [fetchCount, setFetchCount] = useState(0);
+  const [radio, setRadio] = useAtom(RadioAtom);
 
   const [navScrollLastKnown, setNavScrollLastKnown] = useState(0);
-  const [radio, setRadio] = useAtom(RadioAtom);
-  const [showRadioVolume, setShowRadioVolume] = useState(false);
 
   const audio = document.querySelector("audio#audioPlayer") as HTMLAudioElement;
 
@@ -387,148 +386,154 @@ export default function Header() {
             useUnstyledButton
           />
         </nav>
-        <div
-          className={
-            radioCSS.radio +
-            " " +
-            (radio.inSidebar ? radioCSS.inSidebar : "") +
-            " " +
-            (radio.showDJ ? radioCSS.showDJ : "")
-          }
-          id="player"
-        >
-          <div
-            className={
-              radioCSS.volume + " " + (showRadioVolume ? radioCSS.show : "")
+        {radio.inSidebar && <Radio />}
+      </div>
+      {!radio.inSidebar && <Radio />}
+    </header>
+  );
+}
+
+function Radio() {
+  const [radio, setRadio] = useAtom(RadioAtom);
+  const [showRadioVolume, setShowRadioVolume] = useState(false);
+
+  return (
+    <div
+      className={
+        radioCSS.radio +
+        " " +
+        (radio.inSidebar ? radioCSS.inSidebar : "") +
+        " " +
+        (radio.showDJ ? radioCSS.showDJ : "")
+      }
+      id="player"
+    >
+      <div
+        className={
+          radioCSS.volume + " " + (showRadioVolume ? radioCSS.show : "")
+        }
+      >
+        <input
+          type="range"
+          name=""
+          id=""
+          value={radio.volume}
+          min={0}
+          max={100}
+          step={1}
+          onChange={(e) => {
+            setRadio({
+              ...radio,
+              volume: parseInt(e.target.value),
+            });
+            const audio = document.querySelector("audio");
+            if (audio) {
+              audio.volume = parseInt(e.target.value) / 100;
             }
+          }}
+          onLoad={() => {
+            const audio = document.querySelector("audio");
+            if (audio) {
+              audio.volume = radio.volume / 100;
+            }
+          }}
+          title="Volume"
+        />
+      </div>
+      <div className={radioCSS.dj + " " + radioCSS.container}>
+        <img src={radio.dj.image} alt="" className={radioCSS.background} />
+        <img src={radio.dj.image} alt="" className={radioCSS.image} />
+        <div className={radioCSS.text}>
+          <span className={radioCSS.title}>{parseEntities(radio.dj.name)}</span>
+          <span className={radioCSS.subTitle}>
+            {parseEntities(radio.dj.show)}
+          </span>
+        </div>
+        <div className={radioCSS.controls}>
+          <button
+            onClick={() => {
+              setRadio({
+                ...radio,
+                showDJ: false,
+              });
+            }}
           >
-            <input
-              type="range"
-              name=""
-              id=""
-              value={radio.volume}
-              min={0}
-              max={100}
-              step={1}
-              onChange={(e) => {
-                setRadio({
-                  ...radio,
-                  volume: parseInt(e.target.value),
-                });
-                const audio = document.querySelector("audio");
-                if (audio) {
-                  audio.volume = parseInt(e.target.value) / 100;
-                }
-              }}
-              onLoad={() => {
-                const audio = document.querySelector("audio");
-                if (audio) {
-                  audio.volume = radio.volume / 100;
-                }
-              }}
-              title="Volume"
-            />
-          </div>
-          <div className={radioCSS.dj + " " + radioCSS.container}>
-            <img src={radio.dj.image} alt="" className={radioCSS.background} />
-            <img src={radio.dj.image} alt="" className={radioCSS.image} />
-            <div className={radioCSS.text}>
-              <span className={radioCSS.title}>{parseEntities(radio.dj.name)}</span>
-              <span className={radioCSS.subTitle}>{parseEntities(radio.dj.show)}</span>
-            </div>
-            <div className={radioCSS.controls}>
-              <button
-                onClick={() => {
-                  setRadio({
-                    ...radio,
-                    showDJ: false,
-                  });
-                }}
-              >
-                <GFIcon>keyboard_arrow_down</GFIcon>
-              </button>
-            </div>
-          </div>
-          <div className={radioCSS.nowPlaying + " " + radioCSS.container}>
-            <img
-              src={radio.nowPlaying.artwork}
-              alt=""
-              className={radioCSS.background}
-            />
-            <img
-              src={radio.nowPlaying.artwork}
-              alt=""
-              className={radioCSS.image}
-            />
-            <div
-              className={
-                radioCSS.text
-                // + " " + (showRadioVolume ? radioCSS.hidden : "")
-              }
-            >
-              <span className={radioCSS.title}>
-                {parseEntities(radio.nowPlaying.title)}
-              </span>
-              <span className={radioCSS.subTitle}>
-                {parseEntities(radio.nowPlaying.artist)}
-              </span>
-            </div>
-            <div className={radioCSS.controls}>
-              <button
-                onClick={() => {
-                  setRadio({
-                    ...radio,
-                    state: radio.state === "playing" ? "paused" : "playing",
-                  });
-                }}
-                title={radio.state === "playing" ? "Pause" : "Play"}
-              >
-                <GFIcon>
-                  {radio.state === "playing" ? "pause" : "play_arrow"}
-                </GFIcon>
-              </button>
-              {/* volume control */}
-              <button
-                onClick={() => {
-                  setShowRadioVolume(!showRadioVolume);
-                }}
-                title="Volume"
-                tabIndex={-1}
-              >
-                <GFIcon>volume_up</GFIcon>
-              </button>
-              <button
-                onClick={() => {
-                  setRadio({
-                    ...radio,
-                    inSidebar: !radio.inSidebar,
-                  });
-                }}
-                title={
-                  radio.inSidebar ? "Move out of sidebar" : "Move to sidebar"
-                }
-              >
-                {radio.inSidebar && <GFIcon>keyboard_arrow_right</GFIcon>}
-                {!radio.inSidebar && <GFIcon>keyboard_arrow_left</GFIcon>}
-              </button>
-              {!radio.showDJ && !radio.inSidebar && (
-                <button
-                  onClick={() => {
-                    setRadio({
-                      ...radio,
-                      showDJ: true,
-                    });
-                  }}
-                  title="Show DJ"
-                >
-                  <GFIcon>keyboard_arrow_up</GFIcon>
-                </button>
-              )}
-            </div>
-          </div>
+            <GFIcon>keyboard_arrow_down</GFIcon>
+          </button>
         </div>
       </div>
-    </header>
+      <div className={radioCSS.nowPlaying + " " + radioCSS.container}>
+        <img
+          src={radio.nowPlaying.artwork}
+          alt=""
+          className={radioCSS.background}
+        />
+        <img src={radio.nowPlaying.artwork} alt="" className={radioCSS.image} />
+        <div
+          className={
+            radioCSS.text
+            // + " " + (showRadioVolume ? radioCSS.hidden : "")
+          }
+        >
+          <span className={radioCSS.title}>
+            {parseEntities(radio.nowPlaying.title)}
+          </span>
+          <span className={radioCSS.subTitle}>
+            {parseEntities(radio.nowPlaying.artist)}
+          </span>
+        </div>
+        <div className={radioCSS.controls}>
+          <button
+            onClick={() => {
+              setRadio({
+                ...radio,
+                state: radio.state === "playing" ? "paused" : "playing",
+              });
+            }}
+            title={radio.state === "playing" ? "Pause" : "Play"}
+          >
+            <GFIcon>
+              {radio.state === "playing" ? "pause" : "play_arrow"}
+            </GFIcon>
+          </button>
+          {/* volume control */}
+          <button
+            onClick={() => {
+              setShowRadioVolume(!showRadioVolume);
+            }}
+            title="Volume"
+            tabIndex={-1}
+          >
+            <GFIcon>volume_up</GFIcon>
+          </button>
+          <button
+            onClick={() => {
+              setRadio({
+                ...radio,
+                inSidebar: !radio.inSidebar,
+              });
+            }}
+            title={radio.inSidebar ? "Move out of sidebar" : "Move to sidebar"}
+          >
+            {radio.inSidebar && <GFIcon>keyboard_arrow_right</GFIcon>}
+            {!radio.inSidebar && <GFIcon>keyboard_arrow_left</GFIcon>}
+          </button>
+          {!radio.showDJ && !radio.inSidebar && (
+            <button
+              onClick={() => {
+                setRadio({
+                  ...radio,
+                  showDJ: true,
+                });
+              }}
+              title="Show DJ"
+            >
+              <GFIcon>keyboard_arrow_up</GFIcon>
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

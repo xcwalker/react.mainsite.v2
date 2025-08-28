@@ -84,3 +84,26 @@
     display: none;
   }
 }
+
+@media (max-width: 600px) {
+  .footer {
+    height: auto;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 6.5rem;
+  }
+
+  .column {
+    align-items: center !important;
+    text-align: center;
+  }
+
+  .column:last-of-type {
+    justify-content: center;
+  }
+  
+}

@@ -13,17 +13,27 @@ export default defineConfig(({ mode }) => {
       return;
     }
 
+    const prevDate = new Date(env.VITE_BUILD_DATE);
+    const date = new Date();
+
     let out;
 
     if (
-      JSON.stringify(env.VITE_BUILD_DATE) ===
-      JSON.stringify(new Date().toISOString().split("T", 1)[0])
+      // JSON.stringify(env.VITE_BUILD_DATE) ===
+      // JSON.stringify(new Date().toISOString().split("T", 1)[0])
+      prevDate.getFullYear() === date.getFullYear() &&
+      getWeekNumber(prevDate) === getWeekNumber(date)
     ) {
       out = data
         .toString()
         .replace(
           "VITE_APP_VERSION=" + env.VITE_APP_VERSION,
           "VITE_APP_VERSION=" + (Number(env.VITE_APP_VERSION) + 1)
+        )
+        .replace(
+          "VITE_BUILD_DATE=" + env.VITE_BUILD_DATE,
+          "VITE_BUILD_DATE=" +
+            JSON.stringify(new Date().toISOString().split("T", 1)[0])
         );
       console.log("App Version: " + (Number(env.VITE_APP_VERSION) + 1));
       console.log("Build Date: " + env.VITE_BUILD_DATE);
@@ -56,3 +66,21 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tsconfigPaths()],
   };
 });
+
+function getWeekNumber(date: Date) {
+  // Copy date so don't modify original
+  const d = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+  );
+  // Set to nearest Thursday: current date + 4 - current day number
+  // Make Sunday's day number 7
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  // Get first day of year
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  // Calculate full weeks to nearest Thursday
+  const weekNo = Math.ceil(
+    ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7
+  );
+  // Return week number
+  return weekNo;
+}

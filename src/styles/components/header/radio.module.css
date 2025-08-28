@@ -22,12 +22,6 @@
   transition: height 0.25s ease-in-out;
 }
 
-@media (max-width: 625px) {
-  .radio {
-    display: none;
-  }
-}
-
 .radio .container {
   /* position */
   position: absolute;
@@ -301,4 +295,65 @@
 
   /* styling */
   border: 1px solid var(--primary);
+}
+
+/* mobile - sidebar */
+@media (max-width: 625px) {
+  .radio.inSidebar {
+    /* flex */
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+  .radio.inSidebar .text {
+    display: none;
+  }
+
+  .radio.inSidebar .container .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .radio.inSidebar .container .controls button {
+    aspect-ratio: 1;
+
+    /* flex */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .radio.inSidebar .container .controls button > span {
+    font-size: 1.25rem;
+  }
+
+  .radio.inSidebar .volume {
+    position: static;
+    display: none;
+    height: 12.5rem;
+  }
+
+  .radio.inSidebar .volume.show {
+    display: flex;
+    height: 12.5rem;
+  }
+
+  .radio.inSidebar .volume input {
+    rotate: -90deg;
+  }
+}
+
+@media (max-width: 625px) {
+  .radio {
+    width: calc(100vw - (2 * var(--_offset)) - var(--header-width));
+    max-width: unset;
+    transition: width var(--header-transition);
+  }
+
+  body:global(.scrolled) .radio {
+    width: calc(100vw - (2 * var(--_offset)));
+  }
+
+  body:global(.scrolled.scrolledUp) .radio {
+    width: calc(100vw - (2 * var(--_offset)) - (32px + 2rem));
+  }
 }

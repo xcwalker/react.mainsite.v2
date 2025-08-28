@@ -56,24 +56,24 @@ export default function Carousel(props: {
         <div className={css.title}>
           {props.title && <h3>{props.title}</h3>}
           {props.titleLink && (
-            <Link to={props.titleLink.href}>{props.titleLink.text}</Link>
+            <Link to={props.titleLink.href} className={css.titleLink}>{props.titleLink.text}</Link>
+          )}
+
+          {props.showCreateButton && (
+            <RoleProtect staffOnly>
+              <Button
+                href={"/" + props.showCreateButton + "/create"}
+                title={"Create " + toTitleCase(props.showCreateButton)}
+                style="primary"
+                icon={{ gficon: "add" }}
+                width="fit-content"
+                className={css.createButton}
+              >
+                Create {toTitleCase(props.showCreateButton)}
+              </Button>
+            </RoleProtect>
           )}
         </div>
-
-        {props.showCreateButton && (
-          <RoleProtect staffOnly>
-            <Button
-              href={"/" + props.showCreateButton + "/create"}
-              title={"Create " + toTitleCase(props.showCreateButton)}
-              style="primary"
-              icon={{ gficon: "add" }}
-              width="fit-content"
-              className={css.createButton}
-            >
-              Create {toTitleCase(props.showCreateButton)}
-            </Button>
-          </RoleProtect>
-        )}
         <div className={css.controls}>
           {view === "list" && props.hasChildViews && (
             <div className={css.group} id={css.childView}>

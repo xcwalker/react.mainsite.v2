@@ -26,7 +26,12 @@ export default function Footer() {
           <span className={css.build}>
             Build {buildDate.getFullYear().toString().substr(-2)}W
             {pad(getWeekNumber(buildDate), 2)}
-            {alphabet[import.meta.env.VITE_APP_VERSION]}
+            {
+              import.meta.env.VITE_APP_VERSION >= 26 && alphabet[
+                Math.floor((import.meta.env.VITE_APP_VERSION) / 26)
+              ]
+            }
+            {alphabet[import.meta.env.VITE_APP_VERSION % alphabet.length]}
           </span>
         </div>
       </div>
@@ -34,18 +39,22 @@ export default function Footer() {
   );
 }
 
-function getWeekNumber(date :Date) {
-    // Copy date so don't modify original
-    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    // Set to nearest Thursday: current date + 4 - current day number
-    // Make Sunday's day number 7
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
-    // Get first day of year
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    // Calculate full weeks to nearest Thursday
-    const weekNo = Math.ceil(( ( (d.getTime() - yearStart.getTime()) / 86400000) + 1)/7);
-    // Return week number
-    return weekNo;
+function getWeekNumber(date: Date) {
+  // Copy date so don't modify original
+  const d = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+  );
+  // Set to nearest Thursday: current date + 4 - current day number
+  // Make Sunday's day number 7
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  // Get first day of year
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  // Calculate full weeks to nearest Thursday
+  const weekNo = Math.ceil(
+    ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7
+  );
+  // Return week number
+  return weekNo;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -55,4 +64,4 @@ function pad(num: any, size: number) {
   return num;
 }
 
-const alphabet =[...Array(26)].map((_, i) => String.fromCharCode(i + 65));
+const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 65));

@@ -42,7 +42,7 @@ export default function HomeCarousel(props: {
   return (
     <Section id={props.itemType} container={{ className: css.container }}>
       <Carousel
-        showCreateButton={props.itemType}
+        showCreateButton={!props.onHome ? props.itemType : undefined}
         className={css.slider}
         title={props.title}
         multipleViews={true}
