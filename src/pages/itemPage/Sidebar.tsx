@@ -97,7 +97,9 @@ export function ItemSidebar(props: {
             href={
               "https://github.com/xcwalker/" +
               item.metaData.repoName +
-              (item.metaData.subRepo ? "/tree/main/" + props.slug : "")
+              (item.metaData.subRepo
+                ? "/tree/main/" + item.metaData.subRepo
+                : "")
             }
             external
             title="Github Repo"
@@ -118,30 +120,31 @@ export function ItemSidebar(props: {
             Workshop Page
           </Button>
         )}
-        {navigator.canShare && navigator.canShare({
-          title: item.data.title,
-          text: item.data.subTitle,
-          url: window.location.href,
-        }) && (
-          <Button
-            onClick={async () => {
-              await navigator.share({
-                title: item.data.title,
-                text: item.data.subTitle,
-                url: window.location.href,
-              });
-            }}
-            title="Share"
-            icon={{ gficon: "share" }}
-            style={
-              currentUser?.uid === props.item.metaData.authorID
-                ? "secondary"
-                : "primary"
-            }
-          >
-            Share
-          </Button>
-        )}
+        {navigator.canShare &&
+          navigator.canShare({
+            title: item.data.title,
+            text: item.data.subTitle,
+            url: window.location.href,
+          }) && (
+            <Button
+              onClick={async () => {
+                await navigator.share({
+                  title: item.data.title,
+                  text: item.data.subTitle,
+                  url: window.location.href,
+                });
+              }}
+              title="Share"
+              icon={{ gficon: "share" }}
+              style={
+                currentUser?.uid === props.item.metaData.authorID
+                  ? "secondary"
+                  : "primary"
+              }
+            >
+              Share
+            </Button>
+          )}
         {currentUser?.uid === props.item.metaData.authorID && (
           <Button
             href={"./edit"}

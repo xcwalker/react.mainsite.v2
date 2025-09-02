@@ -92,7 +92,7 @@ export type ItemType = {
     authorID: string;
     key?: string;
     repoName?: string;
-    subRepo?: boolean;
+    subRepo?: string;
     workshop?: string;
   };
 };
@@ -147,7 +147,7 @@ export type BlogItemProps = ItemProps;
 export type ProjectItemProps = ItemProps & {
   metaData: {
     repoName: string;
-    subRepo?: boolean;
+    subRepo?: string;
     workshop: string;
     authorID: string;
   };

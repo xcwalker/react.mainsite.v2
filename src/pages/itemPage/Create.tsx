@@ -61,7 +61,7 @@ export default function ItemCreate(props: {
             authorID: "",
             hasThumbnail: false,
             repoName: "",
-            subRepo: false,
+            subRepo: "",
             workshop: "",
           },
         } as CombinedItemProps)
@@ -187,6 +187,42 @@ function Sidebar(props: {
           <GFIcon>add</GFIcon>
         </button>
       </div>
+
+      {props.itemType === "projects" && (
+        <div className={css.links}>
+          <div className={css.repoInfo}>
+            <TextInput
+              value={props.data.metaData.repoName}
+              valueName="repoName"
+              classification="metaData"
+              placeholder="Repository Name"
+              setData={props.setData}
+              title="Repository Name"
+              className={css.repoName}
+            />
+            <TextInput
+              value={
+                props.data.metaData.subRepo ? props.data.metaData.subRepo : ""
+              }
+              valueName="subRepo"
+              classification="metaData"
+              placeholder="Sub Repository (folder name)"
+              setData={props.setData}
+              title="Sub Repository (folder name)"
+              className={css.repoName}
+            />
+          </div>
+          <TextInput
+            value={props.data.metaData.workshop}
+            valueName="workshop"
+            classification="metaData"
+            placeholder="Steam Workshop URL"
+            setData={props.setData}
+            title="Steam Workshop URL"
+            className={css.workshop}
+          />
+        </div>
+      )}
 
       {props.itemType === "recipes" && (
         <div className={css.information}>
@@ -656,6 +692,26 @@ function TextInputList(props: {
               const newValue = { ...prev };
               if (tagLength - 1 !== newValue.data.ingredients.length) {
                 newValue.data.ingredients = prev.data.ingredients.filter(
+                  (_tag, index) => {
+                    return index !== parseInt(props.valueName);
+                  }
+                );
+              }
+              return newValue;
+            });
+          }}
+        >
+          <GFIcon>remove</GFIcon>
+        </button>
+      )}
+      {props.classification === "images" && props.data !== undefined && (
+        <button
+          onClick={() => {
+            const tagLength = props.data?.metaData.images.length || 0;
+            props.setData((prev) => {
+              const newValue = { ...prev };
+              if (tagLength - 1 !== newValue.metaData.images.length) {
+                newValue.metaData.images = prev.metaData.images.filter(
                   (_tag, index) => {
                     return index !== parseInt(props.valueName);
                   }
