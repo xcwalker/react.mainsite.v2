@@ -16,6 +16,9 @@ import Button from "../../components/Button";
 import firebaseCreateData from "../../functions/firebase/storage/createData";
 import Image from "../../components/Image";
 import SideBySide from "../../components/SideBySide";
+import ReactMde from "react-mde";
+import Markdown from "react-markdown";
+import "../../styles/components/markdownEditor.css"
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
@@ -352,10 +355,14 @@ function Main(props: {
   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
   isEdit?: boolean;
 }) {
+  const [selectedTab, setSelectedTab] = useState<
+    "write" | "preview" | undefined
+  >("write");
+
   return (
     <div className={css.main}>
       {/* description */}
-      <TextInputLarge
+      {/* <TextInputLarge
         value={props.data.data.description?.toString() || ""}
         valueName="description"
         classification="data"
@@ -363,6 +370,26 @@ function Main(props: {
         setData={props.setData}
         title="Description"
         className={css.description}
+      /> */}
+      <ReactMde
+        value={props.data.data.description?.toString() || ""}
+        onChange={(value) =>
+          props.setData((prev) => {
+            const newValue = { ...prev };
+            newValue.data.description = value;
+            return newValue;
+          })
+        }
+        selectedTab={selectedTab}
+        onTabChange={setSelectedTab}
+        generateMarkdownPreview={(markdown) =>
+          Promise.resolve(<Markdown>{markdown}</Markdown>)
+        }
+        childProps={{
+          writeButton: {
+            tabIndex: -1,
+          },
+        }}
       />
 
       {/* ingredients */}
@@ -761,34 +788,34 @@ function TextInputList(props: {
   // props.classification === "ingredients" ||
 }
 
-function TextInputLarge(props: {
-  value: string;
-  classification: keyof RecipeItemProps;
-  valueName: keyof RecipeItemProps["data"] | keyof RecipeItemProps["metaData"];
-  setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
+// function TextInputLarge(props: {
+//   value: string;
+//   classification: keyof RecipeItemProps;
+//   valueName: keyof RecipeItemProps["data"] | keyof RecipeItemProps["metaData"];
+//   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
 
-  title: string;
-  placeholder: string;
-  className: string;
-}) {
-  return (
-    <div className={css.textInputLarge}>
-      <textarea
-        value={props.value}
-        onChange={(e) => {
-          props.setData((prev) => {
-            const newValue = { ...prev };
+//   title: string;
+//   placeholder: string;
+//   className: string;
+// }) {
+//   return (
+//     <div className={css.textInputLarge}>
+//       <textarea
+//         value={props.value}
+//         onChange={(e) => {
+//           props.setData((prev) => {
+//             const newValue = { ...prev };
 
-            // @ts-expect-error crappy but is easier than fixing types
-            newValue[props.classification][props.valueName] = e.target.value;
+//             // @ts-expect-error crappy but is easier than fixing types
+//             newValue[props.classification][props.valueName] = e.target.value;
 
-            return newValue;
-          });
-        }}
-        title={props.title}
-        placeholder={props.placeholder}
-        className={props.className}
-      />
-    </div>
-  );
-}
+//             return newValue;
+//           });
+//         }}
+//         title={props.title}
+//         placeholder={props.placeholder}
+//         className={props.className}
+//       />
+//     </div>
+//   );
+// }
