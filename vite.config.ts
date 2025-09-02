@@ -31,7 +31,7 @@ export default defineConfig(({ mode }) => {
           "VITE_APP_VERSION=" + (Number(env.VITE_APP_VERSION) + 1)
         )
         .replace(
-          "VITE_BUILD_DATE=" + env.VITE_BUILD_DATE,
+          'VITE_BUILD_DATE="' + env.VITE_BUILD_DATE + '"',
           "VITE_BUILD_DATE=" +
             JSON.stringify(new Date().toISOString().split("T", 1)[0])
         );
