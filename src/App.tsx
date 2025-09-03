@@ -34,6 +34,7 @@ import ItemEdit from "./pages/itemPage/Edit";
 import VehiclePage from "./pages/vehiclePage/Index";
 import { FindVehiclePage } from "./pages/vehiclePage/Find";
 import UserEdit from "./pages/user/UserEdit";
+import { NewTabLinks } from "./types";
 
 export default function App() {
   const currentUser = useAuth();
@@ -488,3 +489,5 @@ export const RadioAtom = atomWithStorage("radioSettings", {
       "https://simulatorradio.com/processor/avatar?size=256&name=1726140003584.png",
   },
 });
+
+export const NewTabLinksAtom = atomWithStorage<NewTabLinks | undefined>("newTabLinks", undefined);

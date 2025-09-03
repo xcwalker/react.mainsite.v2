@@ -13,6 +13,9 @@ import Logo from "../../components/Logo";
 import { Navigate } from "react-router-dom";
 import { NewTabSearch } from "./Search";
 import firebaseSetupNewTabData from "../../functions/firebase/storage/extra/setupNewTabData";
+import { Helmet } from "react-helmet";
+import { NewTabLinksAtom, separator, title } from "../../App";
+import { useAtom } from "jotai";
 
 export default function NewTab() {
   const user = useAuth();
@@ -21,11 +24,22 @@ export default function NewTab() {
   const [editMode, setEditMode] = useState(false);
   const [hasCMDKey, setHasCMDKey] = useState(false);
   const [modifierPressed, setModifierPressed] = useState(false);
+  const [cachedData, setCachedData] = useAtom(NewTabLinksAtom);
 
   useEffect(() => {
+    // page setup
     const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
     setHasCMDKey(isMac);
   }, []);
+
+  useEffect(() => {
+    console.log("Link Data Changed", linkData);
+    console.log("Cached Data", cachedData);
+    if (cachedData && !linkData) {
+      console.info("Loading From Cache");
+      setLinkData(cachedData);
+    }
+  }, [cachedData, linkData]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -78,6 +92,8 @@ export default function NewTab() {
         firebaseSetupNewTabData(user?.uid).then(() => {
           firebaseGetData("newtab", user?.uid).then((data) => {
             setLinkData(data as NewTabLinks);
+            console.info("Updating Cache");
+            setCachedData(data as NewTabLinks);
             setError(false);
             return;
           });
@@ -85,6 +101,8 @@ export default function NewTab() {
         return;
       }
       setLinkData(data as NewTabLinks);
+      console.info("Updating Cache");
+      setCachedData(data as NewTabLinks);
       setError(false);
       return;
     });
@@ -92,7 +110,7 @@ export default function NewTab() {
       setLinkData(undefined);
       setError(false);
     };
-  }, [user?.uid]);
+  }, [user?.uid, setCachedData]);
 
   // focus on the search input when the component mounts
   useEffect(() => {
@@ -108,100 +126,109 @@ export default function NewTab() {
   return (
     <>
       {!error && !editMode && (
-        <Section
-          id="new-tab"
-          className={css.newTab}
-          container={{ className: css.container }}
-          style={
-            {
-              "--_color-page": linkData?.settings.color || "#000",
-            } as React.CSSProperties
-          }
-        >
-          {linkData && (
-            <div className={css.background}>
-              {linkData && linkData.settings.background.image ? (
-                <img
-                  src={linkData.settings.background.image}
-                  alt={"Background Image"}
-                  className={css.backgroundImage}
-                  style={{
-                    filter: linkData.settings.background.filter
-                      ? linkData.settings.background.filter
-                      : "unset",
-                  }}
-                />
-              ) : (
-                <div
-                  className={css.backgroundColor}
-                  style={{
-                    backgroundColor: linkData.settings.background.color,
-                  }}
-                ></div>
-              )}
-            </div>
-          )}
-          {user?.uid !== undefined && (
-            <SidebarUser userId={user.uid} className={css.user} />
-          )}
-          {linkData?.links && (
-            <div className={css.links}>
-              {linkData?.settings.showOrganization === true && (
-                <Logo type="xcwalker" className={css.logo} />
-              )}
-              <div className={css.search}>
-                {linkData.settings.showSearch && (
-                  <NewTabSearch
-                    hasCMDKey={hasCMDKey}
-                    modifierPressed={modifierPressed}
-                    queryURL={linkData.settings.search.queryURL}
-                    searchProvider={linkData.settings.search.provider}
+        <>
+          <Helmet>
+            <title>
+              New Tab {separator} {title}
+            </title>
+          </Helmet>
+          <Section
+            id="new-tab"
+            className={css.newTab}
+            container={{ className: css.container }}
+            style={
+              {
+                "--_color-page": linkData?.settings.color || "#000",
+              } as React.CSSProperties
+            }
+          >
+            {linkData && (
+              <div className={css.background}>
+                {linkData && linkData.settings.background.image ? (
+                  <img
+                    src={linkData.settings.background.image}
+                    alt={"Background Image"}
+                    className={css.backgroundImage}
+                    style={{
+                      filter: linkData.settings.background.filter
+                        ? linkData.settings.background.filter
+                        : "unset",
+                    }}
                   />
+                ) : (
+                  <div
+                    className={css.backgroundColor}
+                    style={{
+                      backgroundColor: linkData.settings.background.color,
+                    }}
+                  ></div>
                 )}
               </div>
-              <ul>
-                {linkData.links.map((link, index) => (
-                  <LinkItem
-                    key={index}
-                    link={link}
-                    hasCMDKey={hasCMDKey}
-                    modifierPressed={modifierPressed}
-                    index={index}
-                  />
-                ))}
-              </ul>
+            )}
+            {user?.uid !== undefined && (
+              <SidebarUser userId={user.uid} className={css.user} />
+            )}
+            {linkData?.links && (
+              <div className={css.links}>
+                {linkData?.settings.showOrganization === true && (
+                  <Logo type="xcwalker" className={css.logo} />
+                )}
+                <div className={css.search}>
+                  {linkData.settings.showSearch && (
+                    <NewTabSearch
+                      hasCMDKey={hasCMDKey}
+                      modifierPressed={modifierPressed}
+                      queryURL={linkData.settings.search.queryURL}
+                      searchProvider={linkData.settings.search.provider}
+                    />
+                  )}
+                </div>
+                <ul>
+                  {linkData.links.map((link, index) => (
+                    <LinkItem
+                      key={index}
+                      link={link}
+                      hasCMDKey={hasCMDKey}
+                      modifierPressed={modifierPressed}
+                      index={index}
+                    />
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div className={css.editButtonWrapper}>
+              {!hasCMDKey && (
+                <span
+                  className={
+                    css.editShortcut +
+                    (modifierPressed ? " " + css.modifier : "")
+                  }
+                >
+                  Ctrl + E
+                </span>
+              )}
+              {hasCMDKey && (
+                <span
+                  className={
+                    css.editShortcut +
+                    (modifierPressed ? " " + css.modifier : "")
+                  }
+                >
+                  ⌘ + E
+                </span>
+              )}
+              <button
+                className={css.edit}
+                onClick={() => {
+                  setEditMode(true);
+                }}
+              >
+                <GFIcon className={css.icon}>edit</GFIcon>
+                <span className={css.label}>Edit New Tab</span>
+              </button>
             </div>
-          )}
-          <div className={css.editButtonWrapper}>
-            {!hasCMDKey && (
-              <span
-                className={
-                  css.editShortcut + (modifierPressed ? " " + css.modifier : "")
-                }
-              >
-                Ctrl + E
-              </span>
-            )}
-            {hasCMDKey && (
-              <span
-                className={
-                  css.editShortcut + (modifierPressed ? " " + css.modifier : "")
-                }
-              >
-                ⌘ + E
-              </span>
-            )}
-            <button
-              className={css.edit}
-              onClick={() => {
-                setEditMode(true);
-              }}
-            >
-              <GFIcon className={css.icon}>edit</GFIcon>
-              <span className={css.label}>Edit New Tab</span>
-            </button>
-          </div>
-        </Section>
+          </Section>
+        </>
       )}
       {!error && editMode && <Navigate to={"./edit"} />}
       {error && <ErrorPage code={400} error="Error Loading New Tab" />}

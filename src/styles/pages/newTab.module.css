@@ -130,6 +130,7 @@
   width: 100%;
   height: 100%;
   padding: max(5vw, 2rem);
+  padding-bottom: max(5vw, 6rem);
 
   /* flex */
   display: flex;

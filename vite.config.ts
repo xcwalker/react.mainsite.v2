@@ -77,7 +77,7 @@ export default defineConfig(({ mode }) => {
         buildDate.getFullYear().toString().substr(-2) +
           "W" +
           pad(getWeekNumber(buildDate), 2) +
-          "0"
+          "A"
       );
     }
 
