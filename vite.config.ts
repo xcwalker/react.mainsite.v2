@@ -18,6 +18,8 @@ export default defineConfig(({ mode }) => {
 
     let out;
 
+    console.log(env.VITE_BUILD_DATE);
+
     if (
       // JSON.stringify(env.VITE_BUILD_DATE) ===
       // JSON.stringify(new Date().toISOString().split("T", 1)[0])
@@ -37,6 +39,21 @@ export default defineConfig(({ mode }) => {
         );
       console.log("App Version: " + (Number(env.VITE_APP_VERSION) + 1));
       console.log("Build Date: " + env.VITE_BUILD_DATE);
+
+      const buildDate = new Date(env.VITE_BUILD_DATE);
+      console.log(
+        buildDate.getFullYear().toString().substr(-2) +
+          "W" +
+          pad(getWeekNumber(buildDate), 2) +
+          ((env.VITE_APP_VERSION as unknown as number) >= 26
+            ? alphabet[
+                Math.floor((env.VITE_APP_VERSION as unknown as number) / 26)
+              ]
+            : "") +
+          alphabet[
+            (env.VITE_APP_VERSION as unknown as number) % alphabet.length
+          ]
+      );
     } else {
       out = data
         .toString()
@@ -45,14 +62,22 @@ export default defineConfig(({ mode }) => {
           "VITE_APP_VERSION=0"
         )
         .replace(
-          "VITE_BUILD_DATE=" + env.VITE_BUILD_DATE,
+          'VITE_BUILD_DATE="' + env.VITE_BUILD_DATE + '"',
           "VITE_BUILD_DATE=" +
             JSON.stringify(new Date().toISOString().split("T", 1)[0])
         );
+      const buildDate = new Date();
       console.log("App Version: 0");
       console.log(
         "Build Date: " +
-          JSON.stringify(new Date().toISOString().split("T", 1)[0])
+          JSON.stringify(buildDate.toISOString().split("T", 1)[0])
+      );
+
+      console.log(
+        buildDate.getFullYear().toString().substr(-2) +
+          "W" +
+          pad(getWeekNumber(buildDate), 2) +
+          "0"
       );
     }
 
@@ -84,3 +109,12 @@ function getWeekNumber(date: Date) {
   // Return week number
   return weekNo;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function pad(num: any, size: number) {
+  num = num.toString();
+  while (num.length < size) num = "0" + num;
+  return num;
+}
+
+const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 65));
