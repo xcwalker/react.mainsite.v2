@@ -471,6 +471,7 @@ function ScrollToTop() {
 
 export const title = "xcwalker";
 export const separator = "|";
+export const shortURL = "xcw.one";
 
 export const RadioAtom = atomWithStorage("radioSettings", {
   volume: 50,

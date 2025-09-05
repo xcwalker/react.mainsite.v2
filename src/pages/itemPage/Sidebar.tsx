@@ -10,6 +10,7 @@ import Image from "../../components/Image";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { useEffect, useState } from "react";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
+import { shortURL } from "../../App";
 
 export function ItemSidebar(props: {
   item: ItemType;
@@ -124,14 +125,14 @@ export function ItemSidebar(props: {
           navigator.canShare({
             title: item.data.title,
             text: item.data.subTitle,
-            url: window.location.href,
+            url: props.itemType.charAt(0) + shortURL + "/" + props.slug,
           }) && (
             <Button
               onClick={async () => {
                 await navigator.share({
                   title: item.data.title,
                   text: item.data.subTitle,
-                  url: window.location.href,
+                  url: props.itemType.charAt(0) + shortURL + "/" + props.slug,
                 });
               }}
               title="Share"
@@ -145,6 +146,23 @@ export function ItemSidebar(props: {
               Share
             </Button>
           )}
+          {!navigator.canShare &&
+          <Button
+            onClick={() => {
+              navigator.clipboard.writeText(
+                props.itemType.charAt(0) + "." + shortURL + "/" + props.slug
+              );
+            }}
+            title="Copy Link"
+            icon={{ gficon: "link" }}
+            style={
+              currentUser?.uid === props.item.metaData.authorID
+                ? "secondary"
+                : "primary"
+            }
+          >
+            Copy Link
+            </Button>}
         {currentUser?.uid === props.item.metaData.authorID && (
           <Button
             href={"./edit"}
