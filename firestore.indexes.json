@@ -31,6 +31,36 @@
       "density": "SPARSE_ALL"
     },
     {
+      "collectionGroup": "projects",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.date.modified",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "metaData.collection",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "projects",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.collection",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "metaData.date.modified",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
       "collectionGroup": "recipes",
       "queryScope": "COLLECTION",
       "fields": [
