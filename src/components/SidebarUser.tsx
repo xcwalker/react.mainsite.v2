@@ -27,6 +27,7 @@ export default function SidebarUser(props: {
     <Link
       className={css.author + (props.className ? " " + props.className : "")}
       to={"/user/" + props.userId}
+      style={{color: userData?.images?.color ? userData.images.color : undefined}}
     >
       {userData?.images?.background && (
         <>

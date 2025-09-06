@@ -136,6 +136,15 @@ function Sidebar(props: {
               className={css.colorPicker}
             />
           )}
+          <CompactPicker
+            onChange={(e) => {
+              const updatedUserData: UserType = { ...props.userData };
+              updatedUserData.images.color = e.hex;
+              props.setUserData(updatedUserData);
+            }}
+            color={props.userData.images.color}
+            className={css.colorPicker}
+          />
           <Input
             type="url"
             value={props.userData.images.profile}

@@ -39,7 +39,7 @@ export default function Sidebar(props: { user: UserType; id: string }) {
 
   return (
     <div className={css.sidebar}>
-      <div className={css.user}>
+      <div className={css.user} style={{color: props.user.images.color ? props.user.images.color : undefined}}>
         {props.user.images.background && (
           <>
             {props.user.images.backgroundType === "color" && (

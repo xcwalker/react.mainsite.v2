@@ -17,6 +17,7 @@
   /* styling */
   border-radius: 0.5rem;
   /* overflow: clip; */
+  color: white;
 
   /* transition */
   transition: height 0.25s ease-in-out;

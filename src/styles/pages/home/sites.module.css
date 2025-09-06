@@ -30,7 +30,7 @@
   border-radius: 1rem;
   border: 1px solid var(--secondary);
   overflow: clip;
-  color: white;
+  color: var(--text);
 
   /* text */
   text-decoration: none;

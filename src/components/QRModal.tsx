@@ -32,8 +32,8 @@ export function QRModal(props: {
           /> */}
           <QRCode
             value={props.link}
-            bgColor="var(--background-200)"
-            fgColor="white"
+            bgColor="var(--text-inverse)"
+            fgColor="var(--text)"
             className={css.qrCode}
           />
           <span className={css.link}>{props.link}</span>

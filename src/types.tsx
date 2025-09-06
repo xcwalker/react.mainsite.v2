@@ -253,6 +253,7 @@ export type UserType = {
     profile: string;
     background: string;
     backgroundType: string;
+    color?: string;
   };
   info: {
     gender: string;
