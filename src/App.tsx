@@ -360,6 +360,64 @@ export default function App() {
               </Route>
             </Route>
 
+            {/* videos */}
+            <Route path="videos">
+              <Route
+                index
+                element={
+                  <ViewAllPage
+                    itemType="videos"
+                    title="All Videos"
+                    hasThumbnail={true}
+                  />
+                }
+              />
+              <Route
+                path="create"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemCreate itemType="videos" />
+                    </RoleProtect>
+                  </Protect>
+                }
+              />
+              <Route path=":slug">
+                <Route index element={<ItemPage itemType="videos" />} />
+                <Route
+                  path="edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="videos" />
+                    </RoleProtect>
+                  }
+                />
+                <Route
+                  path="admin-edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="videos" admin />
+                    </RoleProtect>
+                  }
+                />
+              </Route>
+            </Route>
+
             {/* accounts */}
             <Route path="account">
               <Route index element={<Navigate to={"manage"} />} />

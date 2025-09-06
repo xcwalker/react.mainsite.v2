@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 import { shortURL } from "../../App";
 import { QRModal } from "../../components/QRModal";
+import firebaseDeleteData from "../../functions/firebase/storage/deleteData";
+import { Navigate } from "react-router-dom";
 
 export function ItemSidebar(props: {
   item: ItemType;
@@ -99,7 +101,18 @@ export function ItemSidebar(props: {
           <RecipeSidebarContent item={item as RecipeItemProps} />
         )}
         <div className={css.links}>
-          {item.metaData.repoName && (
+          {item.metaData.youtube && item.metaData.youtube.length > 0 && (
+            <Button
+              href={item.metaData.youtube}
+              external
+              title="View on YouTube"
+              icon={{ inline: <SocialIcon social="youtube" /> }}
+              style="secondary"
+            >
+              YouTube
+            </Button>
+          )}
+          {item.metaData.repoName && item.metaData.repoName.length > 0 && (
             <Button
               href={
                 "https://github.com/xcwalker/" +
@@ -116,7 +129,7 @@ export function ItemSidebar(props: {
               Github Repo
             </Button>
           )}
-          {item.metaData.workshop && (
+          {item.metaData.workshop && item.metaData.workshop.length > 0 && (
             <Button
               href={item.metaData.workshop}
               external
@@ -189,14 +202,34 @@ export function ItemSidebar(props: {
             </Button>
           )}
           {currentUser?.uid === props.item.metaData.authorID && (
-            <Button
-              href={"./edit"}
-              title={"Edit " + item.data.title}
-              icon={{ gficon: "edit" }}
-              style="primary"
-            >
-              Edit
-            </Button>
+            <>
+              <Button
+                href={"./edit"}
+                title={"Edit " + item.data.title}
+                icon={{ gficon: "edit" }}
+                style="primary"
+              >
+                Edit
+              </Button>
+              <Button
+                icon={{ gficon: "delete" }}
+                title="Delete"
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      "Are you sure you want to delete this item? This action cannot be undone."
+                    )
+                  ) {
+                    // delete item
+                    firebaseDeleteData(props.itemType, props.slug);
+                    Navigate({ to: "../" });
+                  }
+                }}
+                style="danger"
+              >
+                Delete
+              </Button>
+            </>
           )}
           {currentUserData?.info.role &&
             currentUserData?.info.role !== "user" &&

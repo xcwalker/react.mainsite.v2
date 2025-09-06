@@ -18,7 +18,7 @@ import Image from "../../components/Image";
 import SideBySide from "../../components/SideBySide";
 import ReactMde from "react-mde";
 import Markdown from "react-markdown";
-import "../../styles/components/markdownEditor.css"
+import "../../styles/components/markdownEditor.css";
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
@@ -226,40 +226,65 @@ function Sidebar(props: {
           />
         </div>
       )}
+      {props.itemType === "videos" && (
+        <TextInput
+          value={props.data.metaData.youtube ? props.data.metaData.youtube : ""}
+          valueName="youtube"
+          classification="metaData"
+          placeholder="https://www.youtube.com/watch?v=FUf2ZuN4dIg"
+          setData={props.setData}
+          title="Youtube"
+          className={css.youtube}
+        />
+      )}
 
       {props.itemType === "recipes" && (
-        <div className={css.information}>
+        <>
+          <div className={css.information}>
+            <TextInput
+              value={props.data.data.information.serves}
+              valueName="information"
+              classification="data"
+              placeholder="Serves"
+              setData={props.setData}
+              title="Serves"
+              className={css.serves}
+              subValueName="serves"
+            />
+            <TextInput
+              value={props.data.data.information.prepTime}
+              valueName="information"
+              classification="data"
+              placeholder="Prep Time"
+              setData={props.setData}
+              title="Prep Time"
+              className={css.prepTime}
+              subValueName="prepTime"
+            />
+            <TextInput
+              value={props.data.data.information.cookTime}
+              valueName="information"
+              classification="data"
+              placeholder="Cook Time"
+              setData={props.setData}
+              title="Cook Time"
+              className={css.cookTime}
+              subValueName="cookTime"
+            />
+          </div>
+
           <TextInput
-            value={props.data.data.information.serves}
-            valueName="information"
-            classification="data"
-            placeholder="Serves"
+            value={
+              props.data.metaData.youtube ? props.data.metaData.youtube : ""
+            }
+            valueName="youtube"
+            classification="metaData"
+            placeholder="https://www.youtube.com/watch?v=FUf2ZuN4dIg"
             setData={props.setData}
-            title="Serves"
-            className={css.serves}
-            subValueName="serves"
+            title="Youtube"
+            className={css.youtube}
           />
-          <TextInput
-            value={props.data.data.information.prepTime}
-            valueName="information"
-            classification="data"
-            placeholder="Prep Time"
-            setData={props.setData}
-            title="Prep Time"
-            className={css.prepTime}
-            subValueName="prepTime"
-          />
-          <TextInput
-            value={props.data.data.information.cookTime}
-            valueName="information"
-            classification="data"
-            placeholder="Cook Time"
-            setData={props.setData}
-            title="Cook Time"
-            className={css.cookTime}
-            subValueName="cookTime"
-          />
-        </div>
+        </>
       )}
       {currentUser && currentUser !== null && (
         <Button

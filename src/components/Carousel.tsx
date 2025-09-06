@@ -5,6 +5,7 @@ import { ReactNode, UIEvent, useEffect, useRef, useState } from "react";
 import { RoleProtect } from "./Security/Protect";
 import Button from "./Button";
 import toTitleCase from "../functions/toTitleCase";
+import { ItemTypes } from "../types";
 
 export default function Carousel(props: {
   children: ReactNode;
@@ -15,7 +16,7 @@ export default function Carousel(props: {
   className: string;
   titleLink?: { text: string; href: string };
   defaultView: string;
-  showCreateButton?: "recipes" | "projects" | "albums" | "blog";
+  showCreateButton?: ItemTypes;
 }) {
   const carouselRef = useRef<HTMLElement>(null);
   const [scrolledDistance, setScrolledDistance] = useState(0);
@@ -56,7 +57,9 @@ export default function Carousel(props: {
         <div className={css.title}>
           {props.title && <h3>{props.title}</h3>}
           {props.titleLink && (
-            <Link to={props.titleLink.href} className={css.titleLink}>{props.titleLink.text}</Link>
+            <Link to={props.titleLink.href} className={css.titleLink}>
+              {props.titleLink.text}
+            </Link>
           )}
 
           {props.showCreateButton && (

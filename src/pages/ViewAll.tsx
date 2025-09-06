@@ -4,7 +4,7 @@ import HomeCarousel from "./home/Carousel";
 import toTitleCase from "../functions/toTitleCase";
 
 export default function ViewAllPage(props: {
-  itemType: "recipes" | "blog" | "projects" | "albums";
+  itemType: "recipes" | "blog" | "projects" | "albums" | "videos";
   title: string;
   hasThumbnail: boolean;
 }) {

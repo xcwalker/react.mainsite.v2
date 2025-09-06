@@ -45,6 +45,11 @@ const navItems = [
     gficon: "image",
   },
   {
+    title: "Videos",
+    href: "videos",
+    gficon: "airplay",
+  },
+  {
     title: "Fleet",
     href: "vehicles",
     gficon: "directions_car",

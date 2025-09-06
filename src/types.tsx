@@ -134,7 +134,7 @@ export type VehicleHistoryType = {
   isFleetEnrollment: boolean;
 }[];
 
-export type ItemTypes = "projects" | "recipes" | "albums" | "blog" | "vehicles";
+export type ItemTypes = "projects" | "recipes" | "albums" | "blog" | "vehicles" | "videos";
 
 export type CombinedItemProps = ItemProps &
   BlogItemProps &
@@ -143,6 +143,12 @@ export type CombinedItemProps = ItemProps &
   AlbumItemProps;
 
 export type BlogItemProps = ItemProps;
+
+export type VideoItemProps = ItemProps & {
+  metaData: {
+    youtube: string;
+  };
+};
 
 export type ProjectItemProps = ItemProps & {
   metaData: {

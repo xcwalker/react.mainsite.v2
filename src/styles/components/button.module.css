@@ -75,6 +75,18 @@
   background-color: var(--secondary);
 }
 
+.button.danger {
+  /* styling */
+  background: darkred;
+  color: var(--text);
+}
+
+.button.danger:hover {
+  /* styling */
+  background: rgb(238, 0, 0);
+  color: var(--text);
+}
+
 .button.success {
   /* styling */
   background: var(--form-color-valid);

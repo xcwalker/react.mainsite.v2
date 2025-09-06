@@ -3,7 +3,7 @@ import css from "../../styles/pages/home/projects.module.css";
 import { Fragment } from "react/jsx-runtime";
 import GridItem from "../../components/GridItem";
 import { useEffect, useState } from "react";
-import { ItemProps } from "../../types";
+import { ItemProps, ItemTypes } from "../../types";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
 import Carousel from "../../components/Carousel";
 import getDataByDate from "../../functions/firebase/storage/getDataByDate";
@@ -11,9 +11,9 @@ import ListItem from "../../components/ListItem";
 
 export default function HomeCarousel(props: {
   title: string;
-  titleLink?: "projects" | "albums" | "recipes" | "blog";
+  titleLink?: ItemTypes;
   onHome?: boolean;
-  itemType: "projects" | "albums" | "recipes" | "blog";
+  itemType: ItemTypes;
   hasThumbnail: boolean;
 }) {
   const [projectsArray, setProjectsArray] = useState<
