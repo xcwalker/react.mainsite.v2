@@ -1,6 +1,5 @@
 .footer {
   grid-area: footer;
-  z-index: -1;
     
   /* sizing */
   width: 100%;

@@ -1,7 +1,6 @@
 .gridItem {
   /* position */
   position: relative;
-  z-index: -1;
 
   /* sizing */
   padding: 0;
