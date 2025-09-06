@@ -1,8 +1,12 @@
 .markdown {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .markdown a {
-  color: inherit;
+  color: var(--accent);
   text-decoration: underline dashed;
 }
 
@@ -53,32 +57,38 @@
 
 .markdown h1 {
   font-size: 4.21rem;
-  margin-block: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: -0.5rem;
 }
 
 .markdown h2 {
   font-size: 3.158rem;
-  margin-block: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: -0.5rem;
 }
 
 .markdown h3 {
   font-size: 2.369rem;
-  margin-block: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: -0.5rem;
 }
 
 .markdown h4 {
   font-size: 1.777rem;
-  margin-block: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: -0.5rem;
 }
 
 .markdown h5 {
   font-size: 1.333rem;
-  margin-block: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: -0.5rem;
 }
 
 .markdown h6 {
   font-size: 0.75rem;
-  margin-block: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: -0.5rem;
 }
 
 .markdown img {
