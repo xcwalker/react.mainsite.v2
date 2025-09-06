@@ -75,6 +75,13 @@
   background-color: var(--secondary);
 }
 
+.button.success {
+  /* styling */
+  background: var(--form-color-valid);
+  color: var(--text);
+  cursor: default;
+}
+
 .button.pageHidden:focus-visible,
 .button:focus-visible {
   opacity: 1;

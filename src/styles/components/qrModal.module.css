@@ -1,0 +1,117 @@
+.qrModalBackdrop {
+  /* position */
+  position: fixed !important;
+  inset: 0;
+  z-index: 9998;
+
+  /* styling */
+  background: transparent;
+  backdrop-filter: none;
+
+  /* transition */
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.qrModalBackdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+
+  /* styling */
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.qrModal {
+  /* position */
+  position: fixed !important;
+  top: 50% !important;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 9999;
+
+  /* sizing */
+  width: 90%;
+  max-width: 400px;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  /* styling */
+  background: var(--background);
+  border-radius: 8px;
+  padding: 1rem;
+
+  /* transition */
+  scale: 0.8;
+  transition: scale, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+  transform-origin: center center;
+
+  /* hiding */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.qrModal.visible {
+  opacity: 1;
+  pointer-events: auto;
+  scale: 1;
+}
+
+.content {
+  /* sizing */
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.qrModal h3 {
+  /* text */
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.qrModal p {
+  /* text */
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.qrCode {
+  /* sizing */
+  margin-inline: auto;
+  width: 200px;
+  height: 200px;
+  max-width: 100%;
+  max-height: 100%;
+
+  /* styling */
+  background: var(--background-200);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.qrModal .link {
+  /* sizing */
+  display: block;
+  width: 100%;
+  overflow-wrap: anywhere;
+
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-600);
+  text-align: center;
+}

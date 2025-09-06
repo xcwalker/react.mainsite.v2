@@ -11,6 +11,7 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { useEffect, useState } from "react";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 import { shortURL } from "../../App";
+import { QRModal } from "../../components/QRModal";
 
 export function ItemSidebar(props: {
   item: ItemType;
@@ -18,7 +19,9 @@ export function ItemSidebar(props: {
   itemType: ItemTypes;
 }) {
   const currentUser = useAuth();
-  const [currentUserData, setCurrentUserData] = useState<UserType | undefined>();
+  const [currentUserData, setCurrentUserData] = useState<
+    UserType | undefined
+  >();
   const item = props.item;
   const dateModified = new Date(item.metaData.date.modified);
   const dateCreated = new Date(item.metaData.date.created);
@@ -33,6 +36,8 @@ export function ItemSidebar(props: {
     minute: "numeric",
     hour: "numeric",
   };
+  const [linkCopied, setLinkCopied] = useState(false);
+  const [shopQRModal, setShopQRModal] = useState(false);
 
   useEffect(() => {
     if (currentUser?.uid) {
@@ -45,148 +50,176 @@ export function ItemSidebar(props: {
   }, [currentUser?.uid]);
 
   return (
-    <div className={css.sidebar}>
-      <Image
-        src={props.item.metaData?.thumbnail}
-        alt="Thumbnail"
-        className={css.thumbnail}
-      />
-      <div className={css.details}>
-        <h3>{item.data.title}</h3>
-        <h4>{item.data.subTitle}</h4>
-      </div>
-      <div className={css.dates}>
-        <div className={css.created}>
-          {dateCreated.toLocaleDateString(undefined, dateOptions)}
+    <>
+      <div className={css.sidebar}>
+        <Image
+          src={props.item.metaData?.thumbnail}
+          alt="Thumbnail"
+          className={css.thumbnail}
+        />
+        <div className={css.details}>
+          <h3>{item.data.title}</h3>
+          <h4>{item.data.subTitle}</h4>
         </div>
-        {item.metaData.date.created !== item.metaData.date.modified && (
-          <div className={css.modified}>
-            Last Modified:{" "}
-            {dateModified.toLocaleDateString(undefined, dateOptions) ===
-              dateCreated.toLocaleDateString(undefined, dateOptions) &&
-              dateModified.toLocaleTimeString(undefined, timeOptions)}
-            {dateModified.toLocaleDateString(undefined, dateOptions) !==
-              dateCreated.toLocaleDateString(undefined, dateOptions) &&
-              dateModified.toLocaleDateString(undefined, dateOptions)}
+        <div className={css.dates}>
+          <div className={css.created}>
+            {dateCreated.toLocaleDateString(undefined, dateOptions)}
           </div>
-        )}
-      </div>
-
-      <div className={css.tags}>
-        <div className={css.collection}>
-          <GFIcon className={css.icon}>category</GFIcon>
-          {item.metaData.collectionName}
-        </div>
-        {item.metaData.tags.map((tag, index) => {
-          return (
-            <div key={index} className={css.tag}>
-              <GFIcon className={css.icon}>label</GFIcon>
-              <span>{tag}</span>
+          {item.metaData.date.created !== item.metaData.date.modified && (
+            <div className={css.modified}>
+              Last Modified:{" "}
+              {dateModified.toLocaleDateString(undefined, dateOptions) ===
+                dateCreated.toLocaleDateString(undefined, dateOptions) &&
+                dateModified.toLocaleTimeString(undefined, timeOptions)}
+              {dateModified.toLocaleDateString(undefined, dateOptions) !==
+                dateCreated.toLocaleDateString(undefined, dateOptions) &&
+                dateModified.toLocaleDateString(undefined, dateOptions)}
             </div>
-          );
-        })}
-      </div>
-      {item.metaData.authorID && (
-        <SidebarUser userId={item.metaData.authorID} />
-      )}
-      {props.itemType === "recipes" && (
-        <RecipeSidebarContent item={item as RecipeItemProps} />
-      )}
-      <div className={css.links}>
-        {item.metaData.repoName && (
-          <Button
-            href={
-              "https://github.com/xcwalker/" +
-              item.metaData.repoName +
-              (item.metaData.subRepo
-                ? "/tree/main/" + item.metaData.subRepo
-                : "")
-            }
-            external
-            title="Github Repo"
-            icon={{ inline: <SocialIcon social="github" /> }}
-            style="secondary"
-          >
-            Github Repo
-          </Button>
+          )}
+        </div>
+
+        <div className={css.tags}>
+          <div className={css.collection}>
+            <GFIcon className={css.icon}>category</GFIcon>
+            {item.metaData.collectionName}
+          </div>
+          {item.metaData.tags.map((tag, index) => {
+            return (
+              <div key={index} className={css.tag}>
+                <GFIcon className={css.icon}>label</GFIcon>
+                <span>{tag}</span>
+              </div>
+            );
+          })}
+        </div>
+        {item.metaData.authorID && (
+          <SidebarUser userId={item.metaData.authorID} />
         )}
-        {item.metaData.workshop && (
-          <Button
-            href={item.metaData.workshop}
-            external
-            title="Steam Workshop Page"
-            icon={{ inline: <SocialIcon social="steam" /> }}
-            style="secondary"
-          >
-            Workshop Page
-          </Button>
+        {props.itemType === "recipes" && (
+          <RecipeSidebarContent item={item as RecipeItemProps} />
         )}
-        {navigator.canShare &&
-          navigator.canShare({
-            title: item.data.title,
-            text: item.data.subTitle,
-            url: props.itemType.charAt(0) + shortURL + "/" + props.slug,
-          }) && (
+        <div className={css.links}>
+          {item.metaData.repoName && (
             <Button
-              onClick={async () => {
-                await navigator.share({
-                  title: item.data.title,
-                  text: item.data.subTitle,
-                  url: props.itemType.charAt(0) + shortURL + "/" + props.slug,
-                });
+              href={
+                "https://github.com/xcwalker/" +
+                item.metaData.repoName +
+                (item.metaData.subRepo
+                  ? "/tree/main/" + item.metaData.subRepo
+                  : "")
+              }
+              external
+              title="Github Repo"
+              icon={{ inline: <SocialIcon social="github" /> }}
+              style="secondary"
+            >
+              Github Repo
+            </Button>
+          )}
+          {item.metaData.workshop && (
+            <Button
+              href={item.metaData.workshop}
+              external
+              title="Steam Workshop Page"
+              icon={{ inline: <SocialIcon social="steam" /> }}
+              style="secondary"
+            >
+              Workshop Page
+            </Button>
+          )}
+          <Button
+            title="Share With QR Code"
+            icon={{ gficon: "qr_code" }}
+            onClick={() => {
+              setShopQRModal(true);
+            }}
+            style="secondary"
+          >
+            Share Via QR
+          </Button>
+          {navigator.canShare &&
+            navigator.canShare({
+              title: item.data.title,
+              text: item.data.subTitle,
+              url: props.itemType.charAt(0) + shortURL + "/" + props.slug,
+            }) && (
+              <Button
+                onClick={async () => {
+                  await navigator.share({
+                    title: item.data.title,
+                    text: item.data.subTitle,
+                    url: props.itemType.charAt(0) + shortURL + "/" + props.slug,
+                  });
+                }}
+                title="Share"
+                icon={{ gficon: "share" }}
+                style={
+                  currentUser?.uid === props.item.metaData.authorID
+                    ? "secondary"
+                    : "primary"
+                }
+              >
+                Share
+              </Button>
+            )}
+          {!navigator.canShare && (
+            <Button
+              onClick={() => {
+                navigator.clipboard
+                  .writeText(
+                    props.itemType.charAt(0) + "." + shortURL + "/" + props.slug
+                  )
+                  .then(() => {
+                    setLinkCopied(true);
+                    setTimeout(() => setLinkCopied(false), 2000);
+                  });
               }}
-              title="Share"
-              icon={{ gficon: "share" }}
+              title="Copy Link"
+              icon={{ gficon: linkCopied ? "check" : "link" }}
               style={
-                currentUser?.uid === props.item.metaData.authorID
+                linkCopied
+                  ? "success"
+                  : currentUser?.uid === props.item.metaData.authorID
                   ? "secondary"
                   : "primary"
               }
+              disabled={linkCopied}
             >
-              Share
+              {linkCopied ? "Link Copied!" : "Copy Link"}
             </Button>
           )}
-          {!navigator.canShare &&
-          <Button
-            onClick={() => {
-              navigator.clipboard.writeText(
-                props.itemType.charAt(0) + "." + shortURL + "/" + props.slug
-              );
-            }}
-            title="Copy Link"
-            icon={{ gficon: "link" }}
-            style={
-              currentUser?.uid === props.item.metaData.authorID
-                ? "secondary"
-                : "primary"
-            }
-          >
-            Copy Link
-            </Button>}
-        {currentUser?.uid === props.item.metaData.authorID && (
-          <Button
-            href={"./edit"}
-            title={"Edit " + item.data.title}
-            icon={{ gficon: "edit" }}
-            style="primary"
-          >
-            Edit
-          </Button>
-        )}
-        {currentUserData?.info.role &&
-          currentUserData?.info.role !== "user" &&
-          currentUserData?.info.role !== "unverified" && (
+          {currentUser?.uid === props.item.metaData.authorID && (
             <Button
-              href={"./admin-edit"}
+              href={"./edit"}
               title={"Edit " + item.data.title}
-              icon={{ gficon: "person_edit" }}
+              icon={{ gficon: "edit" }}
               style="primary"
             >
-              Admin Edit
+              Edit
             </Button>
           )}
+          {currentUserData?.info.role &&
+            currentUserData?.info.role !== "user" &&
+            currentUserData?.info.role !== "unverified" && (
+              <Button
+                href={"./admin-edit"}
+                title={"Edit " + item.data.title}
+                icon={{ gficon: "person_edit" }}
+                style="primary"
+              >
+                Admin Edit
+              </Button>
+            )}
+        </div>
       </div>
-    </div>
+      <QRModal
+        close={() => {
+          setShopQRModal(false);
+        }}
+        link={props.itemType.charAt(0) + "." + shortURL + "/" + props.slug}
+        visible={shopQRModal}
+      />
+    </>
   );
 }
 

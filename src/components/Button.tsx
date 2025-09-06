@@ -20,13 +20,15 @@ export default function Button(props: {
   };
   external?: boolean;
   externalClassName?: string;
-  style?: "primary" | "secondary" | "danger";
+  style?: "primary" | "secondary" | "danger" | "success";
   pageNavigation?: boolean;
   // pageNavigation is used to determine if the button is used for page navigation with # links
   hidden?: "siteNavigation" | "pageNavigation";
   // hidden is used to hide the button, e.g. for the jump to content or new tab buttons
   loading?: boolean;
   // loading is used to show a loading state for the button
+  disabled?: boolean;
+  // disabled is used to disable the button
   width?: string;
   // width is used to set the width of the button
   isBeta?: boolean;
@@ -51,7 +53,7 @@ export default function Button(props: {
           tabIndex={props.tabIndex}
           target={props.target === "newTab" ? "_blank" : ""}
           title={props.title}
-          aria-disabled={props.loading ? "true" : "false"}
+          aria-disabled={props.loading || props.disabled ? "true" : "false"}
         >
           {props.icon?.gficon && (
             <GFIcon
@@ -95,7 +97,7 @@ export default function Button(props: {
           tabIndex={props.tabIndex}
           target={props.target === "newTab" ? "_blank" : ""}
           title={props.title}
-          aria-disabled={props.loading ? "true" : "false"}
+          aria-disabled={props.loading || props.disabled ? "true" : "false"}
         >
           {props.icon?.gficon && (
             <GFIcon
@@ -145,7 +147,7 @@ export default function Button(props: {
           tabIndex={props.tabIndex}
           target={props.target === "newTab" ? "_blank" : ""}
           title={props.title}
-          aria-disabled={props.loading ? "true" : "false"}
+          aria-disabled={props.loading || props.disabled ? "true" : "false"}
         >
           {props.icon?.gficon && (
             <GFIcon
@@ -187,7 +189,7 @@ export default function Button(props: {
           tabIndex={props.tabIndex}
           title={props.title}
           type={props.type ? props.type : "button"}
-          disabled={props.loading ? true : false}
+          disabled={props.loading || props.disabled ? true : false}
         >
           {props.icon?.gficon && (
             <GFIcon

@@ -11,7 +11,7 @@
 
 .thumbnail {
   /* position */
-  z-index: 1;
+  z-index: 0;
 
   /* sizing */
   grid-area: 1 / 1;
@@ -28,7 +28,7 @@
 
 .image .placeholder {
   /* position */
-  z-index: 0;
+  z-index: -1;
   /* flex */
   display: flex;
   justify-content: center;
