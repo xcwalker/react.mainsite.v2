@@ -1,4 +1,7 @@
 .markdown {
+  /* sizing */
+  max-width: 100ch;
+
   /* flex */
   display: flex;
   flex-direction: column;
