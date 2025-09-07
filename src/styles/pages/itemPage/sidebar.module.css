@@ -223,3 +223,33 @@
   background: linear-gradient(-60deg, #417a9b 5%, #67c1f5 95%);
   color: #fff;
 } */
+
+
+.printQrCode {
+  /* hide on screen */
+  display: none;
+}
+
+@media print {
+  .links {
+    display: none;
+  }
+
+  .printQrCode {
+    /* show on print */
+    display: block;
+
+    /* sizing */
+    padding: 1rem;
+    width: 10rem;
+    height: auto;
+    margin-inline: auto;
+
+    /* styling */
+    background: var(--background-100);
+    border-radius: 0.5rem;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-before: auto;
+  }
+}

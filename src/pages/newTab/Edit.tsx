@@ -12,6 +12,7 @@ import { Navigate } from "react-router-dom";
 import { PhotoshopPicker } from "react-color";
 import GFIcon from "../../components/GFIcon";
 import Checkbox from "../../components/Checkbox";
+import { isValidHttpUrl } from "./Index";
 
 export default function NewTabEdit() {
   const user = useAuth();
@@ -256,7 +257,7 @@ function LinkItemEdit(props: {
                     //   "&size=128"
 
                     "https://icon.horse/icon/" +
-                    new URL(props.link.url).hostname.replace(/^www\./, "")
+                    (isValidHttpUrl(props.link.url) ? new URL(props.link.url).hostname.replace(/^www\./, "") : "")
               }
               alt={props.link.title}
               className={css.iconImage}

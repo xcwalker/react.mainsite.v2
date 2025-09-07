@@ -85,3 +85,9 @@
 .quickLinks .container button:focus-visible {
   text-decoration: underline dashed;
 }
+
+@media print {
+  .quickLinks {
+    display: none;
+  }
+}

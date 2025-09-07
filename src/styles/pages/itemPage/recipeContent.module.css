@@ -34,6 +34,8 @@
 
   /* counter */
   counter-increment: counter;
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
 .instructions li::before {

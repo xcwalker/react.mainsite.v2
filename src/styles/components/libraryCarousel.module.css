@@ -5,6 +5,12 @@
   gap: 0;
 }
 
+@media print {
+  .carouselContainer {
+    display: none;
+  }
+}
+
 .header {
   .title {
     /* flex */

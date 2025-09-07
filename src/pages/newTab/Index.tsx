@@ -246,7 +246,9 @@ export function LinkItem(props: {
   // const matches = props.link.url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i);
   // const domain = matches && matches[1];
 
-  const url = new URL(props.link.url);
+  const url = isValidHttpUrl(props.link.url)
+    ? new URL(props.link.url)
+    : new URL("http://invalidurl"); // Fallback to http if no protocol is provided
   const hostname = url.hostname.replace(/^www\./, "");
 
   let shortcutIndex = props.index + 1;
@@ -328,4 +330,16 @@ export function LinkItem(props: {
       </span>
     </li>
   );
+}
+
+export function isValidHttpUrl(string: string) {
+  let url;
+
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
 }

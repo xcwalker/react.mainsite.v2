@@ -22,3 +22,9 @@
 a.banner {
   text-decoration: underline dashed;
 }
+
+@media print {
+  .banner {
+    display: none;
+  }
+}

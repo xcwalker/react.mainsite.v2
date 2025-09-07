@@ -14,6 +14,7 @@ import { shortURL } from "../../App";
 import { QRModal } from "../../components/QRModal";
 import firebaseDeleteData from "../../functions/firebase/storage/deleteData";
 import { Navigate } from "react-router-dom";
+import QRCode from "react-qr-code";
 
 export function ItemSidebar(props: {
   item: ItemType;
@@ -244,6 +245,15 @@ export function ItemSidebar(props: {
               </Button>
             )}
         </div>
+
+        {/* print qr code */}
+        <QRCode
+          value={props.itemType.charAt(0) + "." + shortURL + "/" + props.slug}
+          size={128}
+          className={css.printQrCode}
+          fgColor="var(--text)"
+          bgColor="var(--background-100)"
+        />
       </div>
       <QRModal
         close={() => {

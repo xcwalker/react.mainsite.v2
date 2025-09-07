@@ -140,8 +140,8 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
             />
           </Helmet>
           <Section id="project">
-            <SideBySide leftWidth="350px">
-              <ItemSidebar itemType={props.itemType} item={item} slug={slug} />
+            <SideBySide leftWidth="350px" printLeftWidth="350px">
+              <ItemSidebar itemType={props.itemType} item={item} slug={slug}  />
               <main className={css.main}>
                 {item.data.description.length > 0 && (
                   <Markdown

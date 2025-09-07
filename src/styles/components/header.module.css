@@ -117,16 +117,6 @@
 
 @media print {
   .header {
-    /* position */
-    position: static;
-
-    /* sizing */
-    height: 52px;
-
-    /* styling */
-    background: transparent;
-  }
-  .links {
     display: none;
   }
 }

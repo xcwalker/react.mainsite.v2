@@ -124,3 +124,18 @@ h6 {
     /* overflow: hidden; */
   }
 }
+
+
+@media print {
+  #root {
+    grid-template-columns: [main-start footer-start] auto [main-end footer-end];
+  }
+
+  #root > main {
+    max-width: 100%;
+  }
+}
+
+@page{
+  size: A4 landscape !important
+ }
