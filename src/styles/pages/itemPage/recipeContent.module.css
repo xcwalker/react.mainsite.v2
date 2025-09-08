@@ -8,8 +8,27 @@
   gap: 0.5rem;
 }
 
+.instructions .header {
+  /* sizing */
+  height: 2rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
 .instructions h3 {
   margin: 0;
+  margin-right: auto;
+}
+
+.instructions .header button {
+  /* sizing */
+  width: fit-content;
+  grid-template-columns: 1fr;
+  padding: 0.5rem;
 }
 
 .instructions ul {
@@ -50,4 +69,22 @@
   font-size: 0.75rem;
   margin-right: 0.5rem;
   line-height: 1;
+}
+
+.instructions li.checklistItem::before {
+  display: none;
+}
+
+.instructions li.checklistItem input[type="checkbox"] {
+  /* position */
+  position: absolute;
+  left: -1.75rem;
+  top: 0;
+
+  /* sizing */
+  width: 1rem;
+  height: 1rem;
+
+  /* styling */
+  accent-color: var(--accent);
 }

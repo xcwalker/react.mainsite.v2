@@ -20,6 +20,8 @@ export function ItemSidebar(props: {
   item: ItemType;
   slug: string;
   itemType: ItemTypes;
+  checklistMode: boolean;
+  setChecklistMode: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const currentUser = useAuth();
   const [currentUserData, setCurrentUserData] = useState<
@@ -102,6 +104,23 @@ export function ItemSidebar(props: {
           <RecipeSidebarContent item={item as RecipeItemProps} />
         )}
         <div className={css.links}>
+          {props.itemType === "recipes" && (
+            <Button
+              icon={{
+                gficon: props.checklistMode
+                  ? "format_list_numbered"
+                  : "checklist",
+              }}
+              style="secondary"
+              onClick={() => props.setChecklistMode(!props.checklistMode)}
+              title={
+                (props.checklistMode ? "Numbered" : "Checklist") +
+                "  Mode"
+              }
+            >
+              {props.checklistMode ? "Numbered" : "Checklist"} Mode
+            </Button>
+          )}
           {item.metaData.youtube && item.metaData.youtube.length > 0 && (
             <Button
               href={item.metaData.youtube}

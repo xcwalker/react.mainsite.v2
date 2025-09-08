@@ -176,9 +176,9 @@
     width: 100%;
   }
 
-  > :last-child {
+  /* > :last-child {
     margin-right: 4rem;
-  }
+  } */
 }
 
 .carousel::-webkit-scrollbar {

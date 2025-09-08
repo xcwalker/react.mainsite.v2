@@ -25,6 +25,7 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
   const { slug } = useParams();
   const [item, setItem] = useState<ItemType | undefined>(undefined);
   const [error, setError] = useState(false);
+  const [checklistMode, setChecklistMode] = useState(false);
 
   useEffect(() => {
     firebaseGetRealtimeData(
@@ -141,7 +142,7 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
           </Helmet>
           <Section id="project">
             <SideBySide leftWidth="350px" printLeftWidth="350px">
-              <ItemSidebar itemType={props.itemType} item={item} slug={slug}  />
+              <ItemSidebar itemType={props.itemType} item={item} slug={slug} checklistMode={checklistMode} setChecklistMode={setChecklistMode}  />
               <main className={css.main}>
                 {item.data.description.length > 0 && (
                   <Markdown
@@ -156,7 +157,7 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
                   </Markdown>
                 )}
                 {props.itemType === "recipes" && (
-                  <RecipeContent item={item as RecipeItemProps} />
+                  <RecipeContent item={item as RecipeItemProps} checklistMode={checklistMode} />
                 )}
                 <ItemImages item={item} slug={slug} itemType={props.itemType} />
               </main>
