@@ -169,6 +169,14 @@ function InstructionItem(props: {
 }) {
   const checked = props.checkedItems.includes(props.item);
 
+  function toggleChecked() {
+    if (checked) {
+      props.setCheckedItems((prev) => prev.filter((i) => i !== props.item));
+    } else {
+      props.setCheckedItems((prev) => [...prev, props.item]);
+    }
+  }
+
   return (
     <li className={props.checklistMode ? css.checklistItem : ""}>
       {props.checklistMode && (
@@ -176,19 +184,20 @@ function InstructionItem(props: {
           type="checkbox"
           checked={checked}
           onChange={() => {
-            if (checked) {
-              props.setCheckedItems((prev) =>
-                prev.filter((i) => i !== props.item)
-              );
-            } else {
-              props.setCheckedItems((prev) => [...prev, props.item]);
-            }
+            toggleChecked();
           }}
           className={css.checklistCheckbox}
           aria-label="Mark instruction as completed"
         />
       )}
-      <span className={checked ? css.checked : ""}>{decode(props.item)}</span>
+      <span
+        className={checked ? css.checked : ""}
+        onClick={() => {
+          toggleChecked();
+        }}
+      >
+        {decode(props.item)}
+      </span>
     </li>
   );
 }
