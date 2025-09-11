@@ -4,3 +4,44 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.main {}
+
+.main .links {}
+
+.main .links h3 {
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.main .links ul {
+  /* spacing */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.main .links li.linkItem {
+  /* position */
+  position: relative;
+}
+
+.main .links li.linkItem button {
+  /* position */
+  position: absolute;
+  inset: 0.4rem;
+  top: auto;
+  left: auto;
+
+  /* sizing */
+  width: fit-content;
+  grid-template-columns: auto;
+
+  /* styling */
+  border-radius: 0.25rem;
+}

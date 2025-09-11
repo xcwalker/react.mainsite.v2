@@ -6,6 +6,7 @@ import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealti
 import { useEffect, useState } from "react";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import toTitleCase from "../../functions/toTitleCase";
+import { isValidHttpUrl } from "../newTab/Index";
 
 export default function Sidebar(props: { user: UserType; id: string }) {
   const currentUser = useAuth();
@@ -39,7 +40,12 @@ export default function Sidebar(props: { user: UserType; id: string }) {
 
   return (
     <div className={css.sidebar}>
-      <div className={css.user} style={{color: props.user.images.color ? props.user.images.color : undefined}}>
+      <div
+        className={css.user}
+        style={{
+          color: props.user.images.color ? props.user.images.color : undefined,
+        }}
+      >
         {props.user.images.background && (
           <>
             {props.user.images.backgroundType === "color" && (
@@ -120,15 +126,12 @@ export default function Sidebar(props: { user: UserType; id: string }) {
           </span>
         </div>
       </div>
-      <ul className={css.links}>
-        {props.user.links &&
-          props.user.links.length > 0 &&
-          props.user.links.map((item, index) => {
-            // const matches = item.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i);
-            // const domain = matches && matches[1];
-            // console.log(domain);
-
-            const url = new URL(item);
+      {props.user.links && props.user.links.length > 0 && (
+        <ul className={css.links}>
+          {props.user.links.map((item, index) => {
+            const url = isValidHttpUrl(item)
+              ? new URL(item)
+              : new URL("https://invalidurl.com");
             const hostname = url.hostname.replace(/^www\./, "");
 
             return (
@@ -159,10 +162,11 @@ export default function Sidebar(props: { user: UserType; id: string }) {
               </Button>
             );
           })}
-        {props.user.links && props.user.links.length % 2 != 0 && (
-          <div className={css.innerCorner} />
-        )}
-      </ul>
+          {props.user.links && props.user.links.length % 2 != 0 && (
+            <div className={css.innerCorner} />
+          )}
+        </ul>
+      )}
       {currentUserData?.info.role &&
         currentUserData?.info.role !== "user" &&
         currentUserData?.info.role !== "unverified" && (

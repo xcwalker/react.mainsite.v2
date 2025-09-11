@@ -67,7 +67,59 @@ export default function UserEdit(props: {
             userData={userData}
             userID={uuid ? uuid : currentUser?.uid || ""} // Use uuid or current user's uid
           />
-          <main></main>
+          <main className={css.main}>
+            {/* links */}
+            <div className={css.links}>
+              <h3>Links</h3>
+              <ul>
+                {userData.links.map((item, index) => {
+                  return (
+                    <li key={index} className={css.linkItem}>
+                      <Input
+                        type="url"
+                        value={item}
+                        onChange={(e) => {
+                          const updatedUserData: UserType = { ...userData };
+                          updatedUserData.links[index] = e.target.value;
+                          setUserData(updatedUserData);
+                        }}
+                        id={"link-" + index}
+                        label={"Link " + (index + 1)}
+                        placeholder="https://example.com"
+                      />
+                      <Button
+                        style="danger"
+                        icon={{ gficon: "delete" }}
+                        title="Delete Link"
+                        onClick={() => {
+                          const updatedUserData: UserType = { ...userData };
+                          updatedUserData.links.splice(index, 1);
+                          setUserData(updatedUserData);
+                        }}
+                      >
+                        <></>
+                      </Button>
+                    </li>
+                  );
+                })}
+                <Button
+                  style="secondary"
+                  icon={{ gficon: "add" }}
+                  title="Add Link"
+                  onClick={() => {
+                    const updatedUserData: UserType = { ...userData };
+                    if (!updatedUserData.links) {
+                      updatedUserData.links = [];
+                    }
+                    updatedUserData.links.push("");
+                    setUserData(updatedUserData);
+                  }}
+                >
+                  Add Link
+                </Button>
+              </ul>
+            </div>
+          </main>
         </SideBySide>
       )}
       {error && (
