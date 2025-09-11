@@ -9,7 +9,7 @@ export default function ListItem(props: {
 }) {
   const date = new Date(props.date);
   return (
-    <li className={css.listItem}>
+    <li className={css.listItem + " listItem"}>
       <Link to={props.href}>
         <div className={css.info}>
           <span className={css.title}>{props.title}</span>

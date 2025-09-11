@@ -198,3 +198,7 @@
   flex-direction: column;
   gap: 0;
 }
+
+.carousel:global(.view-list):has(a:hover) a:not(:hover):not(:focus-visible) {
+  color: var(--secondary);
+}
