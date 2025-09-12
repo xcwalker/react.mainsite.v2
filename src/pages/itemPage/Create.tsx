@@ -19,6 +19,8 @@ import SideBySide from "../../components/SideBySide";
 import ReactMde from "react-mde";
 import Markdown from "react-markdown";
 import "../../styles/components/markdownEditor.css";
+import Input from "../../components/Input";
+import toast from "react-hot-toast";
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
@@ -112,6 +114,7 @@ function Sidebar(props: {
           setData={props.setData}
           title="Thumbnail url"
           className={css.thumbnailURL}
+          type="url"
         />
       </div>
       {/* image */}
@@ -123,6 +126,7 @@ function Sidebar(props: {
         setData={props.setData}
         title="Title"
         className={css.title}
+        required
       />
       <TextInput
         value={props.data.data.subTitle}
@@ -132,6 +136,7 @@ function Sidebar(props: {
         setData={props.setData}
         title="SubTitle"
         className={css.subTitle}
+        required
       />
       <div className={css.collection}>
         <TextInput
@@ -223,6 +228,7 @@ function Sidebar(props: {
             setData={props.setData}
             title="Steam Workshop URL"
             className={css.workshop}
+            type="url"
           />
         </div>
       )}
@@ -235,6 +241,7 @@ function Sidebar(props: {
           setData={props.setData}
           title="Youtube"
           className={css.youtube}
+          type="url"
         />
       )}
 
@@ -250,6 +257,7 @@ function Sidebar(props: {
               title="Serves"
               className={css.serves}
               subValueName="serves"
+              required
             />
             <TextInput
               value={props.data.data.information.prepTime}
@@ -260,6 +268,7 @@ function Sidebar(props: {
               title="Prep Time"
               className={css.prepTime}
               subValueName="prepTime"
+              required
             />
             <TextInput
               value={props.data.data.information.cookTime}
@@ -270,6 +279,7 @@ function Sidebar(props: {
               title="Cook Time"
               className={css.cookTime}
               subValueName="cookTime"
+              required
             />
           </div>
 
@@ -289,6 +299,42 @@ function Sidebar(props: {
       {currentUser && currentUser !== null && (
         <Button
           onClick={() => {
+            // check if item have required fields filled
+            if (props.data.data.title === "") {
+              toast.error("Title is required");
+              return;
+            } 
+            if (props.data.data.description === "") {
+              toast.error("Description is required");
+              return;
+            }
+            if (props.itemType === "recipes") {
+              if (props.data.data.ingredients.length === 0) {
+                toast.error("At least one ingredient is required");
+                return;
+              }
+              if (
+                props.data.data.instructions.cook.length === 0 &&
+                props.data.data.instructions.prep &&
+                props.data.data.instructions.prep.length === 0
+              ) {
+                toast.error("At least one instruction is required");
+                return;
+              }
+              if (props.data.data.information.cookTime === "") {
+                toast.error("Cook time is required");
+                return;
+              }
+              if (props.data.data.information.prepTime === "") {
+                toast.error("Prep time is required");
+                return;
+              }
+              if (props.data.data.information.serves === "") {
+                toast.error("Serves is required");
+                return;
+              }
+            }
+
             if (props.slug) {
               // update existing item
               firebaseSetData(props.itemType, props.slug, {
@@ -625,16 +671,18 @@ function TextInput(props: {
   setData: React.Dispatch<React.SetStateAction<CombinedItemProps>>;
   data?: CombinedItemProps;
   subValueName?: string;
-
+  type?: "number" | "text" | "email" | "password" | "tel" | "url";
+  required?: boolean;
   title: string;
   placeholder: string;
   className: string;
 }) {
   return (
     <div className={css.textInput}>
-      <input
-        type="text"
+      <Input
+        type={props.type ? props.type : "text"}
         value={props.value}
+        id={props.valueName.toString()}
         onChange={(e) => {
           props.setData((prev) => {
             const newValue = { ...prev };
@@ -652,9 +700,9 @@ function TextInput(props: {
             return newValue;
           });
         }}
-        title={props.title}
+        label={props.title}
         placeholder={props.placeholder}
-        className={props.className}
+        required={props.required}
       />
     </div>
   );

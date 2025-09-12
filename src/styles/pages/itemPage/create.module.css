@@ -19,23 +19,6 @@
   height: fit-content;
 }
 
-.create .textInput input {
-  /* sizing */
-  width: 100%;
-  padding: 0.25rem 0.5rem;
-
-  /* styling */
-  border-radius: 0.25rem;
-  border: 1px solid var(--primary);
-  background-color: transparent;
-  color: var(--text);
-
-  /* text */
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
 .create .textInput input:focus-visible {
   border-color: var(--text);
   outline: none;
@@ -178,10 +161,7 @@
   gap: 0.25rem;
 }
 
-.create .sidebar .thumbnailContainer,
-.create .sidebar .collection,
 .create .sidebar .tags,
-.create .sidebar .information,
 .create .sidebar .links,
 .create .sidebar .repoInfo,
 .create .main .ingredients,
@@ -198,10 +178,30 @@
 
   /* styling */
   border-radius: 0.25rem;
-  border: 1px solid var(--secondary);
+  border: 1px solid var(--primary);
 
   &:focus-within {
     border-color: var(--text);
+  }
+}
+
+.create .sidebar .thumbnailContainer,
+.create .sidebar .collection,
+.create .sidebar .information {
+  /* sizing */
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  border-radius: 0.25rem;
+  background: var(--primary);
+
+  &:focus-within {
+    background: var(--secondary);
   }
 }
 
