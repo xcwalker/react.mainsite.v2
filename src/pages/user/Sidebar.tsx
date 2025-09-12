@@ -143,16 +143,19 @@ export default function Sidebar(props: { user: UserType; id: string }) {
                 className={css.linkButton}
                 icon={{
                   inline: (
-                    <img
-                      src={
-                        // old gstatic implementation
-                        // "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-                        // item +
-                        // "&size=128"
-                        "https://icon.horse/icon/" + hostname
-                      }
-                      alt=""
-                    />
+                    <div className={css.linkIcon}>
+                      <div className={css.background} />
+                      <img
+                        src={
+                          // old gstatic implementation
+                          // "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
+                          // item +
+                          // "&size=128"
+                          "https://icon.horse/icon/" + hostname
+                        }
+                        alt=""
+                      />
+                    </div>
                   ),
                 }}
               >
