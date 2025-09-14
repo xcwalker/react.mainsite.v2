@@ -348,19 +348,21 @@ function Sidebar(props: {
                     created: props.data.metaData.date.created,
                     modified: new Date().toJSON(),
                   },
-                  collection: props.admin
-                    ? props.data.metaData.collection.startsWith(
-                        props.data.metaData.authorID + "-"
-                      )
+                  collection: props.data.metaData.collection.length === 0 ? "" : (
+                    props.admin
+                      ? props.data.metaData.collection.startsWith(
+                          props.data.metaData.authorID + "-"
+                        )
+                        ? props.data.metaData.collection
+                        : props.data.metaData.authorID +
+                          "-" +
+                          props.data.metaData.collection
+                      : props.data.metaData.collection.startsWith(
+                          currentUser.uid + "-"
+                        )
                       ? props.data.metaData.collection
-                      : props.data.metaData.authorID +
-                        "-" +
-                        props.data.metaData.collection
-                    : props.data.metaData.collection.startsWith(
-                        currentUser.uid + "-"
-                      )
-                    ? props.data.metaData.collection
-                    : currentUser.uid + "-" + props.data.metaData.collection,
+                      : currentUser.uid + "-" + props.data.metaData.collection
+                  ),
                 },
               }).then((res) => {
                 console.log(res);

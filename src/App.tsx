@@ -35,6 +35,7 @@ import VehiclePage from "./pages/vehiclePage/Index";
 import { FindVehiclePage } from "./pages/vehiclePage/Find";
 import UserEdit from "./pages/user/UserEdit";
 import { NewTabLinks } from "./types";
+import OverlayCreate from "./pages/overlay/Create";
 
 export default function App() {
   const currentUser = useAuth();
@@ -285,6 +286,65 @@ export default function App() {
               </Route>
             </Route>
 
+            {/* recipes */}
+            <Route path="overlay">
+              <Route
+                index
+                element={
+                  // <ViewAllPage
+                  //   itemType="recipes"
+                  //   title="All Recipes"
+                  //   hasThumbnail={true}
+                  // />
+                  <></>
+                }
+              />
+              <Route
+                path="create"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <OverlayCreate />
+                    </RoleProtect>
+                  </Protect>
+                }
+              />
+              {/* <Route path=":slug">
+                <Route index element={<ItemPage itemType="recipes" />} />
+                <Route
+                  path="edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="recipes" />
+                    </RoleProtect>
+                  }
+                />
+                <Route
+                  path="admin-edit"
+                  element={
+                    <RoleProtect
+                      redirect={ErrorPage({
+                        code: 403,
+                        error: "Access Denied",
+                      })}
+                    >
+                      <ItemEdit itemType="recipes" admin />
+                    </RoleProtect>
+                  }
+                />
+              </Route> */}
+            </Route>
+
             {/* vehicles */}
             <Route path="vehicles">
               <Route index element={<FindVehiclePage />} />
@@ -529,7 +589,7 @@ function ScrollToTop() {
 
 export const title = "xcwalker";
 export const separator = "|";
-export const shortURL = "xcw.one";
+export const shortURL = import.meta.env.VITE_SHORT_URL || "xcw.one";
 
 export const RadioAtom = atomWithStorage("radioSettings", {
   volume: 50,

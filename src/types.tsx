@@ -309,7 +309,8 @@ export const userSetup: UserType = {
   },
 };
 
-type Overlay_PositionType =
+
+export type Overlay_PositionType =
   | "top left"
   | "top right"
   | "top center"
@@ -319,20 +320,65 @@ type Overlay_PositionType =
   | "center left"
   | "center right"
   | "center";
-type Overlay_DirectionType =
+
+  export const OverlayPositions: Overlay_PositionType[] = [
+    "top left",
+    "top center",
+    "top right",
+    "center left",
+    "center",
+    "center right",
+    "bottom left",
+    "bottom center",
+    "bottom right",
+  ];
+
+export type Overlay_PositionType_WithHeader =
+  | Overlay_PositionType
+  | "main header"
+  | "sub header";
+
+export type Overlay_DirectionType =
   | "row"
   | "column"
   | "row-reverse"
   | "column-reverse";
 
-export type OverlayType = {
+  export const OverlayDirections: Overlay_DirectionType[] = [
+    "row",
+    "column",
+    "row-reverse",
+    "column-reverse",
+  ];
+
+export type Overlay_TransitionType =
+  | "fade"
+  | "slide"
+  | "zoom"
+  | "zoom directional"
+  | "zoom slide directional"
+  | "none";
+
+export const OverlayTransitions: Overlay_TransitionType[] = [
+  "fade",
+  "slide",
+  "zoom",
+  "zoom directional",
+  "zoom slide directional",
+  "none",
+];
+
+export type overlayType = {
   data: {
     title: string;
     style: number;
     colorScheme: "light" | "dark" | "custom";
     customColor?: string; // Hex color code for custom color scheme
-    logo?: string; // URL or path to a logo image
-    logoPosition: Overlay_PositionType | "main header" | "sub header";
+    logo: {
+      src: string; // URL or path to a logo image
+      position: Overlay_PositionType;
+      priority: number; // 1 (highest) to 5 (lowest)
+    };
     socials: {
       items: {
         handle: string;
@@ -340,22 +386,41 @@ export type OverlayType = {
       }[];
       position: Overlay_PositionType;
       direction: Overlay_DirectionType;
+      priority: number; // 1 (highest) to 5 (lowest)
+    };
+    tags: {
+      items: (
+        | {
+            name: string;
+            text: string;
+          }
+        | string
+      )[];
+      position: Overlay_PositionType | "header";
+      direction: Overlay_DirectionType;
+      priority: number; // 1 (highest) to 5 (lowest)
     };
     header: {
       main: string;
       sub: string;
       position: Overlay_PositionType;
       direction: Overlay_DirectionType;
+      priority: number; // 1 (highest) to 5 (lowest)
     };
     radio: {
       visibility: boolean;
       style: string;
       position: Overlay_PositionType;
-      station: "SR" | "SR Rock" | "SR Dance" | "SR Xmas";
+      station: Overlay_StationType;
       duration: number; // in seconds | -1 for infinite
       durationBar: boolean; // whether to show a duration bar
       showDJ: boolean; // whether to show the DJ name
       showStation: boolean; // whether to show the station name
+      animation: {
+        type: Overlay_TransitionType; // animation type for the radio element
+        duration: number; // duration of the animation in milliseconds
+      };
+      priority: number; // 1 (highest) to 5 (lowest)
     };
   };
   metaData: {
@@ -366,4 +431,67 @@ export type OverlayType = {
     thumbnail?: string;
     authorID: string;
   };
+};
+
+export const OverlayStations = [
+  "SR",
+  "SR Rock",
+  "SR Dance",
+  "SR Xmas",
+];
+
+export type Overlay_StationType = "SR" | "SR Rock" | "SR Dance" | "SR Xmas";
+
+export const OverlayDefault: overlayType = {
+  data: {
+    title: "",
+    style: 1,
+    colorScheme: "light",
+    logo: {
+      src: "",
+      position: "top left",
+      priority: 3,
+    },
+    socials: {
+      items: [],
+      position: "bottom left",
+      direction: "row",
+      priority: 3,
+    },
+    tags: {
+      items: [],
+      position: "top right",
+      direction: "row",
+      priority: 3,
+    },
+    header: {
+      main: "",
+      sub: "",
+      position: "top center",
+      direction: "column",
+      priority: 3,
+    },
+    radio: {
+      visibility: false,
+      style: "style-1",
+      position: "bottom right",
+      station: "SR",
+      duration: -1,
+      durationBar: true,
+      showDJ: true,
+      showStation: true,
+      animation: {
+        type: "slide",
+        duration: 500,
+      },
+      priority: 3,
+    },
+  },
+  metaData: {
+    date: {
+      created: new Date().toJSON(),
+      modified: new Date().toJSON(),
+    },
+    authorID: "",
+  },
 };

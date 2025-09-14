@@ -20,7 +20,7 @@ export default function Button(props: {
   };
   external?: boolean;
   externalClassName?: string;
-  style?: "primary" | "secondary" | "danger" | "success";
+  style?: "primary" | "secondary" | "danger" | "success" | "remove";
   pageNavigation?: boolean;
   // pageNavigation is used to determine if the button is used for page navigation with # links
   hidden?: "siteNavigation" | "pageNavigation";

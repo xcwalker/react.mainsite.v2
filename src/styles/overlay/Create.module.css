@@ -1,0 +1,770 @@
+.sidebar {
+  /* position */
+  position: sticky;
+  top: 1rem;
+
+  /* sizing */
+  height: fit-content;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.main {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+iframe.preview {
+  border: none;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 1rem;
+  overflow: clip;
+}
+
+/*** InputGroup ***/
+.inputGroup {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* sizing */
+  padding: 0.25rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  border: 0.125rem solid var(--primary);
+
+  & > .inputGroup {
+    border: none;
+    background-color: var(--secondary);
+  }
+}
+
+.inputGroup:global(.direction-row) {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.inputGroup:global(.direction-column) {
+  flex-direction: column;
+}
+
+/*** Toggle Input ***/
+.stationSelect {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: fit-content;
+  flex-grow: 1;
+  padding: 0.125rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--primary);
+}
+
+.stationSelect > label {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+}
+
+.stationSelect .select {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  min-height: fit-content;
+  padding: 0.5rem 1rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--background);
+  cursor: pointer;
+}
+
+.stationSelect .select select {
+  /* A reset of styles, including removing the default dropdown arrow */
+  appearance: none;
+  /* Additional resets for further consistency */
+  /* sizing */
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+
+  /* text */
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+
+  /* styling */
+  background-color: transparent;
+  border: none;
+  cursor: inherit;
+  color: inherit;
+}
+
+.stationSelect .select .icon {
+  /* position */
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+
+  /* pointer events */
+  pointer-events: none;
+
+  /* text */
+  font-size: 1.5rem;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text);
+}
+
+/*** Toggle Input ***/
+.toggleInput {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: fit-content;
+  flex-grow: 1;
+  padding: 0.125rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--primary);
+}
+
+.toggleInput > label {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+}
+
+.toggleInput .toggle {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  min-height: fit-content;
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--background);
+}
+
+.toggleInput .toggle input {
+  /* hiding */
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toggleInput .toggle label {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+}
+
+/*** Tags Input ***/
+.tagsInput {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--primary);
+}
+
+.tagsInput > label {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+}
+
+.tagsInput .tags {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  min-height: fit-content;
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--background);
+}
+
+.tagsInput .tags .tag {
+  /* sizing */
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--secondary);
+}
+
+.tagsInput .tags .tag:focus-within {
+  background: var(--accent);
+}
+
+.tagsInput .tags .tag .removeButton {
+  /* sizing */
+  grid-template-columns: 1fr;
+  width: fit-content;
+  aspect-ratio: 1;
+  text-align: center;
+}
+
+.tagsInput .tags .addTag {
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.25rem;
+}
+
+/*** Socials Input ***/
+.socialsInput {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--primary);
+}
+
+.socialsInput > label {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+}
+
+.socialsInput .socials {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  min-height: fit-content;
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--background);
+}
+
+.socialsInput .socials .social {
+  /* sizing */
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--secondary);
+}
+
+.socialsInput .socials .social:focus-within {
+  background: var(--accent);
+}
+
+.socialsInput .socials .social .removeButton {
+  /* sizing */
+  grid-template-columns: 1fr;
+  width: fit-content;
+  aspect-ratio: 1;
+  text-align: center;
+}
+
+/*** Priority Input ***/
+.priorityInput {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: fit-content;
+  min-width: 15rem;
+  padding: 0.125rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--primary);
+}
+
+.priorityInput > label {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+}
+
+.priorityInput .priority {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  min-height: fit-content;
+  padding: 0.25rem;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 0.25rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--background);
+}
+
+.priorityInput .priority input[type="number"] {
+  /* sizing */
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  grid-row: span 2;
+
+  /* text */
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+
+  /* styling */
+  border-radius: 0.25rem;
+  background: transparent;
+  border: 0.125rem solid transparent;
+  color: var(--text);
+  transition: border-color 0.2s ease-in-out;
+  -moz-appearance: textfield;
+}
+
+.priorityInput .priority input[type="number"]::-webkit-outer-spin-button,
+.priorityInput .priority input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.priorityInput .priority input[type="number"]:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.priorityInput .priority button {
+  /* sizing */
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  /* text */
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1;
+
+  /* styling */
+  border-radius: 0.25rem;
+  background: transparent;
+  cursor: pointer;
+  border: 0.125rem solid var(--primary);
+  color: var(--text);
+  transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out;
+}
+
+.priorityInput .priority button:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+/*** Direction Input ***/
+.directionInput {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: fit-content;
+  padding: 0.125rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--primary);
+}
+
+.directionInput > label {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+}
+
+.directionInput .directions {
+  /* sizing */
+  width: 100%;
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--background);
+}
+
+.directionInput .directions input {
+  /* hiding */
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.directionInput .directions .direction {
+  /* sizing */
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+
+  /* text */
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+
+  /* styling */
+  border-radius: 0.25rem;
+  background: transparent;
+  cursor: pointer;
+  border: 0.125rem solid var(--primary);
+  transition: background 0.2s ease-in-out;
+}
+
+.directionInput .directions .direction:hover {
+  border-color: var(--accent);
+}
+
+.directionInput .directions .direction:global(.checked-true) {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/*** Position Input ***/
+.positionInput {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: fit-content;
+  min-width: 15rem;
+  padding: 0.125rem;
+  flex-grow: 1;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--primary);
+}
+
+.positionInput > label {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+}
+
+.positionInput .positions {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  padding: 0.25rem;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0.25rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--background);
+}
+
+.positionInput .positions input {
+  /* hiding */
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.positionInput .positions .position {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
+  border-radius: 0.25rem;
+  background: transparent;
+  cursor: pointer;
+  border: 0.125rem solid var(--primary);
+  transition: background 0.2s ease-in-out;
+}
+
+.positionInput .positions .position:hover {
+  border-color: var(--accent);
+}
+
+.positionInput .positions .position:global(.checked-true) {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* positioning all buttons to the outer edge */
+.positionInput .positions > .position:nth-child(1) {
+  justify-self: start;
+  align-self: start;
+}
+
+.positionInput .positions > .position:nth-child(2) {
+  justify-self: center;
+  align-self: start;
+}
+
+.positionInput .positions > .position:nth-child(3) {
+  justify-self: end;
+  align-self: start;
+}
+
+.positionInput .positions > .position:nth-child(4) {
+  justify-self: start;
+  align-self: center;
+}
+
+.positionInput .positions > .position:nth-child(5) {
+  justify-self: center;
+  align-self: center;
+}
+
+.positionInput .positions > .position:nth-child(6) {
+  justify-self: end;
+  align-self: center;
+}
+
+.positionInput .positions > .position:nth-child(7) {
+  justify-self: start;
+  align-self: end;
+}
+
+.positionInput .positions > .position:nth-child(8) {
+  justify-self: center;
+  align-self: end;
+}
+
+.positionInput .positions > .position:nth-child(9) {
+  justify-self: end;
+  align-self: end;
+}

@@ -87,6 +87,20 @@
   color: var(--text);
 }
 
+.button.remove {
+  /* styling */
+  background: darkred;
+  color: var(--text);
+}
+
+.button.remove:hover {
+  /* styling */
+  outline: 0.125rem solid rgb(238, 0, 0);
+  outline-offset: -0.125rem;
+  background: rgb(62, 0, 0);
+  color: var(--text);
+}
+
 .button.success {
   /* styling */
   background: var(--form-color-valid);
