@@ -21,6 +21,8 @@ import Button from "../../components/Button";
 import GFIcon from "../../components/GFIcon";
 import firebaseCreateData from "../../functions/firebase/storage/createData";
 import firebaseSetData from "../../functions/firebase/storage/setData";
+import { Preview } from "./Preview";
+import { useAuth } from "../../functions/firebase/authentication/useAuth";
 
 export default function OverlayCreate(props: { id?: string }) {
   const params = useParams();
@@ -41,8 +43,10 @@ export default function OverlayCreate(props: { id?: string }) {
       });
     } else if (params.id) {
       firebaseGetData("overlays", params.id).then((data) => {
+        console.log(data);
         if (data) {
           setOverlay(data as overlayType);
+          setLoading(false);
           setError(false);
         } else {
           setError(true);
@@ -60,9 +64,9 @@ export default function OverlayCreate(props: { id?: string }) {
     };
   }, [props.id, params.id]);
 
-  if (loading) return <div>Loading...</div>;
-
   if (error) return <div>Error loading overlay data.</div>;
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <Section id="OverlayCreate">
@@ -92,10 +96,11 @@ function Sidebar(props: {
   id?: string;
 }) {
   const navigate = useNavigate();
+  const currentUser = useAuth();
 
   return (
     <div className={css.sidebar}>
-      <Preview overlay={props.overlay} />
+      <Preview overlay={props.overlay} className={css.preview} />
       <Input
         id="title"
         label="title"
@@ -128,7 +133,13 @@ function Sidebar(props: {
         onClick={() => {
           props.setLoading(true);
           if (!props.id) {
-            firebaseCreateData("overlays", props.overlay).then((id) => {
+            firebaseCreateData("overlays", {
+              ...props.overlay,
+              metaData: {
+                ...props.overlay.metaData,
+                authorID: currentUser?.uid,
+              },
+            }).then((id) => {
               if (id) {
                 navigate(`/overlay/${id}`);
                 props.setLoading(false);
@@ -150,9 +161,9 @@ function Sidebar(props: {
         }}
         style="primary"
         title="Publish Overlay"
-        icon={{ gficon: "publish" }}
+        icon={{ gficon: props.id ? "save" : "publish" }}
       >
-        Publish
+        {props.id ? "Update" : "Publish"}
       </Button>
     </div>
   );
@@ -670,32 +681,6 @@ function Main(props: {
         </InputGroup>
       </InputGroup>
     </div>
-  );
-}
-
-function Preview(props: { overlay: overlayType }) {
-  useEffect(() => {
-    // This is to force the iframe to reload when the overlay changes
-    const iframe = document.getElementById(
-      "overlay-preview"
-    ) as HTMLIFrameElement;
-    if (iframe) {
-      iframe.src =
-        "https://overlay.xcwalker.dev/preview?json=" +
-        JSON.stringify(props.overlay);
-      console.log(iframe.src);
-    }
-  }, [props.overlay]);
-
-  return (
-    <iframe
-      src={
-        "https://overlay.xcwalker.dev/preview?json=" +
-        JSON.stringify(props.overlay)
-      }
-      className={css.preview}
-      id="overlay-preview"
-    />
   );
 }
 

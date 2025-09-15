@@ -36,6 +36,7 @@ import { FindVehiclePage } from "./pages/vehiclePage/Find";
 import UserEdit from "./pages/user/UserEdit";
 import { NewTabLinks } from "./types";
 import OverlayCreate from "./pages/overlay/Create";
+import OverlayIndex from "./pages/overlay/Index";
 
 export default function App() {
   const currentUser = useAuth();
@@ -314,8 +315,8 @@ export default function App() {
                   </Protect>
                 }
               />
-              {/* <Route path=":slug">
-                <Route index element={<ItemPage itemType="recipes" />} />
+              <Route path=":id">
+                <Route index element={<OverlayIndex />} />
                 <Route
                   path="edit"
                   element={
@@ -325,24 +326,11 @@ export default function App() {
                         error: "Access Denied",
                       })}
                     >
-                      <ItemEdit itemType="recipes" />
+                      <OverlayCreate />
                     </RoleProtect>
                   }
                 />
-                <Route
-                  path="admin-edit"
-                  element={
-                    <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
-                    >
-                      <ItemEdit itemType="recipes" admin />
-                    </RoleProtect>
-                  }
-                />
-              </Route> */}
+              </Route>
             </Route>
 
             {/* vehicles */}

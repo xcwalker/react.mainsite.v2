@@ -55,9 +55,6 @@
 }
 
 .details {
-  /* sizing */
-  
-
   /* flex */
   display: flex;
   flex-direction: column;
@@ -83,9 +80,6 @@
 }
 
 .dates {
-  /* sizing */
-  
-
   /* flex */
   display: flex;
   flex-direction: column;

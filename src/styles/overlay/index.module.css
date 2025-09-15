@@ -1,0 +1,74 @@
+.preview {
+  border: none;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 1rem;
+  overflow: clip;
+}
+
+.sidebar {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+}
+
+.details {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sidebar h3 {
+  margin: 0;
+
+  /* text */
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.sidebar h4 {
+  margin: 0;
+
+  /* text */
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.dates {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dates .created {
+  /* text */
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.dates .modified {
+  /* text */
+  font-size: 0.75rem;
+  line-height: 1;
+  font-weight: 500;
+  color: var(--text-400);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.extraButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
