@@ -3,6 +3,7 @@ import {
   Overlay_DirectionType,
   Overlay_PositionType,
   Overlay_StationType,
+  Overlay_TransitionType,
   OverlayDefault,
   OverlayDirections,
   OverlayPositions,
@@ -11,19 +12,21 @@ import {
   overlayType,
 } from "../../types";
 import firebaseGetData from "../../functions/firebase/storage/getData";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Section from "../../components/Section";
 import SideBySide from "../../components/SideBySide";
 import css from "../../styles/overlay/Create.module.css";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import GFIcon from "../../components/GFIcon";
+import firebaseCreateData from "../../functions/firebase/storage/createData";
+import firebaseSetData from "../../functions/firebase/storage/setData";
 
 export default function OverlayCreate(props: { id?: string }) {
   const params = useParams();
   const [overlay, setOverlay] = useState<overlayType>(OverlayDefault);
   const [loading, setLoading] = useState<boolean>(true);
-  const [errpr, setError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     if (props.id) {
@@ -59,12 +62,20 @@ export default function OverlayCreate(props: { id?: string }) {
 
   if (loading) return <div>Loading...</div>;
 
-  if (errpr) return <div>Error loading overlay data.</div>;
+  if (error) return <div>Error loading overlay data.</div>;
 
   return (
     <Section id="OverlayCreate">
       <SideBySide leftWidth="1fr">
-        <Sidebar overlay={overlay} setOverlay={setOverlay} />
+        <Sidebar
+          overlay={overlay}
+          setOverlay={setOverlay}
+          loading={loading}
+          setLoading={setLoading}
+          error={error}
+          setError={setError}
+          id={props.id || params.id}
+        />
         <Main overlay={overlay} setOverlay={setOverlay} />
       </SideBySide>
     </Section>
@@ -74,7 +85,14 @@ export default function OverlayCreate(props: { id?: string }) {
 function Sidebar(props: {
   overlay: overlayType;
   setOverlay: (overlay: overlayType) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  error: boolean;
+  setError: (error: boolean) => void;
+  id?: string;
 }) {
+  const navigate = useNavigate();
+
   return (
     <div className={css.sidebar}>
       <Preview overlay={props.overlay} />
@@ -98,12 +116,43 @@ function Sidebar(props: {
           JSON.stringify(props.overlay)
         }
         external
-        style="primary"
+        style="secondary"
         title="Open Preview In New Tab"
         target="newTab"
         icon={{ gficon: "preview" }}
       >
         Open Preview In New Tab
+      </Button>
+      {/* Publish Button */}
+      <Button
+        onClick={() => {
+          props.setLoading(true);
+          if (!props.id) {
+            firebaseCreateData("overlays", props.overlay).then((id) => {
+              if (id) {
+                navigate(`/overlay/${id}`);
+                props.setLoading(false);
+              } else {
+                props.setError(true);
+              }
+            });
+          } else {
+            firebaseSetData("overlays", props.id, props.overlay)
+              .then(() => {
+                navigate(`/overlay/${props.id}`);
+                props.setLoading(false);
+              })
+              .catch(() => {
+                props.setError(true);
+                props.setLoading(false);
+              });
+          }
+        }}
+        style="primary"
+        title="Publish Overlay"
+        icon={{ gficon: "publish" }}
+      >
+        Publish
       </Button>
     </div>
   );
@@ -474,11 +523,12 @@ function Main(props: {
                     duration: parseInt(e.target.value),
                   },
                 },
-              }});
-            }
-          }
+              },
+            });
+          }}
           value={props.overlay.data.radio.animation.type}
-          onChange={(e) => {
+          onChange={(value) => {
+            console.log(value);
             props.setOverlay({
               ...props.overlay,
               data: {
@@ -487,13 +537,57 @@ function Main(props: {
                   ...props.overlay.data.radio,
                   animation: {
                     ...props.overlay.data.radio.animation,
-                    type: e.target.value as typeof OverlayTransitions[number],
+                    type: value,
                   },
                 },
               },
             });
           }}
         />
+        <InputGroup direction="row">
+          <DurationInput
+            id="radio-duration"
+            label="radio duration (ms)"
+            min={-1}
+            max={5000}
+            step={5}
+            value={props.overlay.data.radio.duration}
+            onChange={(e) => {
+              props.setOverlay({
+                ...props.overlay,
+                data: {
+                  ...props.overlay.data,
+                  radio: {
+                    ...props.overlay.data.radio,
+                    duration: parseInt(e.target.value),
+                  },
+                },
+              });
+            }}
+          />
+          <ToggleInput
+            // durationBar
+            label="radio duration bar"
+            id="radio-duration-bar"
+            value={props.overlay.data.radio.durationBar}
+            onChange={(e) => {
+              props.setOverlay({
+                ...props.overlay,
+                data: {
+                  ...props.overlay.data,
+                  radio: {
+                    ...props.overlay.data.radio,
+                    durationBar: e.target.checked,
+                  },
+                },
+              });
+            }}
+            falseLabel="Hide Duration Bar"
+            trueLabel="Show Duration Bar"
+            falseIcon="visibility"
+            trueIcon="visibility_off"
+          />
+        </InputGroup>
         <InputGroup direction="row">
           <PositionInput
             label="radio position"
@@ -528,6 +622,50 @@ function Main(props: {
                 },
               });
             }}
+          />
+        </InputGroup>
+        <InputGroup direction="row">
+          <ToggleInput
+            label="radio show DJ"
+            id="radio-show-dj"
+            value={props.overlay.data.radio.showDJ}
+            onChange={(e) => {
+              props.setOverlay({
+                ...props.overlay,
+                data: {
+                  ...props.overlay.data,
+                  radio: {
+                    ...props.overlay.data.radio,
+                    showDJ: e.target.checked,
+                  },
+                },
+              });
+            }}
+            falseLabel="Hide DJ"
+            trueLabel="Show DJ"
+            falseIcon="visibility"
+            trueIcon="visibility_off"
+          />
+          <ToggleInput
+            label="radio show station"
+            id="radio-show-station"
+            value={props.overlay.data.radio.showStation}
+            onChange={(e) => {
+              props.setOverlay({
+                ...props.overlay,
+                data: {
+                  ...props.overlay.data,
+                  radio: {
+                    ...props.overlay.data.radio,
+                    showStation: e.target.checked,
+                  },
+                },
+              });
+            }}
+            falseLabel="Hide Station"
+            trueLabel="Show Station"
+            falseIcon="visibility"
+            trueIcon="visibility_off"
           />
         </InputGroup>
       </InputGroup>
@@ -949,10 +1087,11 @@ function AnimationInput(props: {
   id: string;
   label: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: Overlay_TransitionType) => void;
   duration: number;
   onDurationChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
+  const [dropDownOpen, setDropdownOpen] = useState(false);
   // OverlayTransitions
   // let value be one of OverlayTransitions
   // should include duration input
@@ -960,30 +1099,70 @@ function AnimationInput(props: {
     <div className={css.animationInput}>
       <label htmlFor={props.id}>{props.label}</label>
       <div className={css.animations}>
-        {/* map OverlayTransitions */}
-        {OverlayTransitions.map((transition) => (
-          <div key={transition} className={css.animation}>
-            <input
-              type="radio"
-              id={`${props.id}-${transition}`}
-              name={props.id}
-              value={transition}
-              checked={props.value === transition}
-              onChange={props.onChange}
-            />
-            <label htmlFor={`${props.id}-${transition}`}>{transition}</label>
+        <div className={css.animation}>
+          {/* map OverlayTransitions */}
+          <button
+            onClick={() => setDropdownOpen(true)}
+            onBlur={() => {
+              // only close if not hovering over the dropdown
+              if (!document.querySelector(`#${props.id}-dropdown:hover`)) {
+                setDropdownOpen(false);
+              }
+            }}
+            className={
+              css.selectedAnimation + ` ${dropDownOpen ? css.open : ""}`
+            }
+          >
+            <span>{props.value}</span>
+            <GFIcon className={css.icon}>
+              {dropDownOpen ? "arrow_drop_up" : "arrow_drop_down"}
+            </GFIcon>
+          </button>
+          <div
+            className={
+              css.animationDropdown + ` ${dropDownOpen ? "" : css.closed}`
+            }
+            id={`${props.id}-dropdown`}
+            onBlur={() => setDropdownOpen(false)}
+          >
+            {OverlayTransitions.map((transition) => (
+              <div
+                key={transition}
+                className={
+                  css.animation +
+                  ` ${props.value === transition ? css.selected : ""}`
+                }
+              >
+                <button
+                  id={`${props.id}-${transition}`}
+                  className={css.animationButton}
+                  title={transition}
+                  onClick={() => {
+                    props.onChange(transition);
+                    setDropdownOpen(false);
+                  }}
+                >
+                  {transition}
+                </button>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
         <div className={css.duration}>
-          <label htmlFor={`${props.id}-duration`}>duration (ms)</label>
           <input
-            type="number"
+            type="range"
             id={`${props.id}-duration`}
             name={`${props.id}-duration`}
             min={0}
+            max={500}
+            step={5}
             value={props.duration}
             onChange={props.onDurationChange}
           />
+          <div className={css.value}>
+            <span>{props.duration} ms</span>
+            <span>{(props.duration / 1000).toFixed(2)} s</span>
+          </div>
         </div>
       </div>
     </div>
@@ -994,6 +1173,9 @@ function DurationInput(props: {
   id: string;
   label: string;
   value: number;
+  min: number;
+  max: number;
+  step: number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
@@ -1001,13 +1183,26 @@ function DurationInput(props: {
       <label htmlFor={props.id}>{props.label}</label>
       <div className={css.duration}>
         <input
-          type="number"
+          type="range"
           id={props.id}
           name={props.label}
-          min={-1}
+          min={props.min}
+          max={props.max}
+          step={props.step}
           value={props.value}
           onChange={props.onChange}
         />
+        {props.value !== -1 && (
+          <div className={css.value}>
+            <span>{props.value} ms</span>
+            <span>{(props.value / 1000).toFixed(2)} s</span>
+          </div>
+        )}
+        {props.value === -1 && (
+          <div className={css.value}>
+            <span>Infinite</span>
+          </div>
+        )}
       </div>
     </div>
   );
