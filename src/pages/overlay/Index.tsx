@@ -122,7 +122,7 @@ export default function OverlayIndex() {
             </div>
           </div>
         </div>
-        <Preview overlay={overlay} className={css.preview} />
+        <Preview overlay={overlay} className={css.preview} size="large" />
       </SideBySide>
     </Section>
   );

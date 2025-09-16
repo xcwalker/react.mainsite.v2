@@ -100,7 +100,7 @@ function Sidebar(props: {
 
   return (
     <div className={css.sidebar}>
-      <Preview overlay={props.overlay} className={css.preview} />
+      <Preview overlay={props.overlay} className={css.preview} size="large" />
       <Input
         id="title"
         label="title"

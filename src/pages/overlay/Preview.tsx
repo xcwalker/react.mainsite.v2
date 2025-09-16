@@ -5,7 +5,7 @@ export function Preview(props: { overlay: overlayType; className: string; size?:
   useEffect(() => {
     // This is to force the iframe to reload when the overlay changes
     const iframe = document.getElementById(
-      "overlay-preview"
+      "overlay-preview-" + (props.overlay.data.title as string).replace(/\s+/g, "-").toLowerCase()
     ) as HTMLIFrameElement;
     if (iframe) {
       iframe.src =
@@ -22,7 +22,7 @@ export function Preview(props: { overlay: overlayType; className: string; size?:
         JSON.stringify(props.overlay)
       }
       className={props.className}
-      id="overlay-preview"
+      id={"overlay-preview-" + props.overlay.data.title.replace(/\s+/g, "-").toLowerCase()}
     />
   );
 }
