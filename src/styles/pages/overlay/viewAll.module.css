@@ -1,0 +1,63 @@
+.card {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  padding: 0;
+  flex-shrink: 0;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* styling */
+  border-radius: 1rem;
+  border: 0.25rem solid transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+.preview {
+  border: none;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 1rem;
+  overflow: clip;
+  pointer-events: none;
+}
+
+.card .details {
+  /* sizing */
+  padding-inline: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card h3 {
+  margin: 0;
+
+  /* text */
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.card h4 {
+  margin: 0;
+
+  /* text */
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+
+.card:hover .preview,
+.card:focus-visible .preview {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}

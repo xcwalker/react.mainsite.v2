@@ -15,7 +15,7 @@ import firebaseGetData from "../../functions/firebase/storage/getData";
 import { useNavigate, useParams } from "react-router-dom";
 import Section from "../../components/Section";
 import SideBySide from "../../components/SideBySide";
-import css from "../../styles/overlay/Create.module.css";
+import css from "../../styles/pages/overlay/Create.module.css";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import GFIcon from "../../components/GFIcon";
@@ -916,14 +916,10 @@ function TagsInput(props: {
                 placeholder="Tag Name"
                 type="text"
                 onChange={(e) => {
-                  const newValue = [...props.value];
-                  if (typeof newValue[index] === "string") {
-                    newValue[index] = { name: e.target.value, text: "" };
-                  } else {
+                  const newValue = [...props.value] as ({ name: string; text: string })[];
                     newValue[index] = {
                       ...newValue[index],
                       name: e.target.value,
-                    };
                   }
                   props.onChange({
                     target: { value: JSON.stringify(newValue) },
@@ -944,7 +940,7 @@ function TagsInput(props: {
                   newValue[index] = e.target.value;
                 } else {
                   newValue[index] = {
-                    ...newValue[index],
+                    ...newValue[index] as { name: string; text: string },
                     text: e.target.value,
                   };
                 }

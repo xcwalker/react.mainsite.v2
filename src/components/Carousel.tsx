@@ -16,7 +16,7 @@ export default function Carousel(props: {
   className: string;
   titleLink?: { text: string; href: string };
   defaultView: string;
-  showCreateButton?: ItemTypes;
+  showCreateButton?: ItemTypes | "overlay";
 }) {
   const carouselRef = useRef<HTMLElement>(null);
   const [scrolledDistance, setScrolledDistance] = useState(0);

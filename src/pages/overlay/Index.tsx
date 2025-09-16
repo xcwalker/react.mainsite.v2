@@ -3,7 +3,7 @@ import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtim
 import { overlayType } from "../../types";
 import { useParams } from "react-router";
 import Section from "../../components/Section";
-import css from "../../styles/overlay/index.module.css";
+import css from "../../styles/pages/overlay/index.module.css";
 import SideBySide from "../../components/SideBySide";
 import { Preview } from "./Preview";
 import SidebarUser from "../../components/SidebarUser";

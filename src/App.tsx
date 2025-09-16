@@ -37,6 +37,7 @@ import UserEdit from "./pages/user/UserEdit";
 import { NewTabLinks } from "./types";
 import OverlayCreate from "./pages/overlay/Create";
 import OverlayIndex from "./pages/overlay/Index";
+import { OverlayViewAll } from "./pages/overlay/ViewAll";
 
 export default function App() {
   const currentUser = useAuth();
@@ -289,17 +290,7 @@ export default function App() {
 
             {/* recipes */}
             <Route path="overlay">
-              <Route
-                index
-                element={
-                  // <ViewAllPage
-                  //   itemType="recipes"
-                  //   title="All Recipes"
-                  //   hasThumbnail={true}
-                  // />
-                  <></>
-                }
-              />
+              <Route index element={<OverlayViewAll />} />
               <Route
                 path="create"
                 element={
@@ -597,4 +588,7 @@ export const RadioAtom = atomWithStorage("radioSettings", {
   },
 });
 
-export const NewTabLinksAtom = atomWithStorage<NewTabLinks | undefined>("newTabLinks", undefined);
+export const NewTabLinksAtom = atomWithStorage<NewTabLinks | undefined>(
+  "newTabLinks",
+  undefined
+);

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { overlayType } from "../../types";
 
-export function Preview(props: { overlay: overlayType; className: string }) {
+export function Preview(props: { overlay: overlayType; className: string; size?: "small" | "large" }) {
   useEffect(() => {
     // This is to force the iframe to reload when the overlay changes
     const iframe = document.getElementById(
@@ -9,16 +9,16 @@ export function Preview(props: { overlay: overlayType; className: string }) {
     ) as HTMLIFrameElement;
     if (iframe) {
       iframe.src =
-        "https://overlay.xcwalker.dev/preview?json=" +
+        "https://overlay.xcwalker.dev/"+ (props.size ? props.size + "-preview" : "preview") +"?json=" +
         JSON.stringify(props.overlay);
       console.log(iframe.src);
     }
-  }, [props.overlay]);
+  }, [props.overlay, props.size]);
 
   return (
     <iframe
       src={
-        "https://overlay.xcwalker.dev/preview?json=" +
+        "https://overlay.xcwalker.dev/"+ (props.size ? props.size + "-preview" : "preview") +"?json=" +
         JSON.stringify(props.overlay)
       }
       className={props.className}
