@@ -139,9 +139,9 @@ function Sidebar(props: {
                 ...props.overlay.metaData,
                 authorID: currentUser?.uid,
               },
-            }).then((id) => {
-              if (id) {
-                navigate(`/overlay/${id}`);
+            }).then((docref) => {
+              if (docref?.id) {
+                navigate(`/overlay/${docref.id}`);
                 props.setLoading(false);
               } else {
                 props.setError(true);
