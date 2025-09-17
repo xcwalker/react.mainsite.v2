@@ -9,17 +9,19 @@ import { Preview } from "./Preview";
 import SidebarUser from "../../components/SidebarUser";
 import Button from "../../components/Button";
 import { toast } from "react-hot-toast";
+import LoadingPage from "../../components/Loading";
+import ErrorPage from "../../ErrorPage";
 
 export default function OverlayIndex() {
   const params = useParams();
-  const [overlay, setOverlay] = useState<overlayType | null>(null);
+  const [overlay, setOverlay] = useState<overlayType | undefined>(undefined);
   const [error, setError] = useState(false);
 
   const dateModified = new Date(
-    overlay !== null ? overlay.metaData.date.modified : 0
+    overlay !== undefined ? overlay.metaData.date.modified : 0
   );
   const dateCreated = new Date(
-    overlay !== null ? overlay.metaData.date.created : 0
+    overlay !== undefined ? overlay.metaData.date.created : 0
   );
   const dateOptions: Intl.DateTimeFormatOptions = {
     weekday: undefined,
@@ -45,11 +47,11 @@ export default function OverlayIndex() {
   }, [params.id]);
 
   if (error) {
-    return <div>Error loading overlay.</div>;
+    return <ErrorPage code={404} error="Overlay not found" />;
   }
 
-  if (!overlay) {
-    return <div>Loading...</div>;
+  if (overlay === undefined) {
+    return <LoadingPage />;
   }
 
   return (
