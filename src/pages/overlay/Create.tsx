@@ -79,7 +79,7 @@ export default function OverlayCreate(props: { id?: string }) {
     );
   }
 
-  if (currentUser.uid !== overlay.metaData.authorID) {
+  if (currentUser.uid !== overlay.metaData.authorID && (props.id || params.id)) {
     return (
       <ErrorPage
         code={403}
