@@ -60,6 +60,7 @@ const navItems = [
     href: "overlay",
     gficon: "layers",
     isBeta: true,
+    requireUser: true,
   },
   {
     title: "Profile",

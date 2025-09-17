@@ -290,7 +290,14 @@ export default function App() {
 
             {/* recipes */}
             <Route path="overlay">
-              <Route index element={<OverlayViewAll />} />
+              <Route
+                index
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <OverlayViewAll />
+                  </Protect>
+                }
+              />
               <Route
                 path="create"
                 element={
