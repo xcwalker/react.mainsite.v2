@@ -1,0 +1,5 @@
+.input {
+  flex-shrink: 1;
+  flex-basis: 175px;
+  flex-grow: 1;
+}

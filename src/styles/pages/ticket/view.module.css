@@ -1,0 +1,167 @@
+.unassigned {
+  /* sizing */
+  width: 100%;
+  padding: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* text */
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  color: var(--text-400);
+
+  /* styling */
+  border-radius: 0.5rem;
+
+  background: darkred;
+  color: white;
+  border: 0.125rem solid red;
+}
+
+.unassigned .unassignedText {
+  /* spacing */
+  padding-left: 0.5rem;
+}
+
+.content {
+  /* sizing */
+  height: 80vh;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end;
+}
+
+.messages {
+  /* sizing */
+  padding: 1rem;
+
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+
+  /* styling */
+  list-style: none;
+}
+
+.message {
+  /* sizing */
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.125rem;
+}
+
+.messageContent {
+  /* sizing */
+  max-width: min(75%, 40rem, 100%);
+  width: fit-content;
+  height: fit-content;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+
+  /* text */
+  color: var(--text);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  word-break: break-word;
+  white-space: pre-wrap;
+
+  /* styling */
+  background-color: var(--background-200);
+  border-radius: 0.25rem;
+  --_wider-radius: 0.5rem;
+  list-style: none;
+}
+
+.messageContent p {
+  margin: 0;
+}
+
+.messageDate {
+  /* text */
+  font-size: 0.75rem;
+  color: var(--text-400);
+}
+
+.message.ownMessage {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.message.ownMessage .messageContent {
+  background-color: var(--accent);
+}
+
+.message:not(.ownMessage) + .message:not(.ownMessage),
+.message.ownMessage + .message.ownMessage {
+  margin-top: -0.75rem;
+}
+
+.message:not(.ownMessage):has(+ .message:not(.ownMessage)) .messageDate,
+.message.ownMessage:has(+ .message.ownMessage) .messageDate {
+  display: none;
+}
+
+.message.nextDiffSender .messageContent {
+  border-bottom-left-radius: var(--_wider-radius);
+  border-bottom-right-radius: var(--_wider-radius);
+}
+
+.message.prevDiffSender .messageContent {
+  border-top-left-radius: var(--_wider-radius);
+  border-top-right-radius: var(--_wider-radius);
+}
+
+.messageInput {
+  /* position */
+  position: relative;
+}
+
+.messageInput textarea {
+  /* sizing */
+  width: 100%;
+  height: 6rem;
+  padding: 0.5rem 1rem;
+  min-height: 3rem;
+
+  /* text */
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+
+  /* styling */
+  color: var(--text);
+  background-color: var(--background-200);
+  border: none;
+  border-radius: 0.5rem;
+  resize: vertical;
+  outline: none;
+}
+
+.messageInput textarea::placeholder {
+  color: var(--text-400);
+}
+
+.messageInput .sendButton {
+  /* position */
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+
+  /* sizing */
+  width: fit-content;
+}

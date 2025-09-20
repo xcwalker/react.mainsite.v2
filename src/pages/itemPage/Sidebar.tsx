@@ -2,7 +2,7 @@ import { ItemType, ItemTypes, RecipeItemProps, UserType } from "../../types";
 import Button from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
-import SidebarUser from "../../components/SidebarUser";
+import SidebarUser from "../../components/Sidebar/SidebarUser";
 
 import css from "../../styles/pages/itemPage/sidebar.module.css";
 import cssRecipeContent from "../../styles/pages/itemPage/sidebarRecipeContent.module.css";
@@ -15,6 +15,9 @@ import { QRModal } from "../../components/QRModal";
 import firebaseDeleteData from "../../functions/firebase/storage/deleteData";
 import { Navigate } from "react-router-dom";
 import QRCode from "react-qr-code";
+import SidebarTitle from "../../components/Sidebar/SidebarTitle";
+import SidebarDates from "../../components/Sidebar/SidebarDates";
+import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
 
 export function ItemSidebar(props: {
   item: ItemType;
@@ -30,17 +33,6 @@ export function ItemSidebar(props: {
   const item = props.item;
   const dateModified = new Date(item.metaData.date.modified);
   const dateCreated = new Date(item.metaData.date.created);
-  const dateOptions: Intl.DateTimeFormatOptions = {
-    weekday: undefined,
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  const timeOptions: Intl.DateTimeFormatOptions = {
-    second: undefined,
-    minute: "numeric",
-    hour: "numeric",
-  };
   const [linkCopied, setLinkCopied] = useState(false);
   const [shopQRModal, setShopQRModal] = useState(false);
 
@@ -56,33 +48,14 @@ export function ItemSidebar(props: {
 
   return (
     <>
-      <div className={css.sidebar}>
+      <SidebarContainer>
         <Image
           src={props.item.metaData?.thumbnail}
           alt="Thumbnail"
           className={css.thumbnail}
         />
-        <div className={css.details}>
-          <h3>{item.data.title}</h3>
-          <h4>{item.data.subTitle}</h4>
-        </div>
-        <div className={css.dates}>
-          <div className={css.created}>
-            {dateCreated.toLocaleDateString(undefined, dateOptions)}
-          </div>
-          {item.metaData.date.created !== item.metaData.date.modified && (
-            <div className={css.modified}>
-              Last Modified:{" "}
-              {dateModified.toLocaleDateString(undefined, dateOptions) ===
-                dateCreated.toLocaleDateString(undefined, dateOptions) &&
-                dateModified.toLocaleTimeString(undefined, timeOptions)}
-              {dateModified.toLocaleDateString(undefined, dateOptions) !==
-                dateCreated.toLocaleDateString(undefined, dateOptions) &&
-                dateModified.toLocaleDateString(undefined, dateOptions)}
-            </div>
-          )}
-        </div>
-
+        <SidebarTitle title={item.data.title} subtitle={item.data.subTitle} />
+        <SidebarDates created={dateCreated} modified={dateModified} />
         <div className={css.tags}>
           <div className={css.collection}>
             <GFIcon className={css.icon}>category</GFIcon>
@@ -273,7 +246,7 @@ export function ItemSidebar(props: {
           fgColor="var(--text)"
           bgColor="var(--background-100)"
         />
-      </div>
+      </SidebarContainer>
       <QRModal
         close={() => {
           setShopQRModal(false);

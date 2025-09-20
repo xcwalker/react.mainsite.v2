@@ -1,0 +1,21 @@
+.dates {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dates .created {
+  /* text */
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.dates .modified {
+  /* text */
+  font-size: 0.75rem;
+  line-height: 1;
+  font-weight: 500;
+  color: var(--text-400);
+}

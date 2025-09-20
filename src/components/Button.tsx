@@ -34,6 +34,8 @@ export default function Button(props: {
   isBeta?: boolean;
   // isBeta is used to show a beta tag on the button
   betaTagClassName?: string;
+  centered?: boolean;
+  // centered is used to center the button
 }) {
   return (
     <>
@@ -47,7 +49,8 @@ export default function Button(props: {
             (props.icon ? " " + css.hasIcon : "") +
             (props.style ? ` ${css[props.style]}` : "") +
             (props.hidden === "siteNavigation" ? " " + css.siteHidden : "") +
-            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "")
+            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "") +
+            (props.centered ? " " + css.centered : "")
           }
           style={{ width: props.width ? props.width : "" }}
           tabIndex={props.tabIndex}
@@ -91,7 +94,8 @@ export default function Button(props: {
             (props.icon ? " " + css.hasIcon : "") +
             (props.style ? ` ${css[props.style]}` : "") +
             (props.hidden === "siteNavigation" ? " " + css.siteHidden : "") +
-            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "")
+            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "") +
+            (props.centered ? " " + css.centered : "")
           }
           style={{ width: props.width ? props.width : "" }}
           tabIndex={props.tabIndex}
@@ -141,7 +145,8 @@ export default function Button(props: {
             (props.icon ? " " + css.hasIcon : "") +
             (props.style ? ` ${css[props.style]}` : "") +
             (props.hidden === "siteNavigation" ? " " + css.siteHidden : "") +
-            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "")
+            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "") +
+            (props.centered ? " " + css.centered : "")
           }
           style={{ width: props.width ? props.width : "" }}
           tabIndex={props.tabIndex}
@@ -182,7 +187,8 @@ export default function Button(props: {
             (props.icon ? " " + css.hasIcon : "") +
             (props.style ? ` ${css[props.style]}` : "") +
             (props.hidden === "siteNavigation" ? " " + css.siteHidden : "") +
-            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "")
+            (props.hidden === "pageNavigation" ? " " + css.pageHidden : "") +
+            (props.centered ? " " + css.centered : "")
           }
           style={{ width: props.width ? props.width : "" }}
           onClick={props.onClick}

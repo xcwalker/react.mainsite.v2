@@ -91,6 +91,12 @@
   }
 }
 
+.input.textarea {
+  min-height: 6rem;
+  height: auto;
+  resize: vertical;
+}
+
 .inputContainer:has(.input:invalid) {
   background-color: darkred;
 }

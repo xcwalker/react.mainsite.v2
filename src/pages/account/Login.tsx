@@ -59,7 +59,7 @@ export default function LoginPage() {
             onSubmit={() => submit()}
             forgotPasswordHref="../forgot"
           />
-          <Button style="primary" type="submit" title="Login" width="14rem">
+          <Button style="primary" type="submit" title="Login" width="14rem" centered>
             Login
           </Button>
           <div className={css.divider}>

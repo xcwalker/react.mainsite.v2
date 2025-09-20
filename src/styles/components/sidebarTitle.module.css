@@ -1,0 +1,25 @@
+
+.details {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.details .title {
+  margin: 0;
+
+  /* text */
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.details .subtitle {
+  margin: 0;
+
+  /* text */
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+}

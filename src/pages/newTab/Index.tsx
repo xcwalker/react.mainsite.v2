@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Section from "../../components/Section";
-import SidebarUser from "../../components/SidebarUser";
+import SidebarUser from "../../components/Sidebar/SidebarUser";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 
 import css from "../../styles/pages/newTab.module.css";

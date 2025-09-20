@@ -3,7 +3,7 @@ import { UserType } from "../../types";
 import Section from "../../components/Section";
 import Carousel from "../../components/Carousel";
 import css from "../../styles/pages/user/viewAll.module.css";
-import SidebarUser from "../../components/SidebarUser";
+import SidebarUser from "../../components/Sidebar/SidebarUser";
 import ListItem from "../../components/ListItem";
 import FirebaseGetRealtimeUsersByLastOnline from "../../functions/firebase/storage/useRealtimeUsersByLastOnline";
 

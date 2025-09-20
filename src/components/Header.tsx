@@ -95,6 +95,7 @@ const navItems = [
     title: "Contact",
     href: "ticket",
     gficon: "contact_support",
+    isBeta: true,
   },
 ];
 

@@ -1,12 +1,12 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection as fbc } from "firebase/firestore";
 import { firebaseDB } from "./setup";
 
 export default async function firebaseCreateData(
-  pathID: string,
+  collection: string,
   data: unknown
 ) {
   try {
-    const docref = await addDoc(collection(firebaseDB, pathID), data);
+    const docref = await addDoc(fbc(firebaseDB, collection), data);
     return docref;
   } catch (e) {
     console.error("Error getting data: ", e);

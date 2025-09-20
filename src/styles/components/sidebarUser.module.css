@@ -19,8 +19,8 @@
   overflow: hidden;
 }
 
-.author:hover,
-.author:focus-visible {
+a.author:hover,
+a.author:focus-visible {
   /* text */
   outline: 2px solid var(--text);
   outline-offset: -2px;

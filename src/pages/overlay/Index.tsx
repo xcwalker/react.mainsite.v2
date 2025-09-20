@@ -6,11 +6,14 @@ import Section from "../../components/Section";
 import css from "../../styles/pages/overlay/index.module.css";
 import SideBySide from "../../components/SideBySide";
 import { Preview } from "./Preview";
-import SidebarUser from "../../components/SidebarUser";
+import SidebarUser from "../../components/Sidebar/SidebarUser";
 import Button from "../../components/Button";
 import { toast } from "react-hot-toast";
 import LoadingPage from "../../components/Loading";
 import ErrorPage from "../../ErrorPage";
+import SidebarTitle from "../../components/Sidebar/SidebarTitle";
+import SidebarDates from "../../components/Sidebar/SidebarDates";
+import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
 
 export default function OverlayIndex() {
   const params = useParams();
@@ -23,17 +26,6 @@ export default function OverlayIndex() {
   const dateCreated = new Date(
     overlay !== undefined ? overlay.metaData.date.created : 0
   );
-  const dateOptions: Intl.DateTimeFormatOptions = {
-    weekday: undefined,
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  const timeOptions: Intl.DateTimeFormatOptions = {
-    second: undefined,
-    minute: "numeric",
-    hour: "numeric",
-  };
 
   useEffect(() => {
     if (!params.id) return;
@@ -57,26 +49,12 @@ export default function OverlayIndex() {
   return (
     <Section id="overlay-index">
       <SideBySide leftWidth="350px">
-        <div className={css.sidebar}>
+        <SidebarContainer>
           <div className={css.details}>
-            <h3>{overlay.data.title}</h3>
-            <div className={css.dates}>
-              <div className={css.created}>
-                {dateCreated.toLocaleDateString(undefined, dateOptions)}
-              </div>
-              {overlay.metaData.date.created !==
-                overlay.metaData.date.modified && (
-                <div className={css.modified}>
-                  Last Modified:{" "}
-                  {dateModified.toLocaleDateString(undefined, dateOptions) ===
-                    dateCreated.toLocaleDateString(undefined, dateOptions) &&
-                    dateModified.toLocaleTimeString(undefined, timeOptions)}
-                  {dateModified.toLocaleDateString(undefined, dateOptions) !==
-                    dateCreated.toLocaleDateString(undefined, dateOptions) &&
-                    dateModified.toLocaleDateString(undefined, dateOptions)}
-                </div>
-              )}
-            </div>
+            <SidebarTitle
+              title={overlay.data.title}
+            />
+            <SidebarDates created={dateCreated} modified={dateModified} />
           </div>
           <SidebarUser userId={overlay.metaData.authorID} />
           <div className={css.buttons}>
@@ -123,7 +101,7 @@ export default function OverlayIndex() {
               </Button>
             </div>
           </div>
-        </div>
+        </SidebarContainer>
         <Preview overlay={overlay} className={css.preview} size="large" />
       </SideBySide>
     </Section>

@@ -134,7 +134,13 @@ export type VehicleHistoryType = {
   isFleetEnrollment: boolean;
 }[];
 
-export type ItemTypes = "projects" | "recipes" | "albums" | "blog" | "vehicles" | "videos";
+export type ItemTypes =
+  | "projects"
+  | "recipes"
+  | "albums"
+  | "blog"
+  | "vehicles"
+  | "videos";
 
 export type CombinedItemProps = ItemProps &
   BlogItemProps &
@@ -309,7 +315,6 @@ export const userSetup: UserType = {
   },
 };
 
-
 export type Overlay_PositionType =
   | "top left"
   | "top right"
@@ -321,17 +326,17 @@ export type Overlay_PositionType =
   | "center right"
   | "center";
 
-  export const OverlayPositions: Overlay_PositionType[] = [
-    "top left",
-    "top center",
-    "top right",
-    "center left",
-    "center",
-    "center right",
-    "bottom left",
-    "bottom center",
-    "bottom right",
-  ];
+export const OverlayPositions: Overlay_PositionType[] = [
+  "top left",
+  "top center",
+  "top right",
+  "center left",
+  "center",
+  "center right",
+  "bottom left",
+  "bottom center",
+  "bottom right",
+];
 
 export type Overlay_PositionType_WithHeader =
   | Overlay_PositionType
@@ -344,12 +349,12 @@ export type Overlay_DirectionType =
   | "row-reverse"
   | "column-reverse";
 
-  export const OverlayDirections: Overlay_DirectionType[] = [
-    "row",
-    "column",
-    "row-reverse",
-    "column-reverse",
-  ];
+export const OverlayDirections: Overlay_DirectionType[] = [
+  "row",
+  "column",
+  "row-reverse",
+  "column-reverse",
+];
 
 export type Overlay_TransitionType =
   | "fade"
@@ -433,12 +438,7 @@ export type overlayType = {
   };
 };
 
-export const OverlayStations = [
-  "SR",
-  "SR Rock",
-  "SR Dance",
-  "SR Xmas",
-];
+export const OverlayStations = ["SR", "SR Rock", "SR Dance", "SR Xmas"];
 
 export type Overlay_StationType = "SR" | "SR Rock" | "SR Dance" | "SR Xmas";
 
@@ -494,4 +494,32 @@ export const OverlayDefault: overlayType = {
     },
     authorID: "",
   },
+};
+
+export type TicketType = {
+  data: {
+    title: string;
+    messages: {
+      sender: {
+        id?: string;
+        name?: string;
+      };
+      content: string;
+      date: string;
+    }[];
+  };
+  metaData: {
+    date: {
+      createdAt: string;
+      updatedAt: string;
+    };
+    status: "open" | "in-progress" | "closed";
+    assignee: string | null;
+    priority: "low" | "medium" | "high" | "urgent" | "unknown";
+    reporter: {
+      id?: string;
+      name?: string;
+      email?: string;
+    };
+  };
 };

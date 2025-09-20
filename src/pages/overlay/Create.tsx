@@ -25,6 +25,7 @@ import { Preview } from "./Preview";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import Protect from "../../components/Security/Protect";
 import ErrorPage from "../../ErrorPage";
+import InputGroup from "../../components/InputGroup";
 
 export default function OverlayCreate(props: { id?: string }) {
   const params = useParams();
@@ -713,14 +714,6 @@ function Main(props: {
   );
 }
 
-function InputGroup(props: { children: React.ReactNode; direction?: string }) {
-  return (
-    <div className={css.inputGroup + ` direction-${props.direction}`}>
-      {props.children}
-    </div>
-  );
-}
-
 function PositionInput(props: {
   id: string;
   label: string;
@@ -798,7 +791,7 @@ function DirectionInput(props: {
   );
 }
 
-function PriorityInput(props: {
+export function PriorityInput(props: {
   id: string;
   label: string;
   value: number;

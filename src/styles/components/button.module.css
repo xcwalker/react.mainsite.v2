@@ -43,6 +43,12 @@
   grid-template-columns: var(--_icon-size) 1fr auto;
 }
 
+.button.centered {
+  justify-items: center;
+  text-align: center;
+  padding-inline: auto;
+}
+
 .button.primary {
   /* styling */
   background: var(--accent);

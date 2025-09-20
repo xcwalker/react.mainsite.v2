@@ -6,13 +6,13 @@ import {
 } from "firebase/firestore";
 import { firebaseDB } from "./setup";
 
-export default async function FirebaseGetRealtimeDataByDate(
+export default async function FirebaseGetRealtimeDataByDateForTickets(
   firebaseCollection: string,
   setData: React.Dispatch<React.SetStateAction<unknown>>
 ) {
   const q = query(
     collection(firebaseDB, firebaseCollection),
-    orderBy("metaData.date.modified")
+    orderBy("metaData.date.updatedAt", "desc")
   );
 
   const unsubscribe = onSnapshot(

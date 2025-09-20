@@ -1,7 +1,7 @@
 import { AlbumItemProps } from "../../types";
 import css from "../../styles/pages/project/sidebar.module.css";
 import GFIcon from "../../components/GFIcon";
-import SidebarUser from "../../components/SidebarUser";
+import SidebarUser from "../../components/Sidebar/SidebarUser";
 
 export function AlbumSidebar(props: { item: AlbumItemProps; slug: string }) {
   const item = props.item;

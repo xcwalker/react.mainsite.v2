@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import css from "../styles/components/sidebarUser.module.css";
-import { UserType } from "../types";
+import css from "../../styles/components/sidebarUser.module.css";
+import { UserType } from "../../types";
 import { Link } from "react-router-dom";
-import firebaseGetRealtimeData from "../functions/firebase/storage/useRealtimeData";
-import toTitleCase from "../functions/toTitleCase";
+import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
+import toTitleCase from "../../functions/toTitleCase";
 
 export default function SidebarUser(props: {
   userId?: string;
@@ -32,7 +32,7 @@ export default function SidebarUser(props: {
     return () => {
       setUserData(undefined);
     };
-  }, [props.userId]);
+  }, [props.userId, props.userData]);
 
   return (
     <Link

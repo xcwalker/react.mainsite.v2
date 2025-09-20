@@ -39,6 +39,9 @@ import OverlayCreate from "./pages/overlay/Create";
 import OverlayIndex from "./pages/overlay/Index";
 import { OverlayViewAll } from "./pages/overlay/ViewAll";
 import { UserViewAll } from "./pages/user/ViewAll";
+import TicketDashboard from "./pages/ticket/Dashboard";
+import TicketCreate from "./pages/ticket/Create";
+import TicketView from "./pages/ticket/View";
 
 export default function App() {
   const currentUser = useAuth();
@@ -553,6 +556,19 @@ export default function App() {
                 }
               />
             </Route>
+
+            <Route path="ticket">
+              <Route
+                index
+                element={
+                  <RoleProtect redirect={<TicketCreate />} staffOnly>
+                    <TicketDashboard />
+                  </RoleProtect>
+                }
+              />
+              <Route path=":ticketId" element={<TicketView />} />
+            </Route>
+
             {/* 404 */}
             <Route
               path="*"

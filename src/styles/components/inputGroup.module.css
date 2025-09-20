@@ -1,0 +1,28 @@
+.inputGroup {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* sizing */
+  padding: 0.25rem;
+  width: 100%;
+
+  /* styling */
+  border-radius: 0.5rem;
+  border: 0.125rem solid var(--primary);
+
+  & > .inputGroup {
+    border: none;
+    background-color: var(--secondary);
+  }
+}
+
+.inputGroup:global(.direction-row) {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.inputGroup:global(.direction-column) {
+  flex-direction: column;
+}

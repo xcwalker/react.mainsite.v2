@@ -1,6 +1,6 @@
 import { ItemTypes,  VehicleItemType } from "../../types";
 import Button from "../../components/Button";
-import SidebarUser from "../../components/SidebarUser";
+import SidebarUser from "../../components/Sidebar/SidebarUser";
 
 import css from "../../styles/pages/itemPage/sidebar.module.css";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";

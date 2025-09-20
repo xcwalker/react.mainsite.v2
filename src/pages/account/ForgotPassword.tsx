@@ -6,15 +6,16 @@ import Protect from "../../components/Security/Protect";
 import firebaseResetPassword from "../../functions/firebase/authentication/resetPassword";
 import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function submit(
-    // e: React.MouseEvent
-  ) {
-      // e.preventDefault();
+  function submit() {
+  // e: React.MouseEvent
+    // e.preventDefault();
 
     setLoading(true);
 
@@ -32,25 +33,25 @@ export default function ForgotPasswordPage() {
       </Helmet>
       <AccountPage id="accountLogin" onSubmit={() => submit()}>
         <h2 className={css.title}>Forgotten Your Password</h2>
-        <div className={css.inputContainer}>
-          <label htmlFor="email" className={css.label}>
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className={css.input}
-            required
-            placeholder="email@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.currentTarget.value)}
-            disabled={loading}
-          />
-        </div>
-        <button type="submit" className={css.submit}>
+        <Input
+          id="email"
+          type="email"
+          label="Email"
+          required
+          placeholder="email@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.currentTarget.value)}
+          disabled={loading}
+        />
+        <Button
+          style="primary"
+          type="submit"
+          title="Reset Password"
+          width="14rem"
+          centered
+        >
           Reset Password
-        </button>
+        </Button>
         <span>
           <Link to={"../login"} className={css.link}>
             Login

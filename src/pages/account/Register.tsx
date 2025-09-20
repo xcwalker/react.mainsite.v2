@@ -83,7 +83,7 @@ export default function RegisterPage() {
           onChange={(e) => setPasswordCheck(e.currentTarget.value)}
           disabled={loading}
         />
-        <Button type="submit" style="primary" title="Register">
+        <Button type="submit" style="primary" title="Register" width="14rem" centered>
           Register
         </Button>
         <div className={css.divider}>

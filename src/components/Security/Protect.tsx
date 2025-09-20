@@ -68,6 +68,7 @@ export function RoleProtect(props: {
           )}
         </>
       )}
+      {userData === undefined && props.redirect && <>{props.redirect}</>}
     </>
   );
 }
