@@ -6,13 +6,12 @@ import {
 } from "firebase/firestore";
 import { firebaseDB } from "./setup";
 
-export default async function FirebaseGetRealtimeDataByDate(
-  firebaseCollection: string,
+export default async function FirebaseGetRealtimeUsersByLastOnline(
   setData: React.Dispatch<React.SetStateAction<unknown>>
 ) {
   const q = query(
-    collection(firebaseDB, firebaseCollection),
-    orderBy("metaData.date.modified")
+    collection(firebaseDB, "users"),
+    orderBy("info.lastOnline", "desc")
   );
 
   const unsubscribe = onSnapshot(

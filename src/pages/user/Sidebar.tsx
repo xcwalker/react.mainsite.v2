@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import toTitleCase from "../../functions/toTitleCase";
 import { isValidHttpUrl } from "../newTab/Index";
+import { useParams } from "react-router-dom";
 
-export default function Sidebar(props: { user: UserType; id: string }) {
+export default function Sidebar(props: { user: UserType; id: string; }) {
+  const params = useParams();
   const currentUser = useAuth();
   const [currentUserData, setCurrentUserData] = useState<UserType | undefined>(
     undefined
@@ -207,7 +209,7 @@ export default function Sidebar(props: { user: UserType; id: string }) {
       )}
       {currentUserData?.info.role &&
         currentUserData?.info.role !== "user" &&
-        currentUserData?.info.role !== "unverified" && (
+        currentUserData?.info.role !== "unverified" && params.id && (
           <Button
             href={"./admin-edit"}
             title={"Admin Edit"}

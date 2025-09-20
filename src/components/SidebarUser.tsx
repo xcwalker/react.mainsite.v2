@@ -6,12 +6,23 @@ import firebaseGetRealtimeData from "../functions/firebase/storage/useRealtimeDa
 import toTitleCase from "../functions/toTitleCase";
 
 export default function SidebarUser(props: {
-  userId: string;
+  userId?: string;
   className?: string;
+  userData?: UserType;
 }) {
   const [userData, setUserData] = useState<UserType | undefined>();
 
   useEffect(() => {
+    if (props.userData) {
+      setUserData(props.userData);
+      return;
+    }
+
+    if (!props.userId) {
+      setUserData(undefined);
+      return;
+    }
+    
     firebaseGetRealtimeData(
       "users",
       props.userId,
@@ -26,7 +37,7 @@ export default function SidebarUser(props: {
   return (
     <Link
       className={css.author + (props.className ? " " + props.className : "")}
-      to={"/user/" + props.userId}
+      to={"/users/" + props.userId}
       style={{color: userData?.images?.color ? userData.images.color : undefined}}
     >
       {userData?.images?.background && (

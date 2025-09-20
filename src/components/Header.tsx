@@ -63,8 +63,13 @@ const navItems = [
     requireUser: true,
   },
   {
+    title: "Users",
+    gficon: "group",
+    href: "users",
+  },
+  {
     title: "Profile",
-    href: "user",
+    href: "me",
     gficon: "person",
     requireUser: true,
   },
@@ -75,9 +80,16 @@ const navItems = [
     requireUser: true,
   },
   {
-    title: "account",
+    title: "Login",
+    href: "account",
+    gficon: "login",
+    requireUser: false,
+  },
+  {
+    title: "settings",
     href: "account",
     gficon: "settings",
+    requireUser: true,
   },
   {
     title: "Contact",
@@ -329,7 +341,22 @@ export default function Header() {
                         </Button>
                       </Protect>
                     </Fragment>
-                  );
+                  ); else if (item.requireUser === false)
+                      return (
+                        <Fragment key={index}>
+                          <Protect isLoginPage>
+                            <Button
+                              {...item}
+                              icon={{ gficon: item.gficon, gfClassName: css.icon }}
+                              hidden={item.hidden ? "siteNavigation" : undefined}
+                              isBeta={item.isBeta}
+                              betaTagClassName={css.betaTag}
+                            >
+                              <span className={css.title}>{item.title}</span>
+                            </Button>
+                          </Protect>
+                        </Fragment>
+                      );
                 return (
                   <Fragment key={index}>
                     <Button

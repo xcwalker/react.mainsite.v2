@@ -2,7 +2,7 @@ import Section from "../../components/Section";
 import { useEffect, useState } from "react";
 // import firebaseGetUserData from "../../functions/firebase/user/getUserData";
 import { UserType } from "../../types";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SideBySide from "../../components/SideBySide";
 import css from "../../styles/pages/user/index.module.css";
 import Sidebar from "./Sidebar";
@@ -10,12 +10,15 @@ import ItemCarousel from "../../components/ItemCarousel";
 import firebaseSetupUserData from "../../functions/firebase/user/setupUserData";
 import ErrorPage from "../../ErrorPage";
 import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
+import { useAuth } from "../../functions/firebase/authentication/useAuth";
 
 export default function UserPage(props: { id?: string }) {
   const { uuid } = useParams<string>();
   const [userData, setUserData] = useState<UserType | undefined>(undefined);
   const [userID, setUserID] = useState<string | undefined>(undefined);
   const [error, setError] = useState(false);
+  const currentUser = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (props.id === undefined && uuid === undefined) return;
@@ -60,6 +63,14 @@ export default function UserPage(props: { id?: string }) {
       setError(false);
     });
   }, [error, props.id]);
+
+  useEffect(() => {
+    if (!currentUser?.uid) return;
+
+    if (currentUser?.uid === userID) {
+      navigate("/me", { replace: true });
+    }
+  }, [currentUser?.uid, navigate, userID]);
 
   return (
     <Section id="user">

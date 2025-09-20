@@ -38,6 +38,7 @@ import { NewTabLinks } from "./types";
 import OverlayCreate from "./pages/overlay/Create";
 import OverlayIndex from "./pages/overlay/Index";
 import { OverlayViewAll } from "./pages/overlay/ViewAll";
+import { UserViewAll } from "./pages/user/ViewAll";
 
 export default function App() {
   const currentUser = useAuth();
@@ -472,8 +473,9 @@ export default function App() {
               <Route path="register" element={<RegisterPage />} />
               <Route path="forgot" element={<ForgotPasswordPage />} />
             </Route>
+
             {/* user */}
-            <Route path="user">
+            <Route path="me">
               <Route
                 index
                 element={
@@ -482,7 +484,6 @@ export default function App() {
                   </Protect>
                 }
               />
-
               <Route
                 path="edit"
                 element={
@@ -491,6 +492,11 @@ export default function App() {
                   </Protect>
                 }
               />
+            </Route>
+
+            {/* user */}
+            <Route path="users">
+              <Route index element={<UserViewAll />} />
 
               <Route path=":uuid">
                 <Route index element={<UserPage />} />
