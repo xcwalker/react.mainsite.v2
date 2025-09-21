@@ -51,9 +51,7 @@ export default function OverlayIndex() {
       <SideBySide leftWidth="350px">
         <SidebarContainer>
           <div className={css.details}>
-            <SidebarTitle
-              title={overlay.data.title}
-            />
+            <SidebarTitle title={overlay.data.title} />
             <SidebarDates created={dateCreated} modified={dateModified} />
           </div>
           <SidebarUser userId={overlay.metaData.authorID} />
@@ -103,6 +101,7 @@ export default function OverlayIndex() {
           </div>
         </SidebarContainer>
         <Preview overlay={overlay} className={css.preview} size="large" />
+        <Preview overlay={overlay} className={css.previewSmall} size="small" />
       </SideBySide>
     </Section>
   );

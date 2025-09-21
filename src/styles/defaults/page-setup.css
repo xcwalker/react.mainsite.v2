@@ -13,6 +13,15 @@
   overflow-x: clip;
 }
 
+/* disable pull down to refresh on pages with user input */
+html:has(#OverlayCreate), body:has(#OverlayCreate),
+html:has(#create-item), body:has(#create-item),
+html:has(#nomination), body:has(#nomination),
+html:has(#user-edit), body:has(#user-edit),
+html:has(#create-ticket), body:has(#create-ticket) {
+  overscroll-behavior: none;
+}
+
 body {
   /* sizing */
   width: 100vw;

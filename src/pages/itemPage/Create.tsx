@@ -21,6 +21,7 @@ import Markdown from "react-markdown";
 import "../../styles/components/markdownEditor.css";
 import Input from "../../components/Input";
 import toast from "react-hot-toast";
+import Section from "../../components/Section";
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
@@ -73,7 +74,7 @@ export default function ItemCreate(props: {
   );
 
   return (
-    <section className={css.create}>
+    <Section id="create-item" className={css.create}>
       <SideBySide leftWidth="350px">
         <Sidebar
           data={data}
@@ -84,7 +85,7 @@ export default function ItemCreate(props: {
         />
         <Main data={data} itemType={props.itemType} setData={setData} />
       </SideBySide>
-    </section>
+    </Section>
   );
 }
 
