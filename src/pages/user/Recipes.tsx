@@ -24,15 +24,24 @@ export default function UserRecipes(props: { userID: string }) {
   return (
     <>
       {recipesArray && recipesArray.length > 0 && (
-          <Carousel className={css.slider} title="Recipes" multipleViews={true} defaultView="column">
-            {recipesArray.map((item, index) => {
-              return (
-                <Fragment key={index}>
-                  <GridItem itemType="recipes" item={item.value} slug={item.id} href="recipes" />
-                </Fragment>
-              );
-            })}
-          </Carousel>
+        <Carousel
+          className={css.slider}
+          title="Recipes"
+          multipleViews={true}
+          defaultView="column"
+        >
+          {recipesArray.map((item, index) => {
+            return (
+              <Fragment key={index}>
+                <GridItem
+                  item={item.value}
+                  slug={item.id}
+                  href="recipes"
+                />
+              </Fragment>
+            );
+          })}
+        </Carousel>
       )}
     </>
   );

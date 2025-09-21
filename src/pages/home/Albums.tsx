@@ -20,16 +20,16 @@ export default function HomeAlbums(props: {
 
   useEffect(() => {
     if (props.onHome) {
-    getDataByDateFromUser("albums", import.meta.env.VITE_MAIN_USER_ID).then(
-      (data) => {
+      getDataByDateFromUser("albums", import.meta.env.VITE_MAIN_USER_ID).then(
+        (data) => {
+          setAlbumsArray(data as { id: string; value: AlbumItemType }[]);
+        }
+      );
+    } else {
+      getDataByDate("albums").then((data) => {
         setAlbumsArray(data as { id: string; value: AlbumItemType }[]);
-      }
-    );
-  } else {
-    getDataByDate("albums").then((data) => {
-      setAlbumsArray(data as { id: string; value: AlbumItemType }[]);
-    });
-  }
+      });
+    }
 
     return () => {
       setAlbumsArray(undefined);
@@ -69,7 +69,11 @@ export default function HomeAlbums(props: {
             albumsArray.map((item, index) => {
               return (
                 <Fragment key={index}>
-                  <GridItem itemType="albums" slug={item.id} item={item.value} href="albums" />
+                  <GridItem
+                    slug={item.id}
+                    item={item.value}
+                    href="albums"
+                  />
                 </Fragment>
               );
             })}

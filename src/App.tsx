@@ -42,6 +42,8 @@ import { UserViewAll } from "./pages/user/ViewAll";
 import TicketDashboard from "./pages/ticket/Dashboard";
 import TicketCreate from "./pages/ticket/Create";
 import TicketView from "./pages/ticket/View";
+import GameNavigation from "./pages/games/Navigation";
+import Game_Nomination from "./pages/games/Nomination";
 
 export default function App() {
   const currentUser = useAuth();
@@ -567,6 +569,13 @@ export default function App() {
                 }
               />
               <Route path=":ticketId" element={<TicketView />} />
+            </Route>
+
+            {/* games */}
+            <Route path="games">
+              <Route index element={<GameNavigation />} />
+              <Route path="nomination" element={<Game_Nomination />} />
+              {/* <Route path=":gameId" element={<GamePage />} /> */}
             </Route>
 
             {/* 404 */}

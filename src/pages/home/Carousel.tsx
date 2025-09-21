@@ -76,7 +76,6 @@ export default function HomeCarousel(props: {
               return (
                 <Fragment key={index}>
                   <GridItem
-                    itemType={props.itemType}
                     slug={item.id}
                     item={item.value}
                     href={props.itemType}

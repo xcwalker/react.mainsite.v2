@@ -24,15 +24,24 @@ export default function UserProjects(props: { userID: string }) {
   return (
     <>
       {projectsArray && projectsArray.length > 0 && (
-          <Carousel className={css.slider} title="Projects" multipleViews={true} defaultView="column">
-            {projectsArray.map((item, index) => {
-              return (
-                <Fragment key={index}>
-                  <GridItem itemType="projects" item={item.value} slug={item.id} href="projects" />
-                </Fragment>
-              );
-            })}
-          </Carousel>
+        <Carousel
+          className={css.slider}
+          title="Projects"
+          multipleViews={true}
+          defaultView="column"
+        >
+          {projectsArray.map((item, index) => {
+            return (
+              <Fragment key={index}>
+                <GridItem
+                  item={item.value}
+                  slug={item.id}
+                  href="projects"
+                />
+              </Fragment>
+            );
+          })}
+        </Carousel>
       )}
     </>
   );

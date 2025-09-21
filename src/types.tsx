@@ -57,6 +57,27 @@ export interface ItemProps {
   };
 }
 
+export interface GridItemProps {
+  data: {
+    title: string;
+    subTitle: string;
+    description?: string;
+  };
+  metaData: {
+    date: {
+      created?: string;
+      modified: string;
+    };
+    thumbnail: string;
+    hasThumbnail?: boolean;
+    images?: string[];
+    tags?: string[];
+    collection?: string;
+    collectionName?: string;
+    authorID?: string;
+  };
+}
+
 export type ItemType = {
   data: {
     title: string;

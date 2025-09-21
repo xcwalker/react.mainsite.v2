@@ -50,6 +50,11 @@ const navItems = [
     gficon: "airplay",
   },
   {
+    title: "Games",
+    href: "games",
+    gficon: "sports_esports",
+  },
+  {
     title: "Fleet",
     href: "vehicles",
     gficon: "directions_car",

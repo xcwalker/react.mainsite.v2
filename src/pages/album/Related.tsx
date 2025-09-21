@@ -21,26 +21,26 @@ export default function AlbumRelated(props: {
 
   useEffect(() => {
     if (props.collection && props.sameCollection === true) {
-          getDataByDateExcludeSlugAndSameCollection(
-            "projects",
-            props.slug,
-            props.collection
-          ).then((data) => {
-            setOtherProjects(data as { id: string; value: ProjectItemProps }[]);
-          });
-        } else if (props.collection && props.sameCollection === false) {
-          getDataByDateExcludeSlugAndDifferentCollection(
-            "projects",
-            props.slug,
-            props.collection
-          ).then((data) => {
-            setOtherProjects(data as { id: string; value: ProjectItemProps }[]);
-          });
-        } else {
-          getDataByDateExcludeSlug("projects", props.slug).then((data) => {
-            setOtherProjects(data as { id: string; value: ProjectItemProps }[]);
-          });
-        }
+      getDataByDateExcludeSlugAndSameCollection(
+        "projects",
+        props.slug,
+        props.collection
+      ).then((data) => {
+        setOtherProjects(data as { id: string; value: ProjectItemProps }[]);
+      });
+    } else if (props.collection && props.sameCollection === false) {
+      getDataByDateExcludeSlugAndDifferentCollection(
+        "projects",
+        props.slug,
+        props.collection
+      ).then((data) => {
+        setOtherProjects(data as { id: string; value: ProjectItemProps }[]);
+      });
+    } else {
+      getDataByDateExcludeSlug("projects", props.slug).then((data) => {
+        setOtherProjects(data as { id: string; value: ProjectItemProps }[]);
+      });
+    }
 
     return () => {
       setOtherProjects(undefined);
@@ -75,7 +75,11 @@ export default function AlbumRelated(props: {
           {otherProjects.map((item, index) => {
             return (
               <Fragment key={index}>
-                <GridItem slug={item.id} item={item.value} href="album" itemType="albums" />
+                <GridItem
+                  slug={item.id}
+                  item={item.value}
+                  href="album"
+                />
               </Fragment>
             );
           })}
