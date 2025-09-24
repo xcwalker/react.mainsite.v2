@@ -178,7 +178,12 @@ function InstructionItem(props: {
   }
 
   return (
-    <li className={props.checklistMode ? css.checklistItem : ""}>
+    <li
+      className={props.checklistMode ? css.checklistItem : ""}
+      onClick={() => {
+        toggleChecked();
+      }}
+    >
       {props.checklistMode && (
         <input
           type="checkbox"
@@ -190,14 +195,7 @@ function InstructionItem(props: {
           aria-label="Mark instruction as completed"
         />
       )}
-      <span
-        className={checked ? css.checked : ""}
-        onClick={() => {
-          toggleChecked();
-        }}
-      >
-        {decode(props.item)}
-      </span>
+      <span className={checked ? css.checked : ""}>{decode(props.item)}</span>
     </li>
   );
 }

@@ -72,3 +72,12 @@ export function RoleProtect(props: {
     </>
   );
 }
+
+export function DevModeProtect(props: {
+  children: ReactNode;
+  redirect?: ReactNode;
+}) {
+  const devMode = import.meta.env.VITE_IS_DEVELOPMENT_BUILD === "true";
+
+  return <>{devMode ? <>{props.children}</> : <>{props.redirect}</>}</>;
+}

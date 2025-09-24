@@ -15,11 +15,11 @@ export default function SidebarDates(props: { created: Date; modified: Date }) {
 
   return (
     <div className={css.dates}>
-      <div className={css.created}>
+      <div className={css.created} title={props.created.toLocaleString()}>
         {props.created.toLocaleDateString(undefined, dateOptions)}
       </div>
       {props.created.getTime() !== props.modified.getTime() && (
-        <div className={css.modified}>
+        <div className={css.modified} title={props.modified.toLocaleString()}>
           Last Modified:{" "}
           {props.modified.toLocaleDateString(undefined, dateOptions) ===
           props.created.toLocaleDateString(undefined, dateOptions) ? (

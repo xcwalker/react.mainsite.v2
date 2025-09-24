@@ -14,24 +14,26 @@ export default function GameNavigation() {
         multipleViews={false}
         hasChildViews={false}
       >
-        {games.map((game) => (
+        {(import.meta.env.VITE_IS_DEVELOPMENT_BUILD === "true" 
+          ? games 
+          : games.filter((game) => !game.comingSoon)
+        ).map((game) => (
           <Fragment key={game.name}>
             <GridItem
-            href="games"
+              href="games"
               slug={game.slug}
               item={{
-                metaData: {
-                  date: {
-                    modified: game.created,
-                  },
-
-                  thumbnail: game.preview,
-                },
-                data: {
-                  title: game.name,
-                  subTitle: game.subTitle,
-                  description: game.subTitle || "",
-                },
+          metaData: {
+            date: {
+              modified: game.created,
+            },
+            thumbnail: game.preview,
+          },
+          data: {
+            title: game.name,
+            subTitle: game.subTitle,
+            description: game.subTitle || "",
+          },
               }}
             />
           </Fragment>

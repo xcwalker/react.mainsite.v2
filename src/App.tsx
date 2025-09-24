@@ -23,7 +23,10 @@ import UserIndex from "./pages/user/Index";
 import UserPage from "./pages/user/User";
 import DashboardIndex from "./pages/dashboard/Index";
 import ItemCreate from "./pages/itemPage/Create";
-import Protect, { RoleProtect } from "./components/Security/Protect";
+import Protect, {
+  DevModeProtect,
+  RoleProtect,
+} from "./components/Security/Protect";
 import { atomWithStorage } from "jotai/utils";
 import BannerContainer from "./components/Banners/BannerContainer";
 import NewTab from "./pages/newTab/Index";
@@ -44,6 +47,7 @@ import TicketCreate from "./pages/ticket/Create";
 import TicketView from "./pages/ticket/View";
 import GameNavigation from "./pages/games/Navigation";
 import Game_Nomination from "./pages/games/Nomination";
+import Game_Monopoly from "./pages/games/Monopoly";
 
 export default function App() {
   const currentUser = useAuth();
@@ -299,9 +303,9 @@ export default function App() {
               <Route
                 index
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <RoleProtect redirect={<Navigate to={"/account"} />}>
                     <OverlayViewAll />
-                  </Protect>
+                  </RoleProtect>
                 }
               />
               <Route
@@ -575,6 +579,24 @@ export default function App() {
             <Route path="games">
               <Route index element={<GameNavigation />} />
               <Route path="nomination" element={<Game_Nomination />} />
+              <Route path="monopoly">
+                <Route
+                  index
+                  element={
+                    <DevModeProtect>
+                      <Game_Monopoly />
+                    </DevModeProtect>
+                  }
+                />
+                <Route
+                  path=":gameId"
+                  element={
+                    <DevModeProtect>
+                      <Game_Monopoly />
+                    </DevModeProtect>
+                  }
+                />
+              </Route>
               {/* <Route path=":gameId" element={<GamePage />} /> */}
             </Route>
 

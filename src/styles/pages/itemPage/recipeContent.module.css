@@ -79,7 +79,7 @@
   /* position */
   position: absolute;
   left: -1.75rem;
-  top: 0;
+  top: 0.125rem;
 
   /* sizing */
   width: 1rem;
@@ -87,6 +87,27 @@
 
   /* styling */
   accent-color: var(--accent);
+}
+
+.instructions li.checklistItem {
+  padding-block: 0.25rem;
+  cursor: pointer;
+}
+
+.instructions li.checklistItem:hover::after,
+.instructions li.checklistItem:focus-within::after {
+  /* content */
+  content: "";
+
+  /* position */
+  position: absolute;
+  inset: 0;
+  left: -2rem;
+  z-index: -1;
+
+  /* styling */
+  background-color: var(--background-200);
+  border-radius: 0.25rem;
 }
 
 .instructions li.checklistItem .checked {

@@ -5,7 +5,7 @@ import css from "../styles/components/header.module.css";
 import radioCSS from "../styles/components/header/radio.module.css";
 import GFIcon from "./GFIcon";
 import { SocialsList } from "./Socials";
-import Protect from "./Security/Protect";
+import Protect, { RoleProtect } from "./Security/Protect";
 import { useAtom } from "jotai";
 import { parseEntities } from "parse-entities";
 
@@ -66,6 +66,7 @@ const navItems = [
     gficon: "layers",
     isBeta: true,
     requireUser: true,
+    requireVerified: true,
   },
   {
     title: "Users",
@@ -332,7 +333,23 @@ export default function Header() {
           <ul className={css.links}>
             {navItems &&
               navItems.map((item, index) => {
-                if (item.requireUser)
+                if (item.requireVerified) {
+                  return (
+                    <Fragment key={index}>
+                      <RoleProtect staffOnly redirect={<></>}>
+                        <Button
+                          {...item}
+                          icon={{ gficon: item.gficon, gfClassName: css.icon }}
+                          hidden={item.hidden ? "siteNavigation" : undefined}
+                          isBeta={item.isBeta}
+                          betaTagClassName={css.betaTag}
+                        >
+                          <span className={css.title}>{item.title}</span>
+                        </Button>
+                      </RoleProtect>
+                    </Fragment>
+                  );
+                } else if (item.requireUser)
                   return (
                     <Fragment key={index}>
                       <Protect>

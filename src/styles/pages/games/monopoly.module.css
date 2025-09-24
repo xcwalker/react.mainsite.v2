@@ -1,0 +1,129 @@
+.players {
+  /* sizing */
+  width: 100%;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.5rem;
+}
+
+.properties {
+  /* sizing */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.5rem;
+}
+
+.propertyCard {
+  /* sizing */
+  width: 100%;
+  height: fit-content;
+  padding: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* styling */
+  border: none;
+  border-radius: 0.5rem;
+  overflow: clip;
+  background-color: var(--background-300);
+}
+
+.propertyCard .name {
+  /* sizing */
+  width: 100%;
+  padding: 0.5rem 1rem;
+
+  /* styling */
+  background-color:  var(--_background, var(--background-200));
+  font-weight: bold;
+  font-size: 1.25rem;
+  border-radius: 0.25rem;
+}
+
+.propertyCard .prices {
+  /* sizing */
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.propertyCard .prices .rentRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tradeModalBackdrop {
+  /* position */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+
+  /* styling */
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.tradeModal {
+  /* position */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  
+  /* sizing */
+  width: 650px;
+  max-width: calc(100vw - 2rem);
+  height: fit-content;
+  padding: 2rem;
+
+  /* grid */
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+
+  /* styling */
+  background-color: var(--background-200);
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.tradeModal .tradeActions {
+  /* grid */
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 0.5rem;
+}
+
+.tradeModal .tradeActions .price {
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* text */
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+
+  /* styling */
+  background-color: var(--form-color-valid-hold-opac);
+  color: var(--text);
+  border-radius: 0.5rem;
+  border: 0.125rem solid var(--form-color-valid);
+}

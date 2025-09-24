@@ -4,6 +4,14 @@
     "slug": "nomination",
     "preview": "nomination.svg",
     "created": "2025-09-21T08:56:43.046Z",
-    "subTitle": "A fun nomination game"
+    "subTitle": "A nomination whisk score tracker"
+  }
+  ,{
+    "name": "Monopoly",
+    "slug": "monopoly",
+    "preview": "monopoly.svg",
+    "created": "2025-09-21T15:00:00.000Z",
+    "subTitle": "A monopoly property & money tracker",
+    "comingSoon": true
   }
 ]
