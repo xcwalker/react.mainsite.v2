@@ -1,31 +1,95 @@
-.scoresContainer {
+.nomination {
+  margin: -1rem;
+  padding: 1rem;
+  box-sizing: content-box;
+
+  --_red: red;
+  --_black: var(--text);
+
+  background: #1fa2ff; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #a6ffcb,
+    #12d8fa,
+    #1fa2ff
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #a6ffcb,
+    #12d8fa,
+    #1fa2ff
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.controls {
+  /* sizing */
+  width: 100%;
+
   /* flex */
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 1rem;
+}
+
+.scoresContainer {
+  /* sizing */
+  width: 100%;
+  min-height: 75vh;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  pointer-events: none;
+}
+
+.largeText .scoresContainer {
+  font-size: 1.5rem;
 }
 
 .roundNumberContainer,
 .player {
+  /* position */
+  position: relative;
+
   /* sizing */
   width: fit-content;
-  padding: 3rem;
+  padding: 5em;
+  height: 20em;
 
   /* flex  */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.5em;
 
   /* styling */
   border-radius: 0.5rem;
   border: 0.25rem solid var(--background-200);
+  background: var(--background);
 }
 
 .roundNumberContainer .roundNumber {
+  /* position */
+  position: absolute;
+  top: 1em;
+  left: 1em;
+
   /* sizing */
-  font-size: 1.5rem;
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.roundNumberContainer .roundCardNumber {
+  /* sizing */
+  font-size: 1.5em;
   font-weight: bold;
   line-height: 1;
 }
@@ -33,7 +97,7 @@
 .roundNumberContainer svg {
   /* sizing */
   flex-shrink: 0;
-  --_size: 10rem;
+  --_size: 10em;
   width: var(--_size);
   height: var(--_size);
 }
@@ -41,34 +105,65 @@
 .player {
   /* flex */
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1em;
 }
 
 .player .playerName {
   /* sizing */
-  font-size: 1.25rem;
+  font-size: 1.25em;
   font-weight: bold;
   text-align: center;
   line-height: 1;
 }
 
+.player .round {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  align-items: center;
+  justify-content: center;
+}
+
 .player .scored {
   /* sizing */
-  font-size: 1.25rem;
+  font-size: 2em;
   font-weight: bold;
   color: var(--color-accent);
 }
 
 .player .guess {
   /* sizing */
-  font-size: 1rem;
+  font-size: 1.75em;
   font-weight: bold;
   color: var(--text-200);
 }
 
 .player .total {
   /* sizing */
-  font-size: 1rem;
+  font-size: 1.25em;
   font-weight: bold;
   color: var(--text);
+}
+
+.nominationFullscreen :global(#root) {
+  grid-template-columns: [nav-start] 0[nav-end main-start footer-start] 1fr [main-end footer-end];
+  grid-template-rows: [nav-start main-start] auto [main-end footer-start] 0 [nav-end footer-end];
+  gap: 0;
+}
+
+.nominationFullscreen :global(#root) :global(header),
+.nominationFullscreen :global(#root) :global(footer) {
+  display: none;
+}
+
+.nominationFullscreen :global(#root) :global(main) {
+  max-width: unset;
+  max-height: 100vh;
+}
+
+.nominationFullscreen .nomination,
+.nominationFullscreen .nominationContainer,
+.nominationFullscreen .scoresContainer {
+  height: 100%;
 }

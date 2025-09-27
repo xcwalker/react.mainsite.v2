@@ -180,7 +180,9 @@ export default function Game_Nomination() {
             >
               Open Live View
             </Button>
-            <input type="number" min={0} max={52} value={currentRound} onChange={(e) => setCurrentRound(parseInt(e.target.value, 10) || 0)} />
+            <input type="number" min={1} max={
+              Math.floor(52 / scores.length) * 2
+            } value={currentRound + 1} onChange={(e) => setCurrentRound(parseInt(e.target.value, 10) - 1 || 0)} />
           </>
         )}
       </div>
