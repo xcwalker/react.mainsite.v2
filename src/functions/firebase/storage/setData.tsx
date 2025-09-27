@@ -10,8 +10,15 @@ import {
 export default async function firebaseSetData(
   pathID: string,
   docID: string,
-  data: unknown
+  data: unknown,
+  options?: {
+    toast?: boolean;
+  }
 ) {
+  if (options && options?.toast === false) {
+    return await setDoc(doc(firebaseDB, pathID, docID), data);
+  }
+
   await toast.promise(
     setDoc(doc(firebaseDB, pathID, docID), data),
     {

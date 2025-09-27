@@ -12,7 +12,7 @@ export default function Button(props: {
   tabIndex?: number;
   href?: string;
   title: string;
-  target?: string;
+  target?: "newTab";
   icon?: {
     gficon?: string;
     gfClassName?: string;

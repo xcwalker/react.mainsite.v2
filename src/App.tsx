@@ -48,6 +48,7 @@ import TicketView from "./pages/ticket/View";
 import GameNavigation from "./pages/games/Navigation";
 import Game_Nomination from "./pages/games/Nomination";
 import Game_Monopoly from "./pages/games/Monopoly";
+import LiveView_Nomination from "./pages/games/LiveView/LiveViewNomination";
 
 export default function App() {
   const currentUser = useAuth();
@@ -578,7 +579,13 @@ export default function App() {
             {/* games */}
             <Route path="games">
               <Route index element={<GameNavigation />} />
-              <Route path="nomination" element={<Game_Nomination />} />
+              <Route path="nomination">
+                <Route index element={<Game_Nomination />} />
+                <Route path=":gameID">
+                  <Route index element={<Game_Nomination />} />
+                  <Route path="live" element={<LiveView_Nomination />} />
+                </Route>
+              </Route>
               <Route path="monopoly">
                 <Route
                   index

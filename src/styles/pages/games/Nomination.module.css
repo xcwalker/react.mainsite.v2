@@ -124,3 +124,12 @@ li:last-of-type .roundScoreInput {
 .roundScoreInput {
   -moz-appearance: textfield;
 }
+
+.currentRound {
+  background-color: var(--accent) !important;
+}
+
+.currentRound > * {
+
+  border: none !important;
+}

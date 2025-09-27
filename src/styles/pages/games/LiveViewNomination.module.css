@@ -1,0 +1,74 @@
+.scoresContainer {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.roundNumberContainer,
+.player {
+  /* sizing */
+  width: fit-content;
+  padding: 3rem;
+
+  /* flex  */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  border: 0.25rem solid var(--background-200);
+}
+
+.roundNumberContainer .roundNumber {
+  /* sizing */
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.roundNumberContainer svg {
+  /* sizing */
+  flex-shrink: 0;
+  --_size: 10rem;
+  width: var(--_size);
+  height: var(--_size);
+}
+
+.player {
+  /* flex */
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.player .playerName {
+  /* sizing */
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+}
+
+.player .scored {
+  /* sizing */
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+.player .guess {
+  /* sizing */
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-200);
+}
+
+.player .total {
+  /* sizing */
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text);
+}

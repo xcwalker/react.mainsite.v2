@@ -4,8 +4,15 @@ import css from "../../styles/pages/games/Nomination.module.css";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import AccountPage from "../../components/Security/AccountPage";
+import { useNavigate, useParams } from "react-router-dom";
+import ErrorPage from "../../ErrorPage";
+import firebaseSetData from "../../functions/firebase/storage/setData";
+import firebaseCreateData from "../../functions/firebase/storage/createData";
+import firebaseGetData from "../../functions/firebase/storage/getData";
 
 export default function Game_Nomination() {
+  const { gameID } = useParams();
+  const navigate = useNavigate();
   const [scores, setScores] = useState<
     {
       player: string;
@@ -17,16 +24,48 @@ export default function Game_Nomination() {
       scores: [],
     },
   ]);
+  const [JsonObject, setJsonObject] = useState<{
+    JSON?: string;
+    currentRound?: number;
+  }>({});
   const [gameStarted, setGameStarted] = useState(false);
+  const [error, setError] = useState(false);
+  const [currentRound, setCurrentRound] = useState(-1);
+
+  useEffect(() => {
+    // Reset scores if the number of players changes
+    if (!gameID) return;
+
+    firebaseGetData("games", gameID).then((data) => {
+      // @ts-expect-error Will Work Generic Function
+      setJsonObject(data);
+      setGameStarted(true);
+    });
+  }, [gameID]);
+
+  useEffect(() => {
+    if (JsonObject.JSON) {
+      try {
+        const parsed = JSON.parse(JsonObject.JSON as string);
+        setScores(parsed);
+        setCurrentRound(JsonObject.currentRound || 0);
+      } catch (e) {
+        console.error("Error parsing JSON:", e);
+        setError(true);
+      }
+    }
+  }, [JsonObject]);
 
   useEffect(() => {
     // Initialize scores for each player when the game starts
+    if (gameID) return;
+
     if (gameStarted) {
       const numberOfRounds = Math.floor(52 / scores.length) * 2; // Set the number of rounds
 
       setScores((prevScores) =>
-        prevScores.map((player) => ({
-          ...player,
+        prevScores.map((player, index) => ({
+          player: player.player || "Player " + (index + 1),
           scores: Array.from({ length: numberOfRounds }, () => ({
             roundScore: 0,
             runningTotal: 0,
@@ -35,46 +74,56 @@ export default function Game_Nomination() {
         }))
       );
     }
-  }, [gameStarted, scores.length]);
+  }, [gameStarted, scores.length, gameID]);
+
+  useEffect(() => {
+    // update live game scores
+    if (!gameID || !(scores[0].scores.length > 0)) return;
+
+    firebaseSetData("games", gameID, {
+      JSON: JSON.stringify(scores),
+      currentRound,
+    }, {
+      toast: false,
+    });
+  }, [scores, gameID, currentRound]);
 
   if (!gameStarted) {
     return (
-      <AccountPage
-       id="nomination">
+      <AccountPage id="nomination">
         <h1>Nomination Game</h1>
         <p>Welcome to the Nomination Game! Click the button below to start.</p>
 
-          {scores.map((playerScore, index) => (
-            <Fragment key={index}>
-              <Input
-                id={`player-name-${index}`}
-                value={playerScore.player}
-                onChange={(e) =>
-                  setScores((prevScores) =>
-                    prevScores.map((p, pIdx) =>
-                      pIdx === index ? { ...p, player: e.target.value } : p
-                    )
+        {scores.map((playerScore, index) => (
+          <Fragment key={index}>
+            <Input
+              id={`player-name-${index}`}
+              value={playerScore.player}
+              onChange={(e) =>
+                setScores((prevScores) =>
+                  prevScores.map((p, pIdx) =>
+                    pIdx === index ? { ...p, player: e.target.value } : p
                   )
-                }
-                placeholder="Enter player name"
-                label="Player Name"
-                
-              />
-            </Fragment>
-          ))}
-          <Button
-            onClick={() =>
-              setScores((prevScores) => [
-                ...prevScores,
-                { player: "", scores: [] },
-              ])
-            }
-            style="secondary"
-            title="Add Player"
-            icon={{ gficon: "person_add" }}
-          >
-            Add Player
-          </Button>
+                )
+              }
+              placeholder="Enter player name"
+              label="Player Name"
+            />
+          </Fragment>
+        ))}
+        <Button
+          onClick={() =>
+            setScores((prevScores) => [
+              ...prevScores,
+              { player: "", scores: [] },
+            ])
+          }
+          style="secondary"
+          title="Add Player"
+          icon={{ gficon: "person_add" }}
+        >
+          Add Player
+        </Button>
 
         <Button
           style="primary"
@@ -88,10 +137,53 @@ export default function Game_Nomination() {
     );
   }
 
+  if (error) return <ErrorPage code={404} error="Game not found" />;
+
   const suits = ["Hearts", "Clubs", "Diamonds", "Spades"];
 
   return (
     <Section id="nomination">
+      <div className={css.header}>
+        {!gameID && (
+          <Button
+            onClick={() => {
+              console.log(
+                "Creating new game with scores:",
+                scores,
+                JSON.stringify(scores)
+              );
+              firebaseCreateData("games", {
+                JSON: JSON.stringify(scores),
+                currentRound: 0,
+              }).then((res) => {
+                if (res) {
+                  navigate(`./${res.id}/`);
+                }
+              });
+            }}
+            style="secondary"
+            title="Start Live View"
+            icon={{ gficon: "live_tv" }}
+          >
+            Start Live View
+          </Button>
+        )}
+        {gameID && (
+          <>
+            <Button
+              href="./live"
+              style="secondary"
+              title="Open Live View"
+              icon={{ gficon: "live_tv" }}
+              external
+              target="newTab"
+            >
+              Open Live View
+            </Button>
+            <input type="number" min={0} max={52} value={currentRound} onChange={(e) => setCurrentRound(parseInt(e.target.value, 10) || 0)} />
+          </>
+        )}
+      </div>
       <ul className={css.scoreboard}>
         <li className={css.cardCount}>
           <li className={css.header}></li>
@@ -104,7 +196,7 @@ export default function Game_Nomination() {
               (_, i) => {
                 const maxCards = Math.floor(52 / scores.length) * 2;
                 return (
-                  <li key={i}>
+                  <li key={i} className={i === currentRound ? css.currentRound : ""}>
                     {i < maxCards / 2
                       ? (Math.floor(52 / scores.length) * 2) / 2 - i
                       : i - (Math.floor(52 / scores.length) * 2) / 2 + 1}
@@ -123,7 +215,7 @@ export default function Game_Nomination() {
             {Array.from(
               { length: Math.floor(52 / scores.length) * 2 },
               (_, i) => (
-                <li key={i} title={suits[i % suits.length]}>
+                <li key={i} title={suits[i % suits.length]} className={i === currentRound ? css.currentRound : ""}>
                   {suits[i % suits.length].slice(0, 1)}
                 </li>
               )
@@ -140,7 +232,7 @@ export default function Game_Nomination() {
                 <span>Total</span>
               </li>
               {player.scores.map((s, idx) => (
-                <li key={idx}>
+                <li key={idx} className={idx === currentRound ? css.currentRound : ""}>
                   <input
                     type="number"
                     name={`guess-${index}-${idx}`}
