@@ -1,3 +1,15 @@
+.controls {
+  /* sizing */
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
 .scoreboard {
   /* sizing */
   width: calc(100% + 2rem);

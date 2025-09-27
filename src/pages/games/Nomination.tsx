@@ -143,7 +143,7 @@ export default function Game_Nomination() {
 
   return (
     <Section id="nomination">
-      <div className={css.header}>
+      <div className={css.controls}>
         {!gameID && (
           <Button
             onClick={() => {
@@ -161,9 +161,10 @@ export default function Game_Nomination() {
                 }
               });
             }}
-            style="secondary"
+            style="primary"
             title="Start Live View"
             icon={{ gficon: "live_tv" }}
+            width="fit-content"
           >
             Start Live View
           </Button>
@@ -172,17 +173,24 @@ export default function Game_Nomination() {
           <>
             <Button
               href="./live"
-              style="secondary"
+              style="primary"
               title="Open Live View"
               icon={{ gficon: "live_tv" }}
               external
               target="newTab"
+              width="fit-content"
             >
               Open Live View
             </Button>
-            <input type="number" min={1} max={
-              Math.floor(52 / scores.length) * 2
-            } value={currentRound + 1} onChange={(e) => setCurrentRound(parseInt(e.target.value, 10) - 1 || 0)} />
+            <input
+              type="number"
+              min={1}
+              max={Math.floor(52 / scores.length) * 2}
+              value={currentRound + 1}
+              onChange={(e) =>
+                setCurrentRound(parseInt(e.target.value, 10) - 1 || 0)
+              }
+            />
           </>
         )}
       </div>
@@ -198,7 +206,10 @@ export default function Game_Nomination() {
               (_, i) => {
                 const maxCards = Math.floor(52 / scores.length) * 2;
                 return (
-                  <li key={i} className={i === currentRound ? css.currentRound : ""}>
+                  <li
+                    key={i}
+                    className={i === currentRound ? css.currentRound : ""}
+                  >
                     {i < maxCards / 2
                       ? (Math.floor(52 / scores.length) * 2) / 2 - i
                       : i - (Math.floor(52 / scores.length) * 2) / 2 + 1}
@@ -217,7 +228,11 @@ export default function Game_Nomination() {
             {Array.from(
               { length: Math.floor(52 / scores.length) * 2 },
               (_, i) => (
-                <li key={i} title={suits[i % suits.length]} className={i === currentRound ? css.currentRound : ""}>
+                <li
+                  key={i}
+                  title={suits[i % suits.length]}
+                  className={i === currentRound ? css.currentRound : ""}
+                >
                   {suits[i % suits.length].slice(0, 1)}
                 </li>
               )
@@ -234,7 +249,10 @@ export default function Game_Nomination() {
                 <span>Total</span>
               </li>
               {player.scores.map((s, idx) => (
-                <li key={idx} className={idx === currentRound ? css.currentRound : ""}>
+                <li
+                  key={idx}
+                  className={idx === currentRound ? css.currentRound : ""}
+                >
                   <input
                     type="number"
                     name={`guess-${index}-${idx}`}
