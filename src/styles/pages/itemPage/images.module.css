@@ -8,7 +8,7 @@
   position: relative;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--image-border-radius, 0.5rem);
   overflow: clip;
 }
 

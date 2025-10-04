@@ -2,7 +2,7 @@ html {
   --content-max-width: calc(100% - (2 * min(3rem, max(4vw, 1rem))));
 }
 
-:root {
+html {
   --selector: #0061e0;
 
   /** form colors **/
@@ -19,8 +19,9 @@ html {
   --form-color-valid-opac: hsl(120, 100%, 25%, 0.25);
 }
 
-:root {
+html {
   --text: #000000;
+  --text-alt: #333333;
   --background: #f2f2f2;
   --primary: #d3d3d3;
   --secondary: #c3c3c3;
@@ -29,8 +30,9 @@ html {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  html {
     --text: #ffffff;
+    --text-alt: #cccccc;
     --background: #0d0d0d;
     --primary: #2a2a2a;
     --secondary: #484848;
@@ -39,7 +41,7 @@ html {
   }
 }
 
-:root {
+html {
   --text-050: #f2f2f2;
   --text-100: #e6e6e6;
   --text-200: #cccccc;
@@ -102,7 +104,7 @@ html {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  html {
     --text-050: #0d0d0d;
     --text-100: #1a1a1a;
     --text-200: #333333;

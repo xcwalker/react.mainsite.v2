@@ -6,12 +6,14 @@ import "./styles/defaults/page-setup.css";
 import "./styles/defaults/transitions.css";
 import "./styles/defaults/variables.css";
 
-
 import "./fonts/fonts.css";
 import "./fonts/EmotionalRescueRegular.ttf";
+import ThemeController from "./ThemeController.js";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <ThemeController>
+      <App />
+    </ThemeController>
   </React.StrictMode>
 );

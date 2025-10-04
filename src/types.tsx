@@ -230,6 +230,7 @@ export type LinkItem = {
 
 export type NewTabLinks = {
   links: LinkItem[];
+  
   settings: {
     background: {
       image?: string;

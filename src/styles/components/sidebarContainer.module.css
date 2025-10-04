@@ -2,7 +2,7 @@
   /* flex */
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--item-sidebar-gap, 1rem);
 }
 
 @media (max-width: 900px) {

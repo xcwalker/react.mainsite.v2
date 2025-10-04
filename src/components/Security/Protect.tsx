@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 import { UserType } from "../../types";
+import LoadingPage from "../Loading";
 
 export default function Protect(props: {
   children: ReactNode;
@@ -34,21 +35,27 @@ export function RoleProtect(props: {
   staffOnly?: boolean;
 }) {
   const user = useAuth();
-  const [userData, setUserData] = useState<UserType | undefined>(undefined);
+  const [userData, setUserData] = useState<UserType | undefined | null>(null);
+  const [uid, setUid] = useState<string | null>(null);
 
   useEffect(() => {
+    if (uid === user?.uid) return;
+    
     if (user?.uid) {
+      console.info("Checking User: ", user.uid, " for RoleProtect");
+      setUid(user.uid);
       firebaseGetRealtimeData(
         "users",
         user.uid,
         setUserData as React.Dispatch<React.SetStateAction<unknown>>
       );
     }
-  }, [user?.uid]);
+  }, [user?.uid, uid]);
 
   return (
     <>
-      {userData !== undefined && (
+      {userData === null && <LoadingPage />}
+      {userData !== undefined && userData !== null && (
         <>
           {props.staffOnly ? (
             <>

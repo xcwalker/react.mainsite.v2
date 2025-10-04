@@ -47,8 +47,8 @@
 .collection {
   /* styling */
   padding: 0.25rem 0.5rem;
-  background-color: var(--background-200);
-  border-radius: 0.25rem;
+  background-color: var(--primary);
+  border-radius: var(--item-sidebar-collection-border-radius, 0.25rem);
 
   /* text */
   font-size: 0.65rem;
@@ -106,7 +106,7 @@
   /* flex */
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--item-sidebar-section-gap, 0.5rem);
 }
 
 .links > a,

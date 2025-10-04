@@ -3,7 +3,7 @@
   padding: 2rem 2rem;
 
   /* styling */
-  background-color: var(--background-200);
+  background-color: var(--primary);
 }
 
 .list {
@@ -36,7 +36,7 @@
   flex-shrink: 0;
 
   /* styling */
-  background-color: var(--background-100);
+  background-color: var(--primary);
   overflow: hidden;
 }
 

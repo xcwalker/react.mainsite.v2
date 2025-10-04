@@ -10,7 +10,7 @@
   flex-direction: column;
 
   /* styling */
-  background-color: var(--background-100);
+  background-color: var(--secondary);
 }
 
 .container {

@@ -21,7 +21,7 @@
   text-align: left;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--button-border-radius, 0.5rem);
   border: none;
   background: transparent;
   cursor: pointer;
@@ -134,8 +134,15 @@
 }
 
 .button span.betaTag {
+  /* position */
+  position: absolute;
+  inset: auto;
+  bottom: -0.25rem;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+
   /* sizing */
-  display: inline-block;
   padding: 0.125rem 0.5rem;
 
   /* text */
@@ -145,8 +152,17 @@
 
   /* styling */
   color: var(--text);
+  background-color: transparent;
+  border-radius: var(--button-beta-tag-border-radius, 0.25rem);
+}
+
+@media screen and (min-width: 625px) {
+  .button span.betaTag {
+    display: inline-block;
+    position: static;
+    transform: none;
   background-color: var(--accent);
-  border-radius: 0.25rem;
+  }
 }
 
 .button .external {
@@ -156,4 +172,9 @@
   font-size: var(--_size);
   fill: currentColor;
   color: var(--text);
+}
+
+
+.button:hover span.betaTag {
+  background-color: var(--accent);
 }

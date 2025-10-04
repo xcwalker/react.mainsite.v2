@@ -1,0 +1,52 @@
+html[data-theme="proton"] {
+  --_collection-border-radius: 0rem;
+
+  --text: #000000;
+  --text-alt: #333333;
+  --background-dark: #e6e6e6;
+  --background: #f2f2f2;
+  --primary: #d3d3d3;
+  --secondary: #c3c3c3;
+  --accent: #e00000;
+  --text-inverse: #ffffff;
+
+  /* header */
+  --header-padding: 0rem;
+  --header-mobile-padding: 0rem;
+  --header-title-padding: 1rem;
+  --header-title-mobile-padding: 0.25rem;
+  --header-nav-gap: 1rem;
+  --header-nav-sub-gap: 0rem;
+
+  /* buttons */
+  --button-border-radius: 0rem;
+  --button-beta-tag-border-radius: 0rem;
+
+  /* radio */
+  --radio-border-radius: 0rem;
+  --radio-button-border-radius: 0rem;
+  --radio-image-border-radius: 0rem;
+  --radio-ad-border-radius: 0rem;
+  --radio-ad-image-border-radius: 0rem;
+
+  /* griditems */
+  --grid-item-border-radius: 0rem;
+  --grid-item-collection-border-radius: var(--_collection-border-radius);
+
+  /* images */
+  --image-border-radius: 0rem;
+
+  /* sites */
+  --sites-border-radius: 0rem;
+
+  /* heros */
+  --hero-border-radius: 0rem;
+  --hero-button-border-radius: 0rem;
+  --hero-dot-border-radius: 0rem;
+
+  /* itempage */
+  --item-sidebar-border-radius: 0rem;
+  --item-sidebar-collection-border-radius: var(--_collection-border-radius);
+  --item-sidebar-gap: 1rem;
+  --item-sidebar-section-gap: 0rem;
+}

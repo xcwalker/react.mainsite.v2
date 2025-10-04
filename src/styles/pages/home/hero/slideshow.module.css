@@ -47,7 +47,7 @@
   align-items: center;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--hero-button-border-radius, 0.5rem);
   border: white solid 0.125rem;
   background: transparent;
   backdrop-filter: brightness(0.75) blur(1px);
@@ -100,7 +100,7 @@
   flex-shrink: 0;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--hero-border-radius, 0.5rem);
   overflow: clip;
 }
 
@@ -119,7 +119,7 @@
 
   /* styling */
   background-color: var(--text-200);
-  border-radius: 100vmax;
+  border-radius: var(--hero-dot-border-radius, 100vmax);
   cursor: pointer;
 
   /* transition */

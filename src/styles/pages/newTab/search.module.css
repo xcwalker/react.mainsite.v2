@@ -17,6 +17,12 @@
   color: var(--text);
 }
 
+.searchWrapper:has(.suggestionsBox) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  outline: 2px solid currentColor;
+}
+
 .searchWrapper .editShortcut {
   /* position */
   position: absolute;
@@ -81,19 +87,20 @@
 }
 
 .searchWrapper {
-  outline: 2px solid transparent;
+  outline: 0.125rem solid transparent;
   outline-offset: -0px;
   transition: outline 75ms ease-in-out, outline-offset 75ms ease-in-out;
 }
 
-.searchWrapper:hover {
-  outline: 2px solid var(--secondary);
+.searchWrapper:hover,
+.searchWrapper:has(.suggestionsBox) {
+  outline: 0.125rem solid var(--secondary);
   outline-offset: -0px;
 }
 
 .searchWrapper:focus-within {
-  outline: 2px solid currentColor;
-  outline-offset: -2px;
+  outline: 0.125rem solid currentColor;
+  outline-offset: -0.125rem;
 }
 
 .searchWrapper .searchButton {
@@ -118,4 +125,67 @@
 .searchWrapper .searchButton:hover {
   /* styling */
   background-color: var(--secondary);
+}
+
+.searchWrapper .suggestionsBox {
+  /* position */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  /* layout */
+  display: flex;
+  flex-direction: column;
+
+  /* styling */
+  background-color: var(--primary);
+  outline: 0.125rem solid var(--secondary);
+  border-top: none;
+  border-radius: 0 0 0.5rem 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: outline 75ms ease-in-out, outline-offset 75ms ease-in-out;
+}
+
+.searchWrapper:focus-within .suggestionsBox {
+  outline-color: currentColor;
+  outline-offset: -0.125rem;
+}
+
+.searchWrapper .suggestionsBox a {
+  /* sizing */
+  height: 48px;
+  width: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+
+  /* styling */
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--secondary);
+}
+
+
+.searchWrapper .suggestionsBox a .suggestion {
+  /* sizing */
+  padding: 0.75rem 1rem;
+  padding-left: 0.25rem;
+
+  /* layout */
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  /* styling */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

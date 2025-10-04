@@ -15,7 +15,7 @@
   max-width: calc(100vw - 2rem);
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--radio-border-radius, 0.5rem);
   /* overflow: clip; */
   color: white;
 
@@ -42,7 +42,7 @@
 
   /* styling */
   overflow: clip;
-  border-radius: 0.5rem;
+  border-radius: var(--radio-border-radius, 0.5rem);
   transition: border-radius 0.25s ease-in-out;
 }
 
@@ -92,7 +92,7 @@
   flex-shrink: 0;
 
   /* styling */
-  border-radius: 0.25rem;
+  border-radius: var(--radio-image-border-radius, 0.25rem);
   overflow: hidden;
   object-fit: cover;
 }
@@ -171,7 +171,7 @@
   padding: 0.25rem;
 
   /* styling */
-  border-radius: 0.25rem;
+  border-radius: var(--radio-button-border-radius, 0.25rem);
   overflow: hidden;
   border: none;
   background-color: transparent;
@@ -257,7 +257,7 @@
   gap: 0.5rem;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--radio-border-radius, 0.5rem);
 }
 
 .radio.inSidebar .container .image {

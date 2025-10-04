@@ -5,6 +5,7 @@
 
   /* styling */
   /* border: 1px solid var(--secondary); */
+  overflow: visible;
 }
 
 .search > * {

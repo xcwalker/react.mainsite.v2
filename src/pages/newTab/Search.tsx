@@ -1,9 +1,14 @@
-import { useState } from "react";
-import css from "../../styles/pages/newTab/search.module.css"
+import { useEffect, useState } from "react";
+import css from "../../styles/pages/newTab/search.module.css";
 import GFIcon from "../../components/GFIcon";
 import tlds from "tlds";
 
-export function NewTabSearch(props: { hasCMDKey: boolean; modifierPressed: boolean; searchProvider: string; queryURL: string;}) {
+export function NewTabSearch(props: {
+  hasCMDKey: boolean;
+  modifierPressed: boolean;
+  searchProvider: string;
+  queryURL: string;
+}) {
   const bangs = [
     { bang: "g", url: "https://www.google.com/search?q=%s", icon: "google" },
     { bang: "b", url: "https://www.bing.com/search?q=%s", icon: "bing" },
@@ -139,6 +144,9 @@ export function NewTabSearch(props: { hasCMDKey: boolean; modifierPressed: boole
     },
   ];
 
+  const autoCompleteAPI =
+    "https://proxy.corsfix.com/?https://suggestqueries.google.com/complete/search?client=chrome&output=toolbar&hl=en&q=";
+
   const [searchIsWebsite, setSearchIsWebsite] = useState(false);
   const [searchBang, setSearchBang] = useState<
     | undefined
@@ -148,6 +156,41 @@ export function NewTabSearch(props: { hasCMDKey: boolean; modifierPressed: boole
         icon: string;
       }
   >();
+  const [search, setSearch] = useState("");
+  const [suggestions, setSuggestions] = useState<
+    { suggestion: string; type: string }[]
+  >([]);
+
+  useEffect(() => {
+    if (search.length === 0) {
+      setSuggestions([]);
+    }
+
+    const controller = new AbortController();
+    const fetchSuggestions = async () => {
+      if (search) {
+        const response = await fetch(
+          autoCompleteAPI + encodeURIComponent(search),
+          { signal: controller.signal }
+        );
+        const data = await response.json();
+        console.log(data);
+        setSuggestions(
+          data[1].map((item: string, index: number) => ({
+            suggestion: item,
+            type: data[4]["google:suggesttype"][index],
+          }))
+        );
+      }
+    };
+
+    fetchSuggestions();
+
+    return () => {
+      setSuggestions([]);
+      controller.abort();
+    };
+  }, [search]);
 
   return (
     <div className={css.searchWrapper}>
@@ -206,7 +249,9 @@ export function NewTabSearch(props: { hasCMDKey: boolean; modifierPressed: boole
           // sorts bangs by bang length then finds the first bang that matches the search query
           const bangMatch = bangs
             .sort((a, b) => b.bang.length - a.bang.length)
-            .find((bang) => searchQuery.toLowerCase().includes("!" + bang.bang));
+            .find((bang) =>
+              searchQuery.toLowerCase().includes("!" + bang.bang)
+            );
 
           if (bangMatch) {
             setSearchBang(bangMatch);
@@ -234,9 +279,7 @@ export function NewTabSearch(props: { hasCMDKey: boolean; modifierPressed: boole
                 )
               );
             } else {
-              searchUrl =
-                props.queryURL +
-                encodeURIComponent(searchQuery);
+              searchUrl = props.queryURL + encodeURIComponent(searchQuery);
             }
 
             window.open(searchUrl, "_self");
@@ -244,10 +287,52 @@ export function NewTabSearch(props: { hasCMDKey: boolean; modifierPressed: boole
             e.preventDefault();
           }
         }}
+        onChange={(e) => setSearch(e.target.value)}
+        value={search}
       />
       <button className={css.searchButton}>
         <GFIcon>search</GFIcon>
       </button>
+      {suggestions.length > 0 && (
+        <div className={css.suggestionsBox}>
+          {suggestions.length > 0 &&
+            suggestions.map((suggestion, index) => {
+              if (index < 5)
+                return (
+                  <a
+                    key={index}
+                    href={
+                      suggestion.type === "NAVIGATION"
+                        ? suggestion.suggestion
+                        : props.queryURL +
+                          encodeURIComponent(suggestion.suggestion)
+                    }
+                  >
+                    {suggestion.type === "QUERY" && (
+                      <img
+                        src={
+                          "/" +
+                          (searchBang === undefined
+                            ? props.searchProvider
+                            : searchBang.icon) +
+                          ".svg"
+                        }
+                        alt=""
+                        className={css.icon}
+                      />
+                    )}
+                    {suggestion.type === "NAVIGATION" && (
+                      <GFIcon className={css.icon}>language</GFIcon>
+                    )}
+                    <div className={css.suggestion}>
+                      {suggestion.suggestion}
+                    </div>
+                  </a>
+                );
+              else return null;
+            })}
+        </div>
+      )}
     </div>
   );
 }
