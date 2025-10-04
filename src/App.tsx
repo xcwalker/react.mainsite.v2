@@ -49,6 +49,7 @@ import GameNavigation from "./pages/games/Navigation";
 import Game_Nomination from "./pages/games/Nomination";
 import Game_Monopoly from "./pages/games/Monopoly";
 import LiveView_Nomination from "./pages/games/LiveView/LiveViewNomination";
+import LoadingPage from "./components/Loading";
 
 export default function App() {
   const currentUser = useAuth();
@@ -146,6 +147,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemCreate itemType="blog" />
                     </RoleProtect>
@@ -162,6 +164,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="blog" />
                     </RoleProtect>
@@ -175,6 +178,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="blog" admin />
                     </RoleProtect>
@@ -204,6 +208,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemCreate itemType="projects" />
                     </RoleProtect>
@@ -220,6 +225,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="projects" />
                     </RoleProtect>
@@ -233,6 +239,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="projects" admin />
                     </RoleProtect>
@@ -262,6 +269,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemCreate itemType="recipes" />
                     </RoleProtect>
@@ -278,6 +286,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="recipes" />
                     </RoleProtect>
@@ -291,6 +300,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="recipes" admin />
                     </RoleProtect>
@@ -304,7 +314,10 @@ export default function App() {
               <Route
                 index
                 element={
-                  <RoleProtect redirect={<Navigate to={"/account"} />}>
+                  <RoleProtect
+                    redirect={<Navigate to={"/account"} />}
+                    loading={<LoadingPage />}
+                  >
                     <OverlayViewAll />
                   </RoleProtect>
                 }
@@ -318,6 +331,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <OverlayCreate />
                     </RoleProtect>
@@ -334,6 +348,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <OverlayCreate />
                     </RoleProtect>
@@ -380,6 +395,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemCreate itemType="albums" />
                     </RoleProtect>
@@ -396,6 +412,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="albums" />
                     </RoleProtect>
@@ -409,6 +426,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="albums" admin />
                     </RoleProtect>
@@ -438,6 +456,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemCreate itemType="videos" />
                     </RoleProtect>
@@ -454,6 +473,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="videos" />
                     </RoleProtect>
@@ -467,6 +487,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="videos" admin />
                     </RoleProtect>
@@ -526,6 +547,7 @@ export default function App() {
                         code: 403,
                         error: "Access Denied",
                       })}
+                      loading={<LoadingPage />}
                     >
                       <UserEdit admin />
                     </RoleProtect>
@@ -568,7 +590,11 @@ export default function App() {
               <Route
                 index
                 element={
-                  <RoleProtect redirect={<TicketCreate />} staffOnly>
+                  <RoleProtect
+                    redirect={<TicketCreate />}
+                    staffOnly
+                    loading={<LoadingPage />}
+                  >
                     <TicketDashboard />
                   </RoleProtect>
                 }
