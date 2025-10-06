@@ -175,19 +175,20 @@ export default function Sidebar(props: { user: UserType; id: string; }) {
       {currentUserData?.info.role &&
         currentUserData?.info.role !== "user" &&
         currentUserData?.info.role !== "unverified" && (
+          <>
           <select
             className={css.roleSelect}
             value={props.user.info.role}
             onChange={(e) => {
               const updatedUserData: UserType = { ...props.user };
               updatedUserData.info.role = e.target
-                .value as UserType["info"]["role"];
-
+              .value as UserType["info"]["role"];
+              
               firebaseSetData("users", props.id, updatedUserData).then(() => {
                 console.log("User role updated successfully.");
               });
             }}
-          >
+            >
             <option value="unverified">Unverified</option>
             <option value="user">User</option>
             <option value="developer">Developer</option>
@@ -195,6 +196,41 @@ export default function Sidebar(props: { user: UserType; id: string; }) {
             <option value="admin">Admin</option>
             <option value="overlord">Overlord</option>
           </select>
+          {/* Hide User */}
+            {props.user.info.hidden ? (
+              <Button
+                onClick={() => {
+                  const updatedUserData: UserType = { ...props.user };
+                  updatedUserData.info.hidden = false;
+                  
+                  firebaseSetData("users", props.id, updatedUserData).then(() => {
+                    console.log("User unhidden successfully.");
+                  });
+                }}
+                title={"Unhide User"}
+                icon={{ gficon: "visibility" }}
+                style="danger"
+              >
+                Unhide User
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  const updatedUserData: UserType = { ...props.user };
+                  updatedUserData.info.hidden = true;
+                  
+                  firebaseSetData("users", props.id, updatedUserData).then(() => {
+                    console.log("User hidden successfully.");
+                  });
+                }}
+                title={"Hide User"}
+                icon={{ gficon: "visibility_off" }}
+                style="danger"
+              >
+                Hide User
+              </Button>
+            )}
+            </>
         )}
 
       {currentUser?.uid === props.id && (

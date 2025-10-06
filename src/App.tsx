@@ -527,7 +527,18 @@ export default function App() {
 
             {/* user */}
             <Route path="users">
-              <Route index element={<UserViewAll />} />
+              <Route
+                index
+                element={
+                  <RoleProtect
+                    staffOnly
+                    redirect={<UserViewAll staff={false} />}
+                    loading={<LoadingPage />}
+                  >
+                    <UserViewAll staff={true} />
+                  </RoleProtect>
+                }
+              />
 
               <Route path=":uuid">
                 <Route index element={<UserPage />} />

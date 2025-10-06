@@ -5,22 +5,33 @@ import Carousel from "../../components/Carousel";
 import css from "../../styles/pages/user/viewAll.module.css";
 import SidebarUser from "../../components/Sidebar/SidebarUser";
 import ListItem from "../../components/ListItem";
-import FirebaseGetRealtimeUsersByLastOnline from "../../functions/firebase/storage/useRealtimeUsersByLastOnline";
+import FirebaseGetRealtimeUsersByLastOnlineExcludeHidden from "../../functions/firebase/storage/FirebaseGetRealtimeUsersByLastOnlineExcludeHidden";
+import FirebaseGetRealtimeUsersByLastOnline from "../../functions/firebase/storage/FirebaseGetRealtimeUsersByLastOnline";
 
-export function UserViewAll() {
+export function UserViewAll(props: {
+  staff: boolean;
+}) {
   const [users, setUsers] = useState<{ value: UserType; id: string }[]>([]);
 
   useEffect(() => {
-    FirebaseGetRealtimeUsersByLastOnline(
-      setUsers as React.Dispatch<React.SetStateAction<unknown>>
-    );
-  }, []);
+    if (props.staff) {
+      FirebaseGetRealtimeUsersByLastOnline(
+        setUsers as React.Dispatch<React.SetStateAction<unknown>>
+      );
+      return;
+    } else {
+      FirebaseGetRealtimeUsersByLastOnlineExcludeHidden(
+        setUsers as React.Dispatch<React.SetStateAction<unknown>>
+      );
+      return;
+    }
+  }, [props.staff]);
 
   return (
     <Section id="users-view-all">
       <Carousel
         className={css.carousel}
-        title="Users"
+        title={props.staff ? "StaffView™ Users" : "Users"}
         defaultView="grid"
         multipleViews={true}
         listView={

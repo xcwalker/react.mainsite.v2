@@ -230,7 +230,7 @@ export type LinkItem = {
 
 export type NewTabLinks = {
   links: LinkItem[];
-  
+
   settings: {
     background: {
       image?: string;
@@ -296,6 +296,7 @@ export type UserType = {
       | "moderator"
       | "developer"
       | "Overlord";
+    hidden: boolean;
   };
   links: string[];
   settings: {
@@ -330,6 +331,7 @@ export const userSetup: UserType = {
     joined: new Date().toJSON(),
     lastOnline: new Date().toJSON(),
     role: "unverified",
+    hidden: false,
   },
   links: [],
   settings: {
