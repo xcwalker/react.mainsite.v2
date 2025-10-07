@@ -1,0 +1,9 @@
+html[data-theme="midnight"] {
+  --text: #ffffff;
+  --text-alt: hsl(0, 0%, 95%);
+  --background: hsl(0, 0%, 0%);
+  --primary: hsl(0, 0%, 5%);
+  --secondary: hsl(0, 0%, 10%);
+  --accent: #ff8000;
+  --text-inverse: #000000;
+}

@@ -42,9 +42,9 @@
   z-index: 1;
 
   /* sizing */
-  max-width: 750px;
+  max-width: 800px;
   width: var(--content-max-width);
-  padding:  5rem min(3rem, max(4vw, 1rem));
+  padding:  5rem min(6rem, max(4vw, 1rem));
 
   /* flex */
   display: flex;
@@ -55,8 +55,8 @@
 
 
   /* styling */
-  border: 0.25rem solid var(--background);
-  border-radius: 2rem;
+  border: 0.25rem solid var(--primary);
+  border-radius: var(--accountPage-border-radius, 1rem);
   overflow: hidden;
-  backdrop-filter: blur(0.25rem) brightness(0.75);
+  background-color: var(--background);
 }

@@ -30,7 +30,8 @@ html {
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
+  html[data-theme="dark"],
+  html[data-theme="system"] {
     --text: #ffffff;
     --text-alt: #cccccc;
     --background: #0d0d0d;
@@ -104,7 +105,8 @@ html {
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
+  html[data-theme="dark"],
+  html[data-theme="system"] {
     --text-050: #0d0d0d;
     --text-100: #1a1a1a;
     --text-200: #333333;

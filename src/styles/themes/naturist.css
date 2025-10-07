@@ -1,0 +1,9 @@
+html[data-theme="naturist"] {
+  --text: #ffffff;
+  --text-alt: hsl(0, 0%, 95%);
+  --background: hsl(130, 100%, 10%);
+  --primary: hsl(130, 100%, 25%);
+  --secondary: hsl(130, 100%, 17.5%);
+  --accent: #000000;
+  --text-inverse: #000000;
+}

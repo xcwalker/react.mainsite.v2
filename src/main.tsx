@@ -8,12 +8,12 @@ import "./styles/defaults/variables.css";
 
 import "./fonts/fonts.css";
 import "./fonts/EmotionalRescueRegular.ttf";
-import ThemeController from "./ThemeController.js";
+import SettingController from "./SettingController.js";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeController>
+    <SettingController>
       <App />
-    </ThemeController>
+    </SettingController>
   </React.StrictMode>
 );

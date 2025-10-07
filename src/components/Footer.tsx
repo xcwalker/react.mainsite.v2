@@ -1,9 +1,10 @@
 import css from "../styles/components/footer.module.css";
 import Logo from "./Logo";
 import Socials from "./Socials";
+import build from "../../version.json";
 
 export default function Footer() {
-  const buildDate = new Date(import.meta.env.VITE_BUILD_DATE);
+  const buildDate = new Date(build.BUILD_DATE);
 
   return (
     <footer className={css.footer}>
@@ -22,11 +23,11 @@ export default function Footer() {
             Build {buildDate.getFullYear().toString().substr(-2)}W
             {pad(getWeekNumber(buildDate), 2)}
             {
-              import.meta.env.VITE_APP_VERSION >= 26 && alphabet[
-                Math.floor((import.meta.env.VITE_APP_VERSION) / 26)
+              build.APP_VERSION >= 26 && alphabet[
+                Math.floor((build.APP_VERSION) / 26)
               ]
             }
-            {alphabet[import.meta.env.VITE_APP_VERSION % alphabet.length]}
+            {alphabet[build.APP_VERSION % alphabet.length]}
           </span>
         </div>
       </div>

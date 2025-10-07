@@ -1,0 +1,9 @@
+html[data-theme="trans-pride"] {
+  --text: #fdfdfd;
+  --text-alt: #fdfdfd;
+  --background: #133e5e;
+  --primary: #2e7aad;
+  --secondary: #4ba6e2;
+  --accent: #f9bfbb;
+  --text-inverse: #000000;
+}

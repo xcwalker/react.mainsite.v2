@@ -339,6 +339,10 @@ export const userSetup: UserType = {
   },
 };
 
+export type userSettingsType = {
+  theme: string;
+};
+
 export type Overlay_PositionType =
   | "top left"
   | "top right"
