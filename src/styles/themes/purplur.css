@@ -1,0 +1,10 @@
+html[data-theme="purplur"],
+.preview[data-theme="purplur"] {
+  --text: #fbe2fc;
+  --text-alt: #ffd1fa;
+  --background: #1e0422;
+  --primary: #e979f1;
+  --secondary: #47b40e;
+  --accent: #38eaa4;
+  --text-inverse: #000000;
+}

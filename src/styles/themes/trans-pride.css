@@ -1,4 +1,5 @@
-html[data-theme="trans-pride"] {
+html[data-theme="trans-pride"],
+.preview[data-theme="trans-pride"] {
   --text: #fdfdfd;
   --text-alt: #fdfdfd;
   --background: #133e5e;

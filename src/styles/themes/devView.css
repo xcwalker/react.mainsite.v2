@@ -1,4 +1,5 @@
-html[data-theme="DevView™"] {
+html[data-theme="DevView™"],
+.preview[data-theme="DevView™"] {
   --_collection-border-radius: 0rem;
 
   --text: #000000;

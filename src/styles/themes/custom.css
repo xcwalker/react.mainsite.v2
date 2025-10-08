@@ -1,0 +1,9 @@
+html[data-theme="custom"] {
+  --text: var(--custom-text);
+  --text-alt: var(--custom-textAlt);
+  --background: var(--custom-background);
+  --primary: var(--custom-primary);
+  --secondary: var(--custom-secondary);
+  --accent: var(--custom-accent);
+  --text-inverse: var(--custom-textInverse);
+}

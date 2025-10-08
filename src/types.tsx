@@ -341,6 +341,32 @@ export const userSetup: UserType = {
 
 export type userSettingsType = {
   theme: string;
+  customThemeColor?: {
+    text: string;
+    textAlt: string;
+    background: string;
+    primary: string;
+    secondary: string;
+    accent: string;
+    textInverse: string;
+  };
+  customThemes: {
+    name: string;
+    colors: {
+      text: string;
+      textAlt: string;
+      background: string;
+      primary: string;
+      secondary: string;
+      accent: string;
+      textInverse: string;
+    };
+  }[];
+};
+
+export const userSettingsDefault: userSettingsType = {
+  theme: "system",
+  customThemes: [],
 };
 
 export type Overlay_PositionType =

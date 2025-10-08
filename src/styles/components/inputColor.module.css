@@ -1,0 +1,41 @@
+.inputColor {
+  /* sizing */
+  width: 100%;
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+
+  /* style */
+  border: none;
+  border-radius: var(--color-picker-border-radius, 0.5rem);
+  background: var(--primary);
+}
+
+.label {
+
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+}
+
+.inputColor > div > div {
+  border-radius: var(--color-picker-inner-border-radius, 0.25rem) !important;
+}

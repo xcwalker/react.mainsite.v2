@@ -1,4 +1,5 @@
-html[data-theme="naturist"] {
+html[data-theme="naturist"],
+.preview[data-theme="naturist"] {
   --text: #ffffff;
   --text-alt: hsl(0, 0%, 95%);
   --background: hsl(130, 100%, 10%);
