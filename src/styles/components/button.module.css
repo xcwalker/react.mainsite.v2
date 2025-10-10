@@ -84,13 +84,13 @@
 .button.danger {
   /* styling */
   background: darkred;
-  color: var(--text);
+  color: white;
 }
 
 .button.danger:hover {
   /* styling */
   background: rgb(238, 0, 0);
-  color: var(--text);
+  color: white;
 }
 
 .button.remove {
@@ -125,7 +125,7 @@
   width: var(--_icon-size);
   font-size: var(--_icon-size);
   fill: currentColor;
-  color: var(--text);
+  color: inherit;
 }
 
 .button  img {

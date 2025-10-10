@@ -350,18 +350,20 @@ export type userSettingsType = {
     accent: string;
     textInverse: string;
   };
-  customThemes: {
-    name: string;
-    colors: {
-      text: string;
-      textAlt: string;
-      background: string;
-      primary: string;
-      secondary: string;
-      accent: string;
-      textInverse: string;
-    };
-  }[];
+  customThemes: customThemeType[];
+};
+
+export type customThemeType = {
+  name: string;
+  colors: {
+    text: string;
+    textAlt: string;
+    background: string;
+    primary: string;
+    secondary: string;
+    accent: string;
+    textInverse: string;
+  };
 };
 
 export const userSettingsDefault: userSettingsType = {
