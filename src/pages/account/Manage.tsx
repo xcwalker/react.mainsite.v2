@@ -7,7 +7,11 @@ import { Fragment, useEffect, useState } from "react";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 import LoadingPage from "../../components/Loading";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
-import { userSettingsDefault, userSettingsType } from "../../types";
+import {
+  customThemeType,
+  userSettingsDefault,
+  userSettingsType,
+} from "../../types";
 import InputColor from "../../components/InputColor";
 import invert from "invert-color";
 import InputGroup from "../../components/InputGroup";
@@ -16,6 +20,8 @@ import SideBySide from "../../components/SideBySide";
 import css from "../../styles/pages/account/manage.module.css";
 import Button from "../../components/Button";
 import { User } from "firebase/auth";
+import ButtonWithPreview from "../../components/ButtonWithPreview";
+import SettingSection from "../../components/SettingSection";
 
 export default function ManagePage() {
   const currentUser = useAuth();
@@ -70,15 +76,14 @@ export default function ManagePage() {
         </title>
       </Helmet>
       <SideBySide leftWidth="250px">
-        <Sidebar 
-          page={page}
-          setPage={setPage}
-        />
+        <Sidebar page={page} setPage={setPage} />
         <main className={css.main}>
-          {page === "themes" && <Page_Themes
-            userSettings={userSettings}
-            currentUser={currentUser}
-          />}
+          {page === "themes" && (
+            <Page_Themes
+              userSettings={userSettings}
+              currentUser={currentUser}
+            />
+          )}
           {page === "account" && <Page_Account />}
         </main>
       </SideBySide>
@@ -123,17 +128,19 @@ export function Sidebar(props: {
 
 function Page_Account() {
   return (
-    <div>
-      <h2>Account Settings</h2>
-
-      <button
+    <SettingSection id="accountSettings" title="Account Settings">
+      <Button
+        style="danger"
+        title="Sign out of your account"
+        icon={{ gficon: "logout" }}
+        width="fit-content"
         onClick={() => {
           firebaseLogout();
         }}
       >
         Sign Out
-      </button>
-    </div>
+      </Button>
+    </SettingSection>
   );
 }
 
@@ -144,28 +151,26 @@ function Page_Themes(props: {
   const { currentUser, userSettings } = props;
   const [customThemeName, setCustomThemeName] = useState("");
   return (
-    <div>
-      <h2>Theme Settings</h2>
-      <select
-        name="theme"
-        id=""
-        defaultValue={"system"}
-        onChange={(e) => {
-          const theme = e.target.value;
-
-          firebaseSetData("settings", currentUser.uid, {
-            ...userSettings,
-            theme: theme,
-          });
-        }}
-        value={userSettings.theme}
-      >
+    <SettingSection id="themeSettings" title="Theme Settings">
+      <ul className={css.themeList}>
         {availableThemes.map((theme, index) => (
-          <option value={theme} key={index}>
-            {theme}
-          </option>
+          <li key={index}>
+            <ButtonWithPreview
+              title="Click to select theme"
+              style={userSettings.theme === theme ? "primary" : "secondary"}
+              label={theme}
+              onClick={() => {
+                firebaseSetData("settings", currentUser.uid, {
+                  ...userSettings,
+                  theme: theme,
+                });
+              }}
+            >
+              {PreviewTheme({ themeName: theme })}
+            </ButtonWithPreview>
+          </li>
         ))}
-      </select>
+      </ul>
       {userSettings.theme === "custom" && userSettings.customThemeColor && (
         <InputGroup direction="row">
           <InputGroup>
@@ -328,6 +333,17 @@ function Page_Themes(props: {
           </InputGroup>
         </InputGroup>
       )}
+    </SettingSection>
+  );
+}
+
+function PreviewTheme(props: {
+  themeName: string;
+  customThemeColors?: customThemeType;
+}) {
+  return (
+    <div className="preview" data-theme={props.themeName}>
+      Previewing theme: {props.themeName}
     </div>
   );
 }

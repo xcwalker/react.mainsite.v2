@@ -45,9 +45,9 @@ export default function SettingController(props: { children: React.ReactNode }) 
 }
 
 export const availableThemes = [
+  "system",
   "light",
   "dark",
-  "system",
   "DevView™",
   "trans-pride",
   "midnight",

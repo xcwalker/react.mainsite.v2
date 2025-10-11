@@ -1,0 +1,13 @@
+.settingSection {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.settingSection h2 {
+  /* typography */
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}

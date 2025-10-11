@@ -1,0 +1,22 @@
+.buttonWithPreview {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.buttonWithPreview .preview {
+  /* sizing */
+  width: 100%;
+  height: 100px;
+  padding: 0.5rem;
+
+  /* styling */
+  border-radius: calc(var(--button-border-radius, 0.5rem) / 2);
+  background-color: var(--primary);
+}
+
+.buttonWithPreview.secondary .preview {
+  background-color: var(--background);
+}
