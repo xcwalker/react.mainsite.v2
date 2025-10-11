@@ -499,14 +499,10 @@ export default function App() {
             {/* accounts */}
             <Route path="account">
               <Route index element={<Navigate to={"manage"} />} />
-              <Route
-                path="manage"
-                element={
-                  <Protect redirect={<Navigate to={"../login"} />}>
-                    <ManagePage />
-                  </Protect>
-                }
-              />
+              <Route path="manage">
+                <Route index element={<ManagePage />} />
+                <Route path=":page" element={<ManagePage />} />
+              </Route>
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="forgot" element={<ForgotPasswordPage />} />

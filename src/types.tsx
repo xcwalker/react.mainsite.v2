@@ -1,6 +1,180 @@
 import { DocumentReference } from "firebase/firestore";
 import { ReactNode } from "react";
 
+export type NavItem = {
+  title: string;
+  href: string;
+  gficon: string;
+  hidden?: boolean;
+  isBeta?: boolean;
+  requireUser?: boolean;
+  requireVerified?: boolean;
+}
+
+export type NavSection = {
+  title: string;
+  hideTitle?: boolean;
+  items: NavItem[];
+}
+
+export const defaultNav: NavSection[] = [
+  {
+    title: "Main Navigation",
+    hideTitle: true,
+    items: [
+      {
+        title: "New Tab",
+        href: "/newtab",
+        gficon: "new_window",
+        hidden: true,
+      },
+      {
+        title: "home",
+        href: "",
+        gficon: "home",
+      },
+      {
+        title: "Projects",
+        href: "projects",
+        gficon: "design_services",
+      },
+      {
+        title: "Blog",
+        href: "blog",
+        gficon: "text_snippet",
+      },
+      {
+        title: "Recipes",
+        href: "recipes",
+        gficon: "stockpot",
+      },
+      {
+        title: "Albums",
+        href: "albums",
+        gficon: "image",
+      },
+      {
+        title: "Videos",
+        href: "videos",
+        gficon: "airplay",
+      },
+      {
+        title: "Games",
+        href: "games",
+        gficon: "sports_esports",
+      },
+      {
+        title: "Fleet",
+        href: "vehicles",
+        gficon: "directions_car",
+        isBeta: true,
+      },
+      {
+        title: "Overlay",
+        href: "overlay",
+        gficon: "layers",
+        isBeta: true,
+        requireUser: true,
+        requireVerified: true,
+      },
+      {
+        title: "Users",
+        gficon: "group",
+        href: "users",
+      },
+      {
+        title: "Profile",
+        href: "me",
+        gficon: "person",
+        requireUser: true,
+      },
+      {
+        title: "dashboard",
+        href: "dashboard",
+        gficon: "dashboard",
+        requireUser: true,
+      },
+      {
+        title: "Login",
+        href: "account",
+        gficon: "login",
+        requireUser: false,
+      },
+      {
+        title: "settings",
+        href: "account",
+        gficon: "settings",
+        requireUser: true,
+      },
+      {
+        title: "Contact",
+        href: "ticket",
+        gficon: "contact_support",
+        isBeta: true,
+      },
+    ],
+  },
+  {
+    title: "Sites",
+    items: [
+      {
+        title: "Immersion V2",
+        href: "https://v2.immersion.xcwalker.dev/",
+        gficon: "auto_awesome_mosaic",
+        // iconURL:
+        // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
+      },
+      {
+        title: "Immersion",
+        href: "https://immersion.xcwalker.dev/",
+        gficon: "grid_view",
+        // iconURL:
+        // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
+      },
+      {
+        title: "Searrson",
+        href: "https://searrson.xcwalker.dev/",
+        gficon: "wallpaper_slideshow",
+        // iconURL:
+        // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Searrson.svg",
+      },
+      {
+        title: "Therwim",
+        href: "https://therwim.xcwalker.dev/",
+        gficon: "web",
+        // iconURL:
+        // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Therwim.svg",
+      },
+    ],
+  },
+  {
+    title: "ReactRadio",
+    items: [
+      {
+        title: "Desktop",
+        href: "https://reactradio.dev/",
+        gficon: "desktop_windows",
+        // iconURL:
+        // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
+      },
+      {
+        title: "Mobile",
+        href: "https://mobile.reactradio.dev/",
+        gficon: "smartphone",
+        // iconURL:
+        // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Searrson.svg",
+      },
+      {
+        title: "Legacy",
+        href: "https://legacy.reactradio.dev/",
+        gficon: "devices",
+        // iconURL:
+        // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Therwim.svg",
+      },
+    ],
+  },
+];
+
 type Classes = {
   id?: string;
   className?: string;

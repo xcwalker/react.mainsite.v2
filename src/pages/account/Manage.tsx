@@ -22,13 +22,14 @@ import Button from "../../components/Button";
 import { User } from "firebase/auth";
 import ButtonWithPreview from "../../components/ButtonWithPreview";
 import SettingSection from "../../components/SettingSection";
+import { Navigate, useParams } from "react-router-dom";
 
 export default function ManagePage() {
   const currentUser = useAuth();
   const [userSettings, setUserSettings] = useState<userSettingsType | null>(
     null
   );
-  const [page, setPage] = useState("themes");
+  const { page } = useParams();
 
   useEffect(() => {
     if (!currentUser) {
@@ -76,7 +77,7 @@ export default function ManagePage() {
         </title>
       </Helmet>
       <SideBySide leftWidth="250px">
-        <Sidebar page={page} setPage={setPage} />
+        <Sidebar page={page} />
         <main className={css.main}>
           {page === "themes" && (
             <Page_Themes
@@ -85,6 +86,14 @@ export default function ManagePage() {
             />
           )}
           {page === "account" && <Page_Account />}
+          {page === "radio" && <Page_Radio />}
+          {page === "navigation" && <Page_Navigation />}
+          {page === "keyboardShortcuts" && <Page_KeyboardShortcuts />}
+          {page === "home" && <Page_Home />}
+          {page === "admin" && <Page_Admin />}
+          {page === "dashboard" && <Page_Dashboard />}
+          {page === "newtab" && <Page_NewTab />}
+          {!page && <Navigate to={"themes"} replace={true} />}
         </main>
       </SideBySide>
     </>
@@ -92,13 +101,19 @@ export default function ManagePage() {
 }
 
 export function Sidebar(props: {
-  page: string;
-  setPage: React.Dispatch<React.SetStateAction<string>>;
+  page?: string;
 }) {
-  const { page, setPage } = props;
+  const { page } = props;
 
   const pages = [
     { name: "themes", title: "Manage Themes", icon: "format_paint" },
+    { name: "radio", title: "Radio Settings", icon: "radio" },
+    { name: "navigation", title: "Navigation Settings", icon: "explore" },
+    { name: "home", title: "Home Settings", icon: "home" },
+    { name: "admin", title: "Admin Settings", icon: "admin_panel_settings" },
+    { name: "dashboard", title: "Dashboard Settings", icon: "dashboard" },
+    { name: "newtab", title: "New Tab Settings", icon: "tab" },
+    { name: "keyboardShortcuts", title: "Keyboard Shortcuts", icon: "keyboard" },
     { name: "account", title: "Manage Account", icon: "account_circle" },
   ];
 
@@ -107,14 +122,13 @@ export function Sidebar(props: {
       <nav>
         <ul>
           {pages.map((pageItem) => (
+            console.log(pageItem.name, page, page === pageItem.name),
             <li key={pageItem.name}>
               <Button
-                onClick={() => {
-                  setPage(pageItem.name);
-                }}
-                style={page === pageItem.name ? "primary" : "secondary"}
+                href={"../" + pageItem.name}
                 title={pageItem.title}
                 icon={{ gficon: pageItem.icon }}
+                
               >
                 {pageItem.title}
               </Button>
@@ -337,6 +351,62 @@ function Page_Themes(props: {
   );
 }
 
+function Page_Radio() {
+  return (
+    <SettingSection id="radioSettings" title="Radio Settings">
+      <p>Radio settings coming soon!</p>
+    </SettingSection>
+  );
+}
+
+function Page_Navigation() {
+  return (
+    <SettingSection id="navigationSettings" title="Navigation Settings">
+      <p>Navigation settings coming soon!</p>
+    </SettingSection>
+  );
+}
+
+function Page_KeyboardShortcuts() {
+  return (
+    <SettingSection id="keyboardShortcuts" title="Keyboard Shortcuts">
+      <p>Keyboard shortcuts coming soon!</p>
+    </SettingSection>
+  );
+}
+
+function Page_Home() {
+  return (
+    <SettingSection id="homeSettings" title="Home Settings">
+      <p>Home settings coming soon!</p>
+    </SettingSection>
+  );
+}
+
+function Page_Admin() {
+  return (
+    <SettingSection id="adminSettings" title="Admin Settings">
+      <p>Admin settings coming soon!</p>
+    </SettingSection>
+  );
+}
+
+function Page_Dashboard() {
+  return (
+    <SettingSection id="dashboardSettings" title="Dashboard Settings">
+      <p>Dashboard settings coming soon!</p>
+    </SettingSection>
+  );
+}
+
+function Page_NewTab() {
+  return (
+    <SettingSection id="newTabSettings" title="New Tab Settings">
+      <p>New tab settings coming soon!</p>
+    </SettingSection>
+  );
+}
+
 function PreviewTheme(props: {
   themeName: string;
   customThemeColors?: customThemeType;
@@ -347,3 +417,4 @@ function PreviewTheme(props: {
     </div>
   );
 }
+

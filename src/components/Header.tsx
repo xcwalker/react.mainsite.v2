@@ -11,154 +11,7 @@ import { parseEntities } from "parse-entities";
 
 import { RadioAtom } from "../App";
 import Button from "./Button";
-
-const navItems = [
-  {
-    title: "New Tab",
-    href: "/newtab",
-    gficon: "new_window",
-    hidden: true,
-  },
-  {
-    title: "home",
-    href: "",
-    gficon: "home",
-  },
-  {
-    title: "Projects",
-    href: "projects",
-    gficon: "design_services",
-  },
-  {
-    title: "Blog",
-    href: "blog",
-    gficon: "text_snippet",
-  },
-  {
-    title: "Recipes",
-    href: "recipes",
-    gficon: "stockpot",
-  },
-  {
-    title: "Albums",
-    href: "albums",
-    gficon: "image",
-  },
-  {
-    title: "Videos",
-    href: "videos",
-    gficon: "airplay",
-  },
-  {
-    title: "Games",
-    href: "games",
-    gficon: "sports_esports",
-  },
-  {
-    title: "Fleet",
-    href: "vehicles",
-    gficon: "directions_car",
-    isBeta: true,
-  },
-  {
-    title: "Overlay",
-    href: "overlay",
-    gficon: "layers",
-    isBeta: true,
-    requireUser: true,
-    requireVerified: true,
-  },
-  {
-    title: "Users",
-    gficon: "group",
-    href: "users",
-  },
-  {
-    title: "Profile",
-    href: "me",
-    gficon: "person",
-    requireUser: true,
-  },
-  {
-    title: "dashboard",
-    href: "dashboard",
-    gficon: "dashboard",
-    requireUser: true,
-  },
-  {
-    title: "Login",
-    href: "account",
-    gficon: "login",
-    requireUser: false,
-  },
-  {
-    title: "settings",
-    href: "account",
-    gficon: "settings",
-    requireUser: true,
-  },
-  {
-    title: "Contact",
-    href: "ticket",
-    gficon: "contact_support",
-    isBeta: true,
-  },
-];
-
-const navItemsSites = [
-  {
-    title: "Immersion V2",
-    href: "https://v2.immersion.xcwalker.dev/",
-    gficon: "auto_awesome_mosaic",
-    // iconURL:
-    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
-  },
-  {
-    title: "Immersion",
-    href: "https://immersion.xcwalker.dev/",
-    gficon: "grid_view",
-    // iconURL:
-    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
-  },
-  {
-    title: "Searrson",
-    href: "https://searrson.xcwalker.dev/",
-    gficon: "wallpaper_slideshow",
-    // iconURL:
-    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Searrson.svg",
-  },
-  {
-    title: "Therwim",
-    href: "https://therwim.xcwalker.dev/",
-    gficon: "web",
-    // iconURL:
-    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Therwim.svg",
-  },
-];
-
-const rrItemsSites = [
-  {
-    title: "Desktop",
-    href: "https://reactradio.dev/",
-    gficon: "desktop_windows",
-    // iconURL:
-    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Immersion.svg",
-  },
-  {
-    title: "Mobile",
-    href: "https://mobile.reactradio.dev/",
-    gficon: "smartphone",
-    // iconURL:
-    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Searrson.svg",
-  },
-  {
-    title: "Legacy",
-    href: "https://legacy.reactradio.dev/",
-    gficon: "devices",
-    // iconURL:
-    // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Therwim.svg",
-  },
-];
+import { defaultNav } from "../types";
 
 export default function Header() {
   const api = "https://apiv2.simulatorradio.com/metadata/combined";
@@ -330,107 +183,99 @@ export default function Header() {
           Jump to Player
         </Button>
         <nav>
-          <ul className={css.links}>
-            {navItems &&
-              navItems.map((item, index) => {
-                if (item.requireVerified) {
-                  return (
-                    <Fragment key={index}>
-                      <RoleProtect staffOnly redirect={<></>}>
-                        <Button
-                          {...item}
-                          icon={{ gficon: item.gficon, gfClassName: css.icon }}
-                          hidden={item.hidden ? "siteNavigation" : undefined}
-                          isBeta={item.isBeta}
-                          betaTagClassName={css.betaTag}
-                        >
-                          <span className={css.title}>{item.title}</span>
-                        </Button>
-                      </RoleProtect>
-                    </Fragment>
-                  );
-                } else if (item.requireUser)
-                  return (
-                    <Fragment key={index}>
-                      <Protect>
-                        <Button
-                          {...item}
-                          icon={{ gficon: item.gficon, gfClassName: css.icon }}
-                          hidden={item.hidden ? "siteNavigation" : undefined}
-                          isBeta={item.isBeta}
-                          betaTagClassName={css.betaTag}
-                        >
-                          <span className={css.title}>{item.title}</span>
-                        </Button>
-                      </Protect>
-                    </Fragment>
-                  ); else if (item.requireUser === false)
+          {defaultNav &&
+            defaultNav.map((set, index) => {
+              return (
+                <Fragment key={index}>
+                  {!set.hideTitle && (
+                    <span className={css.listTitle}>{set.title}</span>
+                  )}
+                  <ul className={css.links}>
+                    {set.items.map((item, index) => {
+                      if (item.requireVerified) {
+                        return (
+                          <Fragment key={index}>
+                            <RoleProtect staffOnly redirect={<></>}>
+                              <Button
+                                {...item}
+                                icon={{
+                                  gficon: item.gficon,
+                                  gfClassName: css.icon,
+                                }}
+                                hidden={
+                                  item.hidden ? "siteNavigation" : undefined
+                                }
+                                isBeta={item.isBeta}
+                                betaTagClassName={css.betaTag}
+                              >
+                                <span className={css.title}>{item.title}</span>
+                              </Button>
+                            </RoleProtect>
+                          </Fragment>
+                        );
+                      } else if (item.requireUser)
+                        return (
+                          <Fragment key={index}>
+                            <Protect>
+                              <Button
+                                {...item}
+                                icon={{
+                                  gficon: item.gficon,
+                                  gfClassName: css.icon,
+                                }}
+                                hidden={
+                                  item.hidden ? "siteNavigation" : undefined
+                                }
+                                isBeta={item.isBeta}
+                                betaTagClassName={css.betaTag}
+                              >
+                                <span className={css.title}>{item.title}</span>
+                              </Button>
+                            </Protect>
+                          </Fragment>
+                        );
+                      else if (item.requireUser === false)
+                        return (
+                          <Fragment key={index}>
+                            <Protect isLoginPage>
+                              <Button
+                                {...item}
+                                icon={{
+                                  gficon: item.gficon,
+                                  gfClassName: css.icon,
+                                }}
+                                hidden={
+                                  item.hidden ? "siteNavigation" : undefined
+                                }
+                                isBeta={item.isBeta}
+                                betaTagClassName={css.betaTag}
+                              >
+                                <span className={css.title}>{item.title}</span>
+                              </Button>
+                            </Protect>
+                          </Fragment>
+                        );
                       return (
                         <Fragment key={index}>
-                          <Protect isLoginPage>
-                            <Button
-                              {...item}
-                              icon={{ gficon: item.gficon, gfClassName: css.icon }}
-                              hidden={item.hidden ? "siteNavigation" : undefined}
-                              isBeta={item.isBeta}
-                              betaTagClassName={css.betaTag}
-                            >
-                              <span className={css.title}>{item.title}</span>
-                            </Button>
-                          </Protect>
+                          <Button
+                            {...item}
+                            icon={{
+                              gficon: item.gficon,
+                              gfClassName: css.icon,
+                            }}
+                            hidden={item.hidden ? "siteNavigation" : undefined}
+                            isBeta={item.isBeta}
+                            betaTagClassName={css.betaTag}
+                          >
+                            <span className={css.title}>{item.title}</span>
+                          </Button>
                         </Fragment>
                       );
-                return (
-                  <Fragment key={index}>
-                    <Button
-                      {...item}
-                      icon={{ gficon: item.gficon, gfClassName: css.icon }}
-                      hidden={item.hidden ? "siteNavigation" : undefined}
-                      isBeta={item.isBeta}
-                      betaTagClassName={css.betaTag}
-                    >
-                      <span className={css.title}>{item.title}</span>
-                    </Button>
-                  </Fragment>
-                );
-              })}
-          </ul>
-          <span className={css.listTitle}>Sites</span>
-          <ul className={css.links}>
-            {navItemsSites &&
-              navItemsSites.map((item, index) => {
-                return (
-                  <Fragment key={index}>
-                    <Button
-                      {...item}
-                      icon={{ gficon: item.gficon, gfClassName: css.icon }}
-                      external
-                      externalClassName={css.external}
-                    >
-                      <span className={css.title}>{item.title}</span>
-                    </Button>
-                  </Fragment>
-                );
-              })}
-          </ul>
-          <span className={css.listTitle}>ReactRadio</span>
-          <ul className={css.links}>
-            {rrItemsSites &&
-              rrItemsSites.map((item, index) => {
-                return (
-                  <Fragment key={index}>
-                    <Button
-                      {...item}
-                      icon={{ gficon: item.gficon, gfClassName: css.icon }}
-                      external
-                      externalClassName={css.external}
-                    >
-                      <span className={css.title}>{item.title}</span>
-                    </Button>
-                  </Fragment>
-                );
-              })}
-          </ul>
+                    })}
+                  </ul>
+                </Fragment>
+              );
+            })}
           <span className={css.listTitle}>Socials</span>
           <SocialsList
             listClassName={css.links}

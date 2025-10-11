@@ -26,6 +26,10 @@ export default function SettingController(props: { children: React.ReactNode }) 
       currentUser.uid,
       setUserSettings as React.Dispatch<React.SetStateAction<unknown>>
     );
+
+    return () => {
+      setUserSettings(null);
+    };
   }, [currentUser]);
 
   useEffect(() => {
@@ -38,6 +42,11 @@ export default function SettingController(props: { children: React.ReactNode }) 
       Object.entries(themeColors).forEach(([key, value]) => {
         root.style.setProperty(`--custom-${key}`, value);
       });
+    }
+
+    return () => {
+      const root = document.documentElement;
+      root.setAttribute("data-theme", "system");
     }
   }, [userSettings]);
 

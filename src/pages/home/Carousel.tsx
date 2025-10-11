@@ -8,6 +8,7 @@ import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDat
 import Carousel from "../../components/Carousel";
 import getDataByDate from "../../functions/firebase/storage/getDataByDate";
 import ListItem from "../../components/ListItem";
+import { useAuth } from "../../functions/firebase/authentication/useAuth";
 
 export default function HomeCarousel(props: {
   title: string;
@@ -16,6 +17,7 @@ export default function HomeCarousel(props: {
   itemType: ItemTypes;
   hasThumbnail: boolean;
 }) {
+  const currentUser = useAuth();
   const [projectsArray, setProjectsArray] = useState<
     { id: string; value: ItemProps }[] | undefined
   >();
@@ -24,7 +26,7 @@ export default function HomeCarousel(props: {
     if (props.onHome) {
       getDataByDateFromUser(
         props.itemType,
-        import.meta.env.VITE_MAIN_USER_ID
+        currentUser ? currentUser.uid : import.meta.env.VITE_MAIN_USER_ID
       ).then((data) => {
         setProjectsArray(data as { id: string; value: ItemProps }[]);
       });
@@ -37,7 +39,7 @@ export default function HomeCarousel(props: {
     return () => {
       setProjectsArray(undefined);
     };
-  }, [props.onHome, props.itemType]);
+  }, [props.onHome, props.itemType, currentUser]);
 
   return (
     <Section id={props.itemType} container={{ className: css.container }}>
