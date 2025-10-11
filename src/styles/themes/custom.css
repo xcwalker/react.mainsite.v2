@@ -1,4 +1,5 @@
-html[data-theme="custom"] {
+html[data-theme="custom"],
+.preview[data-theme="custom"] {
   --text: var(--custom-text);
   --text-alt: var(--custom-textAlt);
   --background: var(--custom-background);

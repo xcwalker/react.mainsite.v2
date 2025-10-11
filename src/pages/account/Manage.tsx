@@ -274,6 +274,7 @@ function Page_Themes(props: {
                     },
                   ],
                 });
+                setCustomThemeName("");
               }}
             >
               Save Custom Theme
