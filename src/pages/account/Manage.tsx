@@ -23,6 +23,9 @@ import { User } from "firebase/auth";
 import ButtonWithPreview from "../../components/ButtonWithPreview";
 import SettingSection from "../../components/SettingSection";
 import { Navigate, useParams } from "react-router-dom";
+import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
+import { RoleProtect } from "../../components/Security/Protect";
+import SettingsNavigation from "./Settings/Navigation";
 
 export default function ManagePage() {
   const currentUser = useAuth();
@@ -77,66 +80,134 @@ export default function ManagePage() {
         </title>
       </Helmet>
       <SideBySide leftWidth="250px">
-        <Sidebar page={page} />
+        <Sidebar />
         <main className={css.main}>
-          {page === "themes" && (
-            <Page_Themes
-              userSettings={userSettings}
-              currentUser={currentUser}
-            />
-          )}
-          {page === "account" && <Page_Account />}
-          {page === "radio" && <Page_Radio />}
-          {page === "navigation" && <Page_Navigation />}
-          {page === "keyboardShortcuts" && <Page_KeyboardShortcuts />}
-          {page === "home" && <Page_Home />}
-          {page === "admin" && <Page_Admin />}
-          {page === "dashboard" && <Page_Dashboard />}
-          {page === "newtab" && <Page_NewTab />}
-          {!page && <Navigate to={"themes"} replace={true} />}
+          {pages.map((pageItem) => {
+            if (page === pageItem.name) {
+              const Component = pageItem.component;
+
+              return (
+                <Component
+                  key={pageItem.name}
+                  userSettings={userSettings}
+                  currentUser={currentUser}
+                />
+              );
+            }
+            return null;
+          })}
+          {!page && <Navigate to={pages[0].name} replace={true} />}
         </main>
       </SideBySide>
     </>
   );
 }
+type PageItem = {
+  name: string;
+  title: string;
+  icon: string;
+  component: React.ComponentType<{
+    userSettings: userSettingsType;
+    currentUser: User;
+  }>;
+  adminOnly?: boolean;
+};
 
-export function Sidebar(props: {
-  page?: string;
-}) {
-  const { page } = props;
+const pages: PageItem[] = [
+  {
+    name: "themes",
+    title: "Manage Themes",
+    icon: "format_paint",
+    component: Page_Themes,
+  },
+  {
+    name: "radio",
+    title: "Radio Settings",
+    icon: "radio",
+    component: Page_Radio,
+  },
+  {
+    name: "navigation",
+    title: "Navigation Settings",
+    icon: "explore",
+    component: SettingsNavigation,
+  },
+  {
+    name: "home",
+    title: "Home Settings",
+    icon: "home",
+    component: Page_Home,
+  },
+  {
+    name: "admin",
+    title: "Admin Settings",
+    icon: "admin_panel_settings",
+    adminOnly: true,
+    component: Page_Admin,
+  },
+  {
+    name: "dashboard",
+    title: "Dashboard Settings",
+    icon: "dashboard",
+    component: Page_Dashboard,
+  },
+  {
+    name: "newtab",
+    title: "New Tab Settings",
+    icon: "tab",
+    component: Page_NewTab,
+  },
+  {
+    name: "keyboardShortcuts",
+    title: "Keyboard Shortcuts",
+    icon: "keyboard",
+    component: Page_KeyboardShortcuts,
+  },
+  {
+    name: "account",
+    title: "Manage Account",
+    icon: "account_circle",
+    component: Page_Account,
+  },
+];
 
-  const pages = [
-    { name: "themes", title: "Manage Themes", icon: "format_paint" },
-    { name: "radio", title: "Radio Settings", icon: "radio" },
-    { name: "navigation", title: "Navigation Settings", icon: "explore" },
-    { name: "home", title: "Home Settings", icon: "home" },
-    { name: "admin", title: "Admin Settings", icon: "admin_panel_settings" },
-    { name: "dashboard", title: "Dashboard Settings", icon: "dashboard" },
-    { name: "newtab", title: "New Tab Settings", icon: "tab" },
-    { name: "keyboardShortcuts", title: "Keyboard Shortcuts", icon: "keyboard" },
-    { name: "account", title: "Manage Account", icon: "account_circle" },
-  ];
-
+export function Sidebar() {
   return (
-    <div className={css.sidebar}>
-      <nav>
+    <SidebarContainer>
+      <nav className={css.sidebarNav}>
         <ul>
-          {pages.map((pageItem) => (
-            console.log(pageItem.name, page, page === pageItem.name),
-            <li key={pageItem.name}>
-              <Button
-                href={"../" + pageItem.name}
-                title={pageItem.title}
-                icon={{ gficon: pageItem.icon }}
-                
-              >
-                {pageItem.title}
-              </Button>
-            </li>
-          ))}
+          {pages.map((pageItem) => {
+            if (pageItem.adminOnly) {
+              return (
+                <RoleProtect staffOnly>
+                  <li key={pageItem.name}>
+                    <Button
+                      href={"../" + pageItem.name}
+                      title={pageItem.title}
+                      icon={{ gficon: pageItem.icon }}
+                    >
+                      {pageItem.title}
+                    </Button>
+                  </li>
+                </RoleProtect>
+              );
+            } else {
+              return (
+                <li key={pageItem.name}>
+                  <Button
+                    href={"../" + pageItem.name}
+                    title={pageItem.title}
+                    icon={{ gficon: pageItem.icon }}
+                  >
+                    {pageItem.title}
+                  </Button>
+                </li>
+              );
+            }
+          })}
         </ul>
       </nav>
-    </div>
+    </SidebarContainer>
   );
 }
 
@@ -359,13 +430,7 @@ function Page_Radio() {
   );
 }
 
-function Page_Navigation() {
-  return (
-    <SettingSection id="navigationSettings" title="Navigation Settings">
-      <p>Navigation settings coming soon!</p>
-    </SettingSection>
-  );
-}
+
 
 function Page_KeyboardShortcuts() {
   return (
@@ -417,4 +482,3 @@ function PreviewTheme(props: {
     </div>
   );
 }
-

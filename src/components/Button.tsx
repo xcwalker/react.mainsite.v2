@@ -3,8 +3,7 @@ import css from "../styles/components/button.module.css";
 import { ReactNode } from "react";
 import GFIcon from "./GFIcon";
 
-export default function Button(props: {
-  children: ReactNode;
+export type ButtonType = {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   // type is used to determine the type of button, e.g. submit for forms
@@ -36,7 +35,9 @@ export default function Button(props: {
   betaTagClassName?: string;
   centered?: boolean;
   // centered is used to center the button
-}) {
+}
+
+export default function Button(props: ButtonType & { children: ReactNode }) {
   return (
     <>
       {props.href !== undefined && props.pageNavigation && (
