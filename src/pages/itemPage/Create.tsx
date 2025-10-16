@@ -233,21 +233,15 @@ function Sidebar(props: {
               type="url"
             />
           </div>
-          <div className={css.parnix}>
-            <label htmlFor="parnix">Parnix Compatible</label>
-            <input
-              type="checkbox"
-              id="parnix"
-              checked={props.data.metaData.parnix}
-              onChange={(e) => {
-                props.setData((prev) => {
-                  const newValue = { ...prev };
-                  newValue.metaData.parnix = e.target.checked;
-                  return newValue;
-                });
-              }}
-            />
-          </div>
+          <TextInput
+            value={props.data.metaData.parnix ? props.data.metaData.parnix : ""}
+            valueName="parnix"
+            classification="metaData"
+            placeholder="https://iframe.example.com"
+            setData={props.setData}
+            title="Parnix Compatible"
+            className={css.parnix}
+          />
         </>
       )}
       {props.itemType === "videos" && (

@@ -228,7 +228,7 @@ export interface ItemProps {
     collection: string;
     collectionName: string;
     authorID: string;
-    parnix?: boolean;
+    parnix?: string;
   };
 }
 
