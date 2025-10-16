@@ -192,7 +192,9 @@ export default function Header() {
                   )}
                   <ul className={css.links}>
                     {set.items.map((item, index) => {
-                      if (item.requireVerified) {
+                      if (item.devOnly && import.meta.env.MODE !== "development")
+                        return null;
+                      else if (item.requireVerified) {
                         return (
                           <Fragment key={index}>
                             <RoleProtect staffOnly redirect={<></>}>

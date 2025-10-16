@@ -1,0 +1,30 @@
+.codePreview {
+  /* sizing */
+  padding: 1rem;
+
+  /* styling */
+  border-radius: var(--code-snippet-border-radius, 0.5rem);
+  background-color: var(--code-snippet-background, var(--primary));
+  color: var(--code-snippet-text, var(--text));
+}
+
+.codePreview button {
+  /* position */
+  inset: auto;
+  top: 0;
+  right: 0;
+  margin: 0;
+
+  /* sizing */
+  max-width: unset;
+  max-height: unset;
+  padding: 0.75rem;
+
+  /* styling */
+  color: var(--code-snippet-text, var(--text));
+  background-color: var(--code-snippet-background, var(--background));
+  border: none;
+  cursor: pointer;
+  border-radius: var(--button-border-radius, 0.25rem);
+
+}
