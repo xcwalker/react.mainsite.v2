@@ -87,11 +87,21 @@ export function ItemSidebar(props: {
               style="secondary"
               onClick={() => props.setChecklistMode(!props.checklistMode)}
               title={
-                (props.checklistMode ? "Numbered" : "Checklist") +
-                "  Mode"
+                (props.checklistMode ? "Numbered" : "Checklist") + "  Mode"
               }
             >
               {props.checklistMode ? "Numbered" : "Checklist"} Mode
+            </Button>
+          )}
+          {item.metaData.parnix && (
+            <Button
+              href={"https://parnix.xcwalker.dev/" + props.slug}
+              external
+              title="View on Parnix"
+              icon={{ inline: <SocialIcon social="parnix" /> }}
+              style="secondary"
+            >
+              Parnix
             </Button>
           )}
           {item.metaData.youtube && item.metaData.youtube.length > 0 && (

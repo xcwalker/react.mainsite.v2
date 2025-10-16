@@ -12,7 +12,6 @@ export default async function firebaseGetRealtimeData(
     (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
-        console.log("Current data: ", data);
         setData(data);
         if (setError) setError(false);
       } else {

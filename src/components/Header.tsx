@@ -11,9 +11,12 @@ import { parseEntities } from "parse-entities";
 
 import { RadioAtom } from "../App";
 import Button from "./Button";
-import { defaultNav } from "../types";
+import { defaultNav, userSettingsType } from "../types";
+import { useAuth } from "../functions/firebase/authentication/useAuth";
+import firebaseGetRealtimeData from "../functions/firebase/storage/useRealtimeData";
 
 export default function Header() {
+  const currentUser = useAuth();
   const api = "https://apiv2.simulatorradio.com/metadata/combined";
   const [ticking] = useState(true);
   const [count, setCount] = useState(0);
@@ -24,6 +27,35 @@ export default function Header() {
   const [navScrollLastKnown, setNavScrollLastKnown] = useState(0);
 
   const audio = document.querySelector("audio#audioPlayer") as HTMLAudioElement;
+
+  const [nav, setNav] = useState(defaultNav);
+  const [showSocials, setShowSocials] = useState(true);
+  const [userSettings, setUserSettings] = useState<userSettingsType | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (!currentUser) {
+      setNav(defaultNav);
+      return;
+    }
+
+    firebaseGetRealtimeData(
+      "settings",
+      currentUser.uid,
+      setUserSettings as React.Dispatch<React.SetStateAction<unknown>>
+    );
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (userSettings?.navigation) {
+      setNav(userSettings.navigation);
+    }
+
+    if (userSettings?.navigationShowSocials !== undefined) {
+      setShowSocials(userSettings?.navigationShowSocials);
+    }
+  }, [userSettings]);
 
   useEffect(() => {
     if (fetching || fetchCount === count) return;
@@ -183,8 +215,8 @@ export default function Header() {
           Jump to Player
         </Button>
         <nav>
-          {defaultNav &&
-            defaultNav.map((set, index) => {
+          {nav &&
+            nav.map((set, index) => {
               return (
                 <Fragment key={index}>
                   {!set.hideTitle && (
@@ -278,16 +310,20 @@ export default function Header() {
                 </Fragment>
               );
             })}
-          <span className={css.listTitle}>Socials</span>
-          <SocialsList
-            listClassName={css.links}
-            buttonClassName={css.link}
-            iconClassName={css.icon}
-            externalClassName={css.external}
-            contentClassName={css.content}
-            textClassName={css.title}
-            useUnstyledButton
-          />
+          {showSocials && (
+            <>
+              <span className={css.listTitle}>Socials</span>
+              <SocialsList
+                listClassName={css.links}
+                buttonClassName={css.link}
+                iconClassName={css.icon}
+                externalClassName={css.external}
+                contentClassName={css.content}
+                textClassName={css.title}
+                useUnstyledButton
+              />
+            </>
+          )}
         </nav>
         {radio.inSidebar && <Radio />}
       </div>

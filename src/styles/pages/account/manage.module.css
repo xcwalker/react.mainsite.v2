@@ -21,24 +21,14 @@
   border-radius: calc(var(--button-border-radius, 0.5rem) / 2);
 }
 
-.sidebar {
-  /* flex */
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  /* sizing */
-  width: 100%;
-}
-
-.sidebar nav {
+.sidebarNav {
   /* flex */
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
 }
 
-.sidebar nav ul {
+.sidebarNav ul {
   /* reset */
   list-style: none;
   margin: 0;
@@ -48,6 +38,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--settings-nav-sub-gap, 0.25rem);
+
+  /* text */
+  line-height: 1;
+  font-weight: 700;
 }
 
 .themeList {

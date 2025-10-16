@@ -235,6 +235,7 @@ export interface ItemProps {
     collection: string;
     collectionName: string;
     authorID: string;
+    parnix?: string;
   };
 }
 
@@ -296,6 +297,7 @@ export type ItemType = {
     repoName?: string;
     subRepo?: string;
     workshop?: string;
+    parnix?: boolean;
   };
 };
 
@@ -532,6 +534,8 @@ export type userSettingsType = {
     textInverse: string;
   };
   customThemes: customThemeType[];
+  navigation: NavSection[];
+  navigationShowSocials: boolean;
 };
 
 export type customThemeType = {
@@ -550,6 +554,8 @@ export type customThemeType = {
 export const userSettingsDefault: userSettingsType = {
   theme: "system",
   customThemes: [],
+  navigation: defaultNav,
+  navigationShowSocials: true,
 };
 
 export type Overlay_PositionType =

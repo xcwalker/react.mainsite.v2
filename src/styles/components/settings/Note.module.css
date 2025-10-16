@@ -1,0 +1,17 @@
+
+
+.note {
+  /* spacing */
+  margin: 0;
+  padding: 2rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text);
+  border: 0.125rem solid var(--secondary);
+  border-radius: var(--settings-note-border-radius, 0.5rem);
+}

@@ -1,0 +1,131 @@
+
+
+ul.navigationList,
+.addItems {
+  /* reset */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: var(--settings-nav-sub-gap, 1rem);
+
+  /* text */
+  font-weight: 700;
+  line-height: 1;
+}
+
+ul.navigationList > li .header {
+  /* flex */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+ul.navigationList > li .title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+ul.navigationList .controls,
+ul.navigationList > li .header .titleControls {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+ul.navigationList > li .header .titleControls {
+  padding: 0.25rem;
+  padding-left: 1rem;
+  gap: 1rem;
+
+  border: 1px solid var(--primary);
+  border-radius: var(--button-border-radius, 0.5rem);
+}
+
+ul.navigationList ul.items,
+ul.navigationList ul.removedItems,
+ul.itemsToAdd {
+  /* reset */
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* border */
+  background-color: var(--primary);
+  border-radius: var(--button-border-radius, 0.5rem);
+}
+
+ul.navigationList ul.items li .title,
+ul.navigationList ul.removedItems li .title,
+ul.itemsToAdd li .title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.mainNavList {
+  /* reset */
+  list-style: none;
+  margin: 0;
+  padding: 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  /* styling */
+  border: 0.125rem solid var(--secondary);
+  border-radius: var(--settings-border-radius, 0.5rem);
+}
+
+li.subItem {
+  /* grid */
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  place-items: center;
+  
+  /* padding */
+  padding: 0.25rem;
+  
+  /* border */
+  border-bottom: 0.125rem solid var(--secondary);
+}
+
+li.subItem.draggable {
+  grid-template-columns: 2rem 1fr auto;
+
+}
+
+li.subItem:last-child {
+  border-bottom: none;
+}
+
+li.subItem .title {
+  font-weight: 600;
+  font-size: 1rem;
+  place-self: start;
+  align-self: center;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.draggableList {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
