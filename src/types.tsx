@@ -228,6 +228,7 @@ export interface ItemProps {
     collection: string;
     collectionName: string;
     authorID: string;
+    parnix?: boolean;
   };
 }
 
@@ -289,6 +290,7 @@ export type ItemType = {
     repoName?: string;
     subRepo?: string;
     workshop?: string;
+    parnix?: boolean;
   };
 };
 

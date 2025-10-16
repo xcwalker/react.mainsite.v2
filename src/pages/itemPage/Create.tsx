@@ -198,40 +198,57 @@ function Sidebar(props: {
       </div>
 
       {props.itemType === "projects" && (
-        <div className={css.links}>
-          <div className={css.repoInfo}>
+        <>
+          <div className={css.links}>
+            <div className={css.repoInfo}>
+              <TextInput
+                value={props.data.metaData.repoName}
+                valueName="repoName"
+                classification="metaData"
+                placeholder="Repository Name"
+                setData={props.setData}
+                title="Repository Name"
+                className={css.repoName}
+              />
+              <TextInput
+                value={
+                  props.data.metaData.subRepo ? props.data.metaData.subRepo : ""
+                }
+                valueName="subRepo"
+                classification="metaData"
+                placeholder="Sub Repository (folder name)"
+                setData={props.setData}
+                title="Sub Repository (folder name)"
+                className={css.repoName}
+              />
+            </div>
             <TextInput
-              value={props.data.metaData.repoName}
-              valueName="repoName"
+              value={props.data.metaData.workshop}
+              valueName="workshop"
               classification="metaData"
-              placeholder="Repository Name"
+              placeholder="Steam Workshop URL"
               setData={props.setData}
-              title="Repository Name"
-              className={css.repoName}
-            />
-            <TextInput
-              value={
-                props.data.metaData.subRepo ? props.data.metaData.subRepo : ""
-              }
-              valueName="subRepo"
-              classification="metaData"
-              placeholder="Sub Repository (folder name)"
-              setData={props.setData}
-              title="Sub Repository (folder name)"
-              className={css.repoName}
+              title="Steam Workshop URL"
+              className={css.workshop}
+              type="url"
             />
           </div>
-          <TextInput
-            value={props.data.metaData.workshop}
-            valueName="workshop"
-            classification="metaData"
-            placeholder="Steam Workshop URL"
-            setData={props.setData}
-            title="Steam Workshop URL"
-            className={css.workshop}
-            type="url"
-          />
-        </div>
+          <div className={css.parnix}>
+            <label htmlFor="parnix">Parnix Compatible</label>
+            <input
+              type="checkbox"
+              id="parnix"
+              checked={props.data.metaData.parnix}
+              onChange={(e) => {
+                props.setData((prev) => {
+                  const newValue = { ...prev };
+                  newValue.metaData.parnix = e.target.checked;
+                  return newValue;
+                });
+              }}
+            />
+          </div>
+        </>
       )}
       {props.itemType === "videos" && (
         <TextInput
@@ -304,7 +321,7 @@ function Sidebar(props: {
             if (props.data.data.title === "") {
               toast.error("Title is required");
               return;
-            } 
+            }
             if (props.data.data.description === "") {
               toast.error("Description is required");
               return;
@@ -349,8 +366,10 @@ function Sidebar(props: {
                     created: props.data.metaData.date.created,
                     modified: new Date().toJSON(),
                   },
-                  collection: props.data.metaData.collection.length === 0 ? "" : (
-                    props.admin
+                  collection:
+                    props.data.metaData.collection.length === 0
+                      ? ""
+                      : props.admin
                       ? props.data.metaData.collection.startsWith(
                           props.data.metaData.authorID + "-"
                         )
@@ -362,8 +381,7 @@ function Sidebar(props: {
                           currentUser.uid + "-"
                         )
                       ? props.data.metaData.collection
-                      : currentUser.uid + "-" + props.data.metaData.collection
-                  ),
+                      : currentUser.uid + "-" + props.data.metaData.collection,
                 },
               }).then((res) => {
                 console.log(res);
