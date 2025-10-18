@@ -93,6 +93,8 @@ function HistoryEntry(props: {
       entry.date === ""
     ) {
       setEditMode(true);
+    } else {
+      setEditMode(false);
     }
   }, [entry]);
 
