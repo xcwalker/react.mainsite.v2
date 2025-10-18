@@ -75,12 +75,13 @@ li:last-of-type .entry::after {
   /* sizing */
   width: 100%;
   padding: 0.5rem 1rem;
-  height: 3.25rem;
   
   /* flex */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 
   /* styling */
   border-radius: 0.5rem;
@@ -135,8 +136,8 @@ li:last-of-type .entry::after {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  justify-content: flex-end;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .entry .header .right .technician {
