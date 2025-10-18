@@ -86,6 +86,10 @@ function HistoryEntry(props: {
   const canEdit = !RoleProtectInline(true);
 
   useEffect(() => {
+    setEditedEntry(entry);
+  }, [entry]);
+
+  useEffect(() => {
     if (
       entry.location === "" ||
       entry.milage_miles === 0 ||
