@@ -26,3 +26,7 @@
 .inputGroup:global(.direction-column) {
   flex-direction: column;
 }
+
+.inputGroup.fullWidth {
+  width: 100%;
+}

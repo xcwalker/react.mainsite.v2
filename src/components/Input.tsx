@@ -18,12 +18,15 @@ export default function Input(props: {
   maxLength?: number;
   minLength?: number;
   className?: string;
+  isInvalid?: boolean;
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordHover, setShowPasswordHover] = useState(false);
 
   return (
-    <div className={css.inputContainer + ` ${props.className || ""}`}>
+    <div className={css.inputContainer + ` ${props.className || ""} ${
+      props.isInvalid ? css.invalid : ""
+    }`}>
       <div className={css.labels}>
         <label htmlFor={props.id} className={css.label}>
           {props.label}

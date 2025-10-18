@@ -48,6 +48,14 @@ html[data-theme="DevView™"],
   /* itempage */
   --item-sidebar-border-radius: 0rem;
   --item-sidebar-collection-border-radius: var(--_collection-border-radius);
-  --item-sidebar-gap: 1rem;
+  --item-sidebar-gap: 0rem;
   --item-sidebar-section-gap: 0rem;
+
+  /* settings */
+  --settings-note-border-radius: 0rem;
+  --settings-border-radius: 0rem;
+  --settings-nav-sub-gap: 0rem;
+
+  /* fleet */
+  --fleet-border-radius: 0rem;
 }

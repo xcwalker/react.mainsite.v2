@@ -1,0 +1,58 @@
+
+
+.divider {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  width: 50%;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divider::before {
+  /* content */
+  content: "";
+
+  /* position */
+  position: absolute;
+  inset: 0;
+  top: 50%;
+  translate: 0 -50%;
+
+  /* sizing */
+  width: 100%;
+  height: 0.125rem;
+
+  /* styling */
+
+  --_gap-start: 40%;
+  --_gap-end: 60%;
+  --_background-color: var(--text);
+  background: var(--_background-color);
+  background: linear-gradient(
+    90deg,
+    var(--_background-color) 0%,
+    var(--_background-color) var(--_gap-start),
+    rgba(0, 0, 0, 0) var(--_gap-start),
+    rgba(0, 0, 0, 0) var(--_gap-end),
+    var(--_background-color) var(--_gap-end),
+    var(--_background-color) 100%
+  );
+}
+
+.divider > span {
+  /* position */
+  z-index: 1;
+
+  /* spacing */
+  padding: 0 1rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+}

@@ -63,7 +63,7 @@ export default function VehiclePage(props: { itemType: ItemTypes }) {
                   {item.data.description}
                   {/* {testData} */}
                 </Markdown>
-                <VehicleHistory history={item.data.history} />
+                <VehicleHistory history={item.data.history} vrn={vrn} item={item} />
               </main>
             </SideBySide>
           </Section>

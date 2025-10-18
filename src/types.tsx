@@ -1,4 +1,3 @@
-import { DocumentReference } from "firebase/firestore";
 import { ReactNode } from "react";
 
 export type NavItem = {
@@ -300,11 +299,6 @@ export type VehicleItemType = {
     make: string;
     model: string;
     year: number;
-    engine: {
-      size: number;
-      fuel: "petrol" | "diesel" | "electric" | "hybrid";
-    };
-    transmission: "manual" | "automatic" | "semi-automatic";
     history: VehicleHistoryType;
   };
   metaData: {
@@ -312,7 +306,6 @@ export type VehicleItemType = {
       created: string;
       modified: string;
     };
-    authorID: string;
     key: string;
     vin: string;
     thumbnail?: string;
@@ -324,7 +317,7 @@ export type VehicleHistoryType = {
   milage_miles: number;
   location: string;
   notes: string;
-  technicianRef: DocumentReference;
+  technicianRef: string;
   technician?: UserType;
   work: string[];
   isFleetService: boolean;

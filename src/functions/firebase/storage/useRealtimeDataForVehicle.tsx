@@ -41,7 +41,7 @@ export default async function firebaseGetRealtimeDataForVehicle(
               if (entry.technicianRef) {
                 entry.technician = (await firebaseGetData(
                   "users",
-                  entry.technicianRef.id
+                  entry.technicianRef
                 )) as UserType;
               }
             })

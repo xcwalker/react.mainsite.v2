@@ -36,7 +36,7 @@
   font-size: clamp(10rem, 25vw, 25rem);
   font-weight: 900;
   line-height: 1;
-  color: var(--background-200);
+  color: var(--primary);
 }
 
 .page404 .container .link {

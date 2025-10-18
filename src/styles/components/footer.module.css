@@ -79,6 +79,14 @@
   line-height: 1;
 }
 
+.devMode {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-end;
+}
+
 @media print {
   .footer {
     display: none;

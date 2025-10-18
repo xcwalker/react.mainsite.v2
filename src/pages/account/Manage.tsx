@@ -68,6 +68,10 @@ export default function ManagePage() {
     }
   }, [userSettings, currentUser]);
 
+  if (currentUser === null) {
+    return <Navigate to="/account/login" replace={true} />;
+  }
+
   if (!userSettings || !currentUser) {
     return <LoadingPage />;
   }

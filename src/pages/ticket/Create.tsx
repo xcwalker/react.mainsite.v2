@@ -154,7 +154,7 @@ export default function TicketCreate() {
         id="ticket-message"
       />
       {!currentUser && (
-        <InputGroup direction="row">
+        <InputGroup direction="row" fullWidth>
           {/* Name & Email */}
           <Input
             label="Name (Optional)"

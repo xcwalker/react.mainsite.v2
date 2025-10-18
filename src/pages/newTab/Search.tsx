@@ -142,6 +142,21 @@ export function NewTabSearch(props: {
       url: "https://drive.google.com/drive/search?q=%s",
       icon: "google-drive",
     },
+    {
+      bang: "translate",
+      url: "https://translate.google.com/?sl=auto&tl=en&text=%s&op=translate",
+      icon: "google-translate",
+    },
+    {
+      bang: "icon",
+      url: "https://fonts.google.com/icons?icon.query=%s",
+      icon: "google-icon",
+    },
+    {
+      bang: "fonts",
+      url: "https://fonts.google.com/?query=%s",
+      icon: "google-fonts",
+    },
   ];
 
   const autoCompleteAPI =
@@ -310,13 +325,7 @@ export function NewTabSearch(props: {
                   >
                     {suggestion.type === "QUERY" && (
                       <img
-                        src={
-                          "/" +
-                          (searchBang === undefined
-                            ? props.searchProvider
-                            : searchBang.icon) +
-                          ".svg"
-                        }
+                        src={"/" + props.searchProvider + ".svg"}
                         alt=""
                         className={css.icon}
                       />

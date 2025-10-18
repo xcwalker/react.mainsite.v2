@@ -5,6 +5,25 @@ import build from "../../version.json";
 
 export default function Footer() {
   const buildDate = new Date(build.BUILD_DATE);
+  const mode = import.meta.env.MODE;
+
+  const productionBuildString =
+    buildDate.getFullYear().toString().substr(-2) +
+    "W" +
+    pad(getWeekNumber(buildDate), 2) +
+    (build.APP_VERSION >= 26
+      ? alphabet[Math.floor(build.APP_VERSION / 26)]
+      : "") +
+    alphabet[build.APP_VERSION % alphabet.length];
+
+    const devVersionString = ` Dev${buildDate
+      .getFullYear()
+      .toString()
+      .substr(-2)}W${pad(getWeekNumber(buildDate), 2)}${
+      (build.DEV_VERSION >= 26
+        ? alphabet[Math.floor(build.DEV_VERSION / 26)]
+        : "") + alphabet[build.DEV_VERSION % alphabet.length]
+    }`;
 
   return (
     <footer className={css.footer}>
@@ -19,16 +38,19 @@ export default function Footer() {
         </div>
 
         <div className={css.column}>
-          <span className={css.build}>
-            Build {buildDate.getFullYear().toString().substr(-2)}W
-            {pad(getWeekNumber(buildDate), 2)}
-            {
-              build.APP_VERSION >= 26 && alphabet[
-                Math.floor((build.APP_VERSION) / 26)
-              ]
-            }
-            {alphabet[build.APP_VERSION % alphabet.length]}
-          </span>
+          {mode === "development" && (
+            <div className={css.devMode}>
+              <span>Development Build </span>
+              <span className={css.devBuild}>{devVersionString}</span>
+              <span className={css.prodBuild}>of prod. build {productionBuildString}</span>
+              <span>Confidential - Do Not Distribute</span>
+            </div>
+          )}
+          {mode !== "development" && (
+            <span className={css.build}>
+              Production Build {productionBuildString}
+            </span>
+          )}
         </div>
       </div>
     </footer>

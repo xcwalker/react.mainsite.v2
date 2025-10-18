@@ -50,6 +50,7 @@ import Game_Nomination from "./pages/games/Nomination";
 import Game_Monopoly from "./pages/games/Monopoly";
 import LiveView_Nomination from "./pages/games/LiveView/LiveViewNomination";
 import LoadingPage from "./components/Loading";
+import VehicleEnrollPage from "./pages/vehiclePage/Enroll";
 
 export default function App() {
   const currentUser = useAuth();
@@ -143,10 +144,10 @@ export default function App() {
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemCreate itemType="blog" />
@@ -160,10 +161,10 @@ export default function App() {
                   path="edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="blog" />
@@ -174,10 +175,10 @@ export default function App() {
                   path="admin-edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="blog" admin />
@@ -204,10 +205,10 @@ export default function App() {
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemCreate itemType="projects" />
@@ -221,10 +222,10 @@ export default function App() {
                   path="edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="projects" />
@@ -235,10 +236,10 @@ export default function App() {
                   path="admin-edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="projects" admin />
@@ -265,10 +266,10 @@ export default function App() {
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemCreate itemType="recipes" />
@@ -282,10 +283,10 @@ export default function App() {
                   path="edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="recipes" />
@@ -296,10 +297,10 @@ export default function App() {
                   path="admin-edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="recipes" admin />
@@ -327,10 +328,10 @@ export default function App() {
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <OverlayCreate />
@@ -344,10 +345,10 @@ export default function App() {
                   path="edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <OverlayCreate />
@@ -360,14 +361,14 @@ export default function App() {
             {/* vehicles */}
             <Route path="vehicles">
               <Route index element={<FindVehiclePage />} />
-              {/* <Route
-                path="create"
+              <Route
+                path="enroll"
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
-                    <ItemCreate itemType="vehicles" />
+                    <VehicleEnrollPage />
                   </Protect>
                 }
-              /> */}
+              />
               <Route path=":vrn/:vin6">
                 <Route index element={<VehiclePage itemType="vehicles" />} />
                 <Route path="edit" element={<ItemEdit itemType="vehicles" />} />
@@ -391,10 +392,10 @@ export default function App() {
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemCreate itemType="albums" />
@@ -408,10 +409,10 @@ export default function App() {
                   path="edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="albums" />
@@ -422,10 +423,10 @@ export default function App() {
                   path="admin-edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="albums" admin />
@@ -452,10 +453,10 @@ export default function App() {
                 element={
                   <Protect redirect={<Navigate to={"/account"} />}>
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemCreate itemType="videos" />
@@ -469,10 +470,10 @@ export default function App() {
                   path="edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="videos" />
@@ -483,10 +484,10 @@ export default function App() {
                   path="admin-edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <ItemEdit itemType="videos" admin />
@@ -557,10 +558,10 @@ export default function App() {
                   path="admin-edit"
                   element={
                     <RoleProtect
-                      redirect={ErrorPage({
-                        code: 403,
-                        error: "Access Denied",
-                      })}
+                      redirect={<ErrorPage
+                        code={403}
+                        error={"Access Denied"}
+                      />}
                       loading={<LoadingPage />}
                     >
                       <UserEdit admin />

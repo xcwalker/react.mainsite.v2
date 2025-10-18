@@ -26,11 +26,13 @@ export default defineConfig(({ mode }) => {
         out = {
           APP_VERSION: json.APP_VERSION,
           BUILD_DATE: json.BUILD_DATE,
+          DEV_VERSION: json.DEV_VERSION + 1,
         };
       } else {
         out = {
           APP_VERSION: json.APP_VERSION + 1,
           BUILD_DATE: json.BUILD_DATE,
+          DEV_VERSION: json.DEV_VERSION + 1,
         };
       }
 
@@ -54,6 +56,7 @@ export default defineConfig(({ mode }) => {
           date.getDate(),
           2
         )}`,
+        DEV_VERSION: 0,
       };
 
       console.log("App Version: " + out.APP_VERSION);

@@ -37,7 +37,7 @@ export type ButtonType = {
   // centered is used to center the button
 }
 
-export default function Button(props: ButtonType & { children: ReactNode }) {
+export default function Button(props: ButtonType & { children?: ReactNode }) {
   return (
     <>
       {props.href !== undefined && props.pageNavigation && (
