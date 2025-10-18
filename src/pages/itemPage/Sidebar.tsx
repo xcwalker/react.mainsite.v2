@@ -95,7 +95,7 @@ export function ItemSidebar(props: {
           )}
           {item.metaData.parnix && (
             <Button
-              href={"https://parnix.xcwalker.dev/" + props.slug}
+              href={"https://parnix.uk/" + props.slug}
               external
               title="View on Parnix"
               icon={{ inline: <SocialIcon social="parnix" /> }}

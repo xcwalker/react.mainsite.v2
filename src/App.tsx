@@ -50,6 +50,7 @@ import Game_Nomination from "./pages/games/Nomination";
 import Game_Monopoly from "./pages/games/Monopoly";
 import LiveView_Nomination from "./pages/games/LiveView/LiveViewNomination";
 import LoadingPage from "./components/Loading";
+import { DeveloperView } from "./pages/Developer";
 import VehicleEnrollPage from "./pages/vehiclePage/Enroll";
 
 export default function App() {
@@ -615,6 +616,31 @@ export default function App() {
                 }
               />
               <Route path=":ticketId" element={<TicketView />} />
+            </Route>
+
+            <Route path="developer">
+              <Route
+                index
+                element={
+                  <DevModeProtect>
+                    <DeveloperView />
+                  </DevModeProtect>
+                }
+              />
+              <Route
+                path=":pageID"
+                element={
+                  <DevModeProtect>
+                    <DeveloperView />
+                  </DevModeProtect>
+                }
+              >
+                <Route path=":sectionID" element={
+                  <DevModeProtect>
+                    <DeveloperView />
+                  </DevModeProtect>
+                } />
+              </Route>
             </Route>
 
             {/* games */}

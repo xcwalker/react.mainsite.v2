@@ -8,13 +8,14 @@ export type NavItem = {
   isBeta?: boolean;
   requireUser?: boolean;
   requireVerified?: boolean;
-}
+  devOnly?: boolean;
+};
 
 export type NavSection = {
   title: string;
   hideTitle?: boolean;
   items: NavItem[];
-}
+};
 
 export const defaultNav: NavSection[] = [
   {
@@ -110,6 +111,12 @@ export const defaultNav: NavSection[] = [
         href: "ticket",
         gficon: "contact_support",
         isBeta: true,
+      },
+      {
+        title: "Developer",
+        href: "developer",
+        gficon: "code",
+        devOnly: true,
       },
     ],
   },
