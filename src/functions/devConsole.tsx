@@ -6,7 +6,7 @@
 export const devConsole = {
   log: (message: unknown, ...optionalParams: unknown[]) => {
     if (import.meta.env.MODE === "development") {
-      devConsole.log(message, ...optionalParams);
+      console.log(message, ...optionalParams);
     }
   },
   error: (message: unknown, ...optionalParams: unknown[]) => {

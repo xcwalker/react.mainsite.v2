@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import GFIcon from "../../components/GFIcon";
 import Logo from "../../components/Logo";
 import Section from "../../components/Section";
@@ -10,11 +10,13 @@ import boxingDayHeroCSS from "../../styles/pages/home/hero/boxingDayHero.module.
 import newYearHeroCSS from "../../styles/pages/home/hero/newYearHero.module.css";
 import halloweenHeroCSS from "../../styles/pages/home/hero/halloweenHero.module.css";
 import birthdayHeroCSS from "../../styles/pages/home/hero/birthdayHero.module.css";
+import noKingsHeroCSS from "../../styles/pages/home/hero/noKingsHero.module.css";
 import { Link } from "react-router-dom";
 
 export default function HomeHero() {
   const date = new Date();
   const [slideshowIndex, setSlideshowIndex] = useState(0);
+  const [userInteracted, setUserInteracted] = useState(false);
   const slideshowItems = [
     {
       id: 2,
@@ -66,6 +68,10 @@ export default function HomeHero() {
     },
     {
       id: 1,
+      component: <NoKingsHero />,
+    },
+    {
+      id: 1,
       component: <DefaultHero />,
     },
   ];
@@ -78,6 +84,33 @@ export default function HomeHero() {
         : true;
     })
     .map((item) => item.id);
+
+  useEffect(() => {
+    if (userInteracted) return;
+
+    // Move through slideshow every 10 seconds
+    const interval = setInterval(() => {
+      setSlideshowIndex((prev) => {
+        return (prev + 1) % slideshowActive.length;
+      });
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [slideshowActive.length, userInteracted]);
+
+  const handleUserInteraction = () => {
+    setUserInteracted(true);
+  };
+
+  useEffect(() => {
+    if (!userInteracted) return;
+
+    const timeout = setTimeout(() => {
+      setUserInteracted(false);
+    }, 20000); // 20 seconds of inactivity resets to auto slideshow
+
+    return () => clearTimeout(timeout);
+  }, [userInteracted]);
 
   return (
     <>
@@ -121,11 +154,12 @@ export default function HomeHero() {
         <div className={css.buttons}>
           <button
             type="button"
-            onClick={() =>
+            onClick={() => {
               setSlideshowIndex((prev) => {
                 return Math.max(prev - 1, 0);
-              })
-            }
+              });
+              handleUserInteraction();
+            }}
             className={css.left}
             disabled={slideshowIndex === 0}
           >
@@ -133,11 +167,12 @@ export default function HomeHero() {
           </button>
           <button
             type="button"
-            onClick={() =>
+            onClick={() => {
               setSlideshowIndex((prev) => {
                 return Math.min(prev + 1, slideshowActive.length - 1);
-              })
-            }
+              });
+              handleUserInteraction();
+            }}
             className={css.right}
             disabled={slideshowIndex === slideshowActive.length - 1}
           >
@@ -151,8 +186,11 @@ export default function HomeHero() {
                 key={index}
                 className={`${css.dot} ${
                   index === slideshowIndex ? css.active : ""
-                }`}
-                onClick={() => setSlideshowIndex(index)}
+                } ${userInteracted ? css.userInteracted : css.timed}`}
+                onClick={() => {
+                  setSlideshowIndex(index);
+                  handleUserInteraction();
+                }}
               />
             );
           })}
@@ -282,6 +320,34 @@ function BirthdayHero(props: { isActive?: boolean }) {
         tabIndex={props.isActive ? 0 : -1}
       >
         Wallpaper from Freepik
+      </Link>
+    </div>
+  );
+}
+
+function NoKingsHero(props: { isActive?: boolean }) {
+  return (
+    <div className={noKingsHeroCSS.container}>
+      <img
+        src="/NoKingsBackground.png"
+        alt=""
+        className={defaultHeroCSS.background}
+      />
+      <div className={defaultHeroCSS.backdropAlt} />
+      <Logo type="xcwalker" className={noKingsHeroCSS.logo} />
+      <img
+        src="/No Kings Logo_Horizontal_ForDarkBackgrounds.svg"
+        alt=""
+        className={noKingsHeroCSS.kingsLogo}
+      />
+      <h1 className={defaultHeroCSS.heading}>Supporting No Kings</h1>
+      <Link
+        to="https://nokings.org"
+        className={defaultHeroCSS.attribution}
+        aria-hidden={!props.isActive}
+        tabIndex={props.isActive ? 0 : -1}
+      >
+        Learn More at nokings.org
       </Link>
     </div>
   );

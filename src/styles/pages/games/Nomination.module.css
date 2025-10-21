@@ -112,7 +112,7 @@
   padding: 0 0.5rem;
 
   /* styling */
-  border: 0.125rem solid var(--text-200);
+  border: 0.125rem solid var(--text-alt);
   border-left: none;
   border-bottom: none;
   background: transparent;
@@ -124,7 +124,7 @@
 }
 
 li:last-of-type .roundScoreInput {
-  border-bottom: 0.125rem solid var(--text-200);
+  border-bottom: 0.125rem solid var(--text-alt);
 }
 .roundScoreInput::-webkit-outer-spin-button,
 .roundScoreInput::-webkit-inner-spin-button {

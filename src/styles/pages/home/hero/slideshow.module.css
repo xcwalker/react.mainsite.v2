@@ -36,7 +36,6 @@
 }
 
 .slideshow button {
-
   /* sizing */
   width: 2rem;
   height: 2rem;
@@ -53,7 +52,6 @@
   backdrop-filter: brightness(0.75) blur(1px);
 
   color: white;
-
 }
 
 .slideshow button:hover {
@@ -78,7 +76,7 @@
   width: 100%;
   min-height: 250px;
   height: 35vmin;
-  
+
   /* flex */
   display: flex;
   flex-direction: row;
@@ -118,13 +116,13 @@
   height: var(--_dot-size);
 
   /* styling */
-  background-color: var(--text-200);
+  background: var(--primary);
   border-radius: var(--hero-dot-border-radius, 100vmax);
   cursor: pointer;
 
   /* transition */
   transition: width var(--_transition-speed) ease-in-out,
-    background-color var(--_transition-speed) ease-in-out;
+    background var(--_transition-speed) ease-in-out;
 }
 
 .slideshow .dots .dot.active {
@@ -132,5 +130,32 @@
   width: 2rem;
 
   /* styling */
-  background-color: var(--text);
+  background: var(--text);
+}
+
+.slideshow .dots .dot.active.timed {
+  /* animation */
+  animation: slideshowDotActiveTimedAnimation 10s linear forwards;
+  background: linear-gradient(
+    to right,
+    var(--primary) 0%,
+    var(--primary) 50%,
+    var(--text) 50%,
+    var(--text) 100%
+  );
+  background-size: 200% 100%;
+}
+
+
+.slideshow .dots .dot.active.userInteracted {
+  
+}
+
+@keyframes slideshowDotActiveTimedAnimation {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
 }

@@ -136,7 +136,7 @@
   gap: 0.25rem;
 
   /* styling */
-  border-right: 1px solid var(--text-200);
+  border-right: 1px solid var(--text-alt);
 }
 
 .information > .info:last-child {

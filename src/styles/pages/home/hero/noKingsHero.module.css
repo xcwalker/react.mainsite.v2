@@ -1,0 +1,79 @@
+.container {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  /* styling */
+  color: white;
+}
+
+.backdrop {
+  /* position */
+    position: absolute;
+    inset: 0;
+  z-index: -1;
+
+    --s: 7px; /* control the size */
+    --_card-main-background: rgba(255, 255, 255, 0.25);
+    --_card-main-background-alt: #000000;
+
+    --c: #0000, var(--_card-main-background) 0.5deg 119.5deg, #0000 120deg;
+    --g1: conic-gradient(from 60deg at 56.25% calc(425% / 6), var(--c));
+    --g2: conic-gradient(from 180deg at 43.75% calc(425% / 6), var(--c));
+    --g3: conic-gradient(from -60deg at 50% calc(175% / 12), var(--c));
+    background: var(--g1), var(--g1) var(--s) calc(1.73 * var(--s)), var(--g2),
+      var(--g2) var(--s) calc(1.73 * var(--s)), var(--g3) var(--s) 0,
+      var(--g3) 0 calc(1.73 * var(--s)) var(--_card-main-background-alt);
+    background-size: calc(2 * var(--s)) calc(3.46 * var(--s));
+    opacity: 25%;
+}
+
+.logo {
+  /* position */
+  position: absolute;
+  z-index: 1;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* sizing */
+  width: min(175px, 100%);
+
+  /* styling */
+  color: inherit;
+  fill: currentColor;
+}
+
+.container h1 {
+  /* position */
+  position: absolute;
+  z-index: 1;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* text */
+  text-align: center;
+  font-size: clamp(1rem, 2vw, 3rem);
+  font-weight: 800;
+  margin: 0;
+  line-height: 1;
+}
+
+.kingsLogo {
+  /* sizing */
+  width: min(1200px, 80%);
+}
+
+@media screen and (max-width: 1200px) {
+  .container h1{
+    bottom: 2.25rem;
+  }
+}

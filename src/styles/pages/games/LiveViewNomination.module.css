@@ -136,7 +136,7 @@
   /* sizing */
   font-size: 1.75em;
   font-weight: bold;
-  color: var(--text-200);
+  color: var(--text-alt);
 }
 
 .player .total {
