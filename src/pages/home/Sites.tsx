@@ -3,16 +3,17 @@ import Section from "../../components/Section";
 import css from "../../styles/pages/home/sites.module.css";
 import { Fragment } from "react/jsx-runtime";
 import GFIcon from "../../components/GFIcon";
+import { defaultNav } from "../../types";
 
 export default function HomeSites() {
   return (
     <Section id="sites">
       <h2>Our other sites</h2>
       <div className={css.sites}>
-        {websites.map((item, index) => {
+        {defaultNav.filter(item => item.title === "Sites")[0].items.map((item, index) => {
           return (
             <Fragment key={index}>
-              <SiteItem site={item} />
+              <SiteItem site={{ icon: item.gficon, name: item.title, url: item.href }} />
             </Fragment>
           );
         })}
@@ -34,21 +35,3 @@ function SiteItem(props: {
     </Link>
   );
 }
-
-const websites = [
-  {
-    icon: "grid_view",
-    name: "Immersion",
-    url: "immersion.xcwalker.dev",
-  },
-  {
-    icon: "wallpaper_slideshow",
-    name: "Searrson",
-    url: "searrson.xcwalker.dev",
-  },
-  {
-    icon: "web",
-    name: "Therwim",
-    url: "therwim.xcwalker.dev",
-  },
-];

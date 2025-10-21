@@ -3,6 +3,8 @@
   --blue: #4ba6e2;
   --white: #fdfdfd;
   --text: black;
+  
+  padding: 1rem;
   color: var(--text);
 
   background: linear-gradient(

@@ -13,7 +13,7 @@
 
 .mainContainer {
   /* variables */
-  --_background: var(--background-050);
+  --_background: var(--background);
   --_stripe-color: var(--primary);
   --_row-height: calc(50px + 1rem);
   --_modal-height: 350px;
@@ -61,7 +61,7 @@
 @media (max-width: 450px) {
   .mainContainer {
     --_modal-height: 500px;
-    --_modal-width: 300px;
+    --_modal-width: 350px;
   }
 }
 
@@ -152,7 +152,7 @@ body :has(.visible) {
   margin: 0;
   padding-left: 0.5rem;
   padding-right: 2rem;
-  width: 250px;
+  width: fit-content;
   height: 100%;
 
   /* flex */
@@ -165,11 +165,13 @@ body :has(.visible) {
   color: currentColor;
 
   /* text */
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.125rem;
   border-radius: 0.5rem;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
 }
 
 .modal header button {
@@ -178,6 +180,7 @@ body :has(.visible) {
   height: 100%;
   aspect-ratio: 1;
   padding: 0;
+  width: fit-content;
 
   /* flex */
   display: flex;
@@ -232,24 +235,6 @@ body :has(.visible) {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-}
-
-.modal footer button,
-.modal footer a {
-  /* sizing */
-  min-width: 150px;
-  padding: 0.75rem 2rem;
-
-  /* styling */
-  background-color: darkred;
-  border: none;
-}
-
-.modal footer button:global(.return),
-.modal footer a:global(.return) {
-  background-color: darkgreen;
-  border: none;
-  padding: 0.75rem 2rem;
 }
 
 .backdrop {

@@ -3,7 +3,7 @@ import css from "../styles/components/modal.module.css";
 import Button from "./Button";
 import GFIcon from "./GFIcon";
 
-export default function Modal(props: { setVisibility: Dispatch<SetStateAction<boolean>>; visibility: boolean; children: ReactNode; footer: ReactNode }) {
+export default function Modal(props: { setVisibility: Dispatch<SetStateAction<boolean>>; visibility: boolean; children: ReactNode; footer: ReactNode; title?: string; }) {
   useEffect(() => {
     if (props.visibility) {
       document.body.classList.add("modalVisible");
@@ -22,7 +22,7 @@ export default function Modal(props: { setVisibility: Dispatch<SetStateAction<bo
         <div className={css.modal}>
           <div className={css.container}>
             <header>
-              <h2>Warning</h2>
+              <h2>{props.title || "Warning"}</h2>
               <Button
                 onClick={() => {
                   props.setVisibility(false);

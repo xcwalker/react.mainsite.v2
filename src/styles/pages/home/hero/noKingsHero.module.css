@@ -61,10 +61,11 @@
 
   /* text */
   text-align: center;
-  font-size: clamp(1rem, 2vw, 3rem);
+  font-size: clamp(1rem, 2vw, 2rem);
   font-weight: 800;
   margin: 0;
   line-height: 1;
+  transition: bottom 150ms ;
 }
 
 .kingsLogo {

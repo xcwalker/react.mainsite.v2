@@ -8,6 +8,7 @@ import ProtoBanner from "./ProtoBanner";
 import NoKingsBanner from "./NoKingsBanner";
 import TransPride from "./TransPride";
 import devConsole from "../../functions/devConsole";
+import LgbtqPride from "./LgbtqPride";
 
 export default function BannerContainer() {
   const [networkLost, setNetworkLost] = useState(false);
@@ -37,6 +38,7 @@ export default function BannerContainer() {
       <ProtoBanner />
       <BigTop30Banner />
       <NoKingsBanner />
+      <LgbtqPride />
       <TransPride />
       {(networkLost ||
         import.meta.env.VITE_IS_DEBUG_ALL_BANNERS === "true") && (

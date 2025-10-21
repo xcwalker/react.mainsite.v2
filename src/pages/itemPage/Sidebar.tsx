@@ -13,11 +13,12 @@ import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtim
 import { shortURL } from "../../App";
 import { QRModal } from "../../components/QRModal";
 import firebaseDeleteData from "../../functions/firebase/storage/deleteData";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import QRCode from "react-qr-code";
 import SidebarTitle from "../../components/Sidebar/SidebarTitle";
 import SidebarDates from "../../components/Sidebar/SidebarDates";
 import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
+import DeleteWarning from "../../components/DeleteWarning";
 
 export function ItemSidebar(props: {
   item: ItemType;
@@ -35,6 +36,8 @@ export function ItemSidebar(props: {
   const dateCreated = new Date(item.metaData.date.created);
   const [linkCopied, setLinkCopied] = useState(false);
   const [shopQRModal, setShopQRModal] = useState(false);
+  const [showDeleteWarning, setShowDeleteWarning] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (currentUser?.uid) {
@@ -48,6 +51,20 @@ export function ItemSidebar(props: {
 
   return (
     <>
+      {(currentUser?.uid === props.item.metaData.authorID ||
+        (currentUserData?.info.role &&
+          currentUserData?.info.role !== "user" &&
+          currentUserData?.info.role !== "unverified")) && (
+        <DeleteWarning
+          visibility={showDeleteWarning}
+          setVisibility={setShowDeleteWarning}
+          deleteAction={() => {
+            // delete item
+            firebaseDeleteData(props.itemType, props.slug);
+            navigate("../");
+          }}
+        />
+      )}
       <SidebarContainer>
         <Image
           src={props.item.metaData?.thumbnail}
@@ -218,15 +235,7 @@ export function ItemSidebar(props: {
                 icon={{ gficon: "delete" }}
                 title="Delete"
                 onClick={() => {
-                  if (
-                    window.confirm(
-                      "Are you sure you want to delete this item? This action cannot be undone."
-                    )
-                  ) {
-                    // delete item
-                    firebaseDeleteData(props.itemType, props.slug);
-                    Navigate({ to: "../" });
-                  }
+                  setShowDeleteWarning(true);
                 }}
                 style="danger"
               >
@@ -237,14 +246,26 @@ export function ItemSidebar(props: {
           {currentUserData?.info.role &&
             currentUserData?.info.role !== "user" &&
             currentUserData?.info.role !== "unverified" && (
-              <Button
-                href={"./admin-edit"}
-                title={"Edit " + item.data.title}
-                icon={{ gficon: "person_edit" }}
-                style="primary"
-              >
-                Admin Edit
-              </Button>
+              <>
+                <Button
+                  href={"./admin-edit"}
+                  title={"Edit " + item.data.title}
+                  icon={{ gficon: "person_edit" }}
+                  style="primary"
+                >
+                  Admin Edit
+                </Button>
+                <Button
+                  icon={{ gficon: "delete" }}
+                  title="Delete"
+                  onClick={() => {
+                    setShowDeleteWarning(true);
+                  }}
+                  style="danger"
+                >
+                  Admin Delete
+                </Button>
+              </>
             )}
         </div>
 
