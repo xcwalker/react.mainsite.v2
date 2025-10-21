@@ -9,6 +9,7 @@ import {
 import { firebaseDB } from "./setup";
 import { UserType, VehicleItemType } from "../../../types";
 import firebaseGetData from "./getData";
+import devConsole from "../../devConsole";
 
 export default async function firebaseGetRealtimeDataForVehicle(
   firebaseCollection: string,
@@ -57,13 +58,13 @@ export default async function firebaseGetRealtimeDataForVehicle(
 
         if (setError) setError(false);
       } else {
-        console.log("No such document!");
+        devConsole.log("No such document!");
         if (setError) setError(true);
         setData(undefined);
       }
     },
     (error) => {
-      console.error("Error getting realtime data: ", error);
+      devConsole.error("Error getting realtime data: ", error);
       if (setError) setError(true);
       setData(undefined);
     }

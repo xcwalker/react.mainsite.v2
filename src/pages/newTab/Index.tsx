@@ -16,6 +16,7 @@ import firebaseSetupNewTabData from "../../functions/firebase/storage/extra/setu
 import { Helmet } from "react-helmet";
 import { NewTabLinksAtom, separator, title } from "../../App";
 import { useAtom } from "jotai";
+import devConsole from "../../functions/devConsole";
 
 export default function NewTab() {
   const user = useAuth();
@@ -33,8 +34,8 @@ export default function NewTab() {
   }, []);
 
   useEffect(() => {
-    console.log("Link Data Changed", linkData);
-    console.log("Cached Data", cachedData);
+    devConsole.log("Link Data Changed", linkData);
+    devConsole.log("Cached Data", cachedData);
     if (cachedData && !linkData) {
       console.info("Loading From Cache");
       setLinkData(cachedData);

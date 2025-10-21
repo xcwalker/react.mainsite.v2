@@ -9,6 +9,7 @@ import ErrorPage from "../../ErrorPage";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import firebaseCreateData from "../../functions/firebase/storage/createData";
 import firebaseGetData from "../../functions/firebase/storage/getData";
+import devConsole from "../../functions/devConsole";
 
 export default function Game_Nomination() {
   const { gameID } = useParams();
@@ -147,7 +148,7 @@ export default function Game_Nomination() {
         {!gameID && (
           <Button
             onClick={() => {
-              console.log(
+              devConsole.log(
                 "Creating new game with scores:",
                 scores,
                 JSON.stringify(scores)

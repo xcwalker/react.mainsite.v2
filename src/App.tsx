@@ -52,6 +52,7 @@ import LiveView_Nomination from "./pages/games/LiveView/LiveViewNomination";
 import LoadingPage from "./components/Loading";
 import { DeveloperView } from "./pages/Developer";
 import VehicleEnrollPage from "./pages/vehiclePage/Enroll";
+import devConsole from "./functions/devConsole";
 
 export default function App() {
   const currentUser = useAuth();
@@ -692,7 +693,7 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    console.log(pathname);
+    devConsole.log(pathname);
     // window.scrollTo(0,0);
     setTimeout(() => window.scrollTo(0, 0), 10);
   }, [pathname]);

@@ -16,6 +16,7 @@ import remarkGfm from "remark-gfm";
 import supersub from "remark-supersub";
 import { VehicleHistory } from "./History";
 import firebaseGetRealtimeDataForVehicle from "../../functions/firebase/storage/useRealtimeDataForVehicle";
+import devConsole from "../../functions/devConsole";
 
 export default function VehiclePage(props: { itemType: ItemTypes }) {
   const { vrn, vin6 } = useParams();
@@ -23,7 +24,7 @@ export default function VehiclePage(props: { itemType: ItemTypes }) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    console.log("Fetching data for VRN:", vrn, "VIN6:", vin6);
+    devConsole.log("Fetching data for VRN:", vrn, "VIN6:", vin6);
 
     firebaseGetRealtimeDataForVehicle(
       props.itemType,

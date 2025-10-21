@@ -13,6 +13,7 @@ import css from "../../styles/pages/games/monopoly.module.css";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import Section from "../../components/Section";
 import toast from "react-hot-toast";
+import devConsole from "../../functions/devConsole";
 
 export default function Game_Monopoly() {
   const { gameId } = useParams();
@@ -273,10 +274,10 @@ function TradeModal(props: {
     )[0] || null;
 
   useEffect(() => {
-    console.log(tradeModal);
-    console.log(trade);
-    console.log(game.data.trades);
-    console.log(currentUser?.uid);
+    devConsole.log(tradeModal);
+    devConsole.log(trade);
+    devConsole.log(game.data.trades);
+    devConsole.log(currentUser?.uid);
   }, [tradeModal, trade, game.data.trades, currentUser]);
 
   if (!currentUser) return null;

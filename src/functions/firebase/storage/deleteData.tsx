@@ -1,5 +1,6 @@
 import { doc, deleteDoc } from "firebase/firestore";
 import { firebaseDB } from "./setup";
+import devConsole from "../../devConsole";
 
 export default async function firebaseDeleteData(
   pathID: string,
@@ -7,9 +8,9 @@ export default async function firebaseDeleteData(
 ) {
   try {
     const docSnap = await deleteDoc(doc(firebaseDB, pathID, docID));
-    console.log(docSnap);
+    devConsole.log(docSnap);
     return docSnap;
   } catch (e) {
-    console.error("Error getting data: ", e);
+    devConsole.error("Error getting data: ", e);
   }
 }

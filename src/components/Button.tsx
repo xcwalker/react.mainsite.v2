@@ -35,6 +35,7 @@ export type ButtonType = {
   betaTagClassName?: string;
   centered?: boolean;
   // centered is used to center the button
+  onBlur?: () => void;
 }
 
 export default function Button(props: ButtonType & { children?: ReactNode }) {
@@ -58,6 +59,7 @@ export default function Button(props: ButtonType & { children?: ReactNode }) {
           target={props.target === "newTab" ? "_blank" : ""}
           title={props.title}
           aria-disabled={props.loading || props.disabled ? "true" : "false"}
+          onBlur={props.onBlur}
         >
           {props.icon?.gficon && (
             <GFIcon
@@ -103,6 +105,7 @@ export default function Button(props: ButtonType & { children?: ReactNode }) {
           target={props.target === "newTab" ? "_blank" : ""}
           title={props.title}
           aria-disabled={props.loading || props.disabled ? "true" : "false"}
+          onBlur={props.onBlur}
         >
           {props.icon?.gficon && (
             <GFIcon
@@ -154,6 +157,7 @@ export default function Button(props: ButtonType & { children?: ReactNode }) {
           target={props.target === "newTab" ? "_blank" : ""}
           title={props.title}
           aria-disabled={props.loading || props.disabled ? "true" : "false"}
+          onBlur={props.onBlur}
         >
           {props.icon?.gficon && (
             <GFIcon
@@ -197,6 +201,7 @@ export default function Button(props: ButtonType & { children?: ReactNode }) {
           title={props.title}
           type={props.type ? props.type : "button"}
           disabled={props.loading || props.disabled ? true : false}
+          onBlur={props.onBlur}
         >
           {props.icon?.gficon && (
             <GFIcon

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import css from "../../styles/pages/dashboard/links.module.css";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { NewTabLinks } from "../../types";
@@ -55,7 +55,12 @@ export default function DashboardLinks() {
             <h2>Your Links </h2>
 
             {linkData.links.length !== 0 && (
-              <Button href={"/newtab/edit"} title="Edit Links" width="fit-content" style="secondary">
+              <Button
+                href={"/newtab/edit"}
+                title="Edit Links"
+                width="fit-content"
+                style="secondary"
+              >
                 Edit
               </Button>
             )}
@@ -63,12 +68,14 @@ export default function DashboardLinks() {
           <main className={css.container}>
             {linkData.links.map((item, index) => {
               return (
-                <NewTabLinkItem
-                  hasCMDKey={false}
-                  link={item}
-                  index={index}
-                  modifierPressed={false}
-                />
+                <Fragment key={index}>
+                  <NewTabLinkItem
+                    hasCMDKey={false}
+                    link={item}
+                    index={index}
+                    modifierPressed={false}
+                  />
+                </Fragment>
               );
             })}
             {linkData.links.length === 0 && (

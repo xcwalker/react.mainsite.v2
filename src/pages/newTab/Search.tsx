@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import css from "../../styles/pages/newTab/search.module.css";
 import GFIcon from "../../components/GFIcon";
 import tlds from "tlds";
+import devConsole from "../../functions/devConsole";
 
 export function NewTabSearch(props: {
   hasCMDKey: boolean;
@@ -189,7 +190,7 @@ export function NewTabSearch(props: {
           { signal: controller.signal }
         );
         const data = await response.json();
-        console.log(data);
+        devConsole.log(data);
         setSuggestions(
           data[1].map((item: string, index: number) => ({
             suggestion: item,

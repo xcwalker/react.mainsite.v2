@@ -2,6 +2,7 @@ import { CSSProperties, Fragment, useEffect, useState } from "react";
 import GFIcon from "../../components/GFIcon";
 import css from "../../styles/pages/dashboard/weather.module.css";
 import LoadingPage from "../../components/Loading";
+import devConsole from "../../functions/devConsole";
 
 export default function DashboardWeather() {
   const [weather, setWeather] = useState<weatherType | undefined>();
@@ -21,11 +22,11 @@ export default function DashboardWeather() {
         setLocation(pos);
       }, error);
     } else {
-      console.log("Geolocation not supported");
+      devConsole.log("Geolocation not supported");
     }
 
     function error() {
-      console.log("Unable to retrieve your location");
+      devConsole.log("Unable to retrieve your location");
       setError(true);
       setLoading(false);
     }
@@ -47,7 +48,7 @@ export default function DashboardWeather() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        devConsole.log(data);
         setWeather(data);
         setLoading(false);
       });

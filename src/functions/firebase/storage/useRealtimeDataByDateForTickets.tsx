@@ -5,6 +5,7 @@ import {
   query,
 } from "firebase/firestore";
 import { firebaseDB } from "./setup";
+import devConsole from "../../devConsole";
 
 export default async function FirebaseGetRealtimeDataByDateForTickets(
   firebaseCollection: string,
@@ -24,11 +25,11 @@ export default async function FirebaseGetRealtimeDataByDateForTickets(
         output.push({ id: doc.id, value: doc.data() });
       });
 
-      console.log("Fetched data by date: ", output);
+      devConsole.log("Fetched data by date: ", output);
       setData(output);
     },
     (error) => {
-      console.error("Error getting data by date: ", error);
+      devConsole.error("Error getting data by date: ", error);
     }
   );
 

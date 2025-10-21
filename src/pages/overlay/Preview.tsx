@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { overlayType } from "../../types";
+import devConsole from "../../functions/devConsole";
 
 export function Preview(props: {
   overlay: overlayType;
@@ -22,7 +23,7 @@ export function Preview(props: {
         (props.size ? props.size + "-preview" : "preview") +
         "?json=" +
         JSON.stringify(props.overlay);
-      console.log(iframe.src);
+      devConsole.log(iframe.src);
     }
   }, [props.overlay, props.size]);
 

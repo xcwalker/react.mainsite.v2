@@ -142,7 +142,13 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
           </Helmet>
           <Section id="project">
             <SideBySide leftWidth="350px" printLeftWidth="350px">
-              <ItemSidebar itemType={props.itemType} item={item} slug={slug} checklistMode={checklistMode} setChecklistMode={setChecklistMode}  />
+              <ItemSidebar
+                itemType={props.itemType}
+                item={item}
+                slug={slug}
+                checklistMode={checklistMode}
+                setChecklistMode={setChecklistMode}
+              />
               <main className={css.main}>
                 {item.data.description.length > 0 && (
                   <Markdown
@@ -157,7 +163,10 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
                   </Markdown>
                 )}
                 {props.itemType === "recipes" && (
-                  <RecipeContent item={item as RecipeItemProps} checklistMode={checklistMode} />
+                  <RecipeContent
+                    item={item as RecipeItemProps}
+                    checklistMode={checklistMode}
+                  />
                 )}
                 <ItemImages item={item} slug={slug} itemType={props.itemType} />
               </main>
@@ -186,8 +195,9 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
         <ErrorPage
           code={404}
           error={
-            props.itemType.substring(0, props.itemType.length - 1) +
-            " Not Found"
+            toTitleCase((props.itemType.charAt(props.itemType.length - 1) === "s"
+              ? props.itemType.slice(0, -1)
+              : props.itemType)) + " Not Found"
           }
         />
       )}

@@ -178,7 +178,7 @@ export default function Header() {
     if (document.body.getBoundingClientRect().top >= 0) {
       document.body.classList.remove("scrolled");
     } else if (document.body.getBoundingClientRect().top < 0) {
-      // console.log(document.body.getBoundingClientRect().top)
+      // devConsole.log(document.body.getBoundingClientRect().top)
       document.body.classList.add("scrolled");
     }
   }, [navScrollLastKnown]);
@@ -493,7 +493,7 @@ function Radio() {
 //     if (document.body.getBoundingClientRect().top >= 0) {
 //       document.body.classList.remove("scrolled");
 //     } else if (document.body.getBoundingClientRect().top < 0) {
-//       // console.log(document.body.getBoundingClientRect().top)
+//       // devConsole.log(document.body.getBoundingClientRect().top)
 //       document.body.classList.add("scrolled");
 //     }
 //   }, [navScrollLastKnown]);

@@ -10,6 +10,7 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
+import devConsole from "../../functions/devConsole";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ export default function LoginPage() {
     setLoading(true);
 
     firebaseLogin(email, password).then((res) => {
-      console.log(res);
+      devConsole.log(res);
       setLoading(false);
     });
   }
@@ -59,7 +60,13 @@ export default function LoginPage() {
             onSubmit={() => submit()}
             forgotPasswordHref="../forgot"
           />
-          <Button style="primary" type="submit" title="Login" width="14rem" centered>
+          <Button
+            style="primary"
+            type="submit"
+            title="Login"
+            width="14rem"
+            centered
+          >
             Login
           </Button>
           <div className={css.divider}>

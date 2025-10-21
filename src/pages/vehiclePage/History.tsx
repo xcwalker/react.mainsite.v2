@@ -16,6 +16,7 @@ import {
   RoleProtect,
   RoleProtectInline,
 } from "../../components/Security/Protect";
+import devConsole from "../../functions/devConsole";
 
 export function VehicleHistory(props: {
   history: VehicleHistoryType;
@@ -60,12 +61,17 @@ export function VehicleHistory(props: {
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           )
           .map((entry, index) => {
-            console.log("History Entry:", entry);
-            console.log("History Entry Technician:", entry.technician);
+            devConsole.log("History Entry:", entry);
+            devConsole.log("History Entry Technician:", entry.technician);
 
             return (
               <Fragment key={index}>
-                <HistoryEntry entry={entry} vrn={props.vrn} item={props.item} index={index} />
+                <HistoryEntry
+                  entry={entry}
+                  vrn={props.vrn}
+                  item={props.item}
+                  index={index}
+                />
               </Fragment>
             );
           })}
@@ -185,7 +191,9 @@ function HistoryEntry(props: {
                     ...item,
                     data: {
                       ...item.data,
-                      history: item.data.history.filter((_h, index) => index !== props.index),
+                      history: item.data.history.filter(
+                        (_h, index) => index !== props.index
+                      ),
                     },
                   });
                 }}

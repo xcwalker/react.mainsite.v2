@@ -1,5 +1,6 @@
 import { collection, doc, documentId, getDoc, getDocs, limit, query, where } from "firebase/firestore";
 import { firebaseDB } from "./setup";
+import devConsole from "../../devConsole";
 
 export default async function firebaseGetData(
   pathID: string,
@@ -8,10 +9,10 @@ export default async function firebaseGetData(
   try {
     const docSnap = await getDoc(doc(firebaseDB, pathID, docID));
     const data = docSnap.data();
-    console.log(data)
+    devConsole.log(data)
     return data;
   } catch (e) {
-    console.error("Error getting data: ", e);
+    devConsole.error("Error getting data: ", e);
   }
 }
 
@@ -33,7 +34,7 @@ export async function firebaseGetDataWithKey(pathID: string, docID: string, key:
       output = doc.data();
     });
 
-    console.log("Current data: ", output);
+    devConsole.log("Current data: ", output);
 
   return output;
 }

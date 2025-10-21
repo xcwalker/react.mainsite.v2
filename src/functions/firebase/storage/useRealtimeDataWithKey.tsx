@@ -1,5 +1,6 @@
 import { collection, documentId, limit, onSnapshot, query, where } from "firebase/firestore";
 import { firebaseDB } from "./setup";
+import devConsole from "../../devConsole";
 
 export default async function firebaseGetRealtimeDataWithKey(
   firebaseCollection: string,
@@ -18,20 +19,20 @@ export default async function firebaseGetRealtimeDataWithKey(
   const unsubscribe = onSnapshot(
     q,
     (querySnapshot) => {
-      console.log("Current data: ", querySnapshot.size);
+      devConsole.log("Current data: ", querySnapshot.size);
       if (querySnapshot.docs[0]) {
         const data = querySnapshot.docs[0].data();
-        console.log("Current data: ", data);
+        devConsole.log("Current data: ", data);
         setData(data);
         if (setError) setError(false);
       } else {
-        console.log("No such document!");
+        devConsole.log("No such document!");
         if (setError) setError(true);
         setData(undefined);
       }
     },
     (error) => {
-      console.error("Error getting realtime data: ", error);
+      devConsole.error("Error getting realtime data: ", error);
       if (setError) setError(true);
       setData(undefined);
     }

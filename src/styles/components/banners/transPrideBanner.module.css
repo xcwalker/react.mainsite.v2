@@ -1,0 +1,17 @@
+.transPrideBanner {
+  --pink: #f9bfbb;
+  --blue: #4ba6e2;
+  --white: #fdfdfd;
+  --text: black;
+  color: var(--text);
+
+  background: linear-gradient(
+    to right,
+    var(--pink) 0%,
+    var(--pink) 20%,
+    var(--white) 47.5%,
+    var(--white) 52.5%,
+    var(--blue) 80%,
+    var(--blue) 100%
+  );
+}

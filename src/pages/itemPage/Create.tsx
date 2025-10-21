@@ -22,6 +22,7 @@ import "../../styles/components/markdownEditor.css";
 import Input from "../../components/Input";
 import toast from "react-hot-toast";
 import Section from "../../components/Section";
+import devConsole from "../../functions/devConsole";
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
@@ -378,7 +379,7 @@ function Sidebar(props: {
                       : currentUser.uid + "-" + props.data.metaData.collection,
                 },
               }).then((res) => {
-                console.log(res);
+                devConsole.log(res);
                 navigate("/" + props.itemType + "/" + props.slug?.toString());
               });
             } else {
@@ -396,7 +397,7 @@ function Sidebar(props: {
                     currentUser.uid + "-" + props.data.metaData.collection,
                 },
               }).then((res) => {
-                console.log(res);
+                devConsole.log(res);
                 if (!res) return;
                 navigate("/" + props.itemType + "/" + res.id);
               });

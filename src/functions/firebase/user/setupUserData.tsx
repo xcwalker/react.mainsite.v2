@@ -8,13 +8,14 @@ import {
   toastStyleSuccess,
 } from "../../../toast";
 import { getAuth, updateProfile } from "firebase/auth";
+import devConsole from "../../devConsole";
 
 export default async function firebaseSetupUserData(userID: string) {
   const auth = getAuth();
-  console.log(userSetup);
+  devConsole.log(userSetup);
 
   if (!auth.currentUser) {
-    console.error("No authenticated user found.");
+    devConsole.error("No authenticated user found.");
     return;
   }
 
@@ -23,10 +24,10 @@ export default async function firebaseSetupUserData(userID: string) {
     photoURL: userSetup.images.profile,
   })
     .then(() => {
-      console.info("User profile updated successfully.");
+      devConsole.info("User profile updated successfully.");
     })
     .catch((error) => {
-      console.error("Error updating user profile:", error);
+      devConsole.error("Error updating user profile:", error);
     });
 
   return toast.promise(

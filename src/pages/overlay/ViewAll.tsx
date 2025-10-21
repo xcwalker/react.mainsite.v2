@@ -9,6 +9,7 @@ import ListItem from "../../components/ListItem";
 import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDateFromUser";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { Link } from "react-router-dom";
+import devConsole from "../../functions/devConsole";
 
 export function OverlayViewAll() {
   const [overlays, setOverlays] = useState<({value: overlayType, id:string})[]>([]);
@@ -18,7 +19,7 @@ export function OverlayViewAll() {
     if (!currentUser) return;
 
     getDataByDateFromUser("overlays", currentUser.uid).then((data) => {
-      console.log(data);
+      devConsole.log(data);
       setOverlays(data as { value: overlayType; id: string }[]);
     });
   }, [currentUser]);

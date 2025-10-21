@@ -5,6 +5,7 @@ import { TicketType } from "../../types";
 import ListItem from "../../components/ListItem";
 import toTitleCase from "../../functions/toTitleCase";
 import FirebaseGetRealtimeDataByDateForTickets from "../../functions/firebase/storage/useRealtimeDataByDateForTickets";
+import devConsole from "../../functions/devConsole";
 
 export default function TicketDashboard() {
   const [tickets, setTickets] = useState<{ value: TicketType; id: string }[]>(
@@ -20,7 +21,7 @@ export default function TicketDashboard() {
   }, []);
 
   useEffect(() => {
-    console.log(tickets);
+    devConsole.log(tickets);
   }, [tickets]);
 
   return (

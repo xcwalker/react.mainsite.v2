@@ -13,6 +13,7 @@ import { PhotoshopPicker } from "react-color";
 import GFIcon from "../../components/GFIcon";
 import Checkbox from "../../components/Checkbox";
 import { isValidHttpUrl } from "./Index";
+import devConsole from "../../functions/devConsole";
 
 export default function NewTabEdit() {
   const user = useAuth();
@@ -49,11 +50,11 @@ export default function NewTabEdit() {
       return;
     }
 
-    console.log("Updating new tab data", linkData, user?.uid);
+    devConsole.log("Updating new tab data", linkData, user?.uid);
 
     firebaseSetData("newtab", user?.uid, linkData)
       .then(() => {
-        console.log("New tab data updated successfully");
+        devConsole.log("New tab data updated successfully");
       })
       .catch((error) => {
         console.error("Error updating new tab data:", error);

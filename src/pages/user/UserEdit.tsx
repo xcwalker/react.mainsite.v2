@@ -11,6 +11,7 @@ import { CompactPicker } from "react-color";
 import Button from "../../components/Button";
 import ErrorPage from "../../ErrorPage";
 import firebaseSetUserData from "../../functions/firebase/user/setUserData";
+import devConsole from "../../functions/devConsole";
 
 export default function UserEdit(props: {
   admin?: boolean; // Optional prop to indicate if the user is an admin
@@ -27,7 +28,7 @@ export default function UserEdit(props: {
     }
 
     if (id !== currentUser?.uid) {
-      console.log(
+      devConsole.log(
         "User is trying to edit another user's profile:",
         id,
         "Current user ID:",
@@ -50,7 +51,7 @@ export default function UserEdit(props: {
       }
 
       // Handle the fetched user data as needed
-      console.log("Fetched user data:", userData);
+      devConsole.log("Fetched user data:", userData);
       setUserData(userData);
       setError(false);
     });
@@ -303,7 +304,7 @@ function Sidebar(props: {
             onClick={() => {
               firebaseSetUserData(props.userID, props.userData)
                 .then(() => {
-                  console.log("User data updated successfully.");
+                  devConsole.log("User data updated successfully.");
                   navigate("../", { replace: true });
                 })
                 .catch((error) => {

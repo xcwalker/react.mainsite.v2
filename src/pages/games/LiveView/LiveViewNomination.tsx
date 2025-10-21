@@ -5,6 +5,7 @@ import ErrorPage from "../../../ErrorPage";
 import Section from "../../../components/Section";
 import css from "../../../styles/pages/games/LiveViewNomination.module.css";
 import Button from "../../../components/Button";
+import devConsole from "../../../functions/devConsole";
 
 export default function LiveView_Nomination() {
   const { gameID } = useParams<{ gameID: string }>();
@@ -53,7 +54,7 @@ export default function LiveView_Nomination() {
 
   useEffect(() => {
     document.addEventListener("fullscreenchange", (e) => {
-      console.log("Fullscreen change", e);
+      devConsole.log("Fullscreen change", e);
       if (!document.fullscreenElement) {
         setFullscreen(false);
         document.documentElement.classList.remove(css.nominationFullscreen);

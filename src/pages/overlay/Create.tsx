@@ -26,6 +26,7 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import Protect from "../../components/Security/Protect";
 import ErrorPage from "../../ErrorPage";
 import InputGroup from "../../components/InputGroup";
+import devConsole from "../../functions/devConsole";
 
 export default function OverlayCreate(props: { id?: string }) {
   const params = useParams();
@@ -47,7 +48,7 @@ export default function OverlayCreate(props: { id?: string }) {
       });
     } else if (params.id) {
       firebaseGetData("overlays", params.id).then((data) => {
-        console.log(data);
+        devConsole.log(data);
         if (data) {
           setOverlay(data as overlayType);
           setLoading(false);
@@ -569,7 +570,7 @@ function Main(props: {
           }}
           value={props.overlay.data.radio.animation.type}
           onChange={(value) => {
-            console.log(value);
+            devConsole.log(value);
             props.setOverlay({
               ...props.overlay,
               data: {

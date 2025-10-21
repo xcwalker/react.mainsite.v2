@@ -8,8 +8,11 @@ import firebaseSetData from "../../functions/firebase/storage/setData";
 import toTitleCase from "../../functions/toTitleCase";
 import { isValidHttpUrl } from "../newTab/Index";
 import { useParams } from "react-router-dom";
+import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
+import InputDropdown from "../../components/InputDropdown";
+import devConsole from "../../functions/devConsole";
 
-export default function Sidebar(props: { user: UserType; id: string; }) {
+export default function Sidebar(props: { user: UserType; id: string }) {
   const params = useParams();
   const currentUser = useAuth();
   const [currentUserData, setCurrentUserData] = useState<UserType | undefined>(
@@ -41,7 +44,7 @@ export default function Sidebar(props: { user: UserType; id: string; }) {
   }, [currentUser?.uid]);
 
   return (
-    <div className={css.sidebar}>
+    <SidebarContainer>
       <div
         className={css.user}
         style={{
@@ -176,36 +179,39 @@ export default function Sidebar(props: { user: UserType; id: string; }) {
         currentUserData?.info.role !== "user" &&
         currentUserData?.info.role !== "unverified" && (
           <>
-          <select
-            className={css.roleSelect}
-            value={props.user.info.role}
-            onChange={(e) => {
-              const updatedUserData: UserType = { ...props.user };
-              updatedUserData.info.role = e.target
-              .value as UserType["info"]["role"];
-              
-              firebaseSetData("users", props.id, updatedUserData).then(() => {
-                console.log("User role updated successfully.");
-              });
-            }}
-            >
-            <option value="unverified">Unverified</option>
-            <option value="user">User</option>
-            <option value="developer">Developer</option>
-            <option value="moderator">Moderator</option>
-            <option value="admin">Admin</option>
-            <option value="overlord">Overlord</option>
-          </select>
-          {/* Hide User */}
+            <InputDropdown
+              id="user-role"
+              label="User Role"
+              value={props.user.info.role}
+              values={[
+                { label: "Unverified", value: "unverified", icon: "help" },
+                { label: "User", value: "user", icon: "person" },
+                { label: "Developer", value: "developer", icon: "code" },
+                { label: "Moderator", value: "moderator", icon: "shield" },
+                { label: "Admin", value: "admin", icon: "shield_person" },
+                { label: "Overlord", value: "overlord", icon: "star" },
+              ]}
+              onChange={(value) => {
+                const updatedUserData: UserType = { ...props.user };
+                updatedUserData.info.role = value as UserType["info"]["role"];
+
+                firebaseSetData("users", props.id, updatedUserData).then(() => {
+                  devConsole.log("User role updated successfully.");
+                });
+              }}
+            />
+            {/* Hide User */}
             {props.user.info.hidden ? (
               <Button
                 onClick={() => {
                   const updatedUserData: UserType = { ...props.user };
                   updatedUserData.info.hidden = false;
-                  
-                  firebaseSetData("users", props.id, updatedUserData).then(() => {
-                    console.log("User unhidden successfully.");
-                  });
+
+                  firebaseSetData("users", props.id, updatedUserData).then(
+                    () => {
+                      devConsole.log("User unhidden successfully.");
+                    }
+                  );
                 }}
                 title={"Unhide User"}
                 icon={{ gficon: "visibility" }}
@@ -218,10 +224,12 @@ export default function Sidebar(props: { user: UserType; id: string; }) {
                 onClick={() => {
                   const updatedUserData: UserType = { ...props.user };
                   updatedUserData.info.hidden = true;
-                  
-                  firebaseSetData("users", props.id, updatedUserData).then(() => {
-                    console.log("User hidden successfully.");
-                  });
+
+                  firebaseSetData("users", props.id, updatedUserData).then(
+                    () => {
+                      devConsole.log("User hidden successfully.");
+                    }
+                  );
                 }}
                 title={"Hide User"}
                 icon={{ gficon: "visibility_off" }}
@@ -230,7 +238,7 @@ export default function Sidebar(props: { user: UserType; id: string; }) {
                 Hide User
               </Button>
             )}
-            </>
+          </>
         )}
 
       {currentUser?.uid === props.id && (
@@ -245,7 +253,8 @@ export default function Sidebar(props: { user: UserType; id: string; }) {
       )}
       {currentUserData?.info.role &&
         currentUserData?.info.role !== "user" &&
-        currentUserData?.info.role !== "unverified" && params.id && (
+        currentUserData?.info.role !== "unverified" &&
+        params.id && (
           <Button
             href={"./admin-edit"}
             title={"Admin Edit"}
@@ -255,6 +264,6 @@ export default function Sidebar(props: { user: UserType; id: string; }) {
             Admin Edit
           </Button>
         )}
-    </div>
+    </SidebarContainer>
   );
 }

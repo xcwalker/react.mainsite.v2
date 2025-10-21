@@ -1,0 +1,45 @@
+.noKingsBanner {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  padding-inline: clamp(1rem, 5vw, 3rem);
+  padding-bottom: 1.25rem;
+  padding-top: 0.5rem;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(0.5rem, 3vw, 15rem);
+  row-gap: 1rem;
+}
+
+.logo {
+  height: 1.75rem;
+}
+
+.text {
+  /* position */
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0;
+  right: 0;
+
+  /* text */
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 800;
+  text-decoration: solid underline;
+}
+
+@media screen and (min-width: 850px) {
+  .noKingsBanner {
+    padding: 1rem;
+  }
+
+  .text {
+    position: static;
+  }
+}

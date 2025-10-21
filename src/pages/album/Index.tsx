@@ -14,6 +14,7 @@ import LoadingPage from "../../components/Loading";
 
 import css from "../../styles/pages/project.module.css";
 import { firebaseGetDataWithKey } from "../../functions/firebase/storage/getData";
+import devConsole from "../../functions/devConsole";
 
 export default function AlbumIndex() {
   const { slug } = useParams();
@@ -26,11 +27,11 @@ export default function AlbumIndex() {
   useEffect(() => {
     firebaseGetDataWithKey("albums", slug as string, key as string).then(
       (data) => {
-        console.log(data);
+        devConsole.log(data);
         if (data === undefined) {
-          console.log("Album not found");
+          devConsole.log("Album not found");
           setTimeout(() => {
-            console.log("reset");
+            devConsole.log("reset");
             setError(true);
             setInput(true);
           }, 2500);

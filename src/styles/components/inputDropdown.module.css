@@ -1,0 +1,100 @@
+.inputContainer {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem;
+
+  /* styling */
+  border-radius: 0.5rem;
+  background: var(--primary);
+}
+
+.labels {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+}
+
+.passwordLabel {
+  /* position */
+  position: absolute;
+  top: 0.125rem;
+  right: 1rem;
+}
+
+.label {
+  opacity: 1;
+  transition: opacity 150ms ease-in-out;
+
+  color: inherit;
+}
+
+.label.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.input {
+  /* sizing */
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+
+  /* styling */
+  background: var(--background);
+  color: var(--text);
+  border: none;
+  outline: none;
+
+  border-radius: calc(0.5rem - 0.125rem);
+}
+
+.dropdown {
+  /* position */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  /* sizing */
+  width: 100%;
+  padding: 0.25rem;
+
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  overflow-y: auto;
+  background: var(--secondary);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

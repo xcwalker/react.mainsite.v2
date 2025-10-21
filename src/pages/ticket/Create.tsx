@@ -9,6 +9,7 @@ import Button from "../../components/Button";
 import AccountPage from "../../components/Security/AccountPage";
 import InputGroup from "../../components/InputGroup";
 import { removeEmpty } from "../../functions/removeEmpty";
+import devConsole from "../../functions/devConsole";
 
 export default function TicketCreate() {
   const [ticketData, setTicketData] = useState<TicketType>({
@@ -102,7 +103,7 @@ export default function TicketCreate() {
 
   const submitTicket = () => {
     // Submit ticket to firebase
-    console.log(ticketData);
+    devConsole.log(ticketData);
     firebaseCreateData("tickets", {
       ...removeEmpty(ticketData),
       data: {
@@ -112,7 +113,7 @@ export default function TicketCreate() {
     }).then((res) => {
       if (!res) return;
 
-      console.log(res);
+      devConsole.log(res);
       navigate("./" + res.id);
     });
   };

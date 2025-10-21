@@ -7,6 +7,7 @@ import { CombinedItemProps, ItemTypes } from "../../types";
 import ErrorPage from "../../ErrorPage";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { RoleProtect } from "../../components/Security/Protect";
+import devConsole from "../../functions/devConsole";
 
 export default function ItemEdit(props: {
   itemType: ItemTypes;
@@ -18,7 +19,7 @@ export default function ItemEdit(props: {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    console.log("Fetching data for item edit", props.itemType, slug);
+    devConsole.log("Fetching data for item edit", props.itemType, slug);
     firebaseGetData(props.itemType, slug as string).then((data) => {
       if (data === undefined) {
         setError(true);

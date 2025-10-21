@@ -5,6 +5,9 @@ import DevBanner from "./DEVBanner";
 import NetworkLostBanner from "./NetworkLostBanner";
 import NetworkRegainedBanner from "./NetworkRegainedBanner";
 import ProtoBanner from "./ProtoBanner";
+import NoKingsBanner from "./NoKingsBanner";
+import TransPride from "./TransPride";
+import devConsole from "../../functions/devConsole";
 
 export default function BannerContainer() {
   const [networkLost, setNetworkLost] = useState(false);
@@ -12,13 +15,13 @@ export default function BannerContainer() {
 
   useEffect(() => {
     window.addEventListener("offline", () => {
-      console.log("The network connection has been lost.");
+      devConsole.log("The network connection has been lost.");
       setNetworkLost(true);
       setNetworkWasLost(true);
     });
 
     window.addEventListener("online", () => {
-      console.log("The network connection has been restored.");
+      devConsole.log("The network connection has been restored.");
       setNetworkLost(false);
     });
 
@@ -33,6 +36,8 @@ export default function BannerContainer() {
       <DevBanner />
       <ProtoBanner />
       <BigTop30Banner />
+      <NoKingsBanner />
+      <TransPride />
       {(networkLost ||
         import.meta.env.VITE_IS_DEBUG_ALL_BANNERS === "true") && (
         <NetworkLostBanner />
