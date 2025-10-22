@@ -19,11 +19,11 @@
   list-style: none;
 }
 
-.newTabEdit .container ul.links li {
+.linkItem {
   width: 300px;
 }
 
-.newTabEdit .container ul.links li .link {
+.linkItem .link {
   /* position */
   position: relative;
 
@@ -36,8 +36,7 @@
   gap: 0.25rem;
 }
 
-
-.newTabEdit .container ul.links li .link .backdrop {
+.linkItem .link .backdrop {
   /* position */
   position: absolute;
   inset: 0;
@@ -48,11 +47,11 @@
   height: 100%;
 
   /* styling */
-  border-radius: 0.75rem;
-  background-color: var(--primary);
+  border-radius: var(--newTabLink-border-radius, 0.75rem);
+  background-color: var(--secondary);
 }
 
-.newTabEdit .container ul.links li .link .backgroundPreview {
+.linkItem .link .backgroundPreview {
   /* position */
   position: absolute;
   inset: 0;
@@ -63,13 +62,13 @@
   height: 100%;
 
   /* styling */
-  border-radius: 0.5rem;
-  border-bottom-left-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
+  border-radius: calc(var(--newTabLink-border-radius, 0.75rem) - 0.25rem);
+  border-bottom-left-radius: var(--button-border-radius, 0.5rem);
+  border-bottom-right-radius: var(--button-border-radius, 0.5rem);
   overflow: clip;
 }
 
-.newTabEdit .container ul.links li .link .backgroundPreview > * {
+.linkItem .link .backgroundPreview > * {
   /* sizing */
   width: 100%;
   height: 100%;
@@ -78,7 +77,7 @@
   object-fit: cover;
 }
 
-.newTabEdit .container ul.links li .link .positionSelector {
+.linkItem .link .positionSelector {
   /* position */
   position: absolute;
   top: 0.25rem;
@@ -91,68 +90,14 @@
   gap: 0.25rem;
 }
 
-.newTabEdit .container ul.links li .link .positionSelector button {
-  /* sizing */
-  width: 1.5rem;
-  height: 1.5rem;
-
-  /* flex */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* styling */
-  border: none;
-  background-color: var(--primary);
-  border-radius: 0.25rem;
-  color: var(--text);
-}
-
-.newTabEdit .container ul.links li .link .positionSelector button:hover {
-  background-color: var(--secondary);
-}
-
-.newTabEdit .container ul.links li .link .positionSelector button:disabled {
-  background-color: var(--background);
-  color: var(--primary);
-}
-
-.newTabEdit .container ul.links li .link .positionSelector button .icon {
-  font-size: 1rem;
-}
-
-.newTabEdit .container ul.links li .link .remove {
+.linkItem .link .remove {
   /* position */
   position: absolute;
   top: 0.25rem;
   right: 0.25rem;
-
-  /* sizing */
-  width: 1.5rem;
-  height: 1.5rem;
-  padding: 0.125rem;
-
-  /* flex */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* styling */
-  border: none;
-  background-color: var(--primary);
-  border-radius: 0.25rem;
-  color: var(--text);
 }
 
-.newTabEdit .container ul.links li .link .remove:hover {
-  background-color: var(--secondary);
-}
-
-.newTabEdit .container ul.links li .link .remove .icon {
-  font-size: 1rem;
-}
-
-.newTabEdit .container ul.links li .link .iconWrapper {
+.linkItem .link .iconWrapper {
   /* position */
   position: relative;
 
@@ -168,74 +113,16 @@
   justify-content: center;
   align-items: center;
 }
-.newTabEdit .container ul.links li .link .iconWrapper .iconImage {
+.linkItem .link .iconWrapper .iconImage {
   /* sizing */
   width: 100%;
   height: var(--_size);
   object-fit: contain;
 }
 
-.newTabEdit .container ul.links li .link input {
+.linkItem .link .title {
   width: 100%;
-}
-
-.newTabEdit .container ul.links li .link input[type="url"],
-.newTabEdit .container ul.links li .link input[type="text"] {
-  /* sizing */
-  width: 100%;
-  padding: 0.25rem 0.5rem;
-
-  /* text */
-  font-size: 0.8rem;
-  font-weight: 500;
-  line-height: 1;
-
-  /* styling */
-  border-radius: 0.25rem;
-  border: none;
-  background: var(--background);
-  color: var(--text);
-}
-
-.newTabEdit .container ul.links li .link input[type="url"]:hover,
-.newTabEdit .container ul.links li .link input[type="text"]:hover {
-  outline: 2px solid var(--text);
-}
-
-.newTabEdit .container ul.links li .link input[type="url"]:focus-visible,
-.newTabEdit .container ul.links li .link input[type="text"]:focus-visible {
-  outline: 2px solid var(--accent);
-}
-
-.newTabEdit .container ul.links li .link button {
-  /* sizing */
-  width: 100%;
-  height: 1.75rem;
-  padding: 0.25rem 0.5rem;
-
-  /* text */
-  font-size: 0.8rem;
-  font-weight: 500;
-  line-height: 1;
-
-  /* styling */
-  border-radius: 0.25rem;
-  border: none;
-  background: var(--secondary);
-  color: var(--text);
-}
-
-.newTabEdit .container ul.links li .link button:hover {
-  background: var(--accent);
-}
-
-.newTabEdit .container ul.links li .link button:disabled {
-  background: var(--background);
-  color: var(--text-disabled);
-}
-
-.newTabEdit .container ul.links li .link .title {
-  width: 100%;
+  height: fit-content;
 
   /* grid */
   display: grid;
@@ -243,7 +130,7 @@
   gap: 0.25rem;
 }
 
-.newTabEdit .container ul.links li .link .background {
+.linkItem .link .background {
   /* sizing */
   width: 100%;
 
@@ -266,8 +153,7 @@
   pointer-events: none;
 }
 
-
-.newTabEdit .container ul.links li .link > *:last-child {
-  border-bottom-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
+.linkItem .link > *:last-child {
+  border-bottom-left-radius: calc(var(--newTabLink-border-radius, 0.75rem) - 0.25rem);
+  border-bottom-right-radius: calc(var(--newTabLink-border-radius, 0.75rem) - 0.25rem);
 }

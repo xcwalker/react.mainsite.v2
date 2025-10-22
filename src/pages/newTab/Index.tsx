@@ -231,7 +231,7 @@ export default function NewTab() {
           </Section>
         </>
       )}
-      {!error && editMode && <Navigate to={"./edit"} />}
+      {!error && editMode && <Navigate to={"/account/manage/newtab"} />}
       {error && <ErrorPage code={400} error="Error Loading New Tab" />}
       {!error && !linkData && <LoadingPage />}
     </>

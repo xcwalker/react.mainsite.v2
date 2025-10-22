@@ -1,6 +1,9 @@
 
 
 .note {
+  /* position */
+  position: relative;
+
   /* spacing */
   margin: 0;
   padding: 2rem;
@@ -8,10 +11,28 @@
   /* text */
   font-size: 1rem;
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.3;
+  white-space: break-spaces;
 
   /* styling */
   color: var(--text);
   border: 0.125rem solid var(--secondary);
   border-radius: var(--settings-note-border-radius, 0.5rem);
+}
+
+.icon {
+  /* variables */
+  --_offset: 0.5rem;
+  --_size: 1.25rem;
+
+  /* position */
+  position: absolute;
+  top: var(--_offset);
+  left: var(--_offset);
+
+  /* size */
+  font-size: var(--_size);
+
+  /* styling */
+  color: var(--secondary);
 }

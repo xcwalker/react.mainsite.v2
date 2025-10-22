@@ -1,0 +1,18 @@
+.preview {
+  max-width: 50rem;
+}
+
+.links {
+  /* sizing */
+  margin: 0;
+  padding: 0;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  /* styling */
+  list-style: none;
+}

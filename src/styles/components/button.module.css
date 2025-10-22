@@ -178,3 +178,11 @@
 .button:hover span.betaTag {
   background-color: var(--accent);
 }
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  /* styling */
+  background: var(--button-disabled-background, transparent);
+  color: var(--button-disabled-color, var(--text-secondary));
+  cursor: not-allowed;
+}

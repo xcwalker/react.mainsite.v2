@@ -58,4 +58,8 @@ html[data-theme="DevView™"],
 
   /* fleet */
   --fleet-border-radius: 0rem;
+
+  /* input */
+  --input-border-radius: 0rem;
+  --newTabLink-border-radius: 0rem;
 }

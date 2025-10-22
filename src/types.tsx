@@ -419,7 +419,7 @@ export type NewTabLinks = {
     showUser: boolean;
     showSearch: boolean;
     search: {
-      provider: "google" | "bing" | "duckduckgo";
+      provider: "google" | "bing" | "duckduckgo" | "custom";
       queryURL: string; // URL template for search queries
       defaultParams?: string; // Additional default parameters for the search query
     };

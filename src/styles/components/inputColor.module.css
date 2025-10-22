@@ -10,7 +10,7 @@
 
   /* style */
   border: none;
-  border-radius: var(--color-picker-border-radius, 0.5rem);
+  border-radius: var(--input-border-radius, 0.5rem);
   background: var(--primary);
 }
 
@@ -37,5 +37,5 @@
 }
 
 .inputColor > div > div {
-  border-radius: var(--color-picker-inner-border-radius, 0.25rem) !important;
+  border-radius: calc(var(--input-border-radius, 0.5rem) - 0.125rem) !important;
 }

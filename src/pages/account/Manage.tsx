@@ -26,6 +26,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
 import { RoleProtect } from "../../components/Security/Protect";
 import SettingsNavigation from "./Settings/Navigation";
+import SettingsNewTab from "./Settings/NewTab";
 
 export default function ManagePage() {
   const currentUser = useAuth();
@@ -159,7 +160,7 @@ const pages: PageItem[] = [
     name: "newtab",
     title: "New Tab Settings",
     icon: "tab",
-    component: Page_NewTab,
+    component: SettingsNewTab,
   },
   {
     name: "keyboardShortcuts",
@@ -180,10 +181,26 @@ export function Sidebar() {
     <SidebarContainer>
       <nav className={css.sidebarNav}>
         <ul>
-          {pages.map((pageItem) => {
+          {pages.map((pageItem, index) => {
             if (pageItem.adminOnly) {
               return (
-                <RoleProtect staffOnly>
+                <Fragment key={index}>
+                  <RoleProtect staffOnly>
+                    <li key={pageItem.name}>
+                      <Button
+                        href={"../" + pageItem.name}
+                        title={pageItem.title}
+                        icon={{ gficon: pageItem.icon }}
+                      >
+                        {pageItem.title}
+                      </Button>
+                    </li>
+                  </RoleProtect>
+                </Fragment>
+              );
+            } else {
+              return (
+                <Fragment key={index}>
                   <li key={pageItem.name}>
                     <Button
                       href={"../" + pageItem.name}
@@ -193,19 +210,7 @@ export function Sidebar() {
                       {pageItem.title}
                     </Button>
                   </li>
-                </RoleProtect>
-              );
-            } else {
-              return (
-                <li key={pageItem.name}>
-                  <Button
-                    href={"../" + pageItem.name}
-                    title={pageItem.title}
-                    icon={{ gficon: pageItem.icon }}
-                  >
-                    {pageItem.title}
-                  </Button>
-                </li>
+                </Fragment>
               );
             }
           })}
@@ -264,6 +269,7 @@ function Page_Themes(props: {
         <InputGroup direction="row">
           <InputGroup>
             <InputColor
+              id="themeBackgroundColor"
               label="Background Color"
               value={userSettings.customThemeColor.background}
               onChange={(color) => {
@@ -277,6 +283,7 @@ function Page_Themes(props: {
               }}
             />
             <InputColor
+              id="themeTextColor"
               label="Text Color"
               value={userSettings.customThemeColor.text}
               onChange={(color) => {
@@ -291,6 +298,7 @@ function Page_Themes(props: {
               }}
             />
             <InputColor
+              id="themeTextAltColor"
               label="Text Alt Color"
               value={userSettings.customThemeColor.textAlt}
               onChange={(color) => {
@@ -304,6 +312,7 @@ function Page_Themes(props: {
               }}
             />
             <InputColor
+              id="themePrimaryColor"
               label="Primary Color"
               value={userSettings.customThemeColor.primary}
               onChange={(color) => {
@@ -317,6 +326,7 @@ function Page_Themes(props: {
               }}
             />
             <InputColor
+              id="themeSecondaryColor"
               label="Secondary Color"
               value={userSettings.customThemeColor.secondary}
               onChange={(color) => {
@@ -330,6 +340,7 @@ function Page_Themes(props: {
               }}
             />
             <InputColor
+              id="themeAccentColor"
               label="Accent Color"
               value={userSettings.customThemeColor.accent}
               onChange={(color) => {
@@ -434,8 +445,6 @@ function Page_Radio() {
   );
 }
 
-
-
 function Page_KeyboardShortcuts() {
   return (
     <SettingSection id="keyboardShortcuts" title="Keyboard Shortcuts">
@@ -464,14 +473,6 @@ function Page_Dashboard() {
   return (
     <SettingSection id="dashboardSettings" title="Dashboard Settings">
       <p>Dashboard settings coming soon!</p>
-    </SettingSection>
-  );
-}
-
-function Page_NewTab() {
-  return (
-    <SettingSection id="newTabSettings" title="New Tab Settings">
-      <p>New tab settings coming soon!</p>
     </SettingSection>
   );
 }

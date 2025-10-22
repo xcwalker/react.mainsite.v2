@@ -56,7 +56,7 @@ export default function DashboardLinks() {
 
             {linkData.links.length !== 0 && (
               <Button
-                href={"/newtab/edit"}
+                href={"/account/manage/newtab"}
                 title="Edit Links"
                 width="fit-content"
                 style="secondary"

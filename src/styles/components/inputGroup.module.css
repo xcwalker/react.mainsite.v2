@@ -9,7 +9,7 @@
   flex-grow: 1;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--input-border-radius, 0.5rem);
   border: 0.125rem solid var(--primary);
 
   & > .inputGroup {

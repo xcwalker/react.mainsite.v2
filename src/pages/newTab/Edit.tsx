@@ -10,10 +10,12 @@ import ErrorPage from "../../ErrorPage";
 import { Navigate } from "react-router-dom";
 
 import { PhotoshopPicker } from "react-color";
-import GFIcon from "../../components/GFIcon";
-import Checkbox from "../../components/Checkbox";
 import { isValidHttpUrl } from "./Index";
 import devConsole from "../../functions/devConsole";
+import IconButton from "../../components/IconButton";
+import Input from "../../components/Input";
+import InputDropdown from "../../components/InputDropdown";
+import Button from "../../components/Button";
 
 export default function NewTabEdit() {
   const user = useAuth();
@@ -174,7 +176,7 @@ export default function NewTabEdit() {
   );
 }
 
-function LinkItemEdit(props: {
+export function LinkItemEdit(props: {
   link: LinkItemType;
   index: number;
   setLinkData: (link: LinkItemType) => void;
@@ -198,41 +200,51 @@ function LinkItemEdit(props: {
 
   return (
     <>
-      <li className={props.link.type === "wide" ? " " + css.wide : ""}>
+      <li
+        className={`${css.linkItem} ${
+          props.link.type === "wide" ? css.wide : ""
+        }`}
+      >
         <div className={css.link}>
           <div className={css.backdrop} />
           <div className={css.iconWrapper}>
             <div className={css.positionSelector}>
-              <button
+              <IconButton
                 onClick={() => {
                   if (props.position > 0) {
                     props.changePosition(props.position - 1);
                   }
                 }}
                 disabled={props.position === 0}
-              >
-                <GFIcon>arrow_drop_up</GFIcon>
-              </button>
-              <button
+                icon={{ gficon: "arrow_drop_up" }}
+                title="Move Up"
+                width="fit-content"
+                style="secondary"
+              />
+              <IconButton
                 onClick={() => {
                   if (props.position < props.positionCount - 1) {
                     props.changePosition(props.position + 1);
                   }
                 }}
                 disabled={props.position === props.positionCount - 1}
-              >
-                <GFIcon>arrow_drop_down</GFIcon>
-              </button>
+                icon={{ gficon: "arrow_drop_down" }}
+                title="Move Down"
+                width="fit-content"
+                style="secondary"
+              />
             </div>
 
-            <button
+            <IconButton
               className={css.remove}
               onClick={() => {
                 props.removeLink();
               }}
-            >
-              <GFIcon className={css.icon}>remove</GFIcon>
-            </button>
+              title="Remove Link"
+              icon={{ gficon: "remove" }}
+              width="fit-content"
+              style="danger"
+            />
 
             <div className={css.backgroundPreview}>
               {props.link.background.type === "image" &&
@@ -258,17 +270,20 @@ function LinkItemEdit(props: {
                     //   "&size=128"
 
                     "https://icon.horse/icon/" +
-                    (isValidHttpUrl(props.link.url) ? new URL(props.link.url).hostname.replace(/^www\./, "") : "")
+                    (isValidHttpUrl(props.link.url)
+                      ? new URL(props.link.url).hostname.replace(/^www\./, "")
+                      : "")
               }
               alt={props.link.title}
               className={css.iconImage}
             />
           </div>
-          <input
+          <Input
             type="url"
             name="iconUrl"
+            label="Icon URL"
             id=""
-            onInput={(e) => {
+            onChange={(e) => {
               const newLink = {
                 ...props.link,
                 icon: (e.target as HTMLInputElement).value,
@@ -278,11 +293,12 @@ function LinkItemEdit(props: {
             value={props.link.icon}
             placeholder="https://example.com/favicon.svg"
           />
-          <input
+          <Input
             type="url"
             name=""
             id=""
-            onInput={(e) => {
+            label="Link URL"
+            onChange={(e) => {
               const newLink = {
                 ...props.link,
                 url: (e.target as HTMLInputElement).value,
@@ -293,11 +309,11 @@ function LinkItemEdit(props: {
             placeholder="https://example.com"
           />
           <div className={css.title}>
-            <input
+            <Input
+              id=""
               type="text"
-              className={css.title}
               value={props.link.title}
-              onInput={(e) => {
+              onChange={(e) => {
                 const newLink = {
                   ...props.link,
                   title: (e.target as HTMLInputElement).value,
@@ -305,25 +321,28 @@ function LinkItemEdit(props: {
                 props.setLinkData(newLink);
               }}
               placeholder="Link Title"
+              label="Link Title"
             />
-            <Checkbox
+            <InputDropdown
               id={`show-title-${props.index}`}
               label="Show Title"
-              showLabel={false}
-              checked={
+              values={[
+                { label: "Show", value: "show" },
+                { label: "Hide", value: "hide" },
+              ]}
+              value={
                 props.link.showTitle === undefined ||
                 props.link.showTitle === true
-                  ? true
-                  : false
+                  ? "show"
+                  : "hide"
               }
-              onChange={(checked) => {
+              onChange={(value) => {
                 const newLink = {
                   ...props.link,
-                  showTitle: checked,
+                  showTitle: value === "show" ? true : false,
                 };
                 props.setLinkData(newLink);
               }}
-              className={css.showTitleCheckbox}
             />
             {/* <input
               type="checkbox"
@@ -346,24 +365,25 @@ function LinkItemEdit(props: {
             /> */}
           </div>
           <div className={css.background}>
-            <select
-              name=""
-              id=""
-              value={props.link.background.type}
-              onChange={(e) => {
+            <InputDropdown
+              id={`link-background-type-${props.index}`}
+              label="Background Type"
+              values={[
+                { label: "Image", value: "image" },
+                { label: "Color", value: "color" },
+              ]}
+              value={props.link.background.type || "color"}
+              onChange={(value) => {
                 const newLink = {
                   ...props.link,
                   background: {
                     ...props.link.background,
-                    type: (e.target as HTMLSelectElement).value,
+                    type: value,
                   },
                 };
                 props.setLinkData(newLink);
               }}
-            >
-              <option value="image">Image</option>
-              <option value="color">Color</option>
-            </select>
+            />
             {props.link.background.type === "image" && (
               <input
                 type="url"
@@ -385,24 +405,28 @@ function LinkItemEdit(props: {
             )}
             {props.link.background.type === "color" && (
               <>
-                <button
+                <Button
                   onClick={() => {
                     setShowBackgroundColorPicker((prev) => !prev);
                   }}
+                  title="Show Picker"
+                  style="secondary"
                 >
                   Show Picker
-                </button>
+                </Button>
               </>
             )}
           </div>
           <>
-            <button
+            <Button
               onClick={() => {
                 setShowColorPicker((prev) => !prev);
               }}
+              title="Show Text Color Picker"
+              style="secondary"
             >
               Show Text Color Picker
-            </button>
+            </Button>
           </>
         </div>
       </li>

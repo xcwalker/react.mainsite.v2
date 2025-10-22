@@ -11,7 +11,7 @@
   padding: 0.125rem;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--input-border-radius, 0.5rem);
   background: var(--primary);
 }
 
@@ -72,7 +72,7 @@
   border: none;
   outline: none;
 
-  border-radius: calc(0.5rem - 0.125rem);
+  border-radius: calc(var(--input-border-radius, 0.5rem) - 0.125rem);
 }
 
 .inputContainer:has(.input:autofill) {
