@@ -111,51 +111,52 @@
 }
 
 .slideshow .dots .dot {
+  /* variables */
+  --_offset: 5%;
+
   /* sizing */
   width: var(--_dot-size);
   height: var(--_dot-size);
 
   /* styling */
-  background: var(--primary);
+  background: linear-gradient(
+    to left,
+    var(--primary) 0%,
+    var(--primary) calc(50% - var(--_offset)),
+    var(--text) calc(50% + var(--_offset)),
+    var(--text) 100%
+  );
+  background-size: 250% 100%;
+  background-position: 100% 0;
   border-radius: var(--hero-dot-border-radius, 100vmax);
   cursor: pointer;
 
   /* transition */
   transition: width var(--_transition-speed) ease-in-out,
-    background var(--_transition-speed) ease-in-out;
+    background-position var(--_transition-speed) ease-in-out;
 }
 
 .slideshow .dots .dot.active {
   /* sizing */
   width: 2rem;
-
-  /* styling */
-  background: var(--text);
+  background-position: 0 0;
 }
 
 .slideshow .dots .dot.active.timed {
-  /* animation */
-  animation: slideshowDotActiveTimedAnimation 10s linear forwards;
-  background: linear-gradient(
-    to right,
-    var(--primary) 0%,
-    var(--primary) 50%,
-    var(--text) 50%,
-    var(--text) 100%
-  );
-  background-size: 200% 100%;
+  background-position: 0 0;
+  transition: width var(--_transition-speed) ease-in-out,
+    background-position 10s linear;
 }
 
-
 .slideshow .dots .dot.active.userInteracted {
-  
+  background-position: 100% 0;
 }
 
 @keyframes slideshowDotActiveTimedAnimation {
-  from {
-    background-position: 0 0;
+  0%, 10% {
+    background-position: 100% 0;
   }
-  to {
-    background-position: -100% 0;
+  90%, 100% {
+    background-position: 0 0;
   }
 }
