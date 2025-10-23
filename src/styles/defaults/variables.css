@@ -29,6 +29,7 @@ html[data-theme="light"],
   --secondary: #c3c3c3;
   --accent: #0061e0;
   --text-inverse: #ffffff;
+  --account-backdrop-filter: brightness(0.85) blur(0.125rem);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,5 +44,6 @@ html[data-theme="light"],
     --secondary: #484848;
     --accent: #0061e0;
     --text-inverse: #000000;
+    --account-backdrop-filter: brightness(0.5) blur(0.125rem);
   }
 }

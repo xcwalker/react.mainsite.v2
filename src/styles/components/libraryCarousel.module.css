@@ -172,7 +172,7 @@
   scroll-behavior: smooth;
 
   > * {
-    max-width: 350px;
+    max-width: min(calc(100vw - 4rem), 350px);
     width: 100%;
   }
 

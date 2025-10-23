@@ -12,6 +12,12 @@ export default function AccountPage(props: {
       id={props.id}
       className={css.accountPage}
       container={{ className: css.content }}
+      background={
+        <div className={css.background}>
+          <img src="/background.svg" alt="" />
+          <div className={css.overlay} />
+        </div>
+      }
     >
       {props.onSubmit && (
         <form

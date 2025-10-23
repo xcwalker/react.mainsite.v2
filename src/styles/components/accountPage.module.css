@@ -12,17 +12,41 @@
   align-items: center;
 }
 
-.accountPage::before {
-  /* content */
-  content: "";
-  
+.accountPage .background {
   /* position */
   position: absolute;
   inset: -1rem;
+  z-index: 0;
 
   /* styling */
-  background-image: url("/backdrop.svg");
-  background-size: 20rem;
+  overflow: hidden;
+}
+
+.accountPage .background img {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.accountPage .overlay {
+  /* position */
+  position: absolute;
+  inset: 0;
+
+  --s: 7px; /* control the size */
+  --_card-main-background: #fff;
+  --_card-main-background-alt: #c4c4c4;
+
+  --c: #0000, var(--_card-main-background) 0.5deg 119.5deg, #0000 120deg;
+  --g1: conic-gradient(from 60deg at 56.25% calc(425% / 6), var(--c));
+  --g2: conic-gradient(from 180deg at 43.75% calc(425% / 6), var(--c));
+  --g3: conic-gradient(from -60deg at 50% calc(175% / 12), var(--c));
+  background: var(--g1), var(--g1) var(--s) calc(1.73 * var(--s)), var(--g2),
+    var(--g2) var(--s) calc(1.73 * var(--s)), var(--g3) var(--s) 0,
+    var(--g3) 0 calc(1.73 * var(--s)) var(--_card-main-background-alt);
+  background-size: calc(2 * var(--s)) calc(3.46 * var(--s));
+  opacity: 25%;
 }
 
 .accountPage .content {
@@ -44,7 +68,7 @@
   /* sizing */
   max-width: 800px;
   width: var(--content-max-width);
-  padding:  5rem min(6rem, max(4vw, 1rem));
+  padding: 5rem min(6rem, max(4vw, 1rem));
 
   /* flex */
   display: flex;
@@ -53,10 +77,10 @@
   align-items: center;
   gap: 1rem;
 
-
   /* styling */
   border: 0.25rem solid var(--primary);
   border-radius: var(--accountPage-border-radius, 1rem);
   overflow: hidden;
-  background-color: var(--background);
+  /* background-color: var(--background); */
+  backdrop-filter: var(--account-backdrop-filter, brightness(0.5) blur(0.125rem));
 }

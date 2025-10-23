@@ -6,7 +6,7 @@
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
-  place-items: center;
+  /* place-items: center; */
 }
 
 .thumbnail {
@@ -40,5 +40,5 @@
 
 .image .placeholder svg {
   /* sizing */
-  width: 200px;
+  width: min(50vw, 200px);
 }

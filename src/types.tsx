@@ -192,6 +192,7 @@ export type SectionType = {
   children: ReactNode;
   container?: Classes;
   style?: React.CSSProperties;
+  background?: ReactNode;
 };
 
 export type StackType = {

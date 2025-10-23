@@ -48,7 +48,10 @@ export default function RegisterPage() {
         </title>
       </Helmet>
       <AccountPage id="accountRegister" onSubmit={() => submit()}>
-        <h2 className={css.title}>Welcome To Awesome</h2>
+        <h2 className={css.title}>
+          <span>Welcome To</span>
+          <span className={css.fancy}>Awesome</span>
+        </h2>
 
         <Input
           type="email"
@@ -83,7 +86,13 @@ export default function RegisterPage() {
           onChange={(e) => setPasswordCheck(e.currentTarget.value)}
           disabled={loading}
         />
-        <Button type="submit" style="primary" title="Register" width="14rem" centered>
+        <Button
+          type="submit"
+          style="primary"
+          title="Register"
+          width="14rem"
+          centered
+        >
           Register
         </Button>
         <div className={css.divider}>
