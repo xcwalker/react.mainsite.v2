@@ -78,6 +78,12 @@ export const defaultNav: NavSection[] = [
         requireVerified: true,
       },
       {
+        title: "Organizations",
+        gficon: "apartment",
+        href: "organizations",
+        requireUser: true,
+      },
+      {
         title: "Users",
         gficon: "group",
         href: "users",
@@ -445,6 +451,19 @@ export const NewTabLinksDefault: NewTabLinks = {
   },
 };
 
+export type OrganizationType = {
+  name: string;
+  description: string;
+  logoUrl: string;
+  creator: string;
+  inviteCodes?: string[];
+  settings?: {
+    allowJoinRequests: boolean;
+    requireInviteCode: boolean;
+    maxMembers?: number;
+  };
+};
+
 export type UserType = {
   about: {
     userName: string;
@@ -481,8 +500,10 @@ export type UserType = {
   };
   organization?: {
     id: string;
-    title: string;
-    email: string;
+    email?: string;
+    role: "owner" | "admin" | "member";
+    title?: string;
+    inviteCode?: string;
   };
 };
 

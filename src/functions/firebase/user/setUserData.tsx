@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { toastStyleDefault, toastStyleError, toastStyleSuccess } from "../../../toast";
 
 export default async function firebaseSetUserData(
-  docID: string,
+  userID: string,
   data: UserType
 ) {
   if (firebaseAuth.currentUser === null) {
@@ -46,7 +46,7 @@ export default async function firebaseSetUserData(
   );
 
   await toast.promise(
-    setDoc(doc(firebaseDB, "users", docID), data).catch((e) => {
+    setDoc(doc(firebaseDB, "users", userID), data).catch((e) => {
       console.error("Error getting data: ", e);
     }),
     {

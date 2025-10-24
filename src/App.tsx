@@ -52,6 +52,11 @@ import LoadingPage from "./components/Loading";
 import { DeveloperView } from "./pages/Developer";
 import VehicleEnrollPage from "./pages/vehiclePage/Enroll";
 import devConsole from "./functions/devConsole";
+import OrganizationNavigation from "./pages/organizations/Navigation";
+import OrganizationCreate from "./pages/organizations/Create";
+import OrganizationJoin from "./pages/organizations/Join";
+import OrganizationDetails from "./pages/organizations/Details";
+import OrganizationEdit from "./pages/organizations/Edit";
 
 export default function App() {
   const currentUser = useAuth();
@@ -619,6 +624,52 @@ export default function App() {
                     <DevModeProtect>
                       <DeveloperView />
                     </DevModeProtect>
+                  }
+                />
+              </Route>
+            </Route>
+
+            {/* organizations */}
+            <Route path="organizations">
+              <Route
+                index
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <OrganizationNavigation />
+                  </Protect>
+                }
+              />
+              <Route
+                path="create"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <OrganizationCreate />
+                  </Protect>
+                }
+              />
+              <Route
+                path="join"
+                element={
+                  <Protect redirect={<Navigate to={"/account"} />}>
+                    <OrganizationJoin />
+                  </Protect>
+                }
+              />
+              <Route path=":organizationId">
+                <Route
+                  index
+                  element={
+                    <Protect redirect={<Navigate to={"/account"} />}>
+                      <OrganizationDetails />
+                    </Protect>
+                  }
+                />
+                <Route
+                  path="edit"
+                  element={
+                    <Protect redirect={<Navigate to={"/account"} />}>
+                      <OrganizationEdit />
+                    </Protect>
                   }
                 />
               </Route>
