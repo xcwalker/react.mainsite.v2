@@ -12,19 +12,23 @@ export default async function firebaseSetData(
   docID: string,
   data: unknown,
   options?: {
-    toast?: boolean;
+    toast?: {
+      loading?: string;
+      success?: string;
+      error?: string;
+    };
   }
 ) {
-  if (options && options?.toast === false) {
+  if (options && (options?.toast || options?.toast === undefined)) {
     return await setDoc(doc(firebaseDB, pathID, docID), data);
   }
 
   await toast.promise(
     setDoc(doc(firebaseDB, pathID, docID), data),
     {
-      loading: "Saving Data",
-      success: "Data Saved Successfully",
-      error: "Error Saving Data",
+      loading: options?.toast?.loading || "Saving Data",
+      success: options?.toast?.success || "Data Saved Successfully",
+      error: options?.toast?.error || "Error Saving Data",
     },
     {
       loading: {

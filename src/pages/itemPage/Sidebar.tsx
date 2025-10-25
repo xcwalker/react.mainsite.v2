@@ -19,6 +19,7 @@ import SidebarTitle from "../../components/Sidebar/SidebarTitle";
 import SidebarDates from "../../components/Sidebar/SidebarDates";
 import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
 import DeleteWarning from "../../components/DeleteWarning";
+import ShareModal from "../../components/ShareModal";
 
 export function ItemSidebar(props: {
   item: ItemType;
@@ -278,12 +279,18 @@ export function ItemSidebar(props: {
           bgColor="var(--background-100)"
         />
       </SidebarContainer>
-      <QRModal
-        close={() => {
-          setShopQRModal(false);
-        }}
-        link={props.itemType.charAt(0) + "." + shortURL + "/" + props.slug}
-        visible={shopQRModal}
+      <ShareModal
+        title={
+          "Share " +
+          (props.itemType.toLowerCase().charAt(props.itemType.length - 1) ===
+          "s"
+            ? props.itemType.slice(0, -1)
+            : props.itemType) +
+          " via QR Code"
+        }
+        setVisibility={setShopQRModal}
+        visibility={shopQRModal}
+        url={props.itemType.charAt(0) + "." + shortURL + "/" + props.slug}
       />
     </>
   );

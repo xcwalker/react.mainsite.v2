@@ -454,7 +454,15 @@ export const NewTabLinksDefault: NewTabLinks = {
 export type OrganizationType = {
   name: string;
   description: string;
-  logoUrl: string;
+  logo: {
+    wide: string;
+    icon: string;
+    background: {
+      type: "color" | "image";
+      color?: string;
+      imageUrl?: string;
+    };
+  };
   creator: string;
   inviteCodes?: string[];
   settings?: {

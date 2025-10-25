@@ -36,7 +36,7 @@ export type ButtonType = {
   centered?: boolean;
   // centered is used to center the button
   onBlur?: () => void;
-}
+};
 
 export default function Button(props: ButtonType & { children?: ReactNode }) {
   return (
@@ -60,6 +60,7 @@ export default function Button(props: ButtonType & { children?: ReactNode }) {
           title={props.title}
           aria-disabled={props.loading || props.disabled ? "true" : "false"}
           onBlur={props.onBlur}
+          onClick={props.onClick}
         >
           {props.icon?.gficon && (
             <GFIcon
@@ -106,6 +107,7 @@ export default function Button(props: ButtonType & { children?: ReactNode }) {
           title={props.title}
           aria-disabled={props.loading || props.disabled ? "true" : "false"}
           onBlur={props.onBlur}
+          onClick={props.onClick}
         >
           {props.icon?.gficon && (
             <GFIcon
@@ -158,6 +160,7 @@ export default function Button(props: ButtonType & { children?: ReactNode }) {
           title={props.title}
           aria-disabled={props.loading || props.disabled ? "true" : "false"}
           onBlur={props.onBlur}
+          onClick={props.onClick}
         >
           {props.icon?.gficon && (
             <GFIcon
@@ -183,7 +186,7 @@ export default function Button(props: ButtonType & { children?: ReactNode }) {
           )}
         </NavLink>
       )}
-      {(props.onClick || props.type) && (
+      {(props.onClick || props.type) && !props.href && (
         <button
           className={
             css.button +

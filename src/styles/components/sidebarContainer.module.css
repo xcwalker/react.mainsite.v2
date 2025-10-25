@@ -12,6 +12,16 @@
   gap: var(--item-sidebar-gap, 1rem);
 }
 
+.sidebar h1,
+.sidebar h2,
+.sidebar h3,
+.sidebar h4,
+.sidebar h5,
+.sidebar h6 {
+  /* margin */
+  margin: 0;
+}
+
 @media (max-width: 900px) {
   .sidebar {
     /* position */

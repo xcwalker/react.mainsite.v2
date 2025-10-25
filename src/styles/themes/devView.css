@@ -62,4 +62,8 @@ html[data-theme="DevView™"],
   /* input */
   --input-border-radius: 0rem;
   --newTabLink-border-radius: 0rem;
+
+  /* organization */
+  --organization-border-radius: 0rem;
+  --organization-sub-border-radius: 0rem;
 }

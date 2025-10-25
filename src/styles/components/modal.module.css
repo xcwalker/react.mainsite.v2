@@ -27,7 +27,7 @@
   /* position */
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 100;
 
   /* grid */
   display: grid;
@@ -48,7 +48,8 @@
   /* hiding */
   opacity: 1;
   pointer-events: auto;
-  transition: grid-template-rows var(--_slide-duration) ease calc(var(--_opacity-duration) + var(--_hold-after-opacity));
+  transition: grid-template-rows var(--_slide-duration) ease
+    calc(var(--_opacity-duration) + var(--_hold-after-opacity));
 }
 
 @media (max-width: 600px) {
@@ -88,7 +89,8 @@ body :has(.visible) {
   opacity: 0;
 
   /* transition */
-  transition: opacity var(--_opacity-duration) ease calc(var(--_slide-duration) + var(--_hold-after-slide));
+  transition: opacity var(--_opacity-duration) ease
+    calc(var(--_slide-duration) + var(--_hold-after-slide));
 }
 
 .mainContainer.visible > .modal,
@@ -121,7 +123,8 @@ body :has(.visible) {
   /* sizing */
   height: 50px;
   padding: 0.5rem;
-
+  flex-shrink: 0;
+  
   /* flex */
   display: flex;
   justify-content: space-between;

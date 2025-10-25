@@ -3,7 +3,14 @@ import css from "../styles/components/modal.module.css";
 import Button from "./Button";
 import GFIcon from "./GFIcon";
 
-export default function Modal(props: { setVisibility: Dispatch<SetStateAction<boolean>>; visibility: boolean; children: ReactNode; footer: ReactNode; title?: string; }) {
+export default function Modal(props: {
+  setVisibility: Dispatch<SetStateAction<boolean>>;
+  visibility: boolean;
+  children: ReactNode;
+  footer: ReactNode;
+  title?: string;
+  height?: string;
+}) {
   useEffect(() => {
     if (props.visibility) {
       document.body.classList.add("modalVisible");
@@ -14,7 +21,18 @@ export default function Modal(props: { setVisibility: Dispatch<SetStateAction<bo
 
   return (
     <>
-      <div className={css.mainContainer + " " + (props.visibility === true ? css.visible : "")}>
+      <div
+        className={
+          css.mainContainer +
+          " " +
+          (props.visibility === true ? css.visible : "")
+        }
+        style={
+          {
+            "--_modal-height": props.height ? props.height : "350px",
+          } as React.CSSProperties
+        }
+      >
         <div className={css.corner}></div>
         <div className={css.corner}></div>
         <div className={css.corner}></div>
