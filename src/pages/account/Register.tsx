@@ -41,7 +41,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <Protect isLoginPage={true} redirect={<Navigate to={"../manage"} />}>
+    <Protect isLoginPage={true} redirect={<Navigate to={"/user"} replace />}>
       <Helmet>
         <title>
           Register {separator} Accounts {separator} {title}
