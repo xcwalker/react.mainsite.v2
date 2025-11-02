@@ -125,26 +125,33 @@ function Sidebar(props: {
 
   return (
     <SidebarContainer>
-      <div
-        className={css.logo}
-        style={
-          {
-            "--_background-color":
-              organization.logo.background.type === "color"
-                ? organization.logo.background.color
-                : "transparent",
-          } as React.CSSProperties
-        }
-      >
-        <img src={organization.logo.wide} alt="" />
-        {organization.logo.background.type === "image" && (
-          <img
-            src={organization.logo.background.imageUrl}
-            alt=""
-            className={css.background}
-          />
-        )}
-      </div>
+      {organization.logo.background && (
+        <div
+          className={css.logo}
+          style={
+            {
+              "--_background-color":
+                organization.logo.background.type === "color"
+                  ? organization.logo.background.color
+                  : "transparent",
+            } as React.CSSProperties
+          }
+        >
+          <img src={organization.logo.wide} alt="" />
+          {organization.logo.background.type === "image" && (
+            <img
+              src={organization.logo.background.imageUrl}
+              alt=""
+              className={css.background}
+            />
+          )}
+        </div>
+      )}
+      {!organization.logo.background && (
+        <div className={css.logoNoBackground}>
+          <img src={organization.logo.wide} alt="" />
+        </div>
+      )}
       <SidebarTitle title={organization.name} />
       <Controls
         organization={organization}
@@ -360,16 +367,21 @@ function InviteModal(props: {
   function saveInviteCode() {
     if (codeSaved) return;
 
-    firebaseSetData("organizations", organizationId, {
-      ...organization,
-      inviteCodes: [...(organization.inviteCodes || []), inviteCode],
-    }, {
-      toast: {
-        loading: "Generating Invite Code",
-        success: "Invite Code Generated",
-        error: "Error Generating Invite Code",
+    firebaseSetData(
+      "organizations",
+      organizationId,
+      {
+        ...organization,
+        inviteCodes: [...(organization.inviteCodes || []), inviteCode],
       },
-    }).then(() => {
+      {
+        toast: {
+          loading: "Generating Invite Code",
+          success: "Invite Code Generated",
+          error: "Error Generating Invite Code",
+        },
+      }
+    ).then(() => {
       setCodeSaved(true);
     });
   }

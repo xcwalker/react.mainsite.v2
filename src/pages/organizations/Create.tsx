@@ -67,7 +67,9 @@ export default function OrganizationCreate() {
           firebaseCreateData("organizations", {
             name: name,
             description: description,
-            logoUrl: logoUrl,
+            logo: {
+              wide: logoUrl,
+            },
             creator: currentUser.uid,
           }).then((docRef) => {
             if (docRef) {
