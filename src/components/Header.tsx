@@ -153,16 +153,36 @@ export default function Header() {
   }, [count, ticking]);
 
   useEffect(() => {
-    if (!audio) return;
+    console.log("Radio state changed:", radio.state, radio.tabID, audio);
+    if (!audio || radio.tabID === "") return;
 
     if (radio.state === "playing") {
-      audio.src = "https://stream.simulatorradio.com/320";
-      audio.play();
+      if (
+        audio.src === "https://stream.simulatorradio.com/320" &&
+        !audio.paused
+      ) {
+        audio.muted = false;
+        return;
+      } else {
+        audio.src = "https://stream.simulatorradio.com/320";
+        audio.play().catch((error) => {
+          console.error("Error playing audio:", error);
+          setRadio((prev) => ({ ...prev, state: "paused" }));
+        });
+        audio.muted = false;
+      }
     } else if (radio.state === "paused") {
       audio.pause();
       audio.src = "";
     }
-  }, [audio, radio.state]);
+  }, [audio, radio.state, radio.tabID, setRadio]);
+
+  //audio volume set
+  useEffect(() => {
+    if (!audio) return;
+
+    audio.volume = radio.volume / 100;
+  }, [audio, radio.volume]);
 
   const navScroll = useCallback(() => {
     if (navScrollLastKnown === window.scrollY) return;
@@ -224,7 +244,10 @@ export default function Header() {
                   )}
                   <ul className={css.links}>
                     {set.items.map((item, index) => {
-                      if (item.devOnly && import.meta.env.MODE !== "development")
+                      if (
+                        item.devOnly &&
+                        import.meta.env.MODE !== "development"
+                      )
                         return null;
                       else if (item.requireVerified) {
                         return (

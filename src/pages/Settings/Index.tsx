@@ -1,44 +1,55 @@
-import { firebaseLogout } from "../../functions/firebase/authentication/logout";
+import { firebaseLogout } from "../../functions/firebase/authentication/logout.tsx";
 import { Helmet } from "react-helmet";
-import { separator, title } from "../../App";
-import { availableThemes } from "../../SettingController";
-import firebaseSetData from "../../functions/firebase/storage/setData";
+import { separator, title } from "../../App.tsx";
+import { availableThemes } from "../../SettingController.tsx";
+import firebaseSetData from "../../functions/firebase/storage/setData.tsx";
 import { Fragment, useEffect, useState } from "react";
-import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
-import LoadingPage from "../../components/Loading";
-import { useAuth } from "../../functions/firebase/authentication/useAuth";
+import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData.tsx";
+import LoadingPage from "../../components/Loading.tsx";
+import { useAuth } from "../../functions/firebase/authentication/useAuth.tsx";
 import {
-  customThemeType,
-  userSettingsDefault,
-  userSettingsType,
-} from "../../types";
-import InputColor from "../../components/InputColor";
+    customThemeType,
+    userSettingsDefault,
+    userSettingsType,
+    UserType,
+} from "../../types.tsx";
+import InputColor from "../../components/InputColor.tsx";
 import invert from "invert-color";
-import InputGroup from "../../components/InputGroup";
-import Input from "../../components/Input";
-import SideBySide from "../../components/SideBySide";
+import InputGroup from "../../components/InputGroup.tsx";
+import Input from "../../components/Input.tsx";
+import SideBySide from "../../components/SideBySide.tsx";
 import css from "../../styles/pages/account/manage.module.css";
-import Button from "../../components/Button";
+import Button from "../../components/Button.tsx";
 import { User } from "firebase/auth";
-import ButtonWithPreview from "../../components/ButtonWithPreview";
-import SettingSection from "../../components/SettingSection";
+import ButtonWithPreview from "../../components/ButtonWithPreview.tsx";
+import SettingSection from "../../components/SettingSection.tsx";
 import { Navigate, useParams } from "react-router-dom";
-import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
-import { RoleProtect } from "../../components/Security/Protect";
-import SettingsNavigation from "./Settings/Navigation";
-import SettingsNewTab from "./Settings/NewTab";
+import { SidebarContainer } from "../../components/Sidebar/SidebarContainer.tsx";
+import { RoleProtect } from "../../components/Security/Protect.tsx";
+import SettingsNavigation from "./Navigation.tsx";
+import SettingsNewTab from "./NewTab.tsx";
+import SettingsOrganizations from "./Organization.tsx";
+import Section from "../../components/Section.tsx";
 
 export default function SettingsPage() {
   const currentUser = useAuth();
   const [userSettings, setUserSettings] = useState<userSettingsType | null>(
     null
   );
+  const [userData, setUserData] = useState<UserType | null>(null);
   const { page } = useParams();
 
   useEffect(() => {
     if (!currentUser) {
       return;
     }
+
+    firebaseGetRealtimeData(
+        "users",
+        currentUser.uid,
+        setUserData as React.Dispatch<React.SetStateAction<unknown>>
+
+    )
 
     firebaseGetRealtimeData(
       "settings",
@@ -73,7 +84,7 @@ export default function SettingsPage() {
     return <Navigate to="/account/login" replace={true} />;
   }
 
-  if (!userSettings || !currentUser) {
+  if (!userSettings || !currentUser || !userData) {
     return <LoadingPage />;
   }
 
@@ -88,31 +99,36 @@ export default function SettingsPage() {
         <Sidebar />
         <main className={css.main}>
           {pages.map((pageItem) => {
-            if (page === pageItem.name) {
+              if (page === pageItem.name) {
               const Component = pageItem.component;
 
               return (
                 <Component
                   key={pageItem.name}
                   userSettings={userSettings}
+                  userData={userData}
                   currentUser={currentUser}
                 />
               );
             }
             return null;
           })}
-          {!page && <Navigate to={pages[0].name} replace={true} />}
+            {!pages && <Section id={"NoPageSelected"}>
+                Select A Page
+            </Section>}
         </main>
       </SideBySide>
     </>
   );
 }
+
 type PageItem = {
   name: string;
   title: string;
   icon: string;
   component: React.ComponentType<{
     userSettings: userSettingsType;
+    userData: UserType;
     currentUser: User;
   }>;
   adminOnly?: boolean;
@@ -163,11 +179,17 @@ const pages: PageItem[] = [
     component: SettingsNewTab,
   },
   {
-    name: "keyboardShortcuts",
+    name: "shortcuts",
     title: "Keyboard Shortcuts",
     icon: "keyboard",
     component: Page_KeyboardShortcuts,
   },
+{
+    name: "organization",
+    title: "Organization Shortcuts",
+    icon: "domain",
+    component: SettingsOrganizations,
+},
   {
     name: "account",
     title: "Manage Account",

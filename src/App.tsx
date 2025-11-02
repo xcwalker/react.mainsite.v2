@@ -14,7 +14,7 @@ import ItemPage from "./pages/itemPage/Index";
 import { Helmet } from "react-helmet";
 import ErrorPage from "./ErrorPage";
 import ViewAllPage from "./pages/ViewAll";
-import ManagePage from "./pages/account/Manage";
+import SettingsPage from "./pages/Settings/Index";
 import LoginPage from "./pages/account/Login";
 import RegisterPage from "./pages/account/Register";
 import ForgotPasswordPage from "./pages/account/ForgotPassword";
@@ -57,12 +57,16 @@ import OrganizationCreate from "./pages/organizations/Create";
 import OrganizationJoin from "./pages/organizations/Join";
 import OrganizationDetails from "./pages/organizations/Details";
 import OrganizationEdit from "./pages/organizations/Edit";
+import { v4 as uuidv4 } from "uuid";
+import { useAtom } from "jotai";
 
 export default function App() {
   const currentUser = useAuth();
   const [ticking] = useState(true);
   const [count, setCount] = useState(0);
   const [focusTime, setFocusTime] = useState(new Date());
+  const [tabID, setTabID] = useState<string | undefined>();
+  const [radio, setRadio] = useAtom(RadioAtom);
 
   const handlePageClose = useCallback(() => {
     if (currentUser === null || currentUser === undefined) return;
@@ -109,8 +113,50 @@ export default function App() {
     };
   }, [count, ticking]);
 
+  useEffect(() => {
+    setTabID(uuidv4());
+  }, []);
+
+  useEffect(() => {
+    if (tabID === undefined) return;
+
+    if (radio.tabID === "" || radio.tabID === undefined) {
+      setRadio((prev) => ({ ...prev, tabID: tabID }));
+    }
+
+    function handleBeforeUnload() {
+      alert("unload");
+      if (radio.tabID === tabID) {
+        setRadio((prev) => ({
+          ...prev,
+          tabID: "",
+        }));
+      }
+
+      return null;
+    }
+
+    window.addEventListener("unload", handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("unload", handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+
+      if (radio.tabID === tabID) {
+        setRadio((prev) => ({
+          ...prev,
+          tabID: "",
+        }));
+      }
+    };
+  }, [tabID, radio.tabID, setRadio]);
+
   return (
     <>
+      {tabID && radio.tabID && tabID === radio.tabID && (
+        <audio id="audioPlayer" src={radio.state === "playing" ? "https://stream.simulatorradio.com/320" : ""} autoPlay hidden muted />
+      )}
       <BrowserRouter>
         <ScrollToTop />
         <Helmet>
@@ -148,7 +194,7 @@ export default function App() {
               <Route
                 path="create"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace/>}>
                     <RoleProtect
                       redirect={
                         <ErrorPage code={403} error={"Access Denied"} />
@@ -206,7 +252,7 @@ export default function App() {
               <Route
                 path="create"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <RoleProtect
                       redirect={
                         <ErrorPage code={403} error={"Access Denied"} />
@@ -264,7 +310,7 @@ export default function App() {
               <Route
                 path="create"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <RoleProtect
                       redirect={
                         <ErrorPage code={403} error={"Access Denied"} />
@@ -313,7 +359,7 @@ export default function App() {
                 index
                 element={
                   <RoleProtect
-                    redirect={<Navigate to={"/account"} />}
+                    redirect={<Navigate to={"/account"} replace />}
                     loading={<LoadingPage />}
                   >
                     <OverlayViewAll />
@@ -323,7 +369,7 @@ export default function App() {
               <Route
                 path="create"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <RoleProtect
                       redirect={
                         <ErrorPage code={403} error={"Access Denied"} />
@@ -359,7 +405,7 @@ export default function App() {
               <Route
                 path="enroll"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <VehicleEnrollPage />
                   </Protect>
                 }
@@ -385,7 +431,7 @@ export default function App() {
               <Route
                 path="create"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <RoleProtect
                       redirect={
                         <ErrorPage code={403} error={"Access Denied"} />
@@ -443,7 +489,7 @@ export default function App() {
               <Route
                 path="create"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <RoleProtect
                       redirect={
                         <ErrorPage code={403} error={"Access Denied"} />
@@ -488,14 +534,15 @@ export default function App() {
 
             {/* accounts */}
             <Route path="account">
-              <Route index element={<Navigate to={"manage"} />} />
-              <Route path="manage">
-                <Route index element={<ManagePage />} />
-                <Route path=":page" element={<ManagePage />} />
-              </Route>
+              <Route index element={<Navigate to={"/settings"} replace />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="forgot" element={<ForgotPasswordPage />} />
+            </Route>
+
+            <Route path="settings">
+              <Route index element={<SettingsPage />} />
+              <Route path=":page" element={<SettingsPage />} />
             </Route>
 
             {/* user */}
@@ -503,7 +550,7 @@ export default function App() {
               <Route
                 index
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <UserIndex />
                   </Protect>
                 }
@@ -511,7 +558,7 @@ export default function App() {
               <Route
                 path="edit"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <UserEdit />
                   </Protect>
                 }
@@ -563,7 +610,7 @@ export default function App() {
             <Route
               path="dashboard"
               element={
-                <Protect redirect={<Navigate to={"/account"} />}>
+                <Protect redirect={<Navigate to={"/account"} replace />}>
                   <DashboardIndex />
                 </Protect>
               }
@@ -574,14 +621,14 @@ export default function App() {
               <Route
                 index
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <NewTab />
                   </Protect>
                 }
               />
               <Route
                 path="edit"
-                element={<Navigate to={"/account/manage/newtab"} />}
+                element={<Navigate to={"/settings/newtab"} />}
               />
             </Route>
 
@@ -634,7 +681,7 @@ export default function App() {
               <Route
                 index
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <OrganizationNavigation />
                   </Protect>
                 }
@@ -642,7 +689,7 @@ export default function App() {
               <Route
                 path="create"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <OrganizationCreate />
                   </Protect>
                 }
@@ -650,7 +697,7 @@ export default function App() {
               <Route
                 path="join"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} />}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <OrganizationJoin />
                   </Protect>
                 }
@@ -659,7 +706,7 @@ export default function App() {
                 <Route
                   index
                   element={
-                    <Protect redirect={<Navigate to={"/account"} />}>
+                    <Protect redirect={<Navigate to={"/account"} replace />}>
                       <OrganizationDetails />
                     </Protect>
                   }
@@ -667,7 +714,7 @@ export default function App() {
                 <Route
                   path="edit"
                   element={
-                    <Protect redirect={<Navigate to={"/account"} />}>
+                    <Protect redirect={<Navigate to={"/account"} replace />}>
                       <OrganizationEdit />
                     </Protect>
                   }
@@ -737,6 +784,7 @@ export const separator = "|";
 export const shortURL = import.meta.env.VITE_SHORT_URL || "xcw.one";
 
 export const RadioAtom = atomWithStorage("radioSettings", {
+  tabID: "",
   volume: 50,
   inSidebar: false,
   showDJ: true,

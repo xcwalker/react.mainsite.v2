@@ -1,5 +1,5 @@
 import css from "../styles/components/footer.module.css";
-import Logo from "./Logo";
+import { Logos } from "./Logo";
 import Socials from "./Socials";
 import build from "../../version.json";
 
@@ -16,21 +16,21 @@ export default function Footer() {
       : "") +
     alphabet[build.APP_VERSION % alphabet.length];
 
-    const devVersionString = ` Dev${buildDate
-      .getFullYear()
-      .toString()
-      .substr(-2)}W${pad(getWeekNumber(buildDate), 2)}${
-      (build.DEV_VERSION >= 26
-        ? alphabet[Math.floor(build.DEV_VERSION / 26)]
-        : "") + alphabet[build.DEV_VERSION % alphabet.length]
-    }`;
+  const devVersionString = ` Dev${buildDate
+    .getFullYear()
+    .toString()
+    .substr(-2)}W${pad(getWeekNumber(buildDate), 2)}${
+    (build.DEV_VERSION >= 26
+      ? alphabet[Math.floor(build.DEV_VERSION / 26)]
+      : "") + alphabet[build.DEV_VERSION % alphabet.length]
+  }`;
 
   return (
     <footer className={css.footer}>
       <Socials />
       <div className={css.container}>
         <div className={css.column}>
-          <Logo className={css.svg} />
+          <Logos.xcwalkeruk className={css.logo} />
           <span className={css.span}>
             Copyright © 2024 - {buildDate.getFullYear()} XCWalker.
           </span>
@@ -42,7 +42,9 @@ export default function Footer() {
             <div className={css.devMode}>
               <span>Development Build </span>
               <span className={css.devBuild}>{devVersionString}</span>
-              <span className={css.prodBuild}>of prod. build {productionBuildString}</span>
+              <span className={css.prodBuild}>
+                of prod. build {productionBuildString}
+              </span>
               <span>Confidential - Do Not Distribute</span>
             </div>
           )}

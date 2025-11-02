@@ -11,7 +11,6 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { useEffect, useState } from "react";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 import { shortURL } from "../../App";
-import { QRModal } from "../../components/QRModal";
 import firebaseDeleteData from "../../functions/firebase/storage/deleteData";
 import { useNavigate } from "react-router-dom";
 import QRCode from "react-qr-code";
@@ -45,7 +44,7 @@ export function ItemSidebar(props: {
       firebaseGetRealtimeData(
         "users",
         currentUser.uid,
-        setCurrentUserData as React.Dispatch<React.SetStateAction<unknown>>
+        setCurrentUserData as React.Dispatch<React.SetStateAction<unknown>>,
       );
     }
   }, [currentUser?.uid]);
@@ -201,7 +200,11 @@ export function ItemSidebar(props: {
               onClick={() => {
                 navigator.clipboard
                   .writeText(
-                    props.itemType.charAt(0) + "." + shortURL + "/" + props.slug
+                    props.itemType.charAt(0) +
+                      "." +
+                      shortURL +
+                      "/" +
+                      props.slug,
                   )
                   .then(() => {
                     setLinkCopied(true);
@@ -214,8 +217,8 @@ export function ItemSidebar(props: {
                 linkCopied
                   ? "success"
                   : currentUser?.uid === props.item.metaData.authorID
-                  ? "secondary"
-                  : "primary"
+                    ? "secondary"
+                    : "primary"
               }
               disabled={linkCopied}
             >

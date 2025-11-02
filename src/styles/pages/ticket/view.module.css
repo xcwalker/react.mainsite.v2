@@ -12,7 +12,7 @@
   font-size: 0.9rem;
   font-weight: 600;
   line-height: 1.25rem;
-  color: var(--text-400);
+  color: var(--text-alt);
 
   /* styling */
   border-radius: 0.5rem;
@@ -81,7 +81,7 @@
   white-space: pre-wrap;
 
   /* styling */
-  background-color: var(--background-200);
+  background-color: var(--primary);
   border-radius: 0.25rem;
   --_wider-radius: 0.5rem;
   list-style: none;
@@ -94,7 +94,7 @@
 .messageDate {
   /* text */
   font-size: 0.75rem;
-  color: var(--text-400);
+  color: var(--text-alt);
 }
 
 .message.ownMessage {
@@ -145,7 +145,7 @@
 
   /* styling */
   color: var(--text);
-  background-color: var(--background-200);
+  background-color: var(--primary);
   border: none;
   border-radius: 0.5rem;
   resize: vertical;
@@ -153,7 +153,7 @@
 }
 
 .messageInput textarea::placeholder {
-  color: var(--text-400);
+  color: var(--text-alt);
 }
 
 .messageInput .sendButton {

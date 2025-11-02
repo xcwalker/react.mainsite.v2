@@ -17,6 +17,7 @@ import Button from "../../components/Button";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import { RoleProtect } from "../../components/Security/Protect";
 import toTitleCase from "../../functions/toTitleCase";
+import InputDropdown from "../../components/InputDropdown.tsx";
 
 export default function TicketView() {
   const { ticketId } = useParams<string>();
@@ -34,8 +35,10 @@ export default function TicketView() {
       "tickets",
       ticketId as string,
       setTicket as React.Dispatch<React.SetStateAction<unknown>>,
-      setError
-    );
+      setError,
+    ).then(() => {
+      return;
+    });
   }, [ticketId]);
 
   if (error) {
@@ -101,6 +104,8 @@ function TicketSidebar(props: { ticket: TicketType }) {
                     ...props.ticket.metaData,
                     assignee: currentUser.uid,
                   },
+                }).then(() => {
+                  return;
                 });
               }}
             >
@@ -110,29 +115,60 @@ function TicketSidebar(props: { ticket: TicketType }) {
         </div>
       )}
       <RoleProtect staffOnly>
-        <select
-          name="priority"
-          id=""
-          className={css.priority}
+        <InputDropdown
+          id={"ticket-priority"}
+          label={"Priority"}
           value={props.ticket.metaData.priority}
-          onChange={(e) => {
-            const newPriority = e.target
-              .value as TicketType["metaData"]["priority"];
-            firebaseSetData("tickets", ticketId as string, {
-              ...props.ticket,
-              metaData: {
-                ...props.ticket.metaData,
-                priority: newPriority,
+          values={[
+            {
+              value: "unknown",
+              label: "Set Priority",
+              icon: "assignment_ind",
+            },
+            {
+              value: "low",
+              label: "Low",
+              icon: "assignment_ind",
+            },
+            {
+              value: "medium",
+              label: "Medium",
+              icon: "assignment_ind",
+            },
+            {
+              value: "high",
+              label: "High",
+              icon: "assignment_ind",
+            },
+            {
+              value: "urgent",
+              label: "Urgent",
+              icon: "assignment_ind",
+            },
+          ]}
+          onChange={(value) => {
+            firebaseSetData(
+              "tickets",
+              ticketId as string,
+              {
+                ...props.ticket,
+                metaData: {
+                  ...props.ticket.metaData,
+                  priority: value,
+                },
               },
+              {
+                toast: {
+                  loading: "Updating Ticket Priority",
+                  error: "Unable to update Ticket Priority",
+                  success: "Updated Ticket Priority",
+                },
+              },
+            ).then(() => {
+              return;
             });
           }}
-        >
-          <option value="unknown">Set Priority</option>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-          <option value="urgent">Urgent</option>
-        </select>
+        />
         <Button
           className={css.statusButton}
           style="secondary"
@@ -148,6 +184,8 @@ function TicketSidebar(props: { ticket: TicketType }) {
                 ...props.ticket.metaData,
                 status: newStatus,
               },
+            }).then(() => {
+              return;
             });
           }}
         >
@@ -169,6 +207,8 @@ function TicketSidebar(props: { ticket: TicketType }) {
                 ...props.ticket.metaData,
                 status: "closed",
               },
+            }).then(() => {
+              return;
             });
           }}
         >
@@ -212,6 +252,8 @@ function TicketContent(props: { ticket: TicketType }) {
           updatedAt: new Date().toJSON(),
         },
       },
+    }).then(() => {
+      return;
     });
 
     // Clear the textarea

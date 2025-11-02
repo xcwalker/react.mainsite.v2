@@ -13,17 +13,25 @@ export default async function firebaseSetData(
   data: unknown,
   options?: {
     toast?: {
+      noToast?: boolean;
       loading?: string;
       success?: string;
       error?: string;
     };
-  }
+  },
 ) {
-  if (options && (options?.toast || options?.toast === undefined)) {
+  if (
+    options?.toast?.noToast ||
+    !options ||
+    !options?.toast?.loading ||
+    !options?.toast?.success ||
+    !options?.toast?.error ||
+    options?.toast === undefined
+  ) {
     return await setDoc(doc(firebaseDB, pathID, docID), data);
   }
 
-  await toast.promise(
+  return await toast.promise(
     setDoc(doc(firebaseDB, pathID, docID), data),
     {
       loading: options?.toast?.loading || "Saving Data",
@@ -40,6 +48,6 @@ export default async function firebaseSetData(
       error: {
         style: toastStyleError,
       },
-    }
+    },
   );
 }

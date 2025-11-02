@@ -26,7 +26,7 @@ export default function OrganizationNavigation() {
   }
 
   if (userData.organization?.id) {
-    return <Navigate to={`/organizations/${userData.organization.id}`} />;
+    return <Navigate to={`/organizations/${userData.organization.id}`} replace />;
   }
 
   return (
