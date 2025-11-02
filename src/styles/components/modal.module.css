@@ -25,9 +25,9 @@
   --_hold-after-opacity: 0.25s;
 
   /* position */
-  position: fixed;
+  position: fixed !important;
   inset: 0;
-  z-index: 100;
+  z-index: 999;
 
   /* grid */
   display: grid;
@@ -62,7 +62,7 @@
 @media (max-width: 450px) {
   .mainContainer {
     --_modal-height: 500px;
-    --_modal-width: 350px;
+    --_modal-width: calc(100vw - 4rem);
   }
 }
 
@@ -122,6 +122,7 @@ body :has(.visible) {
 
   /* sizing */
   height: 50px;
+  width: 100%;
   padding: 0.5rem;
   flex-shrink: 0;
   
@@ -154,18 +155,18 @@ body :has(.visible) {
   /* sizing */
   margin: 0;
   padding-left: 0.5rem;
-  padding-right: 2rem;
+  padding: 0.5rem;
   width: fit-content;
-  height: 100%;
+  max-width: calc(100% - 1.5rem - 24px);
 
   /* flex */
-  display: flex;
-  align-items: center;
+  display: block;
   flex-shrink: 1;
 
   /* styling */
   background-color: var(--_background);
   color: currentColor;
+  overflow: clip;
 
   /* text */
   font-size: 1rem;
