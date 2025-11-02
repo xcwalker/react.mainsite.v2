@@ -26,7 +26,7 @@ function SiteItem(props: {
   site: { icon: string; name: string; url: string };
 }) {
   return (
-    <Link className={css.site} to={"https://" + props.site.url}>
+    <Link className={css.site} to={props.site.url}>
       <GFIcon className={css.icon}>{props.site.icon}</GFIcon>
       <div className={css.container}>
         <h3>{props.site.name}</h3>

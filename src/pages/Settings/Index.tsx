@@ -8,10 +8,10 @@ import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtim
 import LoadingPage from "../../components/Loading.tsx";
 import { useAuth } from "../../functions/firebase/authentication/useAuth.tsx";
 import {
-    customThemeType,
-    userSettingsDefault,
-    userSettingsType,
-    UserType,
+  customThemeType,
+  userSettingsDefault,
+  userSettingsType,
+  UserType,
 } from "../../types.tsx";
 import InputColor from "../../components/InputColor.tsx";
 import invert from "invert-color";
@@ -29,7 +29,6 @@ import { RoleProtect } from "../../components/Security/Protect.tsx";
 import SettingsNavigation from "./Navigation.tsx";
 import SettingsNewTab from "./NewTab.tsx";
 import SettingsOrganizations from "./Organization.tsx";
-import Section from "../../components/Section.tsx";
 
 export default function SettingsPage() {
   const currentUser = useAuth();
@@ -45,11 +44,10 @@ export default function SettingsPage() {
     }
 
     firebaseGetRealtimeData(
-        "users",
-        currentUser.uid,
-        setUserData as React.Dispatch<React.SetStateAction<unknown>>
-
-    )
+      "users",
+      currentUser.uid,
+      setUserData as React.Dispatch<React.SetStateAction<unknown>>
+    );
 
     firebaseGetRealtimeData(
       "settings",
@@ -84,6 +82,10 @@ export default function SettingsPage() {
     return <Navigate to="/account/login" replace={true} />;
   }
 
+  if (page === undefined) {
+    return <Navigate to="./themes" replace={true} />;
+  }
+
   if (!userSettings || !currentUser || !userData) {
     return <LoadingPage />;
   }
@@ -99,7 +101,7 @@ export default function SettingsPage() {
         <Sidebar />
         <main className={css.main}>
           {pages.map((pageItem) => {
-              if (page === pageItem.name) {
+            if (page === pageItem.name) {
               const Component = pageItem.component;
 
               return (
@@ -113,9 +115,6 @@ export default function SettingsPage() {
             }
             return null;
           })}
-            {!pages && <Section id={"NoPageSelected"}>
-                Select A Page
-            </Section>}
         </main>
       </SideBySide>
     </>
@@ -184,12 +183,12 @@ const pages: PageItem[] = [
     icon: "keyboard",
     component: Page_KeyboardShortcuts,
   },
-{
+  {
     name: "organization",
     title: "Organization Shortcuts",
     icon: "domain",
     component: SettingsOrganizations,
-},
+  },
   {
     name: "account",
     title: "Manage Account",
