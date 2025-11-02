@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import {Navigate, useSearchParams} from "react-router-dom";
 import AccountPage from "../../components/Security/AccountPage";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -27,6 +27,10 @@ export default function OrganizationJoin() {
 
   if (!currentUser || !userData) {
     return <LoadingPage />;
+  }
+
+  if (userData.organization?.id) {
+      return <Navigate to={"/organizations/" + userData.organization.id} />;
   }
 
   return (

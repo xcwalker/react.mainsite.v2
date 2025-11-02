@@ -427,9 +427,9 @@ function InviteModal(props: {
               value={
                 "https://org." +
                 shortURL +
-                "/" +
+                "/join?organizationId=" +
                 organizationId +
-                "/" +
+                "&inviteCode=" +
                 inviteCode
               }
               bgColor="var(--text-inverse)"

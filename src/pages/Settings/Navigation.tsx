@@ -1,14 +1,14 @@
 import { User } from "firebase/auth";
-import { defaultNav, userSettingsType } from "../../../types";
-import LoadingPage from "../../../components/Loading";
-import SettingSection from "../../../components/SettingSection";
+import { defaultNav, userSettingsType } from "../../types.tsx";
+import LoadingPage from "../../components/Loading.tsx";
+import SettingSection from "../../components/SettingSection.tsx";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import GFIcon from "../../../components/GFIcon";
-import IconButton from "../../../components/IconButton";
-import firebaseSetData from "../../../functions/firebase/storage/setData";
+import GFIcon from "../../components/GFIcon.tsx";
+import IconButton from "../../components/IconButton.tsx";
+import firebaseSetData from "../../functions/firebase/storage/setData.tsx";
 
-import css from "../../../styles/pages/account/settings/navigation.module.css";
-import { SettingsNote } from "../../../components/Settings/Note";
+import css from "../../styles/pages/account/settings/navigation.module.css";
+import { SettingsNote } from "../../components/Settings/Note.tsx";
 
 export default function SettingsNavigation(props: {
   userSettings: userSettingsType | null;

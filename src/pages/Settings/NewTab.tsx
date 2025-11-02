@@ -1,21 +1,21 @@
 import { User } from "firebase/auth";
-import InputDropdown from "../../../components/InputDropdown";
-import SettingSection from "../../../components/SettingSection";
-import { LinkItem, NewTabLinks } from "../../../types";
+import InputDropdown from "../../components/InputDropdown.tsx";
+import SettingSection from "../../components/SettingSection.tsx";
+import { LinkItem, NewTabLinks } from "../../types.tsx";
 import { Fragment, useEffect, useState } from "react";
-import firebaseGetRealtimeData from "../../../functions/firebase/storage/useRealtimeData";
-import LoadingPage from "../../../components/Loading";
-import firebaseSetData from "../../../functions/firebase/storage/setData";
-import Input from "../../../components/Input";
-import InputToggle from "../../../components/InputToggle";
-import InputColor from "../../../components/InputColor";
-import Image from "../../../components/Image";
+import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData.tsx";
+import LoadingPage from "../../components/Loading.tsx";
+import firebaseSetData from "../../functions/firebase/storage/setData.tsx";
+import Input from "../../components/Input.tsx";
+import InputToggle from "../../components/InputToggle.tsx";
+import InputColor from "../../components/InputColor.tsx";
+import Image from "../../components/Image.tsx";
 
-import css from "../../../styles/pages/account/settings/newTab.module.css";
-import { SettingsNote } from "../../../components/Settings/Note";
-import { LinkItemEdit } from "../../newTab/Edit";
-import { arrayMove } from "../../../functions/arrayMove";
-import Button from "../../../components/Button";
+import css from "../../styles/pages/account/settings/newTab.module.css";
+import { SettingsNote } from "../../components/Settings/Note.tsx";
+import { LinkItemEdit } from "../newTab/Edit.tsx";
+import { arrayMove } from "../../functions/arrayMove.tsx";
+import Button from "../../components/Button.tsx";
 
 export default function SettingsNewTab(props: { currentUser: User | null }) {
   const { currentUser } = props;

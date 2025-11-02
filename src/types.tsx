@@ -108,7 +108,7 @@ export const defaultNav: NavSection[] = [
       },
       {
         title: "settings",
-        href: "account",
+        href: "settings",
         gficon: "settings",
         requireUser: true,
       },
