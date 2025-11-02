@@ -28,7 +28,7 @@ import { RoleProtect } from "../../components/Security/Protect";
 import SettingsNavigation from "./Settings/Navigation";
 import SettingsNewTab from "./Settings/NewTab";
 
-export default function ManagePage() {
+export default function SettingsPage() {
   const currentUser = useAuth();
   const [userSettings, setUserSettings] = useState<userSettingsType | null>(
     null
