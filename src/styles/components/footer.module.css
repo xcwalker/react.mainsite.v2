@@ -33,6 +33,7 @@
 .column {
   /* sizing */
   height: 100%;
+  width: fit-content;
 
   /* flex */
   display: flex;
@@ -50,10 +51,11 @@
   justify-content: flex-end;
 }
 
+.logo,
 .svg {
   /* sizing */
-  width: 100%;
-  max-width: min(300px, 100%);
+  width: 350px;
+  max-width: 100%;
 
   /* styling */
   fill: currentColor;
