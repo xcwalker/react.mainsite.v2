@@ -23,6 +23,9 @@ export default function LoginPage() {
     firebaseLogin(email, password).then((res) => {
       devConsole.log(res);
       setLoading(false);
+    }).catch((err) => {
+      devConsole.error(err);
+      setLoading(false);
     });
   }
 
