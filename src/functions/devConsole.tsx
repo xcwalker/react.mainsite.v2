@@ -1,4 +1,4 @@
-// example usage: devdevConsole.log("Hello, world!");
+// example usage: devConsole.log("Hello, world!");
 //  devConsole.error("An error occurred.");
 //  devConsole.warn("This is a warning.");
 //  devConsole.info("Some information.");

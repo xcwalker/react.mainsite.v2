@@ -85,7 +85,11 @@ export default function Game_Nomination() {
       JSON: JSON.stringify(scores),
       currentRound,
     }, {
-      toast: false,
+      toast: {
+        success: "Game updated successfully!",
+        error: "Failed to update game.",
+        loading: "Updating game...",
+      },
     });
   }, [scores, gameID, currentRound]);
 

@@ -82,6 +82,7 @@ export const defaultNav: NavSection[] = [
         gficon: "apartment",
         href: "organizations",
         requireUser: true,
+        isBeta: true,
       },
       {
         title: "Users",
