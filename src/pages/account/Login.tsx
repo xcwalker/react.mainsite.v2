@@ -30,7 +30,7 @@ export default function LoginPage() {
   }
 
   return (
-    <Protect isLoginPage={true} redirect={<Navigate to={"../manage"} />}>
+    <Protect isLoginPage={true} redirect={<Navigate to={"/user"} replace />}>
       <>
         <Helmet>
           <title>
