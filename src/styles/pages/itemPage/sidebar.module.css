@@ -3,6 +3,13 @@
   margin-inline: -0.5rem;
 }
 
+@media (max-width: 900px) {
+  .thumbnail {
+    width: 100%;
+    margin-inline: 0;
+  }
+}
+
 .image {
   /* sizing */
   width: 100%;
@@ -31,10 +38,8 @@
   width: 200px;
 }
 
-
 .tags {
   /* sizing */
-  
 
   /* flex */
   display: flex;
@@ -148,7 +153,6 @@
   background: linear-gradient(-60deg, #417a9b 5%, #67c1f5 95%);
   color: #fff;
 } */
-
 
 .printQrCode {
   /* hide on screen */
