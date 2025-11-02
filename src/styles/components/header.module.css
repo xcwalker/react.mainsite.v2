@@ -71,7 +71,7 @@
 
 .container .svg {
   /* sizing */
-  width: 135px;
+  height: 23px;
   margin-left: 0.75rem;
   margin-right: auto;
   flex-shrink: 0;

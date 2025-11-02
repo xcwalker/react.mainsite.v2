@@ -5,11 +5,15 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 
 import css from "../../styles/pages/newTab.module.css";
 import firebaseGetData from "../../functions/firebase/storage/getData";
-import { LinkItem as LinkItemType, NewTabLinks } from "../../types";
+import {
+  LinkItem as LinkItemType,
+  NewTabLinks,
+  OrganizationType,
+  UserType,
+} from "../../types";
 import ErrorPage from "../../ErrorPage";
 import LoadingPage from "../../components/Loading";
 import GFIcon from "../../components/GFIcon";
-import Logo from "../../components/Logo";
 import { Navigate } from "react-router-dom";
 import { NewTabSearch } from "./Search";
 import firebaseSetupNewTabData from "../../functions/firebase/storage/extra/setupNewTabData";
@@ -17,6 +21,9 @@ import { Helmet } from "react-helmet";
 import { NewTabLinksAtom, separator, title } from "../../App";
 import { useAtom } from "jotai";
 import devConsole from "../../functions/devConsole";
+import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
+import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
+import HomeHero from "../home/Hero";
 
 export default function NewTab() {
   const user = useAuth();
@@ -26,6 +33,10 @@ export default function NewTab() {
   const [hasCMDKey, setHasCMDKey] = useState(false);
   const [modifierPressed, setModifierPressed] = useState(false);
   const [cachedData, setCachedData] = useAtom(NewTabLinksAtom);
+  const [organization, setOrganization] = useState<OrganizationType | null>(
+    null
+  );
+  const [userData, setUserData] = useState<UserType | null>(null);
 
   useEffect(() => {
     // page setup
@@ -124,6 +135,24 @@ export default function NewTab() {
     }
   }, [linkData]);
 
+  useEffect(() => {
+    if (!user?.uid) {
+      console.error("User not authenticated");
+      return;
+    }
+    firebaseGetRealtimeUserData(user?.uid, setUserData as React.Dispatch<React.SetStateAction<unknown>>);
+  }, [user?.uid]);
+
+  useEffect(() => {
+    if (userData?.organization?.id) {
+      firebaseGetRealtimeData(
+        "organizations",
+        userData.organization?.id,
+        setOrganization as React.Dispatch<React.SetStateAction<unknown>>
+      );
+    }
+  }, [userData?.organization?.id]);
+
   return (
     <>
       {!error && !editMode && (
@@ -171,9 +200,7 @@ export default function NewTab() {
             )}
             {linkData?.links && (
               <div className={css.links}>
-                {linkData?.settings.showOrganization === true && (
-                  <Logo type="xcwalker" className={css.logo} />
-                )}
+                <HomeHero logo={linkData.settings.showOrganization ? organization?.logo.wide : undefined} />
                 <div className={css.search}>
                   {linkData.settings.showSearch && (
                     <NewTabSearch

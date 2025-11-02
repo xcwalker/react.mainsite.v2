@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import GFIcon from "../../components/GFIcon";
-import Logo from "../../components/Logo";
+import { Logos } from "../../components/Logo";
 import Section from "../../components/Section";
 
 import css from "../../styles/pages/home/hero/slideshow.module.css";
@@ -13,14 +13,18 @@ import birthdayHeroCSS from "../../styles/pages/home/hero/birthdayHero.module.cs
 import noKingsHeroCSS from "../../styles/pages/home/hero/noKingsHero.module.css";
 import { Link } from "react-router-dom";
 
-export default function HomeHero() {
+export default function HomeHero(props: { logo?: {
+  src: string;
+  onDark: string;
+  onLight: string;
+} }) {
   const date = new Date();
   const [slideshowIndex, setSlideshowIndex] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
   const slideshowItems = [
     {
       id: 2,
-      component: <ChristmasHero />,
+      component: <ChristmasHero {...props} />,
       dateRange: {
         start: new Date(date.getFullYear() + "-12-01"),
         end: new Date(date.getFullYear() + "-12-25"),
@@ -28,7 +32,7 @@ export default function HomeHero() {
     },
     {
       id: 3,
-      component: <HalloweenHero />,
+      component: <HalloweenHero {...props} />,
       dateRange: {
         start: new Date(date.getFullYear() + "-10-01"),
         end: new Date(date.getFullYear() + "-10-31"),
@@ -36,7 +40,7 @@ export default function HomeHero() {
     },
     {
       id: 4,
-      component: <NewYearsHero />,
+      component: <NewYearsHero {...props} />,
       dateRange: {
         start: new Date(
           (date.getMonth() !== 0
@@ -52,7 +56,7 @@ export default function HomeHero() {
     },
     {
       id: 5,
-      component: <BoxingDaysHero />,
+      component: <BoxingDaysHero {...props} />,
       dateRange: {
         start: new Date(date.getFullYear() + "-12-26"),
         end: new Date(date.getFullYear() + "-12-26 23:59:59"),
@@ -60,7 +64,7 @@ export default function HomeHero() {
     },
     {
       id: 6,
-      component: <BirthdayHero />,
+      component: <BirthdayHero {...props} />,
       dateRange: {
         start: new Date(date.getFullYear() + "-11-27"),
         end: new Date(date.getFullYear() + "-11-27 23:59:59"),
@@ -68,17 +72,17 @@ export default function HomeHero() {
     },
     {
       id: 1,
-      component: <NoKingsHero />,
+      component: <NoKingsHero {...props} />,
     },
     {
       id: 1,
-      component: <DefaultHero />,
+      component: <DefaultHero {...props} />,
     },
   ];
 
   const slideshowActive = slideshowItems
     .filter((item) => {
-      if (import.meta.env.VITE_IS_DEBUG_ALL_HEROS === true) return true;
+      if (import.meta.env.VITE_IS_DEBUG_ALL_HEROS === "true") return true;
       return item.dateRange
         ? date >= item.dateRange?.start && date <= item.dateRange?.end
         : true;
@@ -134,7 +138,7 @@ export default function HomeHero() {
               ? date >= item.dateRange?.start && date <= item.dateRange?.end
               : true;
 
-            if (import.meta.env.VITE_IS_DEBUG_ALL_HEROS === true) {
+            if (import.meta.env.VITE_IS_DEBUG_ALL_HEROS === "true") {
               isVisible = true;
             }
 
@@ -200,17 +204,24 @@ export default function HomeHero() {
   );
 }
 
-function DefaultHero() {
+function DefaultHero(props: { logo?: { src: string; onDark: string; onLight: string } }) {
   return (
     <div className={defaultHeroCSS.container}>
       <img src="/background.svg" alt="" className={defaultHeroCSS.background} />
       <div className={defaultHeroCSS.backdrop}></div>
-      <Logo type="xcwalker" className={defaultHeroCSS.logo} />
+      {!props.logo && <Logos.xcwalkeruk className={defaultHeroCSS.logo} />}
+      {props.logo && (
+        <img
+          src={props.logo.onLight}
+          alt="Organization Logo"
+          className={defaultHeroCSS.logo}
+        />
+      )}
     </div>
   );
 }
 
-function NewYearsHero(props: { isActive?: boolean }) {
+function NewYearsHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
   return (
     <div className={newYearHeroCSS.container}>
       <img
@@ -219,7 +230,14 @@ function NewYearsHero(props: { isActive?: boolean }) {
         className={newYearHeroCSS.background}
       />
       <div className={defaultHeroCSS.backdrop} />
-      <Logo type="xcwalker" className={newYearHeroCSS.logo} />
+      {!props.logo && <Logos.xcwalkeruk className={newYearHeroCSS.logo} />}
+      {props.logo && (
+        <img
+          src={props.logo.onDark}
+          alt="Organization Logo"
+          className={newYearHeroCSS.logo}
+        />
+      )}
       <h1 className={newYearHeroCSS.heading}>Happy New Year</h1>
       <Link
         to="https://www.freepik.com/free-vector/festive-firework-abstract-background_4429603.htm"
@@ -233,7 +251,7 @@ function NewYearsHero(props: { isActive?: boolean }) {
   );
 }
 
-function BoxingDaysHero(props: { isActive?: boolean }) {
+function BoxingDaysHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
   return (
     <div className={boxingDayHeroCSS.container}>
       <img
@@ -242,7 +260,14 @@ function BoxingDaysHero(props: { isActive?: boolean }) {
         className={boxingDayHeroCSS.background}
       />
       <div className={defaultHeroCSS.backdrop} />
-      <Logo type="xcwalker" className={boxingDayHeroCSS.logo} />
+      {!props.logo && <Logos.xcwalkeruk className={boxingDayHeroCSS.logo} />}
+      {props.logo && (
+        <img
+          src={props.logo.onDark}
+          alt="Organization Logo"
+          className={boxingDayHeroCSS.logo}
+        />
+      )}
       <h1 className={boxingDayHeroCSS.heading}>Happy Boxing Day</h1>
       <Link
         to="https://www.freepik.com/free-vector/festive-firework-abstract-background_4429603.htm"
@@ -256,7 +281,7 @@ function BoxingDaysHero(props: { isActive?: boolean }) {
   );
 }
 
-function ChristmasHero(props: { isActive?: boolean }) {
+function ChristmasHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
   return (
     <div className={christmasHeroCSS.container}>
       <img
@@ -265,7 +290,14 @@ function ChristmasHero(props: { isActive?: boolean }) {
         className={defaultHeroCSS.background}
       />
       <div className={defaultHeroCSS.backdrop} />
-      <Logo type="xcwalker" className={christmasHeroCSS.logo} />
+      {!props.logo && <Logos.xcwalkeruk className={christmasHeroCSS.logo} />}
+      {props.logo && (
+        <img
+          src={props.logo.onDark}
+          alt="Organization Logo"
+          className={christmasHeroCSS.logo}
+        />
+      )}
       <h1 className={christmasHeroCSS.heading}>Merry Christmas</h1>
       <Link
         to="https://www.vecteezy.com/vector-art/7718340-hand-drawn-christmas-pattern-design-background"
@@ -279,7 +311,7 @@ function ChristmasHero(props: { isActive?: boolean }) {
   );
 }
 
-function HalloweenHero(props: { isActive?: boolean }) {
+function HalloweenHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
   return (
     <div className={halloweenHeroCSS.container}>
       <img
@@ -288,7 +320,14 @@ function HalloweenHero(props: { isActive?: boolean }) {
         className={defaultHeroCSS.background}
       />
       <div className={defaultHeroCSS.backdrop} />
-      <Logo type="xcwalker" className={halloweenHeroCSS.logo} />
+      {!props.logo && <Logos.xcwalkeruk className={halloweenHeroCSS.logo} />}
+      {props.logo && (
+        <img
+          src={props.logo.onLight}
+          alt="Organization Logo"
+          className={halloweenHeroCSS.logo}
+        />
+      )}
       <h1 className={halloweenHeroCSS.heading}>Happy Halloween</h1>
       <Link
         to="https://www.vecteezy.com/vector-art/11356859-seamless-happy-halloween-vector-background-illustration-with-haunted-mansion-full-moon-haunted-tree-ghosts-and-pumpkins-horizontally-repeatable"
@@ -302,7 +341,7 @@ function HalloweenHero(props: { isActive?: boolean }) {
   );
 }
 
-function BirthdayHero(props: { isActive?: boolean }) {
+function BirthdayHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
   return (
     <div className={birthdayHeroCSS.container}>
       <img
@@ -311,7 +350,14 @@ function BirthdayHero(props: { isActive?: boolean }) {
         className={defaultHeroCSS.background}
       />
       <div className={defaultHeroCSS.backdrop} />
-      <Logo type="xcwalker" className={birthdayHeroCSS.logo} />
+      {!props.logo && <Logos.xcwalkeruk className={birthdayHeroCSS.logo} />}
+      {props.logo && (
+        <img
+          src={props.logo.onLight}
+          alt="Organization Logo"
+          className={birthdayHeroCSS.logo}
+        />
+      )}
       <h1 className={birthdayHeroCSS.heading}>Oh god, I'm old.</h1>
       <Link
         to="https://www.freepik.com/free-vector/hand-drawn-colorful-birthday-background_18775765.htm"
@@ -325,7 +371,7 @@ function BirthdayHero(props: { isActive?: boolean }) {
   );
 }
 
-function NoKingsHero(props: { isActive?: boolean }) {
+function NoKingsHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
   return (
     <div className={noKingsHeroCSS.container}>
       <img
@@ -334,7 +380,14 @@ function NoKingsHero(props: { isActive?: boolean }) {
         className={defaultHeroCSS.background}
       />
       <div className={defaultHeroCSS.backdropAlt} />
-      <Logo type="xcwalker" className={noKingsHeroCSS.logo} />
+      {!props.logo && <Logos.xcwalkeruk className={noKingsHeroCSS.logo} />}
+      {props.logo && (
+        <img
+          src={props.logo.onDark}
+          alt="Organization Logo"
+          className={noKingsHeroCSS.logo}
+        />
+      )}
       <img
         src="/No Kings Logo_Horizontal_ForDarkBackgrounds.svg"
         alt=""

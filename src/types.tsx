@@ -456,7 +456,11 @@ export type OrganizationType = {
   name: string;
   description: string;
   logo: {
-    wide: string;
+    wide: {
+      src: string;
+      onDark: string;
+      onLight: string;
+    };
     icon: string;
     background: {
       type: "color" | "image";

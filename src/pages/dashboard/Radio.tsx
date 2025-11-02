@@ -1,5 +1,5 @@
 import css from "../../styles/pages/dashboard/radio.module.css";
-import Logo from "../../components/Logo";
+import { Logos } from "../../components/Logo";
 import { RadioAtom } from "../../App";
 import { useAtom } from "jotai";
 import GFIcon from "../../components/GFIcon";
@@ -10,7 +10,7 @@ export default function DashboardRadio() {
   return (
     <section className={css.radio}>
       <div className={css.container}>
-        <Logo type="ReactRadio" className={css.logo} />
+        <Logos.reactradio className={css.logo} />
         <img src={radio.nowPlaying.artwork} alt="" className={css.background} />
         <img src={radio.nowPlaying.artwork} alt="" className={css.image} />
         <div className={css.text}>

@@ -32,7 +32,7 @@ export default function Footer() {
         <div className={css.column}>
           <Logos.xcwalkeruk className={css.logo} />
           <span className={css.span}>
-            Build and maintained by <a href="https://xcwalker.dev">xcwalker.dev</a>
+            Built and maintained by <a href="https://xcwalker.dev">xcwalker.dev</a>
           </span>
           <span className={css.span}>
             Copyright © 2024 - {buildDate.getFullYear()} xcwalker.

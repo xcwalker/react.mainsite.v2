@@ -137,7 +137,7 @@ function Sidebar(props: {
             } as React.CSSProperties
           }
         >
-          <img src={organization.logo.wide} alt="" />
+          <img src={organization.logo.wide.src} alt="" />
           {organization.logo.background.type === "image" && (
             <img
               src={organization.logo.background.imageUrl}
@@ -149,7 +149,7 @@ function Sidebar(props: {
       )}
       {!organization.logo.background && (
         <div className={css.logoNoBackground}>
-          <img src={organization.logo.wide} alt="" />
+          <img src={organization.logo.wide.onLight} alt="" />
         </div>
       )}
       <SidebarTitle title={organization.name} />

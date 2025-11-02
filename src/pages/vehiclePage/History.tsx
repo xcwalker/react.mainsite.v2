@@ -3,7 +3,7 @@ import { VehicleHistoryType, VehicleItemType } from "../../types";
 import css from "../../styles/pages/vehiclePage/history.module.css";
 import { Fragment } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
-import Logo from "../../components/Logo";
+import { Logos } from "../../components/Logo";
 import { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
@@ -133,7 +133,7 @@ function HistoryEntry(props: {
               {entry.isFleetService && (
                 <div className={css.fleetService}>
                   {/* <GFIcon>home_repair_service</GFIcon> */}
-                  <Logo type="x" className={css.logo} />
+                  <Logos.x className={css.logo} />
                 </div>
               )}
               <RoleProtect staffOnly>

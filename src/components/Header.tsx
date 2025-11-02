@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useState } from "react";
-import Logo from "./Logo";
+import { Logos } from "./Logo";
 
 import css from "../styles/components/header.module.css";
 import radioCSS from "../styles/components/header/radio.module.css";
@@ -214,8 +214,8 @@ export default function Header() {
   return (
     <header className={css.header} id="header">
       <div className={css.container}>
-        <Logo type="xcwalker" className={css.svg} />
-        <Logo type="x" className={css.svgSmall} />
+        <Logos.xcwalkeruk className={css.svg} />
+        <Logos.x className={css.svgSmall} />
         <Button
           href="#main"
           className={css.skip}
