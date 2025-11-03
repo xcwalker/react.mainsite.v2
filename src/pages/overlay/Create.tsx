@@ -27,6 +27,8 @@ import Protect from "../../components/Security/Protect";
 import ErrorPage from "../../ErrorPage";
 import InputGroup from "../../components/InputGroup";
 import devConsole from "../../functions/devConsole";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
+import { separator, title } from "../../App";
 
 export default function OverlayCreate(props: { id?: string }) {
   const params = useParams();
@@ -81,7 +83,10 @@ export default function OverlayCreate(props: { id?: string }) {
     );
   }
 
-  if (currentUser.uid !== overlay.metaData.authorID && (props.id || params.id)) {
+  if (
+    currentUser.uid !== overlay.metaData.authorID &&
+    (props.id || params.id)
+  ) {
     return (
       <ErrorPage
         code={403}
@@ -91,20 +96,25 @@ export default function OverlayCreate(props: { id?: string }) {
   }
 
   return (
-    <Section id="OverlayCreate">
-      <SideBySide leftWidth="1fr">
-        <Sidebar
-          overlay={overlay}
-          setOverlay={setOverlay}
-          loading={loading}
-          setLoading={setLoading}
-          error={error}
-          setError={setError}
-          id={props.id || params.id}
-        />
-        <Main overlay={overlay} setOverlay={setOverlay} />
-      </SideBySide>
-    </Section>
+    <PageSeoWrapper
+      title={`${props.id || params.id ? "Edit Overlay" : "Create Overlay"} ${separator} ${title}`}
+      description="Create and customize overlays for your streams and videos on xcwalker.uk"
+    >
+      <Section id="OverlayCreate">
+        <SideBySide leftWidth="1fr">
+          <Sidebar
+            overlay={overlay}
+            setOverlay={setOverlay}
+            loading={loading}
+            setLoading={setLoading}
+            error={error}
+            setError={setError}
+            id={props.id || params.id}
+          />
+          <Main overlay={overlay} setOverlay={setOverlay} />
+        </SideBySide>
+      </Section>
+    </PageSeoWrapper>
   );
 }
 

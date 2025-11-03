@@ -131,6 +131,20 @@ export const defaultNav: NavSection[] = [
     title: "Sites",
     items: [
       {
+        title: "xcwalker.dev",
+        href: "https://xcwalker.dev/",
+        gficon: "deployed_code",
+        // iconURL:
+        // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/XCWalkerDev.svg",
+      },
+      {
+        title: "Parnix",
+        href: "https://parnix.uk/",
+        gficon: "frame_inspect",
+        // iconURL:
+        // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Parnix.svg",
+      },
+      {
         title: "Immersion V2",
         href: "https://v2.immersion.xcwalker.dev/",
         gficon: "auto_awesome_mosaic",

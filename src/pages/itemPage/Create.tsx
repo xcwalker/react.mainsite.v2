@@ -23,6 +23,8 @@ import Input from "../../components/Input";
 import toast from "react-hot-toast";
 import Section from "../../components/Section";
 import devConsole from "../../functions/devConsole";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
+import { separator, title } from "../../App";
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
@@ -75,18 +77,23 @@ export default function ItemCreate(props: {
   );
 
   return (
-    <Section id="create-item" className={css.create}>
-      <SideBySide leftWidth="350px">
-        <Sidebar
-          data={data}
-          itemType={props.itemType}
-          setData={setData}
-          slug={props.slug}
-          admin={props.admin}
-        />
-        <Main data={data} itemType={props.itemType} setData={setData} />
-      </SideBySide>
-    </Section>
+    <PageSeoWrapper
+      title={`${props.dataInput ? "Edit" : "Create New"} ${props.itemType.slice(0, -1)} ${separator} ${title}`}
+      description={`${props.dataInput ? "Edit" : "Create a new"} ${props.itemType.slice(0, -1)} on ${title}`}
+    >
+      <Section id="create-item" className={css.create}>
+        <SideBySide leftWidth="350px">
+          <Sidebar
+            data={data}
+            itemType={props.itemType}
+            setData={setData}
+            slug={props.slug}
+            admin={props.admin}
+          />
+          <Main data={data} itemType={props.itemType} setData={setData} />
+        </SideBySide>
+      </Section>
+    </PageSeoWrapper>
   );
 }
 
@@ -365,18 +372,20 @@ function Sidebar(props: {
                     props.data.metaData.collection.length === 0
                       ? ""
                       : props.admin
-                      ? props.data.metaData.collection.startsWith(
-                          props.data.metaData.authorID + "-"
-                        )
-                        ? props.data.metaData.collection
-                        : props.data.metaData.authorID +
-                          "-" +
-                          props.data.metaData.collection
-                      : props.data.metaData.collection.startsWith(
-                          currentUser.uid + "-"
-                        )
-                      ? props.data.metaData.collection
-                      : currentUser.uid + "-" + props.data.metaData.collection,
+                        ? props.data.metaData.collection.startsWith(
+                            props.data.metaData.authorID + "-"
+                          )
+                          ? props.data.metaData.collection
+                          : props.data.metaData.authorID +
+                            "-" +
+                            props.data.metaData.collection
+                        : props.data.metaData.collection.startsWith(
+                              currentUser.uid + "-"
+                            )
+                          ? props.data.metaData.collection
+                          : currentUser.uid +
+                            "-" +
+                            props.data.metaData.collection,
                 },
               }).then((res) => {
                 devConsole.log(res);
@@ -409,8 +418,8 @@ function Sidebar(props: {
                 ? "Admin Save"
                 : "Admin Publish"
               : props.slug
-              ? "Save"
-              : "Publish"
+                ? "Save"
+                : "Publish"
           }
           icon={{
             gficon: props.admin
@@ -418,8 +427,8 @@ function Sidebar(props: {
                 ? "save_as"
                 : ""
               : props.slug
-              ? "Save"
-              : "Publish",
+                ? "Save"
+                : "Publish",
           }}
           style="primary"
         >
@@ -428,8 +437,8 @@ function Sidebar(props: {
               ? "Admin Save"
               : ""
             : props.slug
-            ? "Save"
-            : "Publish"}
+              ? "Save"
+              : "Publish"}
         </Button>
       )}
     </div>

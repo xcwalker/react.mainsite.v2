@@ -6,6 +6,7 @@ import "./styles/themes/midnight.css";
 import "./styles/themes/naturist.css";
 import "./styles/themes/purplur.css";
 import "./styles/themes/custom.css";
+import "./styles/themes/github.css";
 import { useAuth } from "./functions/firebase/authentication/useAuth";
 import firebaseGetRealtimeData from "./functions/firebase/storage/useRealtimeData";
 import { userSettingsType } from "./types";
@@ -57,6 +58,7 @@ export const availableThemes = [
   "system",
   "light",
   "dark",
+  "github",
   "DevView™",
   "trans-pride",
   "midnight",

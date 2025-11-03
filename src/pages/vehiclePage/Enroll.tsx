@@ -9,6 +9,8 @@ import { checkIfDocExists } from "../../functions/firebase/storage/checkIfDocExi
 import toast from "react-hot-toast";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import { useNavigate } from "react-router-dom";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
+import { separator, title } from "../../App";
 
 export default function VehicleEnrollPage() {
   const navigate = useNavigate();
@@ -57,133 +59,138 @@ export default function VehicleEnrollPage() {
   }, [vrn]);
 
   return (
-    <AccountPage id="vehicle-enroll">
-      <h1>Vehicle Enrollment</h1>
+    <PageSeoWrapper
+      title={`Enroll Vehicle ${vrn ? `${separator} ${vrn}` : ""} ${separator} ${title}`}
+      description={`Enroll a new vehicle into the fleet management system on ${title}`}
+    >
+      <AccountPage id="vehicle-enroll">
+        <h1>Vehicle Enrollment</h1>
 
-      <Input
-        label={vrnAvailable === false ? "VRN (Unavailable)" : "VRN"}
-        value={vrn}
-        onChange={(e) => setVrn(e.target.value.toUpperCase())}
-        id="vehicle-vrn"
-        required
-        isInvalid={vrnAvailable === false}
-      />
-      <InputGroup direction="row" fullWidth>
         <Input
-          label="Make"
-          value={vehicle.data.make}
+          label={vrnAvailable === false ? "VRN (Unavailable)" : "VRN"}
+          value={vrn}
+          onChange={(e) => setVrn(e.target.value.toUpperCase())}
+          id="vehicle-vrn"
+          required
+          isInvalid={vrnAvailable === false}
+        />
+        <InputGroup direction="row" fullWidth>
+          <Input
+            label="Make"
+            value={vehicle.data.make}
+            onChange={(e) =>
+              setVehicle({
+                ...vehicle,
+                data: { ...vehicle.data, make: e.target.value },
+              })
+            }
+            required
+            id="vehicle-make"
+            className={css.input}
+          />
+          <Input
+            label="Model"
+            value={vehicle.data.model}
+            onChange={(e) =>
+              setVehicle({
+                ...vehicle,
+                data: { ...vehicle.data, model: e.target.value },
+              })
+            }
+            required
+            id="vehicle-model"
+            className={css.input}
+          />
+        </InputGroup>
+        <InputGroup direction="row" fullWidth>
+          <Input
+            label="Year"
+            type="number"
+            value={vehicle.data.year}
+            onChange={(e) =>
+              setVehicle({
+                ...vehicle,
+                data: { ...vehicle.data, year: e.target.valueAsNumber },
+              })
+            }
+            required
+            id="vehicle-year"
+            className={css.input}
+          />
+          <Input
+            label="Mileage"
+            type="number"
+            value={vehicle.data.history[0].milage_miles}
+            onChange={(e) =>
+              setVehicle({
+                ...vehicle,
+                data: {
+                  ...vehicle.data,
+                  history: [
+                    {
+                      ...vehicle.data.history[0],
+                      milage_miles: e.target.valueAsNumber,
+                    },
+                  ],
+                },
+              })
+            }
+            required
+            id="vehicle-mileage"
+            className={css.input}
+          />
+        </InputGroup>
+        <Input
+          label="Description"
+          value={vehicle.data.description}
           onChange={(e) =>
             setVehicle({
               ...vehicle,
-              data: { ...vehicle.data, make: e.target.value },
+              data: { ...vehicle.data, description: e.target.value },
             })
           }
-          required
-          id="vehicle-make"
-          className={css.input}
+          id="vehicle-description"
         />
         <Input
-          label="Model"
-          value={vehicle.data.model}
+          label="VIN"
+          value={vehicle.metaData.vin}
           onChange={(e) =>
             setVehicle({
               ...vehicle,
-              data: { ...vehicle.data, model: e.target.value },
-            })
-          }
-          required
-          id="vehicle-model"
-          className={css.input}
-        />
-      </InputGroup>
-      <InputGroup direction="row" fullWidth>
-        <Input
-          label="Year"
-          type="number"
-          value={vehicle.data.year}
-          onChange={(e) =>
-            setVehicle({
-              ...vehicle,
-              data: { ...vehicle.data, year: e.target.valueAsNumber },
-            })
-          }
-          required
-          id="vehicle-year"
-          className={css.input}
-        />
-        <Input
-          label="Mileage"
-          type="number"
-          value={vehicle.data.history[0].milage_miles}
-          onChange={(e) =>
-            setVehicle({
-              ...vehicle,
-              data: {
-                ...vehicle.data,
-                history: [
-                  {
-                    ...vehicle.data.history[0],
-                    milage_miles: e.target.valueAsNumber,
-                  },
-                ],
+              metaData: {
+                ...vehicle.metaData,
+                vin: e.target.value.toUpperCase(),
+                key: e.target.value
+                  .toUpperCase()
+                  .substring(e.target.value.length - 6),
               },
             })
           }
           required
-          id="vehicle-mileage"
+          id="vehicle-vin"
           className={css.input}
+          maxLength={17}
+          minLength={11}
         />
-      </InputGroup>
-      <Input
-        label="Description"
-        value={vehicle.data.description}
-        onChange={(e) =>
-          setVehicle({
-            ...vehicle,
-            data: { ...vehicle.data, description: e.target.value },
-          })
-        }
-        id="vehicle-description"
-      />
-      <Input
-        label="VIN"
-        value={vehicle.metaData.vin}
-        onChange={(e) =>
-          setVehicle({
-            ...vehicle,
-            metaData: {
-              ...vehicle.metaData,
-              vin: e.target.value.toUpperCase(),
-              key: e.target.value
-                .toUpperCase()
-                .substring(e.target.value.length - 6),
-            },
-          })
-        }
-        required
-        id="vehicle-vin"
-        className={css.input}
-        maxLength={17}
-        minLength={11}
-      />
-      <Button
-        onClick={() => {
-          firebaseSetData("vehicles", vrn, vehicle)
-            .then(() => {
-              toast.success("Vehicle enrolled successfully!");
-              navigate("/vehicles/" + vrn + "/" + vehicle.metaData.key);
-            })
-            .catch((error) => {
-              toast.error("Error enrolling vehicle: " + error.message);
-            });
-        }}
-        title="Enroll Vehicle"
-        style="primary"
-        width="14rem"
-        centered
-      >
-        Enroll
-      </Button>
-    </AccountPage>
+        <Button
+          onClick={() => {
+            firebaseSetData("vehicles", vrn, vehicle)
+              .then(() => {
+                toast.success("Vehicle enrolled successfully!");
+                navigate("/vehicles/" + vrn + "/" + vehicle.metaData.key);
+              })
+              .catch((error) => {
+                toast.error("Error enrolling vehicle: " + error.message);
+              });
+          }}
+          title="Enroll Vehicle"
+          style="primary"
+          width="14rem"
+          centered
+        >
+          Enroll
+        </Button>
+      </AccountPage>
+    </PageSeoWrapper>
   );
 }

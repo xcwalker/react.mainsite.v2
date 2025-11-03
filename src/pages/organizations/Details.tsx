@@ -20,13 +20,14 @@ import Button from "../../components/Button";
 import DeleteWarning from "../../components/DeleteWarning";
 import SidebarButtonContainer from "../../components/Sidebar/SidebarButtonContainer";
 import ShareModal from "../../components/ShareModal";
-import { shortURL } from "../../App";
+import { separator, shortURL, title } from "../../App";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { User } from "firebase/auth";
 import Modal from "../../components/Modal";
 import Input from "../../components/Input";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import QRCode from "react-qr-code";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
 
 export default function OrganizationDetails() {
   const currentUser = useAuth();
@@ -62,7 +63,10 @@ export default function OrganizationDetails() {
   }
 
   return (
-    <>
+    <PageSeoWrapper
+      title={`${organization.name} ${separator} Organization ${separator} ${title}`}
+      description={`View the details of the organization "${organization.name}" on ${title}`}
+    >
       <Section id="organizationDetails">
         <SideBySide leftWidth="350px">
           <Sidebar
@@ -100,7 +104,7 @@ export default function OrganizationDetails() {
         organizationId={organizationId || ""}
         organization={organization}
       />
-    </>
+    </PageSeoWrapper>
   );
 }
 

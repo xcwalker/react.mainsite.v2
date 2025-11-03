@@ -18,6 +18,8 @@ import firebaseSetData from "../../functions/firebase/storage/setData";
 import { RoleProtect } from "../../components/Security/Protect";
 import toTitleCase from "../../functions/toTitleCase";
 import InputDropdown from "../../components/InputDropdown.tsx";
+import PageSeoWrapper from "../../components/PageSeoWrapper.tsx";
+import { separator, title } from "../../App.tsx";
 
 export default function TicketView() {
   const { ticketId } = useParams<string>();
@@ -50,12 +52,17 @@ export default function TicketView() {
   }
 
   return (
-    <Section id="view-ticket">
-      <SideBySide leftWidth="350px">
-        <TicketSidebar ticket={ticket} />
-        <TicketContent ticket={ticket} />
-      </SideBySide>
-    </Section>
+    <PageSeoWrapper
+      title={`${toTitleCase(ticket.data.title)} ${separator} Ticket View ${separator} ${title}`}
+      description={`View the details of ticket ${toTitleCase(ticket.data.title)}`}
+    >
+      <Section id="view-ticket">
+        <SideBySide leftWidth="350px">
+          <TicketSidebar ticket={ticket} />
+          <TicketContent ticket={ticket} />
+        </SideBySide>
+      </Section>
+    </PageSeoWrapper>
   );
 }
 

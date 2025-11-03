@@ -5,7 +5,6 @@ import { ItemSidebar } from "./Sidebar";
 import Markdown from "react-markdown";
 import ItemImages from "./Images";
 import ItemCarousel from "../../components/ItemCarousel";
-import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
 import removeMd from "remove-markdown";
 import ErrorPage from "../../ErrorPage";
@@ -20,6 +19,7 @@ import supersub from "remark-supersub";
 import RecipeContent from "./RecipeContent";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 import toTitleCase from "../../functions/toTitleCase";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
 
 export default function ItemPage(props: { itemType: ItemTypes }) {
   const { slug } = useParams();
@@ -44,102 +44,13 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
   return (
     <>
       {item && !error && slug && (
-        <>
-          <Helmet>
-            <title>
-              {toTitleCase(item.data.title)} - {item.data.subTitle} {separator}{" "}
-              {toTitleCase(props.itemType)} {separator} {title}
-            </title>
-            <meta
-              name="description"
-              content={
-                "An " +
-                title +
-                " " +
-                toTitleCase(item.data.title) +
-                ". " +
-                removeMd(item.data.description ? item.data.description : "")
-              }
-            />
-            <meta
-              name="twitter:description"
-              content={
-                "An " +
-                title +
-                " " +
-                toTitleCase(item.data.title) +
-                ". " +
-                removeMd(item.data.description ? item.data.description : "")
-              }
-            />
-            <meta
-              property="og:description"
-              content={
-                "An " +
-                title +
-                " " +
-                toTitleCase(item.data.title) +
-                ". " +
-                removeMd(item.data.description ? item.data.description : "")
-              }
-            />
-            {/* Twitter Meta */}
-            <meta
-              name="twitter:title"
-              content={
-                toTitleCase(item.data.title) +
-                " | " +
-                item.data.subTitle +
-                " " +
-                separator +
-                " " +
-                title
-              }
-            />
-            <meta
-              name="twitter:image"
-              content={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                props.itemType +
-                "/" +
-                slug.toLowerCase() +
-                "/images/thumbnail.jpg"
-              }
-            />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta property="og:type" content="website" />
-            <meta
-              property="og:url"
-              content={
-                "https://xcwalker.dev/" +
-                props.itemType +
-                "/" +
-                slug.toLowerCase()
-              }
-            />
-            <meta
-              property="og:title"
-              content={
-                toTitleCase(item.data.title) +
-                " | " +
-                item.data.subTitle +
-                " " +
-                separator +
-                " " +
-                title
-              }
-            />
-            <meta
-              property="og:image"
-              content={
-                "https://raw.githubusercontent.com/xcwalker/mainsite.data/main/" +
-                props.itemType +
-                "/" +
-                slug.toLowerCase() +
-                "/images/thumbnail.jpg"
-              }
-            />
-          </Helmet>
+        <PageSeoWrapper
+          title={`${toTitleCase(item.data.title)} ${separator} ${item.data.subTitle} ${separator} ${toTitleCase(props.itemType)} ${separator} ${title}`}
+          description={removeMd(
+            item.data.description ? item.data.description : ""
+          )}
+          image={item.metaData.thumbnail}
+        >
           <Section id="project">
             <SideBySide leftWidth="350px" printLeftWidth="350px">
               <ItemSidebar
@@ -188,16 +99,18 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
               title={"More " + props.itemType}
             />
           </Section>
-        </>
+        </PageSeoWrapper>
       )}
       {item === undefined && !error && <LoadingPage />}
       {error && (
         <ErrorPage
           code={404}
           error={
-            toTitleCase((props.itemType.charAt(props.itemType.length - 1) === "s"
-              ? props.itemType.slice(0, -1)
-              : props.itemType)) + " Not Found"
+            toTitleCase(
+              props.itemType.charAt(props.itemType.length - 1) === "s"
+                ? props.itemType.slice(0, -1)
+                : props.itemType
+            ) + " Not Found"
           }
         />
       )}

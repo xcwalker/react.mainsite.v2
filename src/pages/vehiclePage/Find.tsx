@@ -4,34 +4,18 @@ import AccountPage from "../../components/Security/AccountPage";
 import css from "../../styles/pages/vehicles/find.module.css";
 import Button from "../../components/Button";
 import { separator, title } from "../../App";
-import { Helmet } from "react-helmet";
 import { RoleProtect } from "../../components/Security/Protect";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
 
 export function FindVehiclePage() {
   const [vrn, setVRN] = useState("");
-  const [vin6, sertVIN6] = useState("");
+  const [vin6, setVIN6] = useState("");
 
   return (
-    <>
-      <Helmet>
-        <title>
-          Fleet {separator} {title}
-        </title>
-        <meta
-          name="twitter:title"
-          content={"Fleet " + separator + " " + title}
-        />
-        <meta
-          property="og:title"
-          content={"Fleet " + separator + " " + title}
-        />
-        <meta name="description" content={"Fleet on " + title} />
-        <meta name="twitter:description" content={"Fleet on " + title} />
-        <meta property="og:description" content={"Fleet on " + title} />
-        {/* Twitter Meta */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://xcwalker.dev/vehicles/" />
-      </Helmet>
+    <PageSeoWrapper
+      title={`Fleet ${separator} ${title}`}
+      description={`Find your fleet vehicle history on ${title}`}
+    >
       <AccountPage id="accountLogin">
         <h2 className={css.title}>Find Fleet Vehicle History</h2>
         <Input
@@ -52,7 +36,7 @@ export function FindVehiclePage() {
           required
           placeholder="●●●●●●"
           value={vin6}
-          onChange={(e) => sertVIN6(e.currentTarget.value.toUpperCase())}
+          onChange={(e) => setVIN6(e.currentTarget.value.toUpperCase())}
           maxLength={6}
           minLength={6}
         />
@@ -82,6 +66,6 @@ export function FindVehiclePage() {
           </Button>
         </RoleProtect>
       </AccountPage>
-    </>
+    </PageSeoWrapper>
   );
 }

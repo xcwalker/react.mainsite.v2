@@ -11,6 +11,8 @@ import firebaseSetupUserData from "../../functions/firebase/user/setupUserData";
 import ErrorPage from "../../ErrorPage";
 import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
+import { separator, title } from "../../App";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
 
 export default function UserPage(props: { id?: string }) {
   const { uuid } = useParams<string>();
@@ -73,50 +75,65 @@ export default function UserPage(props: { id?: string }) {
   }, [currentUser?.uid, navigate, userID]);
 
   return (
-    <Section id="user">
+    <>
       {userData && (
-        <SideBySide leftWidth="350px">
-          <Sidebar user={userData} id={props.id ? props.id : (uuid ? uuid : "")} />
-          <main className={css.main}>
-            {userData.images.header && (
-              <img src={userData.images.header} alt="" className={css.header} />
-            )}
-            {userID && (
-              <>
-                <ItemCarousel
-                  userID={userID}
-                  itemType="projects"
-                  title={userData.about.firstName + "'s Projects"}
-                  slug=""
-                  sameCollection={false}
-                />
-                <ItemCarousel
-                  userID={userID}
-                  itemType="recipes"
-                  title={userData.about.firstName + "'s Recipes"}
-                  slug=""
-                  sameCollection={false}
-                />
-                <ItemCarousel
-                  userID={userID}
-                  itemType="blog"
-                  title={userData.about.firstName + "'s Blog Posts"}
-                  slug=""
-                  sameCollection={false}
-                />
-                <ItemCarousel
-                  userID={userID}
-                  itemType="albums"
-                  title={userData.about.firstName + "'s Albums"}
-                  slug=""
-                  sameCollection={false}
-                />
-              </>
-            )}
-          </main>
-        </SideBySide>
+        <PageSeoWrapper
+          title={`@${userData.about.userName} ${separator} ${userData.about.firstName} ${userData.about.lastName} ${separator} User Profile ${separator} ${title}`}
+          description={userData.about.statement ? userData.about.statement : undefined}
+          image={userData.images.profile ? userData.images.profile : undefined}
+        >
+          <Section id="user">
+            <SideBySide leftWidth="350px">
+              <Sidebar
+                user={userData}
+                id={props.id ? props.id : uuid ? uuid : ""}
+              />
+              <main className={css.main}>
+                {userData.images.header && (
+                  <img
+                    src={userData.images.header}
+                    alt=""
+                    className={css.header}
+                  />
+                )}
+                {userID && (
+                  <>
+                    <ItemCarousel
+                      userID={userID}
+                      itemType="projects"
+                      title={userData.about.firstName + "'s Projects"}
+                      slug=""
+                      sameCollection={false}
+                    />
+                    <ItemCarousel
+                      userID={userID}
+                      itemType="recipes"
+                      title={userData.about.firstName + "'s Recipes"}
+                      slug=""
+                      sameCollection={false}
+                    />
+                    <ItemCarousel
+                      userID={userID}
+                      itemType="blog"
+                      title={userData.about.firstName + "'s Blog Posts"}
+                      slug=""
+                      sameCollection={false}
+                    />
+                    <ItemCarousel
+                      userID={userID}
+                      itemType="albums"
+                      title={userData.about.firstName + "'s Albums"}
+                      slug=""
+                      sameCollection={false}
+                    />
+                  </>
+                )}
+              </main>
+            </SideBySide>
+          </Section>
+        </PageSeoWrapper>
       )}
       {error && <ErrorPage code={404} error="User Not Found" />}
-    </Section>
+    </>
   );
 }

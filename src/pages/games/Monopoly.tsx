@@ -14,6 +14,8 @@ import firebaseSetData from "../../functions/firebase/storage/setData";
 import Section from "../../components/Section";
 import toast from "react-hot-toast";
 import devConsole from "../../functions/devConsole";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
+import { separator, title } from "../../App";
 
 export default function Game_Monopoly() {
   const { gameId } = useParams();
@@ -104,7 +106,10 @@ export default function Game_Monopoly() {
 
   if (game.data && game.data?.status === "in-progress") {
     return (
-      <>
+      <PageSeoWrapper
+        title={`Monopoly Game ${separator} ${title}`}
+        description={`Monopoly Game ${separator} ${title}`}
+      >
         <Section id="game_monopoly_in_progress">
           <h1>Monopoly - In Progress</h1>
           <div className={css.players}>
@@ -172,12 +177,15 @@ export default function Game_Monopoly() {
           gameId={gameId}
           close={() => setTradeModal({ visible: false, propertyId: null })}
         />
-      </>
+      </PageSeoWrapper>
     );
   }
 
   return (
-    <>
+    <PageSeoWrapper
+      title={`Monopoly Game ${separator} ${title}`}
+      description={`Monopoly Game ${separator} ${title}`}
+    >
       <AccountPage id="game_monopoly">
         <h1>Monopoly</h1>
         <div className={css.players}>
@@ -244,7 +252,7 @@ export default function Game_Monopoly() {
         visible={showQR}
         close={() => setShowQR(false)}
       />
-    </>
+    </PageSeoWrapper>
   );
 }
 
@@ -548,8 +556,8 @@ function PropertyCard(props: {
                     {index === 0
                       ? "No Houses"
                       : index === 5
-                      ? "Hotel"
-                      : `${index} House${index > 1 ? "s" : ""}`}{" "}
+                        ? "Hotel"
+                        : `${index} House${index > 1 ? "s" : ""}`}{" "}
                     :
                   </span>
                   <span>${rent}</span>

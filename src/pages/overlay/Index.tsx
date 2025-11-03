@@ -14,6 +14,8 @@ import ErrorPage from "../../ErrorPage";
 import SidebarTitle from "../../components/Sidebar/SidebarTitle";
 import SidebarDates from "../../components/Sidebar/SidebarDates";
 import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
+import { separator, title } from "../../App";
 
 export default function OverlayIndex() {
   const params = useParams();
@@ -47,62 +49,73 @@ export default function OverlayIndex() {
   }
 
   return (
-    <Section id="overlay-index">
-      <SideBySide leftWidth="350px">
-        <SidebarContainer>
-          <div className={css.details}>
-            <SidebarTitle title={overlay.data.title} />
-            <SidebarDates created={dateCreated} modified={dateModified} />
-          </div>
-          <SidebarUser userId={overlay.metaData.authorID} />
-          <div className={css.buttons}>
-            <Button
-              href="./edit"
-              icon={{ gficon: "edit" }}
-              style="secondary"
-              title="Edit Overlay"
-            >
-              Edit
-            </Button>
-            <Button
-              href={"https://overlay.xcwalker.dev/" + params.id}
-              icon={{ gficon: "open_in_browser" }}
-              style="primary"
-              title="Open Overlay"
-              external
-            >
-              Open Overlay
-            </Button>
-            <div className={css.extraButtons}>
-              <Button
-                href={"https://overlay.xcwalker.dev/" + params.id + ".unstyled"}
-                icon={{ gficon: "check_box_outline_blank" }}
-                style="secondary"
-                title="Open Unstyled Overlay"
-              >
-                Unstyled
-              </Button>
-              {/* copy link */}
-              <Button
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    "https://overlay.xcwalker.dev/" + params.id
-                  );
-
-                  toast.success("Link copied to clipboard!");
-                }}
-                icon={{ gficon: "link" }}
-                style="secondary"
-                title="Copy Overlay Link"
-              >
-                Copy Link
-              </Button>
+    <PageSeoWrapper
+      title={`${overlay.data.title} ${separator} Overlay ${separator} ${title}`}
+      description={`View the overlay "${overlay.data.title}" on ${title}`}
+    >
+      <Section id="overlay-index">
+        <SideBySide leftWidth="350px">
+          <SidebarContainer>
+            <div className={css.details}>
+              <SidebarTitle title={overlay.data.title} />
+              <SidebarDates created={dateCreated} modified={dateModified} />
             </div>
-          </div>
-        </SidebarContainer>
-        <Preview overlay={overlay} className={css.preview} size="large" />
-        <Preview overlay={overlay} className={css.previewSmall} size="small" />
-      </SideBySide>
-    </Section>
+            <SidebarUser userId={overlay.metaData.authorID} />
+            <div className={css.buttons}>
+              <Button
+                href="./edit"
+                icon={{ gficon: "edit" }}
+                style="secondary"
+                title="Edit Overlay"
+              >
+                Edit
+              </Button>
+              <Button
+                href={"https://overlay.xcwalker.dev/" + params.id}
+                icon={{ gficon: "open_in_browser" }}
+                style="primary"
+                title="Open Overlay"
+                external
+              >
+                Open Overlay
+              </Button>
+              <div className={css.extraButtons}>
+                <Button
+                  href={
+                    "https://overlay.xcwalker.dev/" + params.id + ".unstyled"
+                  }
+                  icon={{ gficon: "check_box_outline_blank" }}
+                  style="secondary"
+                  title="Open Unstyled Overlay"
+                >
+                  Unstyled
+                </Button>
+                {/* copy link */}
+                <Button
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      "https://overlay.xcwalker.dev/" + params.id
+                    );
+
+                    toast.success("Link copied to clipboard!");
+                  }}
+                  icon={{ gficon: "link" }}
+                  style="secondary"
+                  title="Copy Overlay Link"
+                >
+                  Copy Link
+                </Button>
+              </div>
+            </div>
+          </SidebarContainer>
+          <Preview overlay={overlay} className={css.preview} size="large" />
+          <Preview
+            overlay={overlay}
+            className={css.previewSmall}
+            size="small"
+          />
+        </SideBySide>
+      </Section>
+    </PageSeoWrapper>
   );
 }

@@ -12,6 +12,8 @@ import Button from "../../components/Button";
 import ErrorPage from "../../ErrorPage";
 import firebaseSetUserData from "../../functions/firebase/user/setUserData";
 import devConsole from "../../functions/devConsole";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
+import { separator, title } from "../../App";
 
 export default function UserEdit(props: {
   admin?: boolean; // Optional prop to indicate if the user is an admin
@@ -58,78 +60,83 @@ export default function UserEdit(props: {
   }, [uuid, currentUser?.uid, props.admin]);
 
   return (
-    <Section id="user-edit">
-      {userData !== undefined && !error && (
-        <SideBySide leftWidth="350px">
-          <Sidebar
-            admin={props.admin}
-            setError={setError}
-            setUserData={setUserData}
-            userData={userData}
-            userID={uuid ? uuid : currentUser?.uid || ""} // Use uuid or current user's uid
+    <PageSeoWrapper
+      title={`Edit User ${separator} ${title}`}
+      description="Edit user profile information."
+    >
+      <Section id="user-edit">
+        {userData !== undefined && !error && (
+          <SideBySide leftWidth="350px">
+            <Sidebar
+              admin={props.admin}
+              setError={setError}
+              setUserData={setUserData}
+              userData={userData}
+              userID={uuid ? uuid : currentUser?.uid || ""} // Use uuid or current user's uid
+            />
+            <main className={css.main}>
+              {/* links */}
+              <div className={css.links}>
+                <h3>Links</h3>
+                <ul>
+                  {userData.links.map((item, index) => {
+                    return (
+                      <li key={index} className={css.linkItem}>
+                        <Input
+                          type="url"
+                          value={item}
+                          onChange={(e) => {
+                            const updatedUserData: UserType = { ...userData };
+                            updatedUserData.links[index] = e.target.value;
+                            setUserData(updatedUserData);
+                          }}
+                          id={"link-" + index}
+                          label={"Link " + (index + 1)}
+                          placeholder="https://example.com"
+                        />
+                        <Button
+                          style="danger"
+                          icon={{ gficon: "delete" }}
+                          title="Delete Link"
+                          onClick={() => {
+                            const updatedUserData: UserType = { ...userData };
+                            updatedUserData.links.splice(index, 1);
+                            setUserData(updatedUserData);
+                          }}
+                        >
+                          <></>
+                        </Button>
+                      </li>
+                    );
+                  })}
+                  <Button
+                    style="secondary"
+                    icon={{ gficon: "add" }}
+                    title="Add Link"
+                    onClick={() => {
+                      const updatedUserData: UserType = { ...userData };
+                      if (!updatedUserData.links) {
+                        updatedUserData.links = [];
+                      }
+                      updatedUserData.links.push("");
+                      setUserData(updatedUserData);
+                    }}
+                  >
+                    Add Link
+                  </Button>
+                </ul>
+              </div>
+            </main>
+          </SideBySide>
+        )}
+        {error && (
+          <ErrorPage
+            code={500}
+            error="An error occurred while fetching user data."
           />
-          <main className={css.main}>
-            {/* links */}
-            <div className={css.links}>
-              <h3>Links</h3>
-              <ul>
-                {userData.links.map((item, index) => {
-                  return (
-                    <li key={index} className={css.linkItem}>
-                      <Input
-                        type="url"
-                        value={item}
-                        onChange={(e) => {
-                          const updatedUserData: UserType = { ...userData };
-                          updatedUserData.links[index] = e.target.value;
-                          setUserData(updatedUserData);
-                        }}
-                        id={"link-" + index}
-                        label={"Link " + (index + 1)}
-                        placeholder="https://example.com"
-                      />
-                      <Button
-                        style="danger"
-                        icon={{ gficon: "delete" }}
-                        title="Delete Link"
-                        onClick={() => {
-                          const updatedUserData: UserType = { ...userData };
-                          updatedUserData.links.splice(index, 1);
-                          setUserData(updatedUserData);
-                        }}
-                      >
-                        <></>
-                      </Button>
-                    </li>
-                  );
-                })}
-                <Button
-                  style="secondary"
-                  icon={{ gficon: "add" }}
-                  title="Add Link"
-                  onClick={() => {
-                    const updatedUserData: UserType = { ...userData };
-                    if (!updatedUserData.links) {
-                      updatedUserData.links = [];
-                    }
-                    updatedUserData.links.push("");
-                    setUserData(updatedUserData);
-                  }}
-                >
-                  Add Link
-                </Button>
-              </ul>
-            </div>
-          </main>
-        </SideBySide>
-      )}
-      {error && (
-        <ErrorPage
-          code={500}
-          error="An error occurred while fetching user data."
-        />
-      )}
-    </Section>
+        )}
+      </Section>
+    </PageSeoWrapper>
   );
 }
 

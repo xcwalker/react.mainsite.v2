@@ -3,7 +3,6 @@ import Section from "../../components/Section";
 import SideBySide from "../../components/SideBySide";
 import { ItemSidebar } from "./Sidebar";
 import Markdown from "react-markdown";
-import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
 import ErrorPage from "../../ErrorPage";
 import { useEffect, useState } from "react";
@@ -17,6 +16,7 @@ import supersub from "remark-supersub";
 import { VehicleHistory } from "./History";
 import firebaseGetRealtimeDataForVehicle from "../../functions/firebase/storage/useRealtimeDataForVehicle";
 import devConsole from "../../functions/devConsole";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
 
 export default function VehiclePage(props: { itemType: ItemTypes }) {
   const { vrn, vin6 } = useParams();
@@ -43,13 +43,10 @@ export default function VehiclePage(props: { itemType: ItemTypes }) {
   return (
     <>
       {item && !error && vrn && vin6 && (
-        <>
-          <Helmet>
-            <title>
-              {vrn} - {item.data.make} {item.data.model} {separator} Fleet {separator}{" "}
-              {title}
-            </title>
-          </Helmet>
+        <PageSeoWrapper
+          title={`${vrn} ${separator} ${item.data.make} ${item.data.model} ${separator} Fleet ${separator} ${title}`}
+          description={`View the details and history of ${vrn} - ${item.data.make} ${item.data.model} on ${title}`}
+        >
           <Section id="project">
             <SideBySide leftWidth="350px">
               <ItemSidebar itemType={props.itemType} item={item} vrn={vrn} />
@@ -64,11 +61,15 @@ export default function VehiclePage(props: { itemType: ItemTypes }) {
                   {item.data.description}
                   {/* {testData} */}
                 </Markdown>
-                <VehicleHistory history={item.data.history} vrn={vrn} item={item} />
+                <VehicleHistory
+                  history={item.data.history}
+                  vrn={vrn}
+                  item={item}
+                />
               </main>
             </SideBySide>
           </Section>
-        </>
+        </PageSeoWrapper>
       )}
       {item === undefined && !error && <LoadingPage />}
       {error && <ErrorPage code={404} error="Vehicle Not Found" />}

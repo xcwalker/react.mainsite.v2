@@ -11,8 +11,8 @@ import firebaseRegister from "../../functions/firebase/authentication/register";
 import toast from "react-hot-toast";
 import { toastStyleError } from "../../toast";
 import toTitleCase from "../../functions/toTitleCase";
-import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -42,89 +42,89 @@ export default function RegisterPage() {
 
   return (
     <Protect isLoginPage={true} redirect={<Navigate to={"/me"} replace />}>
-      <Helmet>
-        <title>
-          Register {separator} Accounts {separator} {title}
-        </title>
-      </Helmet>
-      <AccountPage id="accountRegister" onSubmit={() => submit()}>
-        <h2 className={css.title}>
-          <span>Welcome To</span>
-          <span className={css.fancy}>Awesome</span>
-        </h2>
+      <PageSeoWrapper
+        title={`Register ${separator} Accounts ${separator} ${title}`}
+        description={`Create a new account on ${title}`}
+      >
+        <AccountPage id="accountRegister" onSubmit={() => submit()}>
+          <h2 className={css.title}>
+            <span>Welcome To</span>
+            <span className={css.fancy}>Awesome</span>
+          </h2>
 
-        <Input
-          type="email"
-          name="email"
-          label="Email"
-          id="email"
-          required
-          placeholder="email@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.currentTarget.value)}
-          disabled={loading}
-        />
-        <Input
-          type="password"
-          name="password"
-          id="password"
-          label="Password"
-          required
-          placeholder="●●●●●●●●●●●"
-          value={password}
-          onChange={(e) => setPassword(e.currentTarget.value)}
-          disabled={loading}
-        />
-        <Input
-          type="password"
-          name="password2"
-          id="password2"
-          label="Repeat Password"
-          required
-          placeholder="●●●●●●●●●●●"
-          value={passwordCheck}
-          onChange={(e) => setPasswordCheck(e.currentTarget.value)}
-          disabled={loading}
-        />
-        <Button
-          type="submit"
-          style="primary"
-          title="Register"
-          width="14rem"
-          centered
-        >
-          Register
-        </Button>
-        <div className={css.divider}>
-          <span>OR</span>
-        </div>
-        <div className={css.socials}>
+          <Input
+            type="email"
+            name="email"
+            label="Email"
+            id="email"
+            required
+            placeholder="email@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.currentTarget.value)}
+            disabled={loading}
+          />
+          <Input
+            type="password"
+            name="password"
+            id="password"
+            label="Password"
+            required
+            placeholder="●●●●●●●●●●●"
+            value={password}
+            onChange={(e) => setPassword(e.currentTarget.value)}
+            disabled={loading}
+          />
+          <Input
+            type="password"
+            name="password2"
+            id="password2"
+            label="Repeat Password"
+            required
+            placeholder="●●●●●●●●●●●"
+            value={passwordCheck}
+            onChange={(e) => setPasswordCheck(e.currentTarget.value)}
+            disabled={loading}
+          />
           <Button
-            style="secondary"
-            onClick={() => {
-              firebaseProviderLogin("google");
-            }}
-            title="Register With Google"
+            type="submit"
+            style="primary"
+            title="Register"
+            width="14rem"
+            centered
           >
-            <SocialIcon social="google" className={css.socialIcon} />
+            Register
           </Button>
-          <Button
-            style="secondary"
-            onClick={() => {
-              firebaseProviderLogin("github");
-            }}
-            title="Register With GitHub"
-          >
-            <SocialIcon social="github" className={css.socialIcon} />
-          </Button>
-        </div>
-        <span>
-          Existing User?{" "}
-          <Link to={"../login"} className={css.link}>
-            Sign In
-          </Link>
-        </span>
-      </AccountPage>
+          <div className={css.divider}>
+            <span>OR</span>
+          </div>
+          <div className={css.socials}>
+            <Button
+              style="secondary"
+              onClick={() => {
+                firebaseProviderLogin("google");
+              }}
+              title="Register With Google"
+            >
+              <SocialIcon social="google" className={css.socialIcon} />
+            </Button>
+            <Button
+              style="secondary"
+              onClick={() => {
+                firebaseProviderLogin("github");
+              }}
+              title="Register With GitHub"
+            >
+              <SocialIcon social="github" className={css.socialIcon} />
+            </Button>
+          </div>
+          <span>
+            Existing User?{" "}
+            <Link to={"../login"} className={css.link}>
+              Sign In
+            </Link>
+          </span>
+        </AccountPage>
+      </PageSeoWrapper>
     </Protect>
   );
 }

@@ -11,7 +11,7 @@ import DashboardRadio from "./Radio";
 import DashboardLinks from "./Links";
 import DashboardSearch from "./Search";
 import { separator, title } from "../../App";
-import { Helmet } from "react-helmet";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
 
 export default function DashboardIndex() {
   const user = useAuth();
@@ -26,12 +26,10 @@ export default function DashboardIndex() {
   }, [user]);
 
   return (
-    <>
-      <Helmet>
-        <title>
-          Dashboard {separator} {title}
-        </title>
-      </Helmet>
+    <PageSeoWrapper
+      title={`Dashboard ${separator} ${title}`}
+      description={`Your personal dashboard on ${title}`}
+    >
       <section className={css.dashboard}>
         <div className={css.container}>
           <DashboardBanner name={userData?.about.firstName} />
@@ -43,6 +41,6 @@ export default function DashboardIndex() {
           <DashboardLinks />
         </div>
       </section>
-    </>
+    </PageSeoWrapper>
   );
 }

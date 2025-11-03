@@ -1,0 +1,10 @@
+html[data-theme="github"],
+.preview[data-theme="github"] {
+  --text: #ffffff;
+  --text-alt: #909692;
+  --background: #101411;
+  --primary: #232925;
+  --secondary: #909692;
+  --accent: #BF6EFF;
+  --text-inverse: #000000;
+}

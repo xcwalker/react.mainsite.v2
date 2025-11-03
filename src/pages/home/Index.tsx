@@ -1,18 +1,16 @@
 import HomeHero from "./Hero";
 import HomeCarousel from "./Carousel";
-import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
 import HomeSites from "./Sites";
 import { HomeRadio } from "./Radio";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
 
 export default function HomeIndex() {
   return (
-    <>
-      <Helmet>
-        <title>
-          Home {separator} {title}
-        </title>
-      </Helmet>
+    <PageSeoWrapper
+      title={`Home ${separator} ${title}`}
+      description={`Welcome to Awesome ${separator} ${title} ${separator} Explore projects, blog posts, recipes, and more!`}
+    >
       <HomeHero />
       <HomeCarousel
         title="My Projects"
@@ -37,6 +35,6 @@ export default function HomeIndex() {
         hasThumbnail={true}
       />
       <HomeSites />
-    </>
+    </PageSeoWrapper>
   );
 }

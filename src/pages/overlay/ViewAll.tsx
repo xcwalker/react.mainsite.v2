@@ -10,9 +10,13 @@ import getDataByDateFromUser from "../../functions/firebase/storage/getDataByDat
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { Link } from "react-router-dom";
 import devConsole from "../../functions/devConsole";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
+import { separator, title } from "../../App";
 
 export function OverlayViewAll() {
-  const [overlays, setOverlays] = useState<({value: overlayType, id:string})[]>([]);
+  const [overlays, setOverlays] = useState<
+    { value: overlayType; id: string }[]
+  >([]);
   const currentUser = useAuth();
 
   useEffect(() => {
@@ -24,37 +28,44 @@ export function OverlayViewAll() {
     });
   }, [currentUser]);
 
-  return <Section id="overlay-view-all">
-    <Carousel
-      className={css.carousel}
-      title="Your Overlays"
-      multipleViews={true}
-      defaultView="grid"
-      showCreateButton="overlay"
-      listView={
-        <>
-          {overlays.map((overlay, index) => (
-            <Fragment key={index}>
-              <ListItem
-                title={overlay.value.data.title}
-                subTitle=""
-                date={overlay.value.metaData.date.modified}
-                href={"./" + overlay.id}
-              />
-            </Fragment>
-          ))}
-        </>
-      }
+  return (
+    <PageSeoWrapper
+      title={`Your Overlays ${separator} ${title}`}
+      description="View and manage all your overlays for streaming and videos."
     >
-      <>
-      {overlays.map(overlay => (
-        <Fragment key={overlay.id}>
-          <OverlayCard overlay={overlay.value} id={overlay.id} />
-        </Fragment>
-      ))}
-      </>
-    </Carousel>
-  </Section>;
+      <Section id="overlay-view-all">
+        <Carousel
+          className={css.carousel}
+          title="Your Overlays"
+          multipleViews={true}
+          defaultView="grid"
+          showCreateButton="overlay"
+          listView={
+            <>
+              {overlays.map((overlay, index) => (
+                <Fragment key={index}>
+                  <ListItem
+                    title={overlay.value.data.title}
+                    subTitle=""
+                    date={overlay.value.metaData.date.modified}
+                    href={"./" + overlay.id}
+                  />
+                </Fragment>
+              ))}
+            </>
+          }
+        >
+          <>
+            {overlays.map((overlay) => (
+              <Fragment key={overlay.id}>
+                <OverlayCard overlay={overlay.value} id={overlay.id} />
+              </Fragment>
+            ))}
+          </>
+        </Carousel>
+      </Section>
+    </PageSeoWrapper>
+  );
 }
 
 function OverlayCard(props: { overlay: overlayType; id: string }) {

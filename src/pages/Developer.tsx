@@ -5,29 +5,36 @@ import { SidebarContainer } from "../components/Sidebar/SidebarContainer";
 import SideBySide from "../components/SideBySide";
 import { CopyBlock, dracula } from "react-code-blocks";
 import codecCSS from "../styles/components/codeSnippet.module.css";
+import PageSeoWrapper from "../components/PageSeoWrapper";
+import { separator, title } from "../App";
 
 export function DeveloperView() {
   const { pageID } = useParams();
 
   return (
-    <Section id="components">
-      <SideBySide leftWidth="250px">
-        <Sidebar pageID={pageID} />
-        <main>
-          {!pageID && <span>Select a page from the sidebar.</span>}
-          {pageID &&
-            pages.map((page) => {
-              if (page.href === pageID) {
-                return (
-                  <Section key={page.name} id={page.name}>
-                    {page.component}
-                  </Section>
-                );
-              }
-            })}
-        </main>
-      </SideBySide>
-    </Section>
+    <PageSeoWrapper
+      title={`Developer ${separator} ${title}`}
+      description={`Developer documentation for ${title}`}
+    >
+      <Section id="components">
+        <SideBySide leftWidth="250px">
+          <Sidebar pageID={pageID} />
+          <main>
+            {!pageID && <span>Select a page from the sidebar.</span>}
+            {pageID &&
+              pages.map((page) => {
+                if (page.href === pageID) {
+                  return (
+                    <Section key={page.name} id={page.name}>
+                      {page.component}
+                    </Section>
+                  );
+                }
+              })}
+          </main>
+        </SideBySide>
+      </Section>
+    </PageSeoWrapper>
   );
 }
 
@@ -39,22 +46,32 @@ function ComponentsView() {
   }
 
   return (
-    <Section id="components">
-      {components.map((component) => {
-        if (component.href === sectionID) {
-          return (
-            <Section key={component.name} id={component.name}>
-              <h2>{component.component}</h2>
-              <p>{component.description}</p>
-              <h3>Example Usage</h3>
-              <ExampleUsage>{component.component}</ExampleUsage>
-              <h3>Code</h3>
-              <CodePreview code={component.exampleCode} />
-            </Section>
-          );
-        }
-      })}
-    </Section>
+    <PageSeoWrapper
+      title={`Components ${separator} Developer ${separator} ${title}`}
+      description={`Developer documentation of components for ${title}`}
+    >
+      <Section id="components">
+        {components.map((component) => {
+          if (component.href === sectionID) {
+            return (
+              <PageSeoWrapper
+                title={`${component.name} ${separator} Components ${separator} Developer ${separator} ${title}`}
+                description={`Developer documentation of ${component.name} for ${title}`}
+              >
+                <Section key={component.name} id={component.name}>
+                  <h2>{component.component}</h2>
+                  <p>{component.description}</p>
+                  <h3>Example Usage</h3>
+                  <ExampleUsage>{component.component}</ExampleUsage>
+                  <h3>Code</h3>
+                  <CodePreview code={component.exampleCode} />
+                </Section>
+              </PageSeoWrapper>
+            );
+          }
+        })}
+      </Section>
+    </PageSeoWrapper>
   );
 }
 
@@ -66,17 +83,27 @@ function FunctionsView() {
   }
 
   return (
-    <Section id="functions">
-      {functions.map((func) => {
-        if (func.href === sectionID) {
-          return (
-            <Section key={func.name} id={func.name}>
-              {func.exampleCode}
-            </Section>
-          );
-        }
-      })}
-    </Section>
+    <PageSeoWrapper
+      title={`Functions ${separator} Developer ${separator} ${title}`}
+      description={`Developer documentation of functions for ${title}`}
+    >
+      <Section id="functions">
+        {functions.map((func) => {
+          if (func.href === sectionID) {
+            return (
+              <PageSeoWrapper
+                title={`${func.name} ${separator} Functions ${separator} Developer ${separator} ${title}`}
+                description={`Developer documentation of ${func.name} for ${title}`}
+              >
+                <Section key={func.name} id={func.name}>
+                  {func.exampleCode}
+                </Section>
+              </PageSeoWrapper>
+            );
+          }
+        })}
+      </Section>
+    </PageSeoWrapper>
   );
 }
 

@@ -10,6 +10,8 @@ import AccountPage from "../../components/Security/AccountPage";
 import InputGroup from "../../components/InputGroup";
 import { removeEmpty } from "../../functions/removeEmpty";
 import devConsole from "../../functions/devConsole";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
+import { separator, title } from "../../App";
 
 export default function TicketCreate() {
   const [ticketData, setTicketData] = useState<TicketType>({
@@ -119,86 +121,92 @@ export default function TicketCreate() {
   };
 
   return (
-    <AccountPage id="create-ticket" onSubmit={() => submitTicket()}>
-      <h1>Create Ticket</h1>
-      <Input
-        label="Title"
-        value={ticketData.data.title}
-        onChange={(e) =>
-          setTicketData({
-            ...ticketData,
-            data: { ...ticketData.data, title: e.target.value },
-          })
-        }
-        required
-        id="ticket-title"
-      />
-      <Input
-        label="Message"
-        type="textarea"
-        value={ticketData.data.messages[0].content}
-        onChange={(e) =>
-          setTicketData({
-            ...ticketData,
-            data: {
-              ...ticketData.data,
-              messages: ticketData.data.messages.map((msg, index) => {
-                if (index === 0) {
-                  return { ...msg, content: e.target.value };
-                }
-                return msg;
-              }),
-            },
-          })
-        }
-        required
-        id="ticket-message"
-      />
-      {!currentUser && (
-        <InputGroup direction="row" fullWidth>
-          {/* Name & Email */}
-          <Input
-            label="Name (Optional)"
-            value={ticketData.metaData.reporter.name || ""}
-            onChange={(e) =>
-              setTicketData({
-                ...ticketData,
-                metaData: {
-                  ...ticketData.metaData,
-                  reporter: {
-                    ...ticketData.metaData.reporter,
-                    name: e.target.value,
+    <PageSeoWrapper
+      title={`Create Ticket ${separator} ${title}`}
+      description="
+        Create a support ticket to get help with any issues or questions you may have."
+    >
+      <AccountPage id="create-ticket" onSubmit={() => submitTicket()}>
+        <h1>Create Ticket</h1>
+        <Input
+          label="Title"
+          value={ticketData.data.title}
+          onChange={(e) =>
+            setTicketData({
+              ...ticketData,
+              data: { ...ticketData.data, title: e.target.value },
+            })
+          }
+          required
+          id="ticket-title"
+        />
+        <Input
+          label="Message"
+          type="textarea"
+          value={ticketData.data.messages[0].content}
+          onChange={(e) =>
+            setTicketData({
+              ...ticketData,
+              data: {
+                ...ticketData.data,
+                messages: ticketData.data.messages.map((msg, index) => {
+                  if (index === 0) {
+                    return { ...msg, content: e.target.value };
+                  }
+                  return msg;
+                }),
+              },
+            })
+          }
+          required
+          id="ticket-message"
+        />
+        {!currentUser && (
+          <InputGroup direction="row" fullWidth>
+            {/* Name & Email */}
+            <Input
+              label="Name (Optional)"
+              value={ticketData.metaData.reporter.name || ""}
+              onChange={(e) =>
+                setTicketData({
+                  ...ticketData,
+                  metaData: {
+                    ...ticketData.metaData,
+                    reporter: {
+                      ...ticketData.metaData.reporter,
+                      name: e.target.value,
+                    },
                   },
-                },
-              })
-            }
-            className={css.input}
-            id="ticket-name"
-          />
-          <Input
-            label="Email (Optional)"
-            type="email"
-            value={ticketData.metaData.reporter.email || ""}
-            onChange={(e) =>
-              setTicketData({
-                ...ticketData,
-                metaData: {
-                  ...ticketData.metaData,
-                  reporter: {
-                    ...ticketData.metaData.reporter,
-                    email: e.target.value,
+                })
+              }
+              className={css.input}
+              id="ticket-name"
+            />
+            <Input
+              label="Email (Optional)"
+              type="email"
+              value={ticketData.metaData.reporter.email || ""}
+              onChange={(e) =>
+                setTicketData({
+                  ...ticketData,
+                  metaData: {
+                    ...ticketData.metaData,
+                    reporter: {
+                      ...ticketData.metaData.reporter,
+                      email: e.target.value,
+                    },
                   },
-                },
-              })
-            }
-            className={css.input}
-            id="ticket-email"
-          />
-        </InputGroup>
-      )}
-      <Button style="primary" type="submit" title="Submit Ticket" centered>
-        Submit Ticket
-      </Button>
-    </AccountPage>
+                })
+              }
+              className={css.input}
+              id="ticket-email"
+            />
+          </InputGroup>
+        )}
+        <Button style="primary" type="submit" title="Submit Ticket" centered>
+          Submit Ticket
+        </Button>
+      </AccountPage>
+    </PageSeoWrapper>
   );
 }

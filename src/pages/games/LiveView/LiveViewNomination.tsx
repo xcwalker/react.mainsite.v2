@@ -6,6 +6,8 @@ import Section from "../../../components/Section";
 import css from "../../../styles/pages/games/LiveViewNomination.module.css";
 import Button from "../../../components/Button";
 import devConsole from "../../../functions/devConsole";
+import PageSeoWrapper from "../../../components/PageSeoWrapper";
+import { separator, title } from "../../../App";
 
 export default function LiveView_Nomination() {
   const { gameID } = useParams<{ gameID: string }>();
@@ -66,61 +68,72 @@ export default function LiveView_Nomination() {
     return <ErrorPage code={404} error="Error fetching game data" />;
 
   return (
-    <Section
-      id="liveView-nomination"
-      className={css.nomination + ` ${largeText ? css.largeText : ""}`}
-      container={{ className: css.nominationContainer }}
+    <PageSeoWrapper
+      title={`Live View Nomination ${separator} ${title}`}
+      description={`Live View Nomination on ${title}`}
     >
-      <div className={css.controls}>
-        <Button
-          onClick={() => {
-            if (!document.fullscreenElement) {
-              document.documentElement.requestFullscreen();
-              document.documentElement.classList.add(css.nominationFullscreen);
-              setFullscreen(true);
-            } else {
-              if (document.exitFullscreen) {
-                document.exitFullscreen();
-                document.documentElement.classList.remove(
+      <Section
+        id="liveView-nomination"
+        className={css.nomination + ` ${largeText ? css.largeText : ""}`}
+        container={{ className: css.nominationContainer }}
+      >
+        <div className={css.controls}>
+          <Button
+            onClick={() => {
+              if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                document.documentElement.classList.add(
                   css.nominationFullscreen
                 );
-                setFullscreen(false);
+                setFullscreen(true);
+              } else {
+                if (document.exitFullscreen) {
+                  document.exitFullscreen();
+                  document.documentElement.classList.remove(
+                    css.nominationFullscreen
+                  );
+                  setFullscreen(false);
+                }
               }
-            }
-          }}
-          style="primary"
-          title="Fullscreen"
-          icon={{ gficon: fullscreen ? "fullscreen_exit" : "fullscreen" }}
-          width="fit-content"
-        >
-          {fullscreen ? "Exit" : "Enter"} Fullscreen
-        </Button>
-        <Button
-          onClick={() => {
-            setLargeText((prev) => !prev);
-          }}
-          style="secondary"
-          title="Enlarge"
-          icon={{ gficon: largeText ? "arrows_input" : "arrows_output" }}
-          width="fit-content"
-        >
-          {largeText ? "Shrink" : "Enlarge"}
-        </Button>
-      </div>
-      <div className={css.scoresContainer}>
-        <RoundNumberRenderer
-          index={currentRound}
-          numberOfPlayers={scores?.length || 0}
-        />
-        {scores && scores.length > 0 ? (
-          scores.map((player, index) => (
-            <PlayerRenderer key={index} player={player} index={currentRound} />
-          ))
-        ) : (
-          <p>No players found.</p>
-        )}
-      </div>
-    </Section>
+            }}
+            style="primary"
+            title="Fullscreen"
+            icon={{ gficon: fullscreen ? "fullscreen_exit" : "fullscreen" }}
+            width="fit-content"
+          >
+            {fullscreen ? "Exit" : "Enter"} Fullscreen
+          </Button>
+          <Button
+            onClick={() => {
+              setLargeText((prev) => !prev);
+            }}
+            style="secondary"
+            title="Enlarge"
+            icon={{ gficon: largeText ? "arrows_input" : "arrows_output" }}
+            width="fit-content"
+          >
+            {largeText ? "Shrink" : "Enlarge"}
+          </Button>
+        </div>
+        <div className={css.scoresContainer}>
+          <RoundNumberRenderer
+            index={currentRound}
+            numberOfPlayers={scores?.length || 0}
+          />
+          {scores && scores.length > 0 ? (
+            scores.map((player, index) => (
+              <PlayerRenderer
+                key={index}
+                player={player}
+                index={currentRound}
+              />
+            ))
+          ) : (
+            <p>No players found.</p>
+          )}
+        </div>
+      </Section>
+    </PageSeoWrapper>
   );
 }
 
@@ -217,9 +230,7 @@ function RoundNumberRenderer(props: {
 
   return (
     <div className={css.roundNumberContainer}>
-      <span className={css.roundNumber}>
-        {index + 1}
-      </span>
+      <span className={css.roundNumber}>{index + 1}</span>
       <span className={css.roundCardNumber}>
         {index < maxCards / 2 ? maxCards / 2 - index : index - maxCards / 2 + 1}
       </span>

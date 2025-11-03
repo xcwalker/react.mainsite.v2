@@ -17,13 +17,13 @@ import GFIcon from "../../components/GFIcon";
 import { Navigate } from "react-router-dom";
 import { NewTabSearch } from "./Search";
 import firebaseSetupNewTabData from "../../functions/firebase/storage/extra/setupNewTabData";
-import { Helmet } from "react-helmet";
 import { NewTabLinksAtom, separator, title } from "../../App";
 import { useAtom } from "jotai";
 import devConsole from "../../functions/devConsole";
 import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 import HomeHero from "../home/Hero";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
 
 export default function NewTab() {
   const user = useAuth();
@@ -140,7 +140,10 @@ export default function NewTab() {
       console.error("User not authenticated");
       return;
     }
-    firebaseGetRealtimeUserData(user?.uid, setUserData as React.Dispatch<React.SetStateAction<unknown>>);
+    firebaseGetRealtimeUserData(
+      user?.uid,
+      setUserData as React.Dispatch<React.SetStateAction<unknown>>
+    );
   }, [user?.uid]);
 
   useEffect(() => {
@@ -156,12 +159,10 @@ export default function NewTab() {
   return (
     <>
       {!error && !editMode && (
-        <>
-          <Helmet>
-            <title>
-              New Tab {separator} {title}
-            </title>
-          </Helmet>
+        <PageSeoWrapper
+          title={`New Tab ${separator} ${title}`}
+          description={`Customize your new tab page on ${title} with quick links and a search bar.`}
+        >
           <Section
             id="new-tab"
             className={css.newTab}
@@ -200,7 +201,13 @@ export default function NewTab() {
             )}
             {linkData?.links && (
               <div className={css.links}>
-                <HomeHero logo={linkData.settings.showOrganization ? organization?.logo.wide : undefined} />
+                <HomeHero
+                  logo={
+                    linkData.settings.showOrganization
+                      ? organization?.logo.wide
+                      : undefined
+                  }
+                />
                 <div className={css.search}>
                   {linkData.settings.showSearch && (
                     <NewTabSearch
@@ -256,7 +263,7 @@ export default function NewTab() {
               </button>
             </div>
           </Section>
-        </>
+        </PageSeoWrapper>
       )}
       {!error && editMode && <Navigate to={"/settings/newtab"} />}
       {error && <ErrorPage code={400} error="Error Loading New Tab" />}

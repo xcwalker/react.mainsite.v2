@@ -7,10 +7,10 @@ import SidebarUser from "../../components/Sidebar/SidebarUser";
 import ListItem from "../../components/ListItem";
 import FirebaseGetRealtimeUsersByLastOnlineExcludeHidden from "../../functions/firebase/storage/FirebaseGetRealtimeUsersByLastOnlineExcludeHidden";
 import FirebaseGetRealtimeUsersByLastOnline from "../../functions/firebase/storage/FirebaseGetRealtimeUsersByLastOnline";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
+import { separator, title } from "../../App";
 
-export function UserViewAll(props: {
-  staff: boolean;
-}) {
+export function UserViewAll(props: { staff: boolean }) {
   const [users, setUsers] = useState<{ value: UserType; id: string }[]>([]);
 
   useEffect(() => {
@@ -28,42 +28,47 @@ export function UserViewAll(props: {
   }, [props.staff]);
 
   return (
-    <Section id="users-view-all">
-      <Carousel
-        className={css.carousel}
-        title={props.staff ? "StaffView™ Users" : "Users"}
-        defaultView="grid"
-        multipleViews={true}
-        listView={
+    <PageSeoWrapper
+      title={`Users ${separator} ${title}`}
+      description="View and manage all your users."
+    >
+      <Section id="users-view-all">
+        <Carousel
+          className={css.carousel}
+          title={props.staff ? "StaffView™ Users" : "Users"}
+          defaultView="grid"
+          multipleViews={true}
+          listView={
+            <>
+              {users.map((user, index) => (
+                <Fragment key={index}>
+                  <ListItem
+                    title={user.value.about.displayName}
+                    subTitle={
+                      "@" +
+                      user.value.about.userName +
+                      " | " +
+                      user.value.about.firstName +
+                      " " +
+                      user.value.about.lastName
+                    }
+                    date={user.value.info.lastOnline}
+                    href={"./" + user.id}
+                  />
+                </Fragment>
+              ))}
+            </>
+          }
+        >
           <>
-            {users.map((user, index) => (
-              <Fragment key={index}>
-                <ListItem
-                  title={user.value.about.displayName}
-                  subTitle={
-                    "@" +
-                    user.value.about.userName +
-                    " | " +
-                    user.value.about.firstName +
-                    " " +
-                    user.value.about.lastName
-                  }
-                  date={user.value.info.lastOnline}
-                  href={"./" + user.id}
-                />
+            {users.map((user) => (
+              <Fragment key={user.id}>
+                <SidebarUser userData={user.value} userId={user.id} />
               </Fragment>
             ))}
           </>
-        }
-      >
-        <>
-          {users.map((user) => (
-            <Fragment key={user.id}>
-              <SidebarUser userData={user.value} userId={user.id} />
-            </Fragment>
-          ))}
-        </>
-      </Carousel>
-    </Section>
+        </Carousel>
+      </Section>
+    </PageSeoWrapper>
   );
 }

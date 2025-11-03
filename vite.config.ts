@@ -50,14 +50,25 @@ export default defineConfig(({ mode }) => {
           alphabet[out.APP_VERSION % alphabet.length]
       );
     } else {
-      out = {
-        APP_VERSION: 0,
-        BUILD_DATE: `${date.getFullYear()}-${pad(date.getMonth() + 1, 2)}-${pad(
-          date.getDate(),
-          2
-        )}`,
-        DEV_VERSION: 0,
-      };
+      if (mode === "development") {
+        out = {
+          APP_VERSION: -1,
+          BUILD_DATE: `${date.getFullYear()}-${pad(date.getMonth() + 1, 2)}-${pad(
+            date.getDate(),
+            2
+          )}`,
+          DEV_VERSION: 0,
+        };
+      } else {
+        out = {
+          APP_VERSION: 0,
+          BUILD_DATE: `${date.getFullYear()}-${pad(date.getMonth() + 1, 2)}-${pad(
+            date.getDate(),
+            2
+          )}`,
+          DEV_VERSION: 0,
+        };
+      }
 
       console.log("App Version: " + out.APP_VERSION);
       console.log("Build Date: " + JSON.stringify(out.BUILD_DATE));

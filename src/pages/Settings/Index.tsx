@@ -1,5 +1,4 @@
 import { firebaseLogout } from "../../functions/firebase/authentication/logout.tsx";
-import { Helmet } from "react-helmet";
 import { separator, title } from "../../App.tsx";
 import { availableThemes } from "../../SettingController.tsx";
 import firebaseSetData from "../../functions/firebase/storage/setData.tsx";
@@ -29,6 +28,8 @@ import { RoleProtect } from "../../components/Security/Protect.tsx";
 import SettingsNavigation from "./Navigation.tsx";
 import SettingsNewTab from "./NewTab.tsx";
 import SettingsOrganizations from "./Organization.tsx";
+import PageSeoWrapper from "../../components/PageSeoWrapper.tsx";
+import toTitleCase from "../../functions/toTitleCase.tsx";
 
 export default function SettingsPage() {
   const currentUser = useAuth();
@@ -91,12 +92,10 @@ export default function SettingsPage() {
   }
 
   return (
-    <>
-      <Helmet>
-        <title>
-          Manage {separator} Accounts {separator} {title}
-        </title>
-      </Helmet>
+    <PageSeoWrapper
+      title={`${toTitleCase(page)} Settings ${separator} ${title}`}
+      description={`Manage settings for ${title}`}
+      >
       <SideBySide leftWidth="250px">
         <Sidebar />
         <main className={css.main}>
@@ -117,7 +116,7 @@ export default function SettingsPage() {
           })}
         </main>
       </SideBySide>
-    </>
+    </PageSeoWrapper>
   );
 }
 

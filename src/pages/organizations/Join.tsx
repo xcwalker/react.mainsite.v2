@@ -1,4 +1,4 @@
-import {Navigate, useSearchParams} from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import AccountPage from "../../components/Security/AccountPage";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -8,6 +8,8 @@ import { UserType } from "../../types";
 import { useEffect, useState } from "react";
 import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
 import LoadingPage from "../../components/Loading";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
+import { separator, title } from "../../App";
 
 export default function OrganizationJoin() {
   const currentUser = useAuth();
@@ -22,7 +24,10 @@ export default function OrganizationJoin() {
       return;
     }
 
-    firebaseGetRealtimeUserData(currentUser?.uid, setUserData as React.Dispatch<React.SetStateAction<unknown>> );
+    firebaseGetRealtimeUserData(
+      currentUser?.uid,
+      setUserData as React.Dispatch<React.SetStateAction<unknown>>
+    );
   }, [currentUser?.uid]);
 
   if (!currentUser || !userData) {
@@ -30,33 +35,60 @@ export default function OrganizationJoin() {
   }
 
   if (userData.organization?.id) {
-      return <Navigate to={"/organizations/" + userData.organization.id} />;
+    return <Navigate to={"/organizations/" + userData.organization.id} />;
   }
 
   return (
-    <AccountPage id="organizationJoin">
-      <h1>Join Organization</h1>
-      <Input id="organizationID" placeholder="Enter organization ID" value={organizationId} onChange={(e) => {
-        setSearchParams({ organizationId: e.target.value, inviteCode: inviteCode });
-      }} 
-        label="Organization ID"
-      />
-      <Input id="inviteCode" placeholder="Enter invite code (if applicable)" value={inviteCode} onChange={(e) => {
-        setSearchParams({ organizationId: organizationId, inviteCode: e.target.value });
-      }} 
-        label="Invite Code"
-      />
-      <Button title="Join Organization" centered style="primary" width="250px" onClick={() => {
-        firebaseSetUserData(currentUser.uid, {
-          ...userData!,
-          organization: {
-            id: organizationId,
-            role: "member",
-            inviteCode: inviteCode || undefined,
-          },
-        });
-      }} >Join Organization</Button>
-      {/* Form for joining an organization */}
-    </AccountPage>
+    <PageSeoWrapper
+      title={`Join Organization ${separator} ${title}`}
+      description={`Join an organization on ${title}`}
+    >
+      <AccountPage id="organizationJoin">
+        <h1>Join Organization</h1>
+        <Input
+          id="organizationID"
+          placeholder="Enter organization ID"
+          value={organizationId}
+          onChange={(e) => {
+            setSearchParams({
+              organizationId: e.target.value,
+              inviteCode: inviteCode,
+            });
+          }}
+          label="Organization ID"
+        />
+        <Input
+          id="inviteCode"
+          placeholder="Enter invite code (if applicable)"
+          value={inviteCode}
+          onChange={(e) => {
+            setSearchParams({
+              organizationId: organizationId,
+              inviteCode: e.target.value,
+            });
+          }}
+          label="Invite Code"
+        />
+        <Button
+          title="Join Organization"
+          centered
+          style="primary"
+          width="250px"
+          onClick={() => {
+            firebaseSetUserData(currentUser.uid, {
+              ...userData!,
+              organization: {
+                id: organizationId,
+                role: "member",
+                inviteCode: inviteCode || undefined,
+              },
+            });
+          }}
+        >
+          Join Organization
+        </Button>
+        {/* Form for joining an organization */}
+      </AccountPage>
+    </PageSeoWrapper>
   );
 }

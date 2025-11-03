@@ -8,9 +8,9 @@ import Protect from "../../components/Security/Protect";
 import firebaseProviderLogin from "../../functions/firebase/authentication/loginWithProvider";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import { Helmet } from "react-helmet";
 import { separator, title } from "../../App";
 import devConsole from "../../functions/devConsole";
+import PageSeoWrapper from "../../components/PageSeoWrapper";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -31,12 +31,10 @@ export default function LoginPage() {
 
   return (
     <Protect isLoginPage={true} redirect={<Navigate to={"/me"} replace />}>
-      <>
-        <Helmet>
-          <title>
-            Login {separator} Accounts {separator} {title}
-          </title>
-        </Helmet>
+      <PageSeoWrapper
+        title={`Login ${separator} Accounts ${separator} ${title}`}
+        description={`Login to your account on ${title}`}
+      >
         <AccountPage id="accountLogin" onSubmit={() => submit()}>
           <h2 className={css.title}>Welcome Back</h2>
           <Input
@@ -102,7 +100,7 @@ export default function LoginPage() {
             </Link>
           </span>
         </AccountPage>
-      </>
+      </PageSeoWrapper>
     </Protect>
   );
 }
