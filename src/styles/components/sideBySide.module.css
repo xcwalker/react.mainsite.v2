@@ -24,7 +24,7 @@
   }
 
   .sideBySide > :last-child {
-    max-width: calc(100vw - var(--header-width) - 1rem);
+    max-width: calc(100vw - var(--header-width) - 2rem);
   }
 
   /* .sideBySide > :first-child {
