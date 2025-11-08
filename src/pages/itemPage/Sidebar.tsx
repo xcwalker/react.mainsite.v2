@@ -174,14 +174,14 @@ export function ItemSidebar(props: {
             navigator.canShare({
               title: item.data.title,
               text: item.data.subTitle,
-              url: props.itemType.charAt(0) + shortURL + "/" + props.slug,
+              url: "https://" + props.itemType.charAt(0) + shortURL + "/" + props.slug,
             }) && (
               <Button
                 onClick={async () => {
                   await navigator.share({
                     title: item.data.title,
                     text: item.data.subTitle,
-                    url: props.itemType.charAt(0) + shortURL + "/" + props.slug,
+                    url: "https://" + props.itemType.charAt(0) + shortURL + "/" + props.slug,
                   });
                 }}
                 title="Share"
@@ -200,6 +200,7 @@ export function ItemSidebar(props: {
               onClick={() => {
                 navigator.clipboard
                   .writeText(
+                    "https://" +
                     props.itemType.charAt(0) +
                       "." +
                       shortURL +

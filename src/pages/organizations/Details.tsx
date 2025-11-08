@@ -205,14 +205,14 @@ function Controls(props: {
         navigator.canShare({
           title: organization.name,
           text: organization.description,
-          url: "org." + shortURL + "/" + organizationId,
+          url: "https://org." + shortURL + "/" + organizationId,
         }) && (
           <Button
             onClick={async () => {
               await navigator.share({
                 title: organization.name,
                 text: organization.description,
-                url: "org." + shortURL + "/" + organizationId,
+                url: "https://org." + shortURL + "/" + organizationId,
               });
             }}
             title="Share"
@@ -226,7 +226,7 @@ function Controls(props: {
         <Button
           onClick={() => {
             navigator.clipboard
-              .writeText("org." + shortURL + "/" + organizationId)
+              .writeText("https://org." + shortURL + "/" + organizationId)
               .then(() => {
                 setLinkCopied(true);
                 setTimeout(() => setLinkCopied(false), 2000);
