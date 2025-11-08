@@ -19,10 +19,10 @@ export default async function FirebaseGetRealtimeUsersByLastOnlineExcludeHidden(
   const unsubscribe = onSnapshot(
     q,
     (querySnapshot) => {
-      const output: { userID: string; value: unknown }[] = [];
+      const output: { id: string; value: unknown }[] = [];
 
       querySnapshot.forEach((doc) => {
-        output.push({ userID: doc.id, value: doc.data() });
+        output.push({ id: doc.id, value: doc.data() });
       });
 
       setData(output);
