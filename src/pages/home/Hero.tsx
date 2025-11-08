@@ -35,7 +35,7 @@ export default function HomeHero(props: { logo?: {
       component: <HalloweenHero {...props} />,
       dateRange: {
         start: new Date(date.getFullYear() + "-10-01"),
-        end: new Date(date.getFullYear() + "-10-31"),
+        end: new Date(date.getFullYear() + "-10-31 23:59:59"),
       },
     },
     {
