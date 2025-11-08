@@ -44,7 +44,7 @@ export function ItemSidebar(props: {
       firebaseGetRealtimeData(
         "users",
         currentUser.uid,
-        setCurrentUserData as React.Dispatch<React.SetStateAction<unknown>>,
+        setCurrentUserData as React.Dispatch<React.SetStateAction<unknown>>
       );
     }
   }, [currentUser?.uid]);
@@ -174,14 +174,26 @@ export function ItemSidebar(props: {
             navigator.canShare({
               title: item.data.title,
               text: item.data.subTitle,
-              url: "https://" + props.itemType.charAt(0) + shortURL + "/" + props.slug,
+              url:
+                "https://" +
+                props.itemType.charAt(0) +
+                "." +
+                shortURL +
+                "/" +
+                props.slug,
             }) && (
               <Button
                 onClick={async () => {
                   await navigator.share({
                     title: item.data.title,
                     text: item.data.subTitle,
-                    url: "https://" + props.itemType.charAt(0) + shortURL + "/" + props.slug,
+                    url:
+                      "https://" +
+                      props.itemType.charAt(0) +
+                      "." +
+                      shortURL +
+                      "/" +
+                      props.slug,
                   });
                 }}
                 title="Share"
@@ -201,11 +213,11 @@ export function ItemSidebar(props: {
                 navigator.clipboard
                   .writeText(
                     "https://" +
-                    props.itemType.charAt(0) +
+                      props.itemType.charAt(0) +
                       "." +
                       shortURL +
                       "/" +
-                      props.slug,
+                      props.slug
                   )
                   .then(() => {
                     setLinkCopied(true);
