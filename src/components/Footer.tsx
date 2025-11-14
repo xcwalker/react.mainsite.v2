@@ -11,19 +11,14 @@ export default function Footer() {
     buildDate.getFullYear().toString().substr(-2) +
     "W" +
     pad(getWeekNumber(buildDate), 2) +
-    (build.APP_VERSION >= 26
-      ? alphabet[Math.floor(build.APP_VERSION / 26)]
-      : "") +
-    alphabet[build.APP_VERSION % alphabet.length];
+    getIterationAlphabet(build.APP_VERSION);
 
   const devVersionString = ` Dev${buildDate
     .getFullYear()
     .toString()
-    .substr(-2)}W${pad(getWeekNumber(buildDate), 2)}${
-    (build.DEV_VERSION >= 26
-      ? alphabet[Math.floor(build.DEV_VERSION / 26)]
-      : "") + alphabet[build.DEV_VERSION % alphabet.length]
-  }`;
+    .substr(-2)}W${pad(getWeekNumber(buildDate), 2)}${getIterationAlphabet(
+    build.DEV_VERSION
+  )}`;
 
   return (
     <footer className={css.footer}>
@@ -32,7 +27,8 @@ export default function Footer() {
         <div className={css.column}>
           <Logos.xcwalkeruk className={css.logo} />
           <span className={css.span}>
-            Built and maintained by <a href="https://xcwalker.dev">xcwalker.dev</a>
+            Built and maintained by{" "}
+            <a href="https://xcwalker.dev">xcwalker.dev</a>
           </span>
           <span className={css.span}>
             Copyright © 2024 - {buildDate.getFullYear()} xcwalker.
@@ -88,3 +84,19 @@ function pad(num: any, size: number) {
 }
 
 const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 65));
+
+function getIterationAlphabet(n: number): string {
+  let result = "";
+  const len = alphabet.length;
+
+  if (n === -1) {
+    return alphabet[0];
+  }
+
+  do {
+    result = alphabet[n % len] + result;
+    n = Math.floor(n / len) - 1;
+  } while (n >= 0);
+
+  return result;
+}

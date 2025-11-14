@@ -44,10 +44,7 @@ export default defineConfig(({ mode }) => {
         buildDate.getFullYear().toString().substr(-2) +
           "W" +
           pad(getWeekNumber(buildDate), 2) +
-          (out.APP_VERSION >= 26
-            ? alphabet[Math.floor(out.APP_VERSION / 26)]
-            : "") +
-          alphabet[out.APP_VERSION % alphabet.length]
+          getIterationAlphabet(out.APP_VERSION)
       );
     } else {
       if (mode === "development") {
@@ -77,7 +74,7 @@ export default defineConfig(({ mode }) => {
         date.getFullYear().toString().substr(-2) +
           "W" +
           pad(getWeekNumber(date), 2) +
-          alphabet[out.APP_VERSION % alphabet.length]
+          getIterationAlphabet(out.APP_VERSION)
       );
     }
 
@@ -118,3 +115,19 @@ function pad(num: any, size: number) {
 }
 
 const alphabet = [...Array(26)].map((_, i) => String.fromCharCode(i + 65));
+
+function getIterationAlphabet(n: number): string {
+  let result = "";
+  const len = alphabet.length;
+
+  if (n === -1) {
+    return alphabet[0];
+  }
+
+  do {
+    result = alphabet[n % len] + result;
+    n = Math.floor(n / len) - 1;
+  } while (n >= 0);
+
+  return result;
+}
