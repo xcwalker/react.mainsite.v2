@@ -48,8 +48,9 @@ html[data-theme="DevView™"],
   /* itempage */
   --item-sidebar-border-radius: 0rem;
   --item-sidebar-collection-border-radius: var(--_collection-border-radius);
-  --item-sidebar-gap: 0rem;
+  --item-sidebar-gap: 0.5rem;
   --item-sidebar-section-gap: 0rem;
+  --recipe-checklist_item-border_radius: 0rem;
 
   /* settings */
   --settings-note-border-radius: 0rem;

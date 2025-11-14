@@ -106,8 +106,8 @@
   z-index: -1;
 
   /* styling */
-  background-color: var(--background-200);
-  border-radius: 0.25rem;
+  background-color: var(--primary);
+  border-radius: var(--recipe-checklist_item-border_radius, 0.25rem);
 }
 
 .instructions li.checklistItem .checked {

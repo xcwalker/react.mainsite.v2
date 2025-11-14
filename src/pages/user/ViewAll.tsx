@@ -29,7 +29,7 @@ export function UserViewAll(props: { staff: boolean }) {
 
   return (
     <PageSeoWrapper
-      title={`Users ${separator} ${title}`}
+      title={`${props.staff ? "StaffView™ Users" : "Users"} ${separator} ${title}`}
       description="View and manage all your users."
     >
       <Section id="users-view-all">

@@ -2,8 +2,11 @@ import css from "../styles/components/footer.module.css";
 import { Logos } from "./Logo";
 import Socials from "./Socials";
 import build from "../../version.json";
+import { useAtomValue } from "jotai";
+import { RadioAtom } from "../App";
 
 export default function Footer() {
+  const radio = useAtomValue(RadioAtom);
   const buildDate = new Date(build.BUILD_DATE);
   const mode = import.meta.env.MODE;
 
@@ -21,7 +24,7 @@ export default function Footer() {
   )}`;
 
   return (
-    <footer className={css.footer}>
+    <footer className={css.footer + " " + (!radio.inSidebar ? css.footerRadio : "") + " " + (radio.showDJ ? css.footerDJ : "")}>
       <Socials />
       <div className={css.container}>
         <div className={css.column}>
