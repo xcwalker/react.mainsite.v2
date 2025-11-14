@@ -5,18 +5,18 @@ import QRCode from "react-qr-code";
 export function QRModal(props: {
   link: string;
   close: () => void;
-  visible: boolean;
+  visible: boolean | "demo";
 }) {
   return (
     <>
       <div
         className={
-          css.qrModalBackdrop + (props.visible ? " " + css.visible : "")
+          css.qrModalBackdrop + (props.visible !== "demo" && props.visible ? " " + css.visible : "")
         }
         onClick={props.close}
       />
       <div
-        className={css.qrModal + (props.visible ? " " + css.visible : "")}
+        className={css.qrModal + (props.visible !== "demo" && props.visible ? " " + css.visible : "") + (props.visible === "demo" ? " " + css.demo : "")}
         aria-hidden={props.visible ? "true" : "false"}
       >
         <div className={css.content}>

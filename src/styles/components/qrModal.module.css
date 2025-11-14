@@ -64,6 +64,17 @@
   scale: 1;
 }
 
+.qrModal.demo {
+  /* position */
+  position: static !important;
+  translate: 0;
+
+  /* hiding reset */
+  opacity: 1;
+  pointer-events: auto;
+  scale: 1;
+}
+
 .content {
   /* sizing */
   width: 100%;

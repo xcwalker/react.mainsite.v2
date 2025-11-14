@@ -26,22 +26,24 @@ export default defineConfig(({ mode }) => {
         out = {
           APP_VERSION: json.APP_VERSION,
           BUILD_DATE: json.BUILD_DATE,
-          DEV_VERSION: json.DEV_VERSION + 1,
+          DEV_VERSION: json.DEV_VERSION,
         };
       } else {
         out = {
           APP_VERSION: json.APP_VERSION + 1,
           BUILD_DATE: json.BUILD_DATE,
-          DEV_VERSION: json.DEV_VERSION + 1,
+          DEV_VERSION: json.DEV_VERSION,
         };
       }
 
       console.log("App Version: " + out.APP_VERSION);
       console.log("Build Date: " + JSON.stringify(out.BUILD_DATE));
+      console.log("Dev Version: " + out.DEV_VERSION);
 
       const buildDate = new Date(out.BUILD_DATE);
       console.log(
-        buildDate.getFullYear().toString().substr(-2) +
+        "Release Build: " +
+          buildDate.getFullYear().toString().substr(-2) +
           "W" +
           pad(getWeekNumber(buildDate), 2) +
           getIterationAlphabet(out.APP_VERSION)
@@ -54,7 +56,7 @@ export default defineConfig(({ mode }) => {
             date.getDate(),
             2
           )}`,
-          DEV_VERSION: 0,
+          DEV_VERSION: json.DEV_VERSION + 1,
         };
       } else {
         out = {
@@ -63,15 +65,17 @@ export default defineConfig(({ mode }) => {
             date.getDate(),
             2
           )}`,
-          DEV_VERSION: 0,
+          DEV_VERSION: json.DEV_VERSION + 1,
         };
       }
 
       console.log("App Version: " + out.APP_VERSION);
       console.log("Build Date: " + JSON.stringify(out.BUILD_DATE));
+      console.log("Dev Version: " + out.DEV_VERSION);
 
       console.log(
-        date.getFullYear().toString().substr(-2) +
+        "Release Build: " +
+          date.getFullYear().toString().substr(-2) +
           "W" +
           pad(getWeekNumber(date), 2) +
           getIterationAlphabet(out.APP_VERSION)

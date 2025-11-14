@@ -1,0 +1,37 @@
+.container {
+  gap: 1rem;
+}
+
+.container h2,
+.container h3 {
+  margin: 0;
+}
+
+.description {
+  margin: 0;
+}
+
+.exampleDiv {
+  /* sizing */
+  padding: 1rem;
+
+  /* flex */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  /* styling */
+  background-color: color(from var(--_background) srgb r g b / 0.85);
+  border: 0.125rem solid;
+  border-color: var(--_background);
+  border-radius: var(--code-snippet-border-radius, 0.5rem);
+
+  transition:
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+}
+
+.exampleDiv:hover {
+  background-color: var(--_background);
+  border-color: color(from var(--_background) srgb calc(r / 2) calc(g / 2) calc(b / 2));
+}

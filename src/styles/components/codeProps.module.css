@@ -1,0 +1,65 @@
+.wrapper {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tableWrapper {
+  /* sizing */
+  width: 100%;
+  padding: 1rem;
+
+  /* styling */
+  border-radius: var(--code-snippet-border-radius, 0.5rem);
+  background-color: var(--code-snippet-background, var(--primary));
+  color: var(--code-snippet-text, var(--text));
+}
+
+.propsTable {
+  /* sizing */
+  width: 100%;
+  padding: 1rem;
+
+  /* styling */
+  border-collapse: collapse;
+}
+
+.propsTable thead {
+  border-radius: calc(var(--code-snippet-border-radius, 0.5rem) / 2);
+  /* says it doesn't affect but works in firefox */
+  overflow: clip;
+}
+
+.propsTable th {
+  /* sizing */
+  padding: 0.5rem;
+  
+  /* styling */
+  background-color: var(--secondary);
+}
+
+.propsTable td {
+  /* sizing */
+  padding: 0.25rem;
+}
+
+.propsTable th,
+.propsTable td {
+  /* sizing */
+  padding-left: 1rem;
+  
+  /* styling */
+  vertical-align: top;
+  text-align: left;
+}
+
+.propsTable tr:nth-child(even) {
+  /* styling */
+  background-color: var(
+    --code-props-row-even-background,
+    var(--background)
+  );
+  border-radius: calc(var(--code-snippet-border-radius, 0.5rem) / 4);
+  overflow: clip;
+}

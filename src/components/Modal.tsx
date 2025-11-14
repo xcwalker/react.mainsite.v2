@@ -5,7 +5,7 @@ import GFIcon from "./GFIcon";
 
 export default function Modal(props: {
   setVisibility: Dispatch<SetStateAction<boolean>>;
-  visibility: boolean;
+  visibility: boolean | "demo";
   children: ReactNode;
   footer: ReactNode;
   title?: string;
@@ -25,7 +25,8 @@ export default function Modal(props: {
         className={
           css.mainContainer +
           " " +
-          (props.visibility === true ? css.visible : "")
+          (props.visibility === true ? css.visible : "") +
+          (props.visibility === "demo" ? " " + css.demo : "")
         }
         style={
           {

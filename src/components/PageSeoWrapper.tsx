@@ -6,10 +6,6 @@ export default function PageSeoWrapper(props: {
   description?: string;
   image?: string;
 }) {
-  console.log("Rendering PageSeoWrapper with title:", props.title);
-  console.log("Rendering PageSeoWrapper with description:", props.description);
-  console.log("Rendering PageSeoWrapper with image:", props.image);
-
   return (
     <>
       <Helmet>

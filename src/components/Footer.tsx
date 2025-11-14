@@ -16,13 +16,6 @@ export default function Footer() {
     pad(getWeekNumber(buildDate), 2) +
     getIterationAlphabet(build.APP_VERSION);
 
-  const devVersionString = ` Dev${buildDate
-    .getFullYear()
-    .toString()
-    .substr(-2)}W${pad(getWeekNumber(buildDate), 2)}${getIterationAlphabet(
-    build.DEV_VERSION
-  )}`;
-
   return (
     <footer className={css.footer + " " + (!radio.inSidebar ? css.footerRadio : "") + " " + (radio.showDJ ? css.footerDJ : "")}>
       <Socials />
@@ -43,7 +36,7 @@ export default function Footer() {
           {mode === "development" && (
             <div className={css.devMode}>
               <span>Development Build </span>
-              <span className={css.devBuild}>{devVersionString}</span>
+              <span className={css.devBuild}>Development Version {build.DEV_VERSION}</span>
               <span className={css.prodBuild}>
                 of prod. build {productionBuildString}
               </span>

@@ -52,6 +52,16 @@
     calc(var(--_opacity-duration) + var(--_hold-after-opacity));
 }
 
+.mainContainer.demo {
+  /* position */
+  position: static !important;
+  --_row-height: var(--_modal-height) !important;
+
+  /* hiding */
+  opacity: 1;
+  pointer-events: auto;
+}
+
 @media (max-width: 600px) {
   .mainContainer {
     --_modal-height: 400px;
@@ -95,7 +105,9 @@ body :has(.visible) {
 
 .mainContainer.visible > .modal,
 .mainContainer.visible > .corner,
-.mainContainer.visible > .backdrop {
+.mainContainer.visible > .backdrop,
+.mainContainer.demo > .modal,
+.mainContainer.demo > .corner {
   /* hiding */
   opacity: 1;
   /* transition */
@@ -125,7 +137,7 @@ body :has(.visible) {
   width: 100%;
   padding: 0.5rem;
   flex-shrink: 0;
-  
+
   /* flex */
   display: flex;
   justify-content: space-between;

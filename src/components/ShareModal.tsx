@@ -6,7 +6,7 @@ import css from "../styles/components/shareModal.module.css";
 
 export default function ShareModal(props: {
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
-  visibility: boolean;
+  visibility: boolean | "demo";
   url: string;
   title?: string;
 }) {

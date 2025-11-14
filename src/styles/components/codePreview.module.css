@@ -1,0 +1,47 @@
+.wrapper {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.preview {
+  /* sizing */
+  padding: 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  /* styling */
+  border-radius: var(--code-snippet-border-radius, 0.5rem);
+  background-color: var(--code-snippet-background, var(--primary));
+  color: var(--code-snippet-text, var(--text));
+
+  --_line-color: var(--accent);
+  --_background-color: var(--code-snippet-background, var(--primary));
+  --_size: 1em;
+  --_thickness: 0.1rem;
+}
+
+.preview .container {
+  /* sizing */
+  padding: 1rem;
+
+  /* background grid */
+  background-image:
+    linear-gradient(
+      var(--_line-color) var(--_thickness),
+      transparent var(--_thickness)
+    ),
+    linear-gradient(
+      90deg,
+      var(--_line-color) var(--_thickness),
+      transparent var(--_thickness)
+    );
+  background-size: var(--_size) var(--_size);
+  overflow: visible;
+  background-position: calc(var(--_thickness) / 2 * -1) calc(var(--_thickness) / 2 * -1);
+  /* background-position: center; */
+}

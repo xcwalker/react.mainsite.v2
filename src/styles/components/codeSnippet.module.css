@@ -1,3 +1,10 @@
+.wrapper {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .codePreview {
   /* sizing */
   padding: 1rem;
@@ -26,5 +33,4 @@
   border: none;
   cursor: pointer;
   border-radius: var(--button-border-radius, 0.25rem);
-
 }

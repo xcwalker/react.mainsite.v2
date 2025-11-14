@@ -36,6 +36,8 @@ export type ButtonType = {
   centered?: boolean;
   // centered is used to center the button
   onBlur?: () => void;
+  // disable active state
+  isActiveDisable?: boolean;
 };
 
 export default function Button(props: ButtonType & { children?: ReactNode }) {
@@ -145,7 +147,7 @@ export default function Button(props: ButtonType & { children?: ReactNode }) {
         <NavLink
           to={props.href}
           className={({ isActive }) =>
-            (isActive ? css.button + " " + css.active : css.button) +
+            (isActive ? css.button + " " + ( props.isActiveDisable ? "" : css.active) : css.button) +
             " " +
             props?.className +
             (props.icon ? " " + css.hasIcon : "") +
