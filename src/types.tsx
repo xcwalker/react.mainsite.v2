@@ -102,6 +102,13 @@ export const defaultNav: NavSection[] = [
         requireUser: true,
       },
       {
+        title: "dashboard new",
+        href: "dashboard-new",
+        gficon: "dashboard",
+        requireUser: true,
+        devOnly: true,
+      },
+      {
         title: "Login",
         href: "account",
         gficon: "login",

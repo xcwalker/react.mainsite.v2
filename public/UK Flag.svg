@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="56.444408mm"
+   height="33.866669mm"
+   viewBox="0 0 56.444408 33.866669"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   sodipodi:docname="UK Flag"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.7645881"
+     inkscape:cx="52.703517"
+     inkscape:cy="15.584373"
+     inkscape:window-width="1680"
+     inkscape:window-height="908"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path2-3"
+       d="M 6.581525,7e-6 22.577777,9.597753 V 0 Z m 18.253983,2.7e-5 v 10.952415 l 3.386665,2.031998 3.386662,-2.03199 V 3.9e-5 Z M 33.866632,2e-5 V 9.597773 L 49.862885,2e-5 Z M 0,3.948922 v 7.33998 l 12.233344,-1.2e-5 z m 56.444409,-2e-5 -12.233344,7.339988 12.233344,-1.5e-5 z M 0,13.546672 V 20.32 h 15.996252 l 5.64446,-3.386675 -5.64446,-3.386653 z m 40.448156,-1.2e-5 -5.64446,3.386677 5.64446,3.38665 15.996253,-7e-6 v -6.773325 z m -12.225983,7.335591 -3.386665,2.031998 v 10.952418 h 6.773327 V 22.914257 Z M 0,22.577777 v 7.339975 l 12.233344,-7.339987 z m 44.211065,-1.2e-5 12.233344,7.33996 v -7.339973 z m -21.633288,1.691117 -15.996252,9.597758 15.996252,-8e-6 z m 11.288855,1.2e-5 v 9.597753 h 15.996253 z"
+       style="fill:#012169;fill-opacity:1;stroke-width:1.12889" />
+    <path
+       id="path15"
+       style="fill:#c8102e;fill-opacity:1;stroke-width:0.423332;paint-order:markers stroke fill"
+       d="m 0,2e-5 v 2.628194 l 14.430051,8.660668 4.384751,3.2e-5 z M 52.049562,7e-6 33.866632,10.91308 v 0.375815 l 3.762909,1.4e-5 L 56.444409,0 Z M 18.814802,22.577797 0,33.866652 l 4.394977,-2.5e-5 18.1828,-10.913055 v -0.37582 z m 18.814739,-5e-6 18.814868,11.288835 V 31.23844 L 42.014358,22.577772 Z" />
+    <path
+       d="M 0,2e-5 56.444409,33.866627 M 56.444409,0 0,33.866652"
+       id="path9"
+       style="fill:#fdfdfd;fill-opacity:1;stroke-width:1.12889" />
+    <path
+       id="path7"
+       style="fill:#c8102e;fill-opacity:1;stroke-width:1.12889"
+       d="M 24.835508,3.4e-5 V 13.546687 L 0,13.546672 V 20.32 l 24.835508,1.2e-5 v 13.546655 h 6.773327 V 20.320012 l 24.835574,-3.2e-5 v -6.773325 l -24.835574,3.7e-5 V 3.9e-5 Z" />
+  </g>
+</svg>

@@ -541,15 +541,21 @@ const [isEnabled, setIsEnabled] = useState(false);
     description:
       "A container component to group multiple input elements together.",
     component: (
-      <InputGroup direction="row">
-        <Input id="first-name" label="First Name" type="text" />
-        <Input id="last-name" label="Last Name" type="text" />
+      <InputGroup direction="column" fullWidth>
+        <Input id="user-name" label="User Name" type="text" />
+        <InputGroup direction="row" basis="200px">
+          <Input id="first-name" label="First Name" type="text" />
+          <Input id="last-name" label="Last Name" type="text" />
+        </InputGroup>
       </InputGroup>
     ),
-    exampleCode: `<InputGroup direction="row" fullWidth={true}>
-  <Input id="first-name" label="First Name" type="text" />
-  <Input id="last-name" label="Last Name" type="text" />
-</InputGroup>`,
+    exampleCode: `<InputGroup direction="column" fullWidth>
+        <Input id="user-name" label="User Name" type="text" />
+        <InputGroup direction="row" basis="200px">
+          <Input id="first-name" label="First Name" type="text" />
+          <Input id="last-name" label="Last Name" type="text" />
+        </InputGroup>
+      </InputGroup>`,
     props: [
       {
         name: "children",
@@ -566,6 +572,11 @@ const [isEnabled, setIsEnabled] = useState(false);
         name: "fullWidth",
         type: "boolean",
         description: "Whether the input group should take full width.",
+      },
+      {
+        name: "basis",
+        type: "string",
+        description: "The flex-basis for the input group or its children.",
       },
     ],
   },
@@ -1034,7 +1045,8 @@ if (exists) {
     name: "firebaseCreateData",
     href: "firebaseCreateData",
     gficon: "add_circle",
-    description: "Creates a new document in a Firestore collection with auto-generated ID.",
+    description:
+      "Creates a new document in a Firestore collection with auto-generated ID.",
     exampleCode: `import firebaseCreateData from "../functions/firebase/storage/createData";
 
 const newData = {
@@ -1058,7 +1070,8 @@ console.log("New document created with ID:", docRef?.id);`,
     ],
     returns: {
       type: "Promise<DocumentReference | undefined>",
-      description: "Returns a document reference to the newly created document.",
+      description:
+        "Returns a document reference to the newly created document.",
     },
   },
   {
@@ -1117,7 +1130,8 @@ console.log("User data:", userData);`,
     name: "firebaseGetDataWithKey",
     href: "firebaseGetDataWithKey",
     gficon: "key",
-    description: "Retrieves a document from Firestore with an additional key verification.",
+    description:
+      "Retrieves a document from Firestore with an additional key verification.",
     exampleCode: `import { firebaseGetDataWithKey } from "../functions/firebase/storage/getData";
 
 const data = await firebaseGetDataWithKey("items", "item123", "secret-key");
@@ -1143,14 +1157,16 @@ if (data) {
     ],
     returns: {
       type: "Promise<unknown>",
-      description: "Returns the document data if key matches, undefined otherwise.",
+      description:
+        "Returns the document data if key matches, undefined otherwise.",
     },
   },
   {
     name: "firebaseSetData",
     href: "firebaseSetData",
     gficon: "save",
-    description: "Sets or updates a document in Firestore with optional toast notifications.",
+    description:
+      "Sets or updates a document in Firestore with optional toast notifications.",
     exampleCode: `import firebaseSetData from "../functions/firebase/storage/setData";
 
 const data = { name: "John", age: 30 };
@@ -1212,14 +1228,16 @@ await firebaseSetData("users", "user123", data, {
     ],
     returns: {
       type: "Promise<void>",
-      description: "Returns a promise that resolves when the operation completes.",
+      description:
+        "Returns a promise that resolves when the operation completes.",
     },
   },
   {
     name: "getDataByDate",
     href: "getDataByDate",
     gficon: "calendar_today",
-    description: "Retrieves all documents from a collection ordered by modification date.",
+    description:
+      "Retrieves all documents from a collection ordered by modification date.",
     exampleCode: `import getDataByDate from "../functions/firebase/storage/getDataByDate";
 
 const items = await getDataByDate("blog");
@@ -1235,14 +1253,16 @@ items.forEach(item => {
     ],
     returns: {
       type: "Promise<{ id: string; value: unknown }[]>",
-      description: "Returns an array of documents with their IDs and data, ordered by modified date.",
+      description:
+        "Returns an array of documents with their IDs and data, ordered by modified date.",
     },
   },
   {
     name: "getDataByDateExcludeSlug",
     href: "getDataByDateExcludeSlug",
     gficon: "filter_list",
-    description: "Retrieves documents ordered by date, excluding a specific document ID.",
+    description:
+      "Retrieves documents ordered by date, excluding a specific document ID.",
     exampleCode: `import getDataByDateExcludeSlug from "../functions/firebase/storage/getDataByDateExcludeSlug";
 
 // Get all blog posts except the current one
@@ -1261,14 +1281,16 @@ const relatedPosts = await getDataByDateExcludeSlug("blog", "current-post-id");`
     ],
     returns: {
       type: "Promise<{ id: string; value: unknown }[]>",
-      description: "Returns an array of documents excluding the specified slug.",
+      description:
+        "Returns an array of documents excluding the specified slug.",
     },
   },
   {
     name: "arrayMove",
     href: "arrayMove",
     gficon: "swap_vert",
-    description: "Moves an element in an array from one index to another, returning a new array.",
+    description:
+      "Moves an element in an array from one index to another, returning a new array.",
     exampleCode: `import { arrayMove } from "../functions/arrayMove";
 
 const items = ["A", "B", "C", "D"];
@@ -1298,14 +1320,16 @@ const handleDrop = (fromIndex: number, toIndex: number) => {
     ],
     returns: {
       type: "T[]",
-      description: "Returns a new array with the element moved to the new position.",
+      description:
+        "Returns a new array with the element moved to the new position.",
     },
   },
   {
     name: "devConsole",
     href: "devConsole",
     gficon: "terminal",
-    description: "A development-only console wrapper that only logs in development mode.",
+    description:
+      "A development-only console wrapper that only logs in development mode.",
     exampleCode: `import devConsole from "../functions/devConsole";
 
 // These only output in development mode
@@ -1370,14 +1394,16 @@ const cleaned = removeEmpty(data);
     ],
     returns: {
       type: "object",
-      description: "Returns a new object with all undefined properties removed.",
+      description:
+        "Returns a new object with all undefined properties removed.",
     },
   },
   {
     name: "toTitleCase",
     href: "toTitleCase",
     gficon: "title",
-    description: "Converts a string to title case (capitalizes first letter of each word).",
+    description:
+      "Converts a string to title case (capitalizes first letter of each word).",
     exampleCode: `import toTitleCase from "../functions/toTitleCase";
 
 const title = toTitleCase("hello world");

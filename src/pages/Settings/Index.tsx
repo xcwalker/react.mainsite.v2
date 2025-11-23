@@ -1,4 +1,3 @@
-import { firebaseLogout } from "../../functions/firebase/authentication/logout.tsx";
 import { separator, title } from "../../App.tsx";
 import { availableThemes } from "../../SettingController.tsx";
 import firebaseSetData from "../../functions/firebase/storage/setData.tsx";
@@ -30,6 +29,7 @@ import SettingsNewTab from "./NewTab.tsx";
 import SettingsOrganizations from "./Organization.tsx";
 import PageSeoWrapper from "../../components/PageSeoWrapper.tsx";
 import toTitleCase from "../../functions/toTitleCase.tsx";
+import { SettingsAccount } from "./Account.tsx";
 
 export default function SettingsPage() {
   const currentUser = useAuth();
@@ -192,7 +192,7 @@ const pages: PageItem[] = [
     name: "account",
     title: "Manage Account",
     icon: "account_circle",
-    component: Page_Account,
+    component: SettingsAccount,
   },
 ];
 
@@ -237,24 +237,6 @@ export function Sidebar() {
         </ul>
       </nav>
     </SidebarContainer>
-  );
-}
-
-function Page_Account() {
-  return (
-    <SettingSection id="accountSettings" title="Account Settings">
-      <Button
-        style="danger"
-        title="Sign out of your account"
-        icon={{ gficon: "logout" }}
-        width="fit-content"
-        onClick={() => {
-          firebaseLogout();
-        }}
-      >
-        Sign Out
-      </Button>
-    </SettingSection>
   );
 }
 

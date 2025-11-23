@@ -120,7 +120,7 @@
   row-gap: 0.25rem;
 
   /* styling */
-  background-color: var(--background-100);
+  background-color: var(--primary);
   border-radius: 0.5rem;
 }
 
@@ -170,7 +170,7 @@ div.date {
   grid-template-columns: repeat(2, 1fr);
 
   /* styling */
-  background-color: var(--background-100);
+  background-color: var(--primary);
   border-radius: 0.5rem;
 }
 

@@ -59,6 +59,8 @@ import OrganizationDetails from "./pages/organizations/Details";
 import OrganizationEdit from "./pages/organizations/Edit";
 import { v4 as uuidv4 } from "uuid";
 import { useAtom } from "jotai";
+import ModularDashboardIndex from "./pages/modularDashboard/Index";
+import ReAuthenticatePage from "./pages/account/ReAuthenticate";
 
 export default function App() {
   const currentUser = useAuth();
@@ -155,7 +157,17 @@ export default function App() {
   return (
     <>
       {tabID && radio.tabID && tabID === radio.tabID && (
-        <audio id="audioPlayer" src={radio.state === "playing" ? "https://stream.simulatorradio.com/320" : ""} autoPlay hidden muted />
+        <audio
+          id="audioPlayer"
+          src={
+            radio.state === "playing"
+              ? "https://stream.simulatorradio.com/320"
+              : ""
+          }
+          autoPlay
+          hidden
+          muted
+        />
       )}
       <BrowserRouter>
         <ScrollToTop />
@@ -194,7 +206,7 @@ export default function App() {
               <Route
                 path="create"
                 element={
-                  <Protect redirect={<Navigate to={"/account"} replace/>}>
+                  <Protect redirect={<Navigate to={"/account"} replace />}>
                     <RoleProtect
                       redirect={
                         <ErrorPage code={403} error={"Access Denied"} />
@@ -538,6 +550,7 @@ export default function App() {
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="forgot" element={<ForgotPasswordPage />} />
+              <Route path="reauthenticate" element={<ReAuthenticatePage />} />
             </Route>
 
             <Route path="settings">
@@ -612,6 +625,16 @@ export default function App() {
               element={
                 <Protect redirect={<Navigate to={"/account"} replace />}>
                   <DashboardIndex />
+                </Protect>
+              }
+            />
+
+            {/* dashboard-new */}
+            <Route
+              path="dashboard-new"
+              element={
+                <Protect redirect={<Navigate to={"/account"} replace />}>
+                  <ModularDashboardIndex />
                 </Protect>
               }
             />

@@ -15,7 +15,13 @@
   & > .inputGroup {
     border: none;
     background-color: var(--secondary);
+    flex-basis: auto;
   }
+}
+
+.inputGroup > * {
+  flex-basis: var(--_flex-basis, auto);
+  flex-grow: 1;
 }
 
 .inputGroup:global(.direction-row) {

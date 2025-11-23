@@ -1,0 +1,87 @@
+.sideBySide {
+  /* sizing */
+  height: 90vh;
+}
+
+
+
+:global(.mosaic.mosaic-blueprint-theme) {
+  background: unset;
+}
+
+:global(.mosaic-preview) {
+  display: none !important;
+}
+
+:global(.mosaic-root) {
+  /* sizing */
+  margin: -0.25rem;
+}
+
+:global(.mosaic-tile) {
+  /* sizing */
+  margin: 0.25rem;
+
+  /* styling */
+  border-radius: var(--dashboard-tile-border-radius, 0.5rem);
+  background-color: var(--primary);
+}
+
+:global(.mosaic-window .mosaic-window-toolbar),
+:global(.mosaic-preview .mosaic-window-toolbar) {
+  /* sizing */
+  margin: 0.5rem;
+  padding: 0.125rem;
+  height: fit-content;
+
+  /* styling */
+  background-color: var(--secondary);
+  color: var(--text);
+  border-radius: var(--dashboard-tile-border-radius, 0.5rem) !important;
+}
+
+:global(.mosaic-window .mosaic-window-toolbar):hover,
+:global(.mosaic-preview .mosaic-window-toolbar):hover {
+  /* styling */
+  background: var(--accent) !important;
+}
+
+:global(.mosaic.mosaic-blueprint-theme .mosaic-window .mosaic-window-title),
+:global(.mosaic.mosaic-blueprint-theme .mosaic-preview .mosaic-window-title) {
+  /* styling */
+  color: var(--text);
+}
+
+:global(.mosaic.mosaic-blueprint-theme .mosaic-window .mosaic-window-body),
+:global(.mosaic.mosaic-blueprint-theme .mosaic-preview .mosaic-window-body) {
+  /* sizing */
+  padding: 1rem;
+  /* styling */
+  background-color: unset;
+}
+/* 
+:global(.mosaic-window) {
+  background-color: var(--primary);
+} */
+
+.toolbarControls {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  align-items: center;
+}
+
+.toolbarControls button {
+  border-radius: 0 !important;
+
+  &:first-of-type {
+    border-top-left-radius: var(--dashboard-tile-border-radius, 0.5rem) !important;
+    border-bottom-left-radius: var(--dashboard-tile-border-radius, 0.5rem) !important;
+  }
+
+  &:last-of-type {
+    border-top-right-radius: var(--dashboard-tile-border-radius, 0.5rem) !important;
+    border-bottom-right-radius: var(--dashboard-tile-border-radius, 0.5rem) !important;
+  }
+}
