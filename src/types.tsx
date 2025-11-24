@@ -488,6 +488,7 @@ export type OrganizationType = {
       color?: string;
       imageUrl?: string;
     };
+    color: string;
   };
   creator: string;
   inviteCodes?: string[];

@@ -28,6 +28,7 @@ import Input from "../../components/Input";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import QRCode from "react-qr-code";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
+import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
 
 export default function OrganizationDetails() {
   const currentUser = useAuth();
@@ -38,6 +39,7 @@ export default function OrganizationDetails() {
   const [users, setUsers] = useState<{ userData: UserType; userId: string }[]>(
     []
   );
+  const [userData, setUserData] = useState<UserType | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
@@ -49,6 +51,15 @@ export default function OrganizationDetails() {
       setOrganization as React.Dispatch<React.SetStateAction<unknown>>
     );
   }, [organizationId]);
+
+  useEffect(() => {
+    if (currentUser?.uid) {
+      firebaseGetRealtimeUserData(
+        currentUser.uid,
+        setUserData as React.Dispatch<React.SetStateAction<unknown>>
+      );
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     // Fetch members logic here
@@ -71,6 +82,7 @@ export default function OrganizationDetails() {
         <SideBySide leftWidth="350px">
           <Sidebar
             currentUser={currentUser}
+            userData={userData}
             organization={organization}
             owners={users.filter(
               (user) => user.userData.organization?.role === "owner"
@@ -111,6 +123,7 @@ export default function OrganizationDetails() {
 function Sidebar(props: {
   organization: OrganizationType;
   currentUser: User | null | undefined;
+  userData: UserType | null;
   organizationId: string;
   owners: { userId: string; userData: UserType }[];
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -121,6 +134,7 @@ function Sidebar(props: {
     organization,
     organizationId,
     currentUser,
+    userData,
     owners,
     setShowDeleteModal,
     setShowInviteModal,
@@ -161,6 +175,7 @@ function Sidebar(props: {
         organization={organization}
         organizationId={organizationId || ""}
         currentUser={currentUser}
+        userData={userData}
         owners={owners}
         setShowDeleteModal={setShowDeleteModal}
         setShowInviteModal={setShowInviteModal}
@@ -174,6 +189,7 @@ function Controls(props: {
   organization: OrganizationType;
   organizationId: string;
   currentUser: User | null | undefined;
+  userData: UserType | null;
   owners: { userId: string; userData: UserType }[];
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowInviteModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -183,6 +199,7 @@ function Controls(props: {
     organization,
     organizationId,
     currentUser,
+    userData,
     owners,
     setShowDeleteModal,
     setShowInviteModal,
@@ -240,22 +257,28 @@ function Controls(props: {
           {linkCopied ? "Link Copied!" : "Copy Link"}
         </Button>
       )}
-      <Button
-        onClick={() => setShowInviteModal(true)}
-        style="secondary"
-        title="Invite Users"
-        icon={{ gficon: "person_add" }}
-      >
-        Invite
-      </Button>
-      <Button
-        href="./edit"
-        style="primary"
-        title="Edit Organization"
-        icon={{ gficon: "edit" }}
-      >
-        Edit
-      </Button>
+      {userData?.organization?.id === organizationId &&
+        (userData.organization?.role === "owner" ||
+          userData.organization?.role === "admin") && (
+          <>
+            <Button
+              onClick={() => setShowInviteModal(true)}
+              style="secondary"
+              title="Invite Users"
+              icon={{ gficon: "person_add" }}
+            >
+              Invite
+            </Button>
+            <Button
+              href="./edit"
+              style="primary"
+              title="Edit Organization"
+              icon={{ gficon: "edit" }}
+            >
+              Edit
+            </Button>
+          </>
+        )}
 
       {owners.length > 0 &&
         owners.find((owner) => owner.userId === currentUser?.uid) && (
