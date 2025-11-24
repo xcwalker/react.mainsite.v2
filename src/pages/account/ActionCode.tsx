@@ -52,6 +52,7 @@ export default function ActionCodePage() {
                   }}
                   style="primary"
                   centered
+                  width="fit-content"
                 >
                   Verify Email
                 </Button>
@@ -65,6 +66,7 @@ export default function ActionCodePage() {
                   href="/account/login"
                   style="primary"
                   centered
+                  width="fit-content"
                 >
                   Login
                 </Button>
@@ -101,6 +103,7 @@ export default function ActionCodePage() {
                   }}
                   style="primary"
                   centered
+                  width="fit-content"
                 >
                   Reset Password
                 </Button>
@@ -114,6 +117,7 @@ export default function ActionCodePage() {
                   href="/account/login"
                   style="primary"
                   centered
+                  width="fit-content"
                 >
                   Login
                 </Button>
