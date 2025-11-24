@@ -653,7 +653,7 @@ export default function App() {
               />
               <Route
                 path="edit"
-                element={<Navigate to={"/settings/newtab"} />}
+                element={<Navigate to={"/settings/newtab"} replace />}
               />
             </Route>
 

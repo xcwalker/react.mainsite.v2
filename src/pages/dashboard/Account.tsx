@@ -45,10 +45,10 @@ export default function DashboardAccount(props: { userData: UserType | null }) {
           <div className={css.text}>
             <Link to={"/user"}>{props.userData.about.displayName}</Link>
             <h3>
-              {props.userData.about.firstName} {props.userData.about.lastName}
+              {props.userData.about.firstName} {props.userData.about.middleName ? props.userData.about.middleName + " " : ""}{props.userData.about.lastName}
             </h3>
           </div>
-          <Link className={css.button} to={"/account/manage"}>
+          <Link className={css.button} to={"/settings/account"}>
             Manage Account
           </Link>
         </div>
