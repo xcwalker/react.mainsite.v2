@@ -6,7 +6,7 @@ import firebaseCreateData from "../../functions/firebase/storage/createData";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import LoadingPage from "../../components/Loading";
 import firebaseSetUserData from "../../functions/firebase/user/setUserData";
-import { UserType } from "../../types";
+import { OrganizationType, UserType } from "../../types";
 import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
 import { useNavigate } from "react-router-dom";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
@@ -77,10 +77,21 @@ export default function OrganizationCreate() {
               name: name,
               description: description,
               logo: {
-                wide: logoUrl,
+                icon: logoUrl,
+                wide: {
+                  src: logoUrl,
+                  onDark: logoUrl,
+                  onLight: logoUrl,
+                },
+                color: "black",
+                background: {
+                  type: "color",
+                  color: "white",
+                  imageUrl: "",
+                }
               },
               creator: currentUser.uid,
-            }).then((docRef) => {
+            } as OrganizationType).then((docRef) => {
               if (docRef) {
                 console.log("Organization created with ID: ", docRef.id);
                 firebaseSetUserData(currentUser.uid, {
