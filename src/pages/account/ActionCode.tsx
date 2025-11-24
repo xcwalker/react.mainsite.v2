@@ -9,9 +9,11 @@ import Protect from "../../components/Security/Protect";
 import FirebaseApplyActionCode from "../../functions/firebase/authentication/applyActionCode";
 import Input from "../../components/Input";
 import { firebaseResetPasswordFromEmail } from "../../functions/firebase/authentication/resetPassword";
+import { useAuth } from "../../functions/firebase/authentication/useAuth";
 
 export default function ActionCodePage() {
   const params = useSearchParams()[0];
+  const currentUser = useAuth();
   const actionCode = params.get("oobCode");
   const actionMode = params.get("mode");
   const [verified, setVerified] = useState(false);
@@ -31,7 +33,7 @@ export default function ActionCodePage() {
           <Protect redirect={<Navigate to={"/account/login"} replace />}>
             {!verified && (
               <>
-                <h2 className={css.title}>Please Reauthenticate</h2>
+                <h2 className={css.title}>Verify Email</h2>
                 <Button
                   title="Verify Email"
                   onClick={() => {
@@ -39,19 +41,35 @@ export default function ActionCodePage() {
 
                     FirebaseApplyActionCode(actionCode)
                       .then(() => {
+                        if (currentUser) {
+                          currentUser.reload();
+                        }
+
                         setVerified(true);
                       })
                       .catch((err) => {
                         console.error(err);
                       });
                   }}
+                  style="primary"
+                  centered
                 >
                   Verify Email
                 </Button>
               </>
             )}
             {verified && (
-              <h2 className={css.title}>Email Verified Successfully</h2>
+              <>
+                <h2 className={css.title}>Email Verified Successfully</h2>
+                <Button
+                  title="Go to Login"
+                  href="/account/login"
+                  style="primary"
+                  centered
+                >
+                  Login
+                </Button>
+              </>
             )}
           </Protect>
         )}
@@ -82,6 +100,8 @@ export default function ActionCodePage() {
                         console.error(err);
                       });
                   }}
+                  style="primary"
+                  centered
                 >
                   Reset Password
                 </Button>
@@ -90,7 +110,12 @@ export default function ActionCodePage() {
             {verified && (
               <>
                 <h2 className={css.title}>Password Reset Successfully</h2>
-                <Button title="Go to Login" href="/account/login">
+                <Button
+                  title="Go to Login"
+                  href="/account/login"
+                  style="primary"
+                  centered
+                >
                   Login
                 </Button>
               </>
