@@ -95,6 +95,19 @@ export function SettingsAccount() {
           Sign Out
         </Button>
       </SettingSection>
+      <SettingSection id="accountDelete" title="Delete Account">
+        <Button
+          style="danger"
+          title="Delete your account permanently"
+          icon={{ gficon: "delete" }}
+          width="fit-content"
+          onClick={() => {
+            navigate("/account/delete");
+          }}
+        >
+          Delete Account
+        </Button>
+      </SettingSection>
     </>
   );
 }

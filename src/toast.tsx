@@ -20,3 +20,15 @@ export const toastStyleSuccess = {
   color: "var(--text)",
   fontWeight: "600",
 };
+
+export const toastStyle = {
+  loading: {
+    style: toastStyleDefault,
+  },
+  success: {
+    style: toastStyleSuccess,
+  },
+  error: {
+    style: toastStyleError,
+  },
+};

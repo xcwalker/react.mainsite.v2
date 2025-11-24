@@ -62,6 +62,7 @@ import { useAtom } from "jotai";
 import ModularDashboardIndex from "./pages/modularDashboard/Index";
 import ReAuthenticatePage from "./pages/account/ReAuthenticate";
 import ActionCodePage from "./pages/account/ActionCode";
+import DeleteAccountPage from "./pages/account/Delete";
 
 export default function App() {
   const currentUser = useAuth();
@@ -553,6 +554,7 @@ export default function App() {
               <Route path="forgot" element={<ForgotPasswordPage />} />
               <Route path="reauthenticate" element={<ReAuthenticatePage />} />
               <Route path="action" element={<ActionCodePage />} />
+              <Route path="delete" element={<DeleteAccountPage />} />
             </Route>
 
             <Route path="settings">

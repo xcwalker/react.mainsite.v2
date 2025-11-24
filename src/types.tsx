@@ -572,6 +572,36 @@ export const userSetup: UserType = {
   },
 };
 
+export const deletedUser: UserType = {
+  about: {
+    userName: "Deleted",
+    displayName: "Deleted",
+    firstName: "Deleted",
+    lastName: "User",
+    statement: "",
+  },
+  images: {
+    backgroundType: "color",
+    background: "var(--background-100)",
+    header: "/background.svg",
+    profile:
+      "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
+  },
+  info: {
+    gender: "Unknown",
+    location: "Unknown",
+    pronouns: "Unknown",
+    joined: new Date().toJSON(),
+    lastOnline: new Date().toJSON(),
+    role: "unverified",
+    hidden: true,
+  },
+  links: [],
+  settings: {
+    showOrganization: false,
+  },
+};
+
 export type userSettingsType = {
   theme: string;
   customThemeColor?: {

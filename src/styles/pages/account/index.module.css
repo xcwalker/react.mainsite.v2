@@ -33,6 +33,28 @@
   color: var(--text);
 }
 
+.description {
+  /* spacing */
+  margin: 0;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.description .special {
+  font-weight: 600;
+  font-style: italic;
+}
+
 .link {
   /* text */
   font-size: 1rem;

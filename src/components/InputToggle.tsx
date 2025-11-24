@@ -5,6 +5,7 @@ export default function InputToggle(props: {
   label: string;
   checked: boolean;
   onChange: (checked: boolean) => void;
+  disabled?: boolean;
 }) {
   return (
     <div className={css.inputContainer}>
@@ -19,6 +20,7 @@ export default function InputToggle(props: {
         id={props.id}
         checked={props.checked}
         onChange={(e) => props.onChange(e.target.checked)}
+        disabled={props.disabled}
       />
     </div>
   );
