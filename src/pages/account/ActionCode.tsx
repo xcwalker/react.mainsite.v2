@@ -1,11 +1,10 @@
-import { Navigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { separator, title } from "../../App";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
 import AccountPage from "../../components/Security/AccountPage";
 import css from "../../styles/pages/account/index.module.css";
 import Button from "../../components/Button";
 import { useState } from "react";
-import Protect from "../../components/Security/Protect";
 import FirebaseApplyActionCode from "../../functions/firebase/authentication/applyActionCode";
 import Input from "../../components/Input";
 import { firebaseResetPasswordFromEmail } from "../../functions/firebase/authentication/resetPassword";
@@ -30,7 +29,7 @@ export default function ActionCodePage() {
     >
       <AccountPage id="accountLogin">
         {isVerifyEmail && (
-          <Protect redirect={<Navigate to={"/account/login"} replace />}>
+          <>
             {!verified && (
               <>
                 <h2 className={css.title}>Verify Email</h2>
@@ -71,10 +70,10 @@ export default function ActionCodePage() {
                 </Button>
               </>
             )}
-          </Protect>
+          </>
         )}
         {isResetPassword && (
-          <Protect isLoginPage redirect={<Navigate to={"/me"} replace />}>
+          <>
             {!verified && (
               <>
                 <h2 className={css.title}>Reset Your Password</h2>
@@ -120,7 +119,7 @@ export default function ActionCodePage() {
                 </Button>
               </>
             )}
-          </Protect>
+          </>
         )}
         {!isVerifyEmail && !isResetPassword && (
           <h2 className={css.title}>Invalid Action Mode</h2>
