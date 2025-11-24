@@ -503,6 +503,7 @@ export type UserType = {
     userName: string;
     displayName: string;
     firstName: string;
+    middleName?: string;
     lastName: string;
     statement: string;
   };

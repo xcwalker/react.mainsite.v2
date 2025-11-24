@@ -93,6 +93,9 @@ export default function Sidebar(props: { user: UserType; id: string }) {
               " | " +
               props.user.about.firstName +
               " " +
+              (props.user.about.middleName
+                ? props.user.about.middleName + " "
+                : "") +
               props.user.about.lastName}
           </span>
         </div>

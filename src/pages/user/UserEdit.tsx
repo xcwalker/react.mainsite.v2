@@ -251,6 +251,17 @@ function Sidebar(props: {
           />
           <Input
             type="text"
+            value={props.userData.about.middleName || ""}
+            onChange={(e) => {
+              const updatedUserData: UserType = { ...props.userData };
+              updatedUserData.about.middleName = e.target.value;
+              props.setUserData(updatedUserData);
+            }}
+            id="middleName"
+            label="Middle Name"
+          />
+          <Input
+            type="text"
             value={props.userData.about.lastName}
             onChange={(e) => {
               const updatedUserData: UserType = { ...props.userData };
