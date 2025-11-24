@@ -28,7 +28,9 @@ export default function ReAuthenticatePage() {
       .then((res) => {
         devConsole.log(res);
         setLoading(false);
-        navigate(params.get("redirect") || "/settings/account", { replace: true });
+        navigate(params.get("redirect") || "/settings/account", {
+          replace: true,
+        });
       })
       .catch((err) => {
         devConsole.error(err);
@@ -37,7 +39,7 @@ export default function ReAuthenticatePage() {
   }
 
   return (
-    <Protect  redirect={<Navigate to={"/account/login"} replace />}>
+    <Protect redirect={<Navigate to={"/account/login"} replace />}>
       <PageSeoWrapper
         title={`Login ${separator} Accounts ${separator} ${title}`}
         description={`Login to your account on ${title}`}

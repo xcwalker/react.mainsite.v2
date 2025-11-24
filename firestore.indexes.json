@@ -1,6 +1,20 @@
 {
   "indexes": [
     {
+      "collectionGroup": "albums",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "metaData.date.modified",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "blog",
       "queryScope": "COLLECTION",
       "fields": [
@@ -12,8 +26,7 @@
           "fieldPath": "metaData.date.modified",
           "order": "ASCENDING"
         }
-      ],
-      "density": "SPARSE_ALL"
+      ]
     },
     {
       "collectionGroup": "overlays",
@@ -27,8 +40,7 @@
           "fieldPath": "metaData.date.modified",
           "order": "ASCENDING"
         }
-      ],
-      "density": "SPARSE_ALL"
+      ]
     },
     {
       "collectionGroup": "projects",
@@ -42,8 +54,7 @@
           "fieldPath": "metaData.date.modified",
           "order": "ASCENDING"
         }
-      ],
-      "density": "SPARSE_ALL"
+      ]
     },
     {
       "collectionGroup": "projects",
@@ -57,8 +68,7 @@
           "fieldPath": "metaData.date.modified",
           "order": "ASCENDING"
         }
-      ],
-      "density": "SPARSE_ALL"
+      ]
     },
     {
       "collectionGroup": "projects",
@@ -72,8 +82,7 @@
           "fieldPath": "metaData.collection",
           "order": "ASCENDING"
         }
-      ],
-      "density": "SPARSE_ALL"
+      ]
     },
     {
       "collectionGroup": "projects",
@@ -87,8 +96,7 @@
           "fieldPath": "metaData.date.modified",
           "order": "ASCENDING"
         }
-      ],
-      "density": "SPARSE_ALL"
+      ]
     },
     {
       "collectionGroup": "recipes",
@@ -102,8 +110,7 @@
           "fieldPath": "metaData.date.modified",
           "order": "ASCENDING"
         }
-      ],
-      "density": "SPARSE_ALL"
+      ]
     },
     {
       "collectionGroup": "recipes",
@@ -117,8 +124,7 @@
           "fieldPath": "metaData.date.modified",
           "order": "ASCENDING"
         }
-      ],
-      "density": "SPARSE_ALL"
+      ]
     },
     {
       "collectionGroup": "recipes",
@@ -132,8 +138,7 @@
           "fieldPath": "metaData.collection",
           "order": "ASCENDING"
         }
-      ],
-      "density": "SPARSE_ALL"
+      ]
     },
     {
       "collectionGroup": "users",
@@ -147,8 +152,7 @@
           "fieldPath": "info.hidden",
           "order": "DESCENDING"
         }
-      ],
-      "density": "SPARSE_ALL"
+      ]
     }
   ],
   "fieldOverrides": []

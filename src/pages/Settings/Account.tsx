@@ -4,9 +4,9 @@ import Input from "../../components/Input";
 import SettingSection from "../../components/SettingSection";
 import { firebaseLogout } from "../../functions/firebase/authentication/logout";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
-import { firebaseUpdateEmail } from "../../functions/firebase/authentication/updateEmail";
 import { useNavigate } from "react-router-dom";
 import { firebaseUpdatePassword } from "../../functions/firebase/authentication/updatePassword";
+import firebaseVerifyEmail from "../../functions/firebase/authentication/verifyEmail";
 
 export function SettingsAccount() {
   const navigate = useNavigate();
@@ -67,9 +67,11 @@ export function SettingsAccount() {
           icon={{ gficon: "email" }}
           width="fit-content"
           onClick={() => {
-            firebaseUpdateEmail(currentUser!, newEmail).catch((err) => {
+            firebaseVerifyEmail(currentUser!, newEmail).catch((err) => {
               if (err.message.startsWith("412")) {
                 navigate("/account/reauthenticate?redirect=/settings/account");
+              } else {
+                console.error(err);
               }
             }).then(() => {
               currentUser?.reload();

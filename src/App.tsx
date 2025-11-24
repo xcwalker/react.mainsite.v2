@@ -61,6 +61,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useAtom } from "jotai";
 import ModularDashboardIndex from "./pages/modularDashboard/Index";
 import ReAuthenticatePage from "./pages/account/ReAuthenticate";
+import ActionCodePage from "./pages/account/ActionCode";
 
 export default function App() {
   const currentUser = useAuth();
@@ -551,6 +552,7 @@ export default function App() {
               <Route path="register" element={<RegisterPage />} />
               <Route path="forgot" element={<ForgotPasswordPage />} />
               <Route path="reauthenticate" element={<ReAuthenticatePage />} />
+              <Route path="action" element={<ActionCodePage />} />
             </Route>
 
             <Route path="settings">

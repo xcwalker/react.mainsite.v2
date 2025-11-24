@@ -1,8 +1,8 @@
-import { updateEmail, User } from "firebase/auth";
-import { toast } from "react-hot-toast";
-import { toastStyleDefault, toastStyleError, toastStyleSuccess } from "../../../toast";
+import { User, verifyBeforeUpdateEmail } from "firebase/auth";
+import toast from "react-hot-toast";
+import { toastStyleError, toastStyleSuccess } from "../../../toast";
 
-export function firebaseUpdateEmail(user: User, newEmail: string) {
+export default function firebaseVerifyEmail(user: User, newEmail: string) {
   if (user) {
     // check when the user last signed in
     if (
@@ -23,15 +23,16 @@ export function firebaseUpdateEmail(user: User, newEmail: string) {
     }
 
     return toast.promise(
-      updateEmail(user, newEmail),
+      verifyBeforeUpdateEmail(user, newEmail),
       {
-        loading: "Updating email...",
-        success: "Email updated successfully.",
-        error: (err) => `Error updating email: ${err.message} ${err.code}`,
+        loading: "Sending verification email...",
+        success: "Verification email sent successfully.",
+        error: (err) =>
+          `Error sending verification email: ${err.message} ${err.code}`,
       },
       {
         loading: {
-          style: toastStyleDefault,
+          style: toastStyleSuccess,
         },
         success: {
           style: toastStyleSuccess,
