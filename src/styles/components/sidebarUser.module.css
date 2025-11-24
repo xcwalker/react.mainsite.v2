@@ -109,10 +109,11 @@ a.author:focus-visible {
   line-height: 1;
 }
 
-.author .title .role {
+.author .role {
   /* sizing */
   display: inline-block;
   padding: 0.125rem 0.5rem;
+  width: fit-content;
 
   /* text */
   font-size: 0.75rem;

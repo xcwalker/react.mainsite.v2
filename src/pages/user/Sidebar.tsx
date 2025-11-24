@@ -1,4 +1,4 @@
-import { UserType } from "../../types";
+import { OrganizationType, UserType } from "../../types";
 import css from "../../styles/pages/user/sidebar.module.css";
 import Button from "../../components/Button";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
@@ -11,6 +11,9 @@ import { useParams } from "react-router-dom";
 import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
 import InputDropdown from "../../components/InputDropdown";
 import devConsole from "../../functions/devConsole";
+import InputToggle from "../../components/InputToggle";
+import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
+import SidebarOrganization from "../../components/Sidebar/SidebarOrganization";
 
 export default function Sidebar(props: { user: UserType; id: string }) {
   const params = useParams();
@@ -32,6 +35,7 @@ export default function Sidebar(props: { user: UserType; id: string }) {
   const dateJoined = new Date(props.user.info.joined);
   const dateOnline = new Date(props.user.info.lastOnline);
   const dateNow = new Date();
+  const [organizationData, setOrganizationData] = useState<OrganizationType>();
 
   useEffect(() => {
     if (currentUser?.uid) {
@@ -42,6 +46,17 @@ export default function Sidebar(props: { user: UserType; id: string }) {
       );
     }
   }, [currentUser?.uid]);
+
+  useEffect(() => {
+    // get organization data if organization id exists and if allowed by user settings
+    if (props.user.organization?.id && props.user.settings.showOrganization) {
+      firebaseGetRealtimeData(
+        "organizations",
+        props.user.organization.id,
+        setOrganizationData as React.Dispatch<React.SetStateAction<unknown>>
+      );
+    }
+  }, [props.user.organization, props.user.settings]);
 
   return (
     <SidebarContainer>
@@ -178,6 +193,37 @@ export default function Sidebar(props: { user: UserType; id: string }) {
           )}
         </ul>
       )}
+      {props.user.settings.showOrganization && organizationData && (
+        // <div className={css.organization}>
+        //   <span className={css.organizationName}>{organizationData.name}</span>
+        //   <span className={css.organizationRole}>
+        //     {props.user.organization?.role}
+        //   </span>
+        // </div>
+        <SidebarOrganization
+          orgId={props.user.organization?.id}
+          orgData={{
+            info: {
+              displayName: organizationData.name,
+              role: props.user.organization?.role || "member",
+            },
+            images: organizationData.logo.background
+              ? {
+                  profile: organizationData.logo.icon || "",
+                  background: organizationData.logo.background.imageUrl || "",
+                  backgroundType:
+                    organizationData.logo.background.type || "color",
+                  color: organizationData.logo.background.color || "#000000",
+                }
+              : {
+                  profile: organizationData.logo.icon || "",
+                  background: "white",
+                  backgroundType: "color",
+                  color: "#000000",
+                },
+          }}
+        />
+      )}
       {currentUserData?.info.role &&
         currentUserData?.info.role !== "user" &&
         currentUserData?.info.role !== "unverified" && (
@@ -203,44 +249,19 @@ export default function Sidebar(props: { user: UserType; id: string }) {
                 });
               }}
             />
-            {/* Hide User */}
-            {props.user.info.hidden ? (
-              <Button
-                onClick={() => {
-                  const updatedUserData: UserType = { ...props.user };
-                  updatedUserData.info.hidden = false;
+            <InputToggle
+              id="user-hidden"
+              label="Hide User"
+              checked={props.user.info.hidden}
+              onChange={(checked) => {
+                const updatedUserData: UserType = { ...props.user };
+                updatedUserData.info.hidden = checked;
 
-                  firebaseSetData("users", props.id, updatedUserData).then(
-                    () => {
-                      devConsole.log("User unhidden successfully.");
-                    }
-                  );
-                }}
-                title={"Unhide User"}
-                icon={{ gficon: "visibility" }}
-                style="danger"
-              >
-                Unhide User
-              </Button>
-            ) : (
-              <Button
-                onClick={() => {
-                  const updatedUserData: UserType = { ...props.user };
-                  updatedUserData.info.hidden = true;
-
-                  firebaseSetData("users", props.id, updatedUserData).then(
-                    () => {
-                      devConsole.log("User hidden successfully.");
-                    }
-                  );
-                }}
-                title={"Hide User"}
-                icon={{ gficon: "visibility_off" }}
-                style="danger"
-              >
-                Hide User
-              </Button>
-            )}
+                firebaseSetData("users", props.id, updatedUserData).then(() => {
+                  devConsole.log("User hidden status updated successfully.");
+                });
+              }}
+            />
           </>
         )}
 

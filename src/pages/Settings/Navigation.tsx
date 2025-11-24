@@ -21,7 +21,7 @@ export default function SettingsNavigation(props: {
   }
 
   return (
-    <SettingSection id="navigationSettings" title="Navigation Settings">
+    <SettingSection id="navigationSettings" title="Reorganize Navigation">
       <SettingsNote >
         Any removed tabs can still be accessed throughout the site and via the
         url

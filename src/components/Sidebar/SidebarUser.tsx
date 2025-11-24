@@ -5,12 +5,31 @@ import { Link } from "react-router-dom";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 import toTitleCase from "../../functions/toTitleCase";
 
+type UserTypeSimple = {
+  info: {
+    displayName: string;
+    role: string;
+  };
+  about: {
+    displayName: string;
+    userName: string;
+    firstName: string;
+    lastName: string;
+  };
+  images: {
+    profile?: string;
+    background?: string;
+    backgroundType?: "color" | "image" | "video";
+    color?: string;
+  };
+};
+
 export default function SidebarUser(props: {
   userId?: string;
   className?: string;
-  userData?: UserType;
+  userData?: UserTypeSimple | UserType
 }) {
-  const [userData, setUserData] = useState<UserType | undefined>();
+  const [userData, setUserData] = useState< UserType | UserTypeSimple | undefined>();
 
   useEffect(() => {
     if (props.userData) {

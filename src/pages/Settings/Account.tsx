@@ -7,6 +7,9 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { useNavigate } from "react-router-dom";
 import { firebaseUpdatePassword } from "../../functions/firebase/authentication/updatePassword";
 import firebaseVerifyEmail from "../../functions/firebase/authentication/verifyEmail";
+import css from "../../styles/pages/settings/account.module.css";
+import IconButton from "../../components/IconButton";
+import SettingsInputGroup from "../../components/Settings/InputGroup";
 
 export function SettingsAccount() {
   const navigate = useNavigate();
@@ -16,71 +19,114 @@ export function SettingsAccount() {
   return (
     <>
       <SettingSection id="accountInfo" title="Account Information">
-        <p>
-          <strong>Email:</strong> {currentUser?.email || "Not Available"}
-        </p>
-        <p>
-          <strong>User ID:</strong> {currentUser?.uid || "Not Available"}
-        </p>
+        <div className={css.info}>
+          <div className={css.infoRow}>
+            <div className={css.infoStack}>
+              <span className={css.infoLabel}>Email:</span>{" "}
+              <span className={css.infoValue}>
+                {currentUser?.email || "Not Available"}
+              </span>
+            </div>
+            <IconButton
+              title="Copy Email"
+              icon={{ gficon: "content_copy" }}
+              onClick={() => {
+                navigator.clipboard.writeText(currentUser?.email || "");
+              }}
+              width="fit-content"
+              className={css.copyButton}
+            />
+          </div>
+          <div className={css.infoRow}>
+            <div className={css.infoStack}>
+              <span className={css.infoLabel}>User ID:</span>{" "}
+              <span className={css.infoValue}>
+                {currentUser?.uid || "Not Available"}
+              </span>
+            </div>
+            <IconButton
+              title="Copy User ID"
+              icon={{ gficon: "content_copy" }}
+              onClick={() => {
+                navigator.clipboard.writeText(currentUser?.uid || "");
+              }}
+              width="fit-content"
+              className={css.copyButton}
+            />
+          </div>
+        </div>
       </SettingSection>
       <SettingSection id="accountChangePassword" title="Change Password">
-        <Input
-          id="newPassword"
-          label="New Password"
-          type="password"
-          placeholder="Enter your new password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
-        <Button
-          style="primary"
-          title="Change your account password"
-          icon={{ gficon: "lock" }}
-          width="fit-content"
-          onClick={() => {
-            firebaseUpdatePassword(currentUser!, newPassword).catch((err) => {
-              if (err.message.startsWith("412")) {
-                navigate("/account/reauthenticate?redirect=/settings/account");
-              }
-            }).then(() => {
-              currentUser?.reload();
-              setNewPassword("");
-            });
-          }}
-        >
-          Change Password
-        </Button>
+        <SettingsInputGroup>
+          <Input
+            id="newPassword"
+            label="New Password"
+            type="password"
+            placeholder="Enter your new password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            width="45ch"
+          />
+          <Button
+            style="primary"
+            title="Change your account password"
+            icon={{ gficon: "lock" }}
+            width="fit-content"
+            onClick={() => {
+              firebaseUpdatePassword(currentUser!, newPassword)
+                .catch((err) => {
+                  if (err.message.startsWith("412")) {
+                    navigate(
+                      "/account/reauthenticate?redirect=/settings/account"
+                    );
+                  }
+                })
+                .then(() => {
+                  currentUser?.reload();
+                  setNewPassword("");
+                });
+            }}
+          >
+            Change Password
+          </Button>
+        </SettingsInputGroup>
       </SettingSection>
       <SettingSection id="accountChangeEmail" title="Update Email">
-        <Input
-          id="newEmail"
-          label="New Email Address"
-          type="email"
-          placeholder="Enter your new email"
-          value={newEmail}
-          onChange={(e) => setNewEmail(e.target.value)}
-
-         />
-        <Button
-          style="primary"
-          title="Change your account email"
-          icon={{ gficon: "email" }}
-          width="fit-content"
-          onClick={() => {
-            firebaseVerifyEmail(currentUser!, newEmail).catch((err) => {
-              if (err.message.startsWith("412")) {
-                navigate("/account/reauthenticate?redirect=/settings/account");
-              } else {
-                console.error(err);
-              }
-            }).then(() => {
-              currentUser?.reload();
-              setNewEmail("");
-            });
-          }}
-        >
-          Change Email
-        </Button>
+        <SettingsInputGroup>
+          <Input
+            id="newEmail"
+            label="New Email Address"
+            type="email"
+            placeholder="Enter your new email"
+            value={newEmail}
+            onChange={(e) => setNewEmail(e.target.value)}
+            width="45ch"
+          />
+          <Button
+            style="primary"
+            title="Change your account email"
+            icon={{ gficon: "email" }}
+            width="fit-content"
+            onClick={() => {
+              firebaseVerifyEmail(currentUser!, newEmail)
+                .catch((err) => {
+                  if (err.message.startsWith("412")) {
+                    navigate(
+                      "/account/reauthenticate?redirect=/settings/account"
+                    );
+                  } else {
+                    console.error(err);
+                  }
+                })
+                .then(() => {
+                  currentUser?.reload();
+                  setNewEmail("");
+                });
+            }}
+          >
+            Change Email
+          </Button>
+        </SettingsInputGroup>
       </SettingSection>
       <SettingSection id="accountLogout" title="Account Logout">
         <Button

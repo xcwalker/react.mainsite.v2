@@ -9,11 +9,15 @@ export default function InputToggle(props: {
 }) {
   return (
     <div className={css.inputContainer}>
-      <div className={css.labels}>
-        <label htmlFor={props.id} className={css.label}>
-          {props.label}
-        </label>
-      </div>
+      <label
+        className={`${css.switch}  ${props.checked ? css.checked : ""}`}
+        htmlFor={props.id}
+      >
+        <span className={`${css.slider}`} />
+      </label>
+      <label htmlFor={props.id} className={css.label}>
+        {props.label}
+      </label>
       <input
         className={css.input}
         type="checkbox"
