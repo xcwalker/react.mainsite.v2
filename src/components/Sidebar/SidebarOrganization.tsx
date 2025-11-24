@@ -11,6 +11,7 @@ type UserTypeSimple = {
     profile?: string;
     background?: string;
     backgroundType?: "color" | "image" | "video";
+    backgroundColor?: string;
     color?: string;
   };
 };
@@ -35,7 +36,7 @@ export default function SidebarOrganization(props: {
           {props.orgData?.images.backgroundType === "color" && (
             <div
               className={css.background}
-              style={{ backgroundColor: props.orgData?.images.background }}
+              style={{ backgroundColor: props.orgData?.images.backgroundColor }}
             />
           )}
           {props.orgData?.images.backgroundType === "image" && (

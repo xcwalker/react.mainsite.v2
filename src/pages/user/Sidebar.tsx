@@ -194,12 +194,6 @@ export default function Sidebar(props: { user: UserType; id: string }) {
         </ul>
       )}
       {props.user.settings.showOrganization && organizationData && (
-        // <div className={css.organization}>
-        //   <span className={css.organizationName}>{organizationData.name}</span>
-        //   <span className={css.organizationRole}>
-        //     {props.user.organization?.role}
-        //   </span>
-        // </div>
         <SidebarOrganization
           orgId={props.user.organization?.id}
           orgData={{
@@ -213,12 +207,14 @@ export default function Sidebar(props: { user: UserType; id: string }) {
                   background: organizationData.logo.background.imageUrl || "",
                   backgroundType:
                     organizationData.logo.background.type || "color",
-                  color: organizationData.logo.background.color || "#000000",
+                    backgroundColor: organizationData.logo.background.color || "white",
+                  color: organizationData.logo.color || "#000000",
                 }
               : {
                   profile: organizationData.logo.icon || "",
-                  background: "white",
+                  background: "",
                   backgroundType: "color",
+                  backgroundColor: "white",
                   color: "#000000",
                 },
           }}
