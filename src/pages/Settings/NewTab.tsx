@@ -72,14 +72,14 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
               label="Custom Search Query URL"
               type="url"
               value={newTabLinks.settings.search.queryURL}
-              onChange={(value) => {
+              onChange={(event) => {
                 firebaseSetData("newtab", currentUser.uid, {
                   ...newTabLinks,
                   settings: {
                     ...newTabLinks.settings,
                     search: {
                       ...newTabLinks.settings.search,
-                      queryURL: value.target.value,
+                      queryURL: event.target.value,
                     },
                   },
                 });
@@ -198,14 +198,14 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
               label="Background Image URL"
               type="url"
               value={newTabLinks.settings.background.image || ""}
-              onChange={(value) => {
+              onChange={(event) => {
                 firebaseSetData("newtab", currentUser.uid, {
                   ...newTabLinks,
                   settings: {
                     ...newTabLinks.settings,
                     background: {
                       ...newTabLinks.settings.background,
-                      image: value,
+                      image: event.target.value,
                     },
                   },
                 });
@@ -232,14 +232,14 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
           label="Background Filter (CSS)"
           type="text"
           value={newTabLinks.settings.background.filter || ""}
-          onChange={(value) => {
+          onChange={(event) => {
             firebaseSetData("newtab", currentUser.uid, {
               ...newTabLinks,
               settings: {
                 ...newTabLinks.settings,
                 background: {
                   ...newTabLinks.settings.background,
-                  filter: value,
+                  filter: event.target.value,
                 },
               },
             });
