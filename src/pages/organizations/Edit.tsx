@@ -18,6 +18,7 @@ import InputColor from "../../components/InputColor";
 import Button from "../../components/Button";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import ReactMde from "react-mde";
+import Markdown from "react-markdown";
 
 export default function OrganizationEdit() {
   const currentUser = useAuth();
@@ -27,7 +28,7 @@ export default function OrganizationEdit() {
   );
   const [userData, setUserData] = useState<UserType>();
   const [redirect, setRedirect] = useState<boolean>(false);
-
+  const [selectedTab, setSelectedTab] = useState<"write" | "preview">("write");
   useEffect(() => {
     firebaseGetData("organizations", organizationId || "").then((data) => {
       setOrganization(data as OrganizationType);
@@ -81,12 +82,25 @@ export default function OrganizationEdit() {
             organizationId={organizationId || ""}
             setRedirect={setRedirect}
           />
-          <ReactMde value={organization.description || ""} onChange={(value) => {
-            setOrganization({
-              ...organization,
-              description: value,
-            });
-          }} />
+          <ReactMde
+            value={organization.description || ""}
+            onChange={(value) => {
+              setOrganization({
+                ...organization,
+                description: value,
+              });
+            }}
+            selectedTab={selectedTab}
+            onTabChange={setSelectedTab}
+            generateMarkdownPreview={(markdown) =>
+              Promise.resolve(<Markdown>{markdown}</Markdown>)
+            }
+            childProps={{
+              writeButton: {
+                tabIndex: -1,
+              },
+            }}
+          />
         </SideBySide>
       </Section>
     </PageSeoWrapper>
@@ -224,9 +238,10 @@ function Sidebar(props: {
                 logo: {
                   ...organization.logo,
                   background: {
-                  ...organization.logo.background,
-                  imageUrl: event.target.value,
-                },}
+                    ...organization.logo.background,
+                    imageUrl: event.target.value,
+                  },
+                },
               });
             }}
             placeholder="Enter organization background image URL"
@@ -253,29 +268,33 @@ function Sidebar(props: {
         )}
       </InputGroup>
       <InputColor
-      id="organization-color"
-      label="Organization Color"
-      value={organization.logo.color}
-      onChange={(value) => {
-        setOrganization({
-          ...organization,
-          logo: {
-            ...organization.logo,
-            color: value,
-          }
-        });
-      }}
-    />
+        id="organization-color"
+        label="Organization Color"
+        value={organization.logo.color}
+        onChange={(value) => {
+          setOrganization({
+            ...organization,
+            logo: {
+              ...organization.logo,
+              color: value,
+            },
+          });
+        }}
+      />
       <Button
         title="Save"
         style="primary"
-        icon={{gficon: "save"}}
+        icon={{ gficon: "save" }}
         onClick={() => {
-          firebaseSetData("organizations", organizationId, organization).then(() => {
-            setRedirect(true);
-          });
+          firebaseSetData("organizations", organizationId, organization).then(
+            () => {
+              setRedirect(true);
+            }
+          );
         }}
-      >Save</Button>
+      >
+        Save
+      </Button>
 
       {/* Add more input fields as necessary */}
     </SidebarContainer>
