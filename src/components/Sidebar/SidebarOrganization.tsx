@@ -31,37 +31,36 @@ export default function SidebarOrganization(props: {
           : undefined,
       }}
     >
-      {props.orgData?.images?.background && (
-        <>
-          {props.orgData?.images.backgroundType === "color" && (
-            <div
-              className={css.background}
-              style={{
-                backgroundColor:
-                  props.orgData?.images.backgroundColor,
-              }}
-            />
-          )}
-          {props.orgData?.images.backgroundType === "image" && (
-            <img
-              src={props.orgData?.images.background}
-              alt=""
-              className={css.background}
-            />
-          )}
-          {props.orgData?.images.backgroundType === "video" && (
-            <video
-              src={props.orgData?.images.background}
-              className={css.background}
-              autoPlay
-              loop
-              muted
-              controls={false}
-            />
-          )}
-        </>
+      {props.orgData?.images.backgroundType === "color" && (
+        <div
+          className={css.background}
+          style={{
+            backgroundColor: props.orgData?.images.backgroundColor,
+          }}
+        />
       )}
-      {!props.orgData?.images.background && <div className={css.background} />}
+      {props.orgData?.images.backgroundType === "image" &&
+        props.orgData?.images.background && (
+          <img
+            src={props.orgData.images.background}
+            alt=""
+            className={css.background}
+          />
+        )}
+      {props.orgData?.images.backgroundType === "video" &&
+        props.orgData?.images.background && (
+          <video
+            src={props.orgData.images.background}
+            className={css.background}
+            autoPlay
+            loop
+            muted
+            controls={false}
+          />
+        )}
+      {!props.orgData?.images.backgroundType && (
+        <div className={css.background} />
+      )}
       <picture className={css.image}>
         {props.orgData?.images.profile && (
           <img

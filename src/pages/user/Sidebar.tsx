@@ -201,13 +201,14 @@ export default function Sidebar(props: { user: UserType; id: string }) {
               displayName: organizationData.name,
               role: props.user.organization?.role || "member",
             },
-            images: organizationData.logo.background
+            images: organizationData.logo.background.type
               ? {
                   profile: organizationData.logo.icon || "",
                   background: organizationData.logo.background.imageUrl || "",
                   backgroundType:
                     organizationData.logo.background.type || "color",
-                    backgroundColor: organizationData.logo.background.color || "white",
+                  backgroundColor:
+                    organizationData.logo.background.color || "white",
                   color: organizationData.logo.color || "#000000",
                 }
               : {
