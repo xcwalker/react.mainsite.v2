@@ -289,7 +289,7 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
               onClick={() => {
                 firebaseSetData("newtab", currentUser.uid, {
                   ...newTabLinks,
-                  links: [...newTabLinks.links, { title: "", url: "" }],
+                  links: [...newTabLinks.links, { title: "", url: "", color: "", background: {} }],
                 });
               }}
               style="primary"

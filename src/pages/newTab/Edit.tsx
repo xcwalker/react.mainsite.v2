@@ -369,10 +369,11 @@ export function LinkItemEdit(props: {
               id={`link-background-type-${props.index}`}
               label="Background Type"
               values={[
+                { label: "None", value: "none", selectable: false },
                 { label: "Image", value: "image" },
                 { label: "Color", value: "color" },
               ]}
-              value={props.link.background.type || "color"}
+              value={props.link.background.type || "none"}
               onChange={(value) => {
                 const newLink = {
                   ...props.link,

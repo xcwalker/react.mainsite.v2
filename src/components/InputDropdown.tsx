@@ -6,7 +6,12 @@ export default function InputDropdown(props: {
   id: string;
   label: string;
   value: string;
-  values: { icon?: string; label: string; value: string }[];
+  values: {
+    icon?: string;
+    label: string;
+    value: string;
+    selectable?: boolean;
+  }[];
   onChange: (value: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,23 +42,33 @@ export default function InputDropdown(props: {
           "Select..."}
       </Button>
       {isOpen && (
-        <div className={css.dropdown} role="listbox" aria-labelledby={props.id} id={`${props.id}-dropdown`}>
-          {props.values.map((option) => (
-            <Fragment key={option.value}>
-              <Button
-                onClick={() => {
-                  props.onChange(option.value);
-                  setIsOpen(false);
-                }}
-                className={css.dropdownOption}
-                title={`Select ${option.label}`}
-                icon={option.icon ? { gficon: option.icon } : undefined}
-                style={props.value === option.value ? "primary" : "secondary"}
-              >
-                {option.label}
-              </Button>
-            </Fragment>
-          ))}
+        <div
+          className={css.dropdown}
+          role="listbox"
+          aria-labelledby={props.id}
+          id={`${props.id}-dropdown`}
+        >
+          {props.values.map(
+            (option) =>
+              option.selectable !== false && (
+                <Fragment key={option.value}>
+                  <Button
+                    onClick={() => {
+                      props.onChange(option.value);
+                      setIsOpen(false);
+                    }}
+                    className={css.dropdownOption}
+                    title={`Select ${option.label}`}
+                    icon={option.icon ? { gficon: option.icon } : undefined}
+                    style={
+                      props.value === option.value ? "primary" : "secondary"
+                    }
+                  >
+                    {option.label}
+                  </Button>
+                </Fragment>
+              )
+          )}
         </div>
       )}
     </div>
