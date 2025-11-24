@@ -36,7 +36,10 @@ export default function SidebarOrganization(props: {
           {props.orgData?.images.backgroundType === "color" && (
             <div
               className={css.background}
-              style={{ backgroundColor: props.orgData?.images.backgroundColor }}
+              style={{
+                backgroundColor:
+                  props.orgData?.images.backgroundColor,
+              }}
             />
           )}
           {props.orgData?.images.backgroundType === "image" && (
