@@ -201,7 +201,7 @@ export default function Sidebar(props: { user: UserType; id: string }) {
               displayName: organizationData.name,
               role: props.user.organization?.role || "member",
             },
-            images: organizationData.logo.background.type
+            images: organizationData.logo.background && organizationData.logo.background.type
               ? {
                   profile: organizationData.logo.icon || "",
                   background: organizationData.logo.background.imageUrl || "",
