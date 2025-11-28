@@ -183,7 +183,7 @@ export default function Header() {
       if (radio.tabID === "unset") {
         setRadio((prev) => ({ ...prev, tabID: tabID }));
       }
-    } else {
+    } else if (radio.state === "paused") {
       setRadio((prev) => ({ ...prev, tabID: "unset" }));
     }
   }, [radio.tabID, setRadio, radio.state]);

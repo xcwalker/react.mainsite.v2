@@ -70,6 +70,7 @@ export default function App() {
   const [count, setCount] = useState(0);
   const [focusTime, setFocusTime] = useState(new Date());
   const radio = useAtomValue(RadioAtom);
+  const [radioID, setRadioID] = useState("unset");
 
   const handlePageClose = useCallback(() => {
     if (currentUser === null || currentUser === undefined) return;
@@ -116,9 +117,19 @@ export default function App() {
     };
   }, [count, ticking]);
 
+  useEffect(() => {
+    if (radio.tabID === "unset") {
+      setTimeout(() => {
+        setRadioID(tabID);
+      }, 1000);
+    } else {
+      setRadioID(radio.tabID);
+    }
+  }, [radio.tabID]);
+
   return (
     <>
-      {radio.tabID && tabID === radio.tabID && (
+      {radio.tabID && radioID === tabID && (
         <audio
           id="audioPlayer"
           src={
@@ -772,24 +783,28 @@ export const title = "xcwalker";
 export const separator = "|";
 export const shortURL = import.meta.env.VITE_SHORT_URL || "xcw.one";
 
-export const RadioAtom = atomWithStorage("radioSettings", {
-  tabID: "",
-  volume: 50,
-  inSidebar: false,
-  showDJ: true,
-  state: "paused",
-  nowPlaying: {
-    title: "Steve’s Going to London",
-    artist: "AJR",
-    artwork: "https://i.scdn.co/image/ab67616d00001e0204a3ca0d3bf91c88f969f905",
-  },
-  dj: {
-    name: "MadMatt",
-    show: "Retro Requests",
-    image:
-      "https://simulatorradio.com/processor/avatar?size=256&name=1726140003584.png",
-  },
-});
+export const RadioAtom = atomWithStorage(
+  "radioSettings",
+  {
+    tabID: "",
+    volume: 50,
+    inSidebar: false,
+    showDJ: true,
+    state: "paused",
+    nowPlaying: {
+      title: "Steve’s Going to London",
+      artist: "AJR",
+      artwork:
+        "https://i.scdn.co/image/ab67616d00001e0204a3ca0d3bf91c88f969f905",
+    },
+    dj: {
+      name: "MadMatt",
+      show: "Retro Requests",
+      image:
+        "https://simulatorradio.com/processor/avatar?size=256&name=1726140003584.png",
+    },
+  }, undefined, {getOnInit: true}
+);
 
 export const NewTabLinksAtom = atomWithStorage<NewTabLinks | undefined>(
   "newTabLinks",
