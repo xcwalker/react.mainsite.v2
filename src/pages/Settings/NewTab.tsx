@@ -91,7 +91,7 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
       {/* visibility toggles */}
       <SettingSection id="newTabVisibility" title="Visibility Settings">
         <InputToggle
-          id="newTabLinksVisibility"
+          id="newTabSearchVisibility"
           label="Show Search"
           checked={newTabLinks.settings.showSearch}
           onChange={(value) => {
@@ -105,7 +105,7 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
           }}
         />
         <InputToggle
-          id="newTabLinksVisibility"
+          id="newTabUserVisibility"
           label="Show User"
           checked={newTabLinks.settings.showUser}
           onChange={(value) => {
@@ -119,7 +119,7 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
           }}
         />
         <InputToggle
-          id="newTabLinksVisibility"
+          id="newTabOrganizationVisibility"
           label="Show Organization"
           checked={newTabLinks.settings.showOrganization}
           onChange={(value) => {

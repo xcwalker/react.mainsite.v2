@@ -58,7 +58,7 @@ import OrganizationJoin from "./pages/organizations/Join";
 import OrganizationDetails from "./pages/organizations/Details";
 import OrganizationEdit from "./pages/organizations/Edit";
 import { v4 as uuidv4 } from "uuid";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import ModularDashboardIndex from "./pages/modularDashboard/Index";
 import ReAuthenticatePage from "./pages/account/ReAuthenticate";
 import ActionCodePage from "./pages/account/ActionCode";
@@ -69,8 +69,7 @@ export default function App() {
   const [ticking] = useState(true);
   const [count, setCount] = useState(0);
   const [focusTime, setFocusTime] = useState(new Date());
-  const [tabID, setTabID] = useState<string | undefined>();
-  const [radio, setRadio] = useAtom(RadioAtom);
+  const radio = useAtomValue(RadioAtom);
 
   const handlePageClose = useCallback(() => {
     if (currentUser === null || currentUser === undefined) return;
@@ -117,48 +116,9 @@ export default function App() {
     };
   }, [count, ticking]);
 
-  useEffect(() => {
-    setTabID(uuidv4());
-  }, []);
-
-  useEffect(() => {
-    if (tabID === undefined) return;
-
-    if (radio.tabID === "" || radio.tabID === undefined) {
-      setRadio((prev) => ({ ...prev, tabID: tabID }));
-    }
-
-    function handleBeforeUnload() {
-      alert("unload");
-      if (radio.tabID === tabID) {
-        setRadio((prev) => ({
-          ...prev,
-          tabID: "",
-        }));
-      }
-
-      return null;
-    }
-
-    window.addEventListener("unload", handleBeforeUnload);
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("unload", handleBeforeUnload);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-
-      if (radio.tabID === tabID) {
-        setRadio((prev) => ({
-          ...prev,
-          tabID: "",
-        }));
-      }
-    };
-  }, [tabID, radio.tabID, setRadio]);
-
   return (
     <>
-      {tabID && radio.tabID && tabID === radio.tabID && (
+      {radio.tabID && tabID === radio.tabID && (
         <audio
           id="audioPlayer"
           src={
@@ -793,6 +753,8 @@ export default function App() {
     </>
   );
 }
+
+export const tabID = uuidv4();
 
 function ScrollToTop() {
   const { pathname } = useLocation();

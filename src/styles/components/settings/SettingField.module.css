@@ -1,0 +1,33 @@
+
+
+.infoRow {
+  /* sizing */
+  padding: 0.5rem 1rem;
+  padding-right: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  /* styling */
+  background-color: var(--primary);
+  border-radius: var(--button-border-radius, 0.5rem);
+}
+
+.infoRow .infoStack {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+}
+
+.infoRow .infoLabel {
+  /* font */
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.infoRow .infoValue {
+  /* font */
+  font-weight: 400;
+}

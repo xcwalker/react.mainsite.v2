@@ -20,14 +20,19 @@ export default function Input(props: {
   className?: string;
   isInvalid?: boolean;
   width?: string;
+  autoComplete?: string;
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordHover, setShowPasswordHover] = useState(false);
 
   return (
-    <div className={css.inputContainer + ` ${props.className || ""} ${
-      props.isInvalid ? css.invalid : ""
-    }`} style={{width: props.width || "100%"}}>
+    <div
+      className={
+        css.inputContainer +
+        ` ${props.className || ""} ${props.isInvalid ? css.invalid : ""}`
+      }
+      style={{ width: props.width || "100%" }}
+    >
       <div className={css.labels}>
         <label htmlFor={props.id} className={css.label}>
           {props.label}
@@ -62,40 +67,45 @@ export default function Input(props: {
           </>
         )}
       </div>
-      {props.type !== "textarea" && <input
-        type={
-          props.type
-            ? props.type === "password"
-              ? showPassword
-                ? "test"
-                : "password"
-              : props.type
-            : "text"
-        }
-        name={props.name}
-        id={props.id}
-        className={css.input}
-        required={props.required}
-        placeholder={props.placeholder}
-        value={props.value}
-        onChange={props.onChange}
-        disabled={props.disabled}
-        maxLength={props.maxLength}
-        minLength={props.minLength}
-      />}
-      {props.type === "textarea" && <textarea
-        name={props.name}
-        id={props.id}
-        className={css.input + " " + css.textarea}
-        required={props.required}
-        placeholder={props.placeholder}
-        value={props.value}
-        // @ts-expect-error works
-        onChange={props.onChange}
-        disabled={props.disabled}
-        maxLength={props.maxLength}
-        minLength={props.minLength}
-      />}
+      {props.type !== "textarea" && (
+        <input
+          type={
+            props.type
+              ? props.type === "password"
+                ? showPassword
+                  ? "test"
+                  : "password"
+                : props.type
+              : "text"
+          }
+          name={props.name}
+          id={props.id}
+          className={css.input}
+          required={props.required}
+          placeholder={props.placeholder}
+          value={props.value}
+          onChange={props.onChange}
+          disabled={props.disabled}
+          maxLength={props.maxLength}
+          minLength={props.minLength}
+          autoComplete={props.autoComplete}
+        />
+      )}
+      {props.type === "textarea" && (
+        <textarea
+          name={props.name}
+          id={props.id}
+          className={css.input + " " + css.textarea}
+          required={props.required}
+          placeholder={props.placeholder}
+          value={props.value}
+          // @ts-expect-error works
+          onChange={props.onChange}
+          disabled={props.disabled}
+          maxLength={props.maxLength}
+          minLength={props.minLength}
+        />
+      )}
       {props.type === "password" && (
         <button
           type="button"

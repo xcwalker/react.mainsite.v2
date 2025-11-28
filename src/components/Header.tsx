@@ -9,7 +9,7 @@ import Protect, { RoleProtect } from "./Security/Protect";
 import { useAtom } from "jotai";
 import { parseEntities } from "parse-entities";
 
-import { RadioAtom } from "../App";
+import { RadioAtom, tabID } from "../App";
 import Button from "./Button";
 import { defaultNav, userSettingsType } from "../types";
 import { useAuth } from "../functions/firebase/authentication/useAuth";
@@ -26,7 +26,7 @@ export default function Header() {
 
   const [navScrollLastKnown, setNavScrollLastKnown] = useState(0);
 
-  const audio = document.querySelector("audio#audioPlayer") as HTMLAudioElement;
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
   const [nav, setNav] = useState(defaultNav);
   const [showSocials, setShowSocials] = useState(true);
@@ -154,7 +154,8 @@ export default function Header() {
 
   useEffect(() => {
     console.log("Radio state changed:", radio.state, radio.tabID, audio);
-    if (!audio || radio.tabID === "") return;
+
+    if (!audio || audio === null || radio.tabID === "unset") return;
 
     if (radio.state === "playing") {
       if (
@@ -176,6 +177,30 @@ export default function Header() {
       audio.src = "";
     }
   }, [audio, radio.state, radio.tabID, setRadio]);
+
+  useEffect(() => {
+    if (radio.state === "playing") {
+      if (radio.tabID === "unset") {
+        setRadio((prev) => ({ ...prev, tabID: tabID }));
+      }
+    } else {
+      setRadio((prev) => ({ ...prev, tabID: "unset" }));
+    }
+  }, [radio.tabID, setRadio, radio.state]);
+
+  useEffect(() => {
+    const audioElement = document.querySelector(
+      "audio#audioPlayer"
+    ) as HTMLAudioElement;
+
+    if (radio.tabID === tabID) {
+      if (audioElement) {
+        setAudio(audioElement);
+      }
+    } else if (radio.tabID !== tabID) {
+      setAudio(null);
+    }
+  }, [radio.tabID]);
 
   //audio volume set
   useEffect(() => {
