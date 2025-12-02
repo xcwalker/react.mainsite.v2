@@ -123,7 +123,7 @@ a.author:focus-visible {
   /* styling */
   color: var(--text);
   background-color: var(--accent);
-  border-radius: 0.25rem;
+  border-radius: var(--user-role-badge-border-radius, 0.25rem);
 }
 
 .author .subTitle {

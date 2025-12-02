@@ -15,6 +15,6 @@
   
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--user-header-border-radius, 0.5rem);
   overflow: clip;
 }

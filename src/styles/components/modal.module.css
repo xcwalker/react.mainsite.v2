@@ -86,7 +86,7 @@ body :has(.visible) {
   grid-row: 3;
 
   /* styling */
-  border-radius: 1rem;
+  border-radius: var(--modal-border-radius, 1rem);
   background-color: var(--_background);
   color: var(--text);
   overflow: hidden;
@@ -154,7 +154,7 @@ body :has(.visible) {
   );
   background-size: calc((var(--_width) * 2) / sin(135deg)) 100%;
   animation: stripes 3s infinite linear;
-  border-radius: 0.5rem;
+  border-radius: calc(var(--modal-border-radius, 1rem) / 2);
 }
 
 @keyframes stripes {
@@ -185,7 +185,7 @@ body :has(.visible) {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.125rem;
-  border-radius: 0.5rem;
+  border-radius: calc(var(--modal-border-radius, 1rem) / 2);
   text-overflow: ellipsis;
   text-wrap: nowrap;
 }
@@ -306,7 +306,7 @@ body :has(.visible) {
   /* styling */
   border-top: var(--_border-width) solid var(--_border-color);
   border-left: var(--_border-width) solid var(--_border-color);
-  border-top-left-radius: 1.5rem;
+  border-top-left-radius: calc(var(--modal-border-radius, 1rem) * 1.5);
 }
 
 .corner:nth-child(2) {
@@ -318,7 +318,7 @@ body :has(.visible) {
   border-top: var(--_border-width) solid var(--_border-color);
   border-right: var(--_border-width) solid var(--_border-color);
   place-self: start end;
-  border-top-right-radius: 1.5rem;
+  border-top-right-radius: calc(var(--modal-border-radius, 1rem) * 1.5);
 }
 
 .corner:nth-child(3) {
@@ -330,7 +330,7 @@ body :has(.visible) {
   border-bottom: var(--_border-width) solid var(--_border-color);
   border-left: var(--_border-width) solid var(--_border-color);
   place-self: end start;
-  border-bottom-left-radius: 1.5rem;
+  border-bottom-left-radius: calc(var(--modal-border-radius, 1rem) * 1.5);
 }
 
 .corner:nth-child(4) {
@@ -342,5 +342,5 @@ body :has(.visible) {
   /* styling */
   border-bottom: var(--_border-width) solid var(--_border-color);
   border-right: var(--_border-width) solid var(--_border-color);
-  border-bottom-right-radius: 1.5rem;
+  border-bottom-right-radius: calc(var(--modal-border-radius, 1rem) * 1.5);
 }

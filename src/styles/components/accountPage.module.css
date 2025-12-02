@@ -79,7 +79,7 @@
 
   /* styling */
   border: 0.25rem solid var(--primary);
-  border-radius: var(--accountPage-border-radius, 1rem);
+  border-radius: var(--account-border-radius, 1rem);
   overflow: hidden;
   /* background-color: var(--background); */
   backdrop-filter: var(--account-backdrop-filter, brightness(0.5) blur(0.125rem));

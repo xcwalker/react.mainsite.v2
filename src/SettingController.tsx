@@ -7,6 +7,7 @@ import "./styles/themes/naturist.css";
 import "./styles/themes/purplur.css";
 import "./styles/themes/custom.css";
 import "./styles/themes/github.css";
+import "./styles/themes/sharp-shift.css";
 import { useAuth } from "./functions/firebase/authentication/useAuth";
 import firebaseGetRealtimeData from "./functions/firebase/storage/useRealtimeData";
 import { userSettingsType } from "./types";
@@ -59,10 +60,11 @@ export const availableThemes = [
   "light",
   "dark",
   "github",
+  "Sharp-Shift",
   "DevView™",
   "trans-pride",
   "midnight",
   "naturist",
   "purplur",
-  "custom"
+  "custom",
 ];
