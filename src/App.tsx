@@ -58,7 +58,7 @@ import OrganizationJoin from "./pages/organizations/Join";
 import OrganizationDetails from "./pages/organizations/Details";
 import OrganizationEdit from "./pages/organizations/Edit";
 import { v4 as uuidv4 } from "uuid";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import ModularDashboardIndex from "./pages/modularDashboard/Index";
 import ReAuthenticatePage from "./pages/account/ReAuthenticate";
 import ActionCodePage from "./pages/account/ActionCode";
@@ -69,8 +69,8 @@ export default function App() {
   const [ticking] = useState(true);
   const [count, setCount] = useState(0);
   const [focusTime, setFocusTime] = useState(new Date());
-  const [tabID, setTabID] = useState<string | undefined>();
-  const [radio, setRadio] = useAtom(RadioAtom);
+  const radio = useAtomValue(RadioAtom);
+  const [radioID, setRadioID] = useState("unset");
 
   const handlePageClose = useCallback(() => {
     if (currentUser === null || currentUser === undefined) return;
@@ -118,47 +118,18 @@ export default function App() {
   }, [count, ticking]);
 
   useEffect(() => {
-    setTabID(uuidv4());
-  }, []);
-
-  useEffect(() => {
-    if (tabID === undefined) return;
-
-    if (radio.tabID === "" || radio.tabID === undefined) {
-      setRadio((prev) => ({ ...prev, tabID: tabID }));
+    if (radio.tabID === "unset") {
+      setTimeout(() => {
+        setRadioID(tabID);
+      }, 1000);
+    } else {
+      setRadioID(radio.tabID);
     }
-
-    function handleBeforeUnload() {
-      alert("unload");
-      if (radio.tabID === tabID) {
-        setRadio((prev) => ({
-          ...prev,
-          tabID: "",
-        }));
-      }
-
-      return null;
-    }
-
-    window.addEventListener("unload", handleBeforeUnload);
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("unload", handleBeforeUnload);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-
-      if (radio.tabID === tabID) {
-        setRadio((prev) => ({
-          ...prev,
-          tabID: "",
-        }));
-      }
-    };
-  }, [tabID, radio.tabID, setRadio]);
+  }, [radio.tabID]);
 
   return (
     <>
-      {tabID && radio.tabID && tabID === radio.tabID && (
+      {radio.tabID && radioID === tabID && (
         <audio
           id="audioPlayer"
           src={
@@ -794,6 +765,8 @@ export default function App() {
   );
 }
 
+export const tabID = uuidv4();
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -810,24 +783,28 @@ export const title = "xcwalker";
 export const separator = "|";
 export const shortURL = import.meta.env.VITE_SHORT_URL || "xcw.one";
 
-export const RadioAtom = atomWithStorage("radioSettings", {
-  tabID: "",
-  volume: 50,
-  inSidebar: false,
-  showDJ: true,
-  state: "paused",
-  nowPlaying: {
-    title: "Steve’s Going to London",
-    artist: "AJR",
-    artwork: "https://i.scdn.co/image/ab67616d00001e0204a3ca0d3bf91c88f969f905",
-  },
-  dj: {
-    name: "MadMatt",
-    show: "Retro Requests",
-    image:
-      "https://simulatorradio.com/processor/avatar?size=256&name=1726140003584.png",
-  },
-});
+export const RadioAtom = atomWithStorage(
+  "radioSettings",
+  {
+    tabID: "",
+    volume: 50,
+    inSidebar: false,
+    showDJ: true,
+    state: "paused",
+    nowPlaying: {
+      title: "Steve’s Going to London",
+      artist: "AJR",
+      artwork:
+        "https://i.scdn.co/image/ab67616d00001e0204a3ca0d3bf91c88f969f905",
+    },
+    dj: {
+      name: "MadMatt",
+      show: "Retro Requests",
+      image:
+        "https://simulatorradio.com/processor/avatar?size=256&name=1726140003584.png",
+    },
+  }, undefined, {getOnInit: true}
+);
 
 export const NewTabLinksAtom = atomWithStorage<NewTabLinks | undefined>(
   "newTabLinks",

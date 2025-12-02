@@ -60,6 +60,7 @@ export default function LoginPage() {
             disabled={loading}
             onSubmit={() => submit()}
             forgotPasswordHref="../forgot"
+            autoComplete="password"
           />
           <Button
             style="primary"

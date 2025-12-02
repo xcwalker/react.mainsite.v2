@@ -7,9 +7,9 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { useNavigate } from "react-router-dom";
 import { firebaseUpdatePassword } from "../../functions/firebase/authentication/updatePassword";
 import firebaseVerifyEmail from "../../functions/firebase/authentication/verifyEmail";
-import css from "../../styles/pages/settings/account.module.css";
-import IconButton from "../../components/IconButton";
 import SettingsInputGroup from "../../components/Settings/InputGroup";
+import Value from "../../components/Settings/Value";
+import ValueStack from "../../components/Settings/ValueStack";
 
 export function SettingsAccount() {
   const navigate = useNavigate();
@@ -19,42 +19,18 @@ export function SettingsAccount() {
   return (
     <>
       <SettingSection id="accountInfo" title="Account Information">
-        <div className={css.info}>
-          <div className={css.infoRow}>
-            <div className={css.infoStack}>
-              <span className={css.infoLabel}>Email:</span>{" "}
-              <span className={css.infoValue}>
-                {currentUser?.email || "Not Available"}
-              </span>
-            </div>
-            <IconButton
-              title="Copy Email"
-              icon={{ gficon: "content_copy" }}
-              onClick={() => {
-                navigator.clipboard.writeText(currentUser?.email || "");
-              }}
-              width="fit-content"
-              className={css.copyButton}
-            />
-          </div>
-          <div className={css.infoRow}>
-            <div className={css.infoStack}>
-              <span className={css.infoLabel}>User ID:</span>{" "}
-              <span className={css.infoValue}>
-                {currentUser?.uid || "Not Available"}
-              </span>
-            </div>
-            <IconButton
-              title="Copy User ID"
-              icon={{ gficon: "content_copy" }}
-              onClick={() => {
-                navigator.clipboard.writeText(currentUser?.uid || "");
-              }}
-              width="fit-content"
-              className={css.copyButton}
-            />
-          </div>
-        </div>
+        <ValueStack>
+          <Value
+            label="Email"
+            value={currentUser?.email || "Not Available"}
+            canCopy
+          />
+          <Value
+            label="User ID"
+            value={currentUser?.uid || "Not Available"}
+            canCopy
+          />
+        </ValueStack>
       </SettingSection>
       <SettingSection id="accountChangePassword" title="Change Password">
         <SettingsInputGroup>
@@ -66,6 +42,7 @@ export function SettingsAccount() {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             width="45ch"
+            autoComplete="new-password"
           />
           <Button
             style="primary"

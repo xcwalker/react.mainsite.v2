@@ -24,6 +24,7 @@ import toTitleCase from "../../functions/toTitleCase.tsx";
 import { SettingsAccount } from "./Account.tsx";
 import SettingsThemes from "./Themes.tsx";
 import SideBySide from "../../components/SideBySide.tsx";
+import SettingsRadio from "./Radio.tsx";
 
 export default function SettingsPage() {
   const currentUser = useAuth();
@@ -140,7 +141,7 @@ const pages: PageItem[] = [
     name: "radio",
     title: "Radio Settings",
     icon: "radio",
-    component: Page_Radio,
+    component: SettingsRadio,
   },
   {
     name: "navigation",
@@ -234,14 +235,6 @@ export function Sidebar() {
         </ul>
       </nav>
     </SidebarContainer>
-  );
-}
-
-function Page_Radio() {
-  return (
-    <SettingSection id="radioSettings" title="Radio Settings">
-      <p>Radio settings coming soon!</p>
-    </SettingSection>
   );
 }
 
