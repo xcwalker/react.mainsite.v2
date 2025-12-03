@@ -221,6 +221,11 @@ export type SectionType = {
   container?: Classes;
   style?: React.CSSProperties;
   background?: ReactNode;
+  aria?: {
+    label?: string;
+    busy?: boolean;
+    hidden?: boolean;
+  }
 };
 
 export type StackType = {

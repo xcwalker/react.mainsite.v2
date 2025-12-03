@@ -1,10 +1,17 @@
 import Section from "./Section";
-import css from "../styles/components/loading.module.css"
+import css from "../styles/components/loading.module.css";
 
-export default function LoadingPage(props: {className?: string}) {
+export default function LoadingPage(props: { className?: string }) {
   return (
-    <Section id="loading" className={props.className} container={{className: css.container}}>
-      <h1 className={css.title}>
+    <Section
+      id="loading"
+      className={props.className}
+      container={{ className: css.container }}
+      aria={{
+        busy: true,
+      }}
+    >
+      <h1 className={css.title} aria-label="Loading" aria-hidden="false">
         <span>L</span>
         <span>o</span>
         <span>a</span>

@@ -3,10 +3,23 @@ import { SectionType } from "../types";
 
 export default function Section(props: SectionType) {
   return (
-    <section className={css.section + " " + props.className} id={props.id} style={props.style}>
+    <section
+      className={css.section + " " + props.className}
+      id={props.id}
+      style={props.style}
+      aria-label={props.aria?.label}
+      aria-busy={props.aria?.busy}
+      aria-hidden={props.aria?.hidden}
+    >
       {props.background}
-      {!props.container && <div className={css.container}>{props.children}</div>}
-      {props.container && <div className={css.container + " " + props.container.className}>{props.children}</div>}
+      {!props.container && (
+        <div className={css.container}>{props.children}</div>
+      )}
+      {props.container && (
+        <div className={css.container + " " + props.container.className}>
+          {props.children}
+        </div>
+      )}
     </section>
   );
 }
