@@ -30,7 +30,7 @@
 
   /* styling */
   background-color: var(--secondary);
-  border-radius: 100vmax;
+  border-radius: var(--input-toggle-border-radius, 100vmax);
   cursor: pointer;
   transition: background-color 0.4s;
 }
@@ -51,7 +51,9 @@
 
   /* styling */
   background-color: var(--text);
-  border-radius: 100vmax;
+  border-radius: calc(
+    var(--input-toggle-border-radius, 100vmax) - var(--_offset) * 2
+  );
   transition: 0.4s;
 }
 

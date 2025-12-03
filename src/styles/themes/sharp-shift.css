@@ -1,0 +1,65 @@
+html[data-theme="Sharp-Shift"],
+.preview[data-theme="Sharp-Shift"] {
+    --text: #ffffff;
+    --text-alt: #cccccc;
+    --background: #0d0d0d;
+    --primary: #2a2a2a;
+    --secondary: #484848;
+    --accent: #0061e0;
+    --text-inverse: #000000;
+    --account-backdrop-filter: brightness(0.5) blur(0.125rem);
+
+  /* buttons */
+  --button-border-radius: 0rem;
+  --button-beta-tag-border-radius: 0rem;
+
+  /* images */
+  --image-border-radius: 0rem;
+
+  /* sites */
+  --sites-border-radius: 0rem;
+
+  /* heros */
+  --hero-border-radius: 0rem;
+  --hero-button-border-radius: 0rem;
+  --hero-dot-border-radius: 0rem;
+
+  /* griditems */
+  --grid-item-border-radius: 0rem;
+  --grid-item-collection-border-radius: 0rem;
+
+  /* settings */
+  --settings-note-border-radius: 0rem;
+  --settings-border-radius: 0rem;
+
+  /* fleet */
+  --fleet-border-radius: 0rem;
+
+  /* input */
+  --input-border-radius: 0rem;
+  --newTabLink-border-radius: 0rem;
+  --input-toggle-border-radius: 0rem;
+
+  /* organization */
+  --organization-border-radius: 0rem;
+  --organization-sub-border-radius: 0rem;
+
+  /* itempage */
+  --item-sidebar-border-radius: 0rem;
+  --item-sidebar-collection-border-radius: 0rem;
+  --recipe-checklist_item-border_radius: 0rem;
+
+  /* user */
+  --user-profile-border-radius: 0rem;
+  --user-role-badge-border-radius: 0rem;
+  --user-header-border-radius: 0rem;
+
+  /* account */
+  --account-border-radius: 0rem;
+
+  /* game */
+  --game-border-radius: 0rem;
+
+  /* modal */
+  --modal-border-radius: 0rem;
+}

@@ -38,7 +38,7 @@
   gap: 1rem;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--item-sidebar-border-radius, 0.5rem);
   overflow: clip;
 }
 
@@ -63,7 +63,7 @@
   height: var(--_size);
 
   /* styling */
-  border-radius: 0.25rem;
+  border-radius: var(--user-profile-border-radius, 0.5rem);
 }
 
 .user > .details {
@@ -121,7 +121,7 @@
 
   /* styling */
   background-color: var(--primary);
-  border-radius: 0.5rem;
+  border-radius: var(--item-sidebar-border-radius, 0.5rem);
 }
 
 .information > .info {
@@ -171,7 +171,7 @@ div.date {
 
   /* styling */
   background-color: var(--primary);
-  border-radius: 0.5rem;
+  border-radius: var(--item-sidebar-border-radius, 0.5rem);
 }
 
 div.date .left {
@@ -220,7 +220,7 @@ div.date span.date {
 
 .links .linkButton {
   text-transform: lowercase;
-  border-radius: 0.25rem;
+  border-radius: calc(var(--item-sidebar-border-radius, 0.5rem) / 2);
   padding-left: 0.5rem;
   gap: 0.5rem;
 }
@@ -229,25 +229,25 @@ div.date span.date {
   /* sizing */
   width: 100%;
   height: 100%;
-  border-radius: 0.25rem;
+  border-radius: calc(var(--item-sidebar-border-radius, 0.5rem) / 2);
   background-color: var(--primary);
 }
 
 .links > :nth-child(1) {
-  border-top-left-radius: 0.5rem;
+  border-top-left-radius: var(--item-sidebar-border-radius, 0.5rem);
 }
 
 .links > :nth-child(2) {
-  border-top-right-radius: 0.5rem;
+  border-top-right-radius: var(--item-sidebar-border-radius, 0.5rem);
 }
 
 .links > :nth-last-of-type(-n+2) {
-  border-bottom-left-radius: 0.5rem;
+  border-bottom-left-radius: var(--item-sidebar-border-radius, 0.5rem);
 }
 
 .links > :nth-last-of-type(-n+1) {
-  border-bottom-left-radius: 0.25rem;
-  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: calc(var(--item-sidebar-border-radius, 0.5rem) / 2);
+  border-bottom-right-radius: var(--item-sidebar-border-radius, 0.5rem);
 }
 
 .links a .linkIcon {
@@ -272,7 +272,7 @@ div.date span.date {
   z-index: 0;
 
   /* styling */
-  border-radius: 0.25rem;
+  border-radius: calc(var(--item-sidebar-border-radius, 0.5rem) / 2);
   background-color: white;
 }
 

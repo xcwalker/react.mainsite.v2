@@ -70,7 +70,7 @@
   gap: 1.5em;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--game-border-radius, 0.5rem);
   border: 0.25rem solid var(--background-200);
   background: var(--background);
 }
