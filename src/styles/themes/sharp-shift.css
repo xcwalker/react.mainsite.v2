@@ -73,4 +73,10 @@ html[data-theme="Sharp-Shift"],
 
   /* modal */
   --modal-border-radius: 0rem;
+
+  /* search */
+  --search-border-radius: 0rem;
+
+  /* newtab */
+  --newtab-link-border-radius: 0rem;
 }

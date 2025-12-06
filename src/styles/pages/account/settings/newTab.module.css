@@ -2,7 +2,8 @@
   max-width: 50rem;
 }
 
-.links {
+.links,
+.bookmarks {
   /* sizing */
   margin: 0;
   padding: 0;

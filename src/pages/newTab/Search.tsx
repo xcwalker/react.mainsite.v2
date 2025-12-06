@@ -3,12 +3,15 @@ import css from "../../styles/pages/newTab/search.module.css";
 import GFIcon from "../../components/GFIcon";
 import tlds from "tlds";
 import devConsole from "../../functions/devConsole";
+import { BookmarkItem as BookmarkItemType } from "../../types";
+import { isValidHttpUrl } from "./Index";
 
 export function NewTabSearch(props: {
   hasCMDKey: boolean;
   modifierPressed: boolean;
   searchProvider: string;
   queryURL: string;
+  bookmarks?: BookmarkItemType[];
 }) {
   const bangs = [
     { bang: "g", url: "https://www.google.com/search?q=%s", icon: "google" },
@@ -176,6 +179,10 @@ export function NewTabSearch(props: {
   const [suggestions, setSuggestions] = useState<
     { suggestion: string; type: string }[]
   >([]);
+  const [matchingBookmarks, setMatchingBookmarks] = useState<
+    BookmarkItemType[]
+  >([]);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
 
   useEffect(() => {
     if (search.length === 0) {
@@ -208,8 +215,24 @@ export function NewTabSearch(props: {
     };
   }, [search]);
 
+  useEffect(() => {
+    if (search.length === 0) {
+      setMatchingBookmarks([]);
+    } else {
+      if (props.bookmarks) {
+        const filtered = props.bookmarks.filter((bookmark) =>
+          bookmark.title.toLowerCase().includes(search.toLowerCase())
+        );
+
+        console.log(filtered);
+
+        setMatchingBookmarks(filtered);
+      }
+    }
+  }, [props.bookmarks, search]);
+
   return (
-    <div className={css.searchWrapper}>
+    <div className={css.searchWrapper + (selectedSuggestionIndex == -1 ? " " + css.selected : "")}>
       {!props.hasCMDKey && (
         <span
           className={
@@ -229,17 +252,19 @@ export function NewTabSearch(props: {
         </span>
       )}
       {!searchIsWebsite && (
-        <img
-          src={
-            "/" +
-            (searchBang === undefined
-              ? props.searchProvider
-              : searchBang.icon) +
-            ".svg"
-          }
-          alt=""
-          className={css.icon}
-        />
+        <div className={css.navIconWrapper}>
+          <img
+            src={
+              "/" +
+              (searchBang === undefined
+                ? props.searchProvider
+                : searchBang.icon) +
+              ".svg"
+            }
+            alt=""
+            className={css.icon}
+          />
+        </div>
       )}
       {searchIsWebsite && <GFIcon className={css.icon}>language</GFIcon>}
       <input
@@ -278,10 +303,28 @@ export function NewTabSearch(props: {
         onKeyDown={(e) => {
           const searchQuery = (e.target as HTMLInputElement).value;
 
+          const joinedSuggestions = [
+            ...matchingBookmarks.slice(0, 3).map((bookmark) => ({
+              suggestion: bookmark.url,
+              type: "NAVIGATION",
+            })),
+            ...suggestions,
+          ];
+
           if (e.key === "Enter") {
             let searchUrl = "";
 
-            if (searchIsWebsite) {
+            if (selectedSuggestionIndex >= 0) {
+              const selectedSuggestion =
+                joinedSuggestions[selectedSuggestionIndex];
+              if (selectedSuggestion.type === "NAVIGATION") {
+                searchUrl = selectedSuggestion.suggestion;
+              } else {
+                searchUrl =
+                  props.queryURL +
+                  encodeURIComponent(selectedSuggestion.suggestion);
+              }
+            } else if (searchIsWebsite) {
               searchUrl =
                 searchQuery.startsWith("http://") ||
                 searchQuery.startsWith("https://")
@@ -301,6 +344,27 @@ export function NewTabSearch(props: {
             window.open(searchUrl, "_self");
             (e.target as HTMLInputElement).value = "";
             e.preventDefault();
+          } else if (e.key === "ArrowDown") {
+            if (
+              selectedSuggestionIndex <
+              Math.min(joinedSuggestions.length - 1, 4)
+            ) {
+              setSelectedSuggestionIndex((prev) => prev + 1);
+            } else {
+              setSelectedSuggestionIndex(-1);
+            }
+            e.preventDefault();
+          } else if (e.key === "ArrowUp") {
+            if (selectedSuggestionIndex > -1) {
+              setSelectedSuggestionIndex((prev) => prev - 1);
+            } else {
+              setSelectedSuggestionIndex(
+                Math.min(joinedSuggestions.length - 1, 4)
+              );
+            }
+            e.preventDefault();
+          } else {
+            setSelectedSuggestionIndex(-1);
           }
         }}
         onChange={(e) => setSearch(e.target.value)}
@@ -309,11 +373,54 @@ export function NewTabSearch(props: {
       <button className={css.searchButton}>
         <GFIcon>search</GFIcon>
       </button>
-      {suggestions.length > 0 && (
+      {(suggestions.length > 0 || matchingBookmarks.length > 0) && (
         <div className={css.suggestionsBox}>
+          {matchingBookmarks.length > 0 &&
+            matchingBookmarks.map((bookmark, index) => {
+              const url = isValidHttpUrl(bookmark.url)
+                ? new URL(bookmark.url)
+                : new URL("http://invalidurl"); // Fallback to http if no protocol is provided
+              const hostname = url.hostname.replace(/^www\./, "");
+
+              if (index < 3)
+                return (
+                  <a
+                    key={index}
+                    href={bookmark.url}
+                    className={
+                      selectedSuggestionIndex === index
+                        ? css.selectedSuggestion
+                        : ""
+                    }
+                  >
+                    <div className={css.navIconWrapper}>
+                      <img
+                        src={
+                          bookmark.icon || "https://icon.horse/icon/" + hostname
+                        }
+                        alt=""
+                        className={css.icon}
+                      />
+                      <GFIcon className={css.indicator}>bookmark</GFIcon>
+                    </div>
+                    <div className={css.suggestion}>{bookmark.title}</div>
+                  </a>
+                );
+              else return null;
+            })}
+
           {suggestions.length > 0 &&
             suggestions.map((suggestion, index) => {
-              if (index < 5)
+              let hostname = "";
+
+              if (suggestion.type === "NAVIGATION") {
+                const url = isValidHttpUrl(suggestion.suggestion)
+                  ? new URL(suggestion.suggestion)
+                  : new URL("http://invalidurl"); // Fallback to http if no protocol is provided
+                hostname = url.hostname.replace(/^www\./, "");
+              }
+
+              if (index < 5 - Math.min(matchingBookmarks.length, 3))
                 return (
                   <a
                     key={index}
@@ -323,17 +430,32 @@ export function NewTabSearch(props: {
                         : props.queryURL +
                           encodeURIComponent(suggestion.suggestion)
                     }
+                    className={
+                      selectedSuggestionIndex ===
+                      index + Math.min(matchingBookmarks.length, 3)
+                        ? css.selectedSuggestion
+                        : ""
+                    }
                   >
-                    {suggestion.type === "QUERY" && (
-                      <img
-                        src={"/" + props.searchProvider + ".svg"}
-                        alt=""
-                        className={css.icon}
-                      />
-                    )}
-                    {suggestion.type === "NAVIGATION" && (
-                      <GFIcon className={css.icon}>language</GFIcon>
-                    )}
+                    <div className={css.navIconWrapper}>
+                      {suggestion.type === "QUERY" && (
+                        <img
+                          src={"/" + props.searchProvider + ".svg"}
+                          alt=""
+                          className={css.icon}
+                        />
+                      )}
+                      {suggestion.type === "NAVIGATION" && (
+                        <>
+                          <img
+                            src={"https://icon.horse/icon/" + hostname}
+                            alt=""
+                            className={css.icon}
+                          />
+                          <GFIcon className={css.indicator}>language</GFIcon>
+                        </>
+                      )}
+                    </div>
                     <div className={css.suggestion}>
                       {suggestion.suggestion}
                     </div>

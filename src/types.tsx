@@ -225,7 +225,7 @@ export type SectionType = {
     label?: string;
     busy?: boolean;
     hidden?: boolean;
-  }
+  };
 };
 
 export type StackType = {
@@ -438,9 +438,16 @@ export type LinkItem = {
   showTitle?: boolean; // Optional flag to show/hide title
 };
 
+export type BookmarkItem = {
+  shorthand: string;
+  title: string;
+  url: string;
+  icon?: string;
+};
+
 export type NewTabLinks = {
   links: LinkItem[];
-
+  bookmarks?: BookmarkItem[];
   settings: {
     background: {
       image?: string;
@@ -457,6 +464,7 @@ export type NewTabLinks = {
       queryURL: string; // URL template for search queries
       defaultParams?: string; // Additional default parameters for the search query
     };
+    showBookmarks?: boolean;
   };
 };
 

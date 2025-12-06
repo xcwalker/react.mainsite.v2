@@ -1,7 +1,11 @@
 import { User } from "firebase/auth";
 import InputDropdown from "../../components/InputDropdown.tsx";
 import SettingSection from "../../components/SettingSection.tsx";
-import { LinkItem, NewTabLinks } from "../../types.tsx";
+import {
+  BookmarkItem as BookmarkItemType,
+  LinkItem,
+  NewTabLinks,
+} from "../../types.tsx";
 import { Fragment, useEffect, useState } from "react";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData.tsx";
 import LoadingPage from "../../components/Loading.tsx";
@@ -16,6 +20,7 @@ import { SettingsNote } from "../../components/Settings/Note.tsx";
 import { LinkItemEdit } from "../newTab/Edit.tsx";
 import { arrayMove } from "../../functions/arrayMove.tsx";
 import Button from "../../components/Button.tsx";
+import InputGroup from "../../components/InputGroup.tsx";
 
 export default function SettingsNewTab(props: { currentUser: User | null }) {
   const { currentUser } = props;
@@ -289,7 +294,10 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
               onClick={() => {
                 firebaseSetData("newtab", currentUser.uid, {
                   ...newTabLinks,
-                  links: [...newTabLinks.links, { title: "", url: "", color: "", background: {} }],
+                  links: [
+                    ...newTabLinks.links,
+                    { title: "", url: "", color: "", background: {} },
+                  ],
                 });
               }}
               style="primary"
@@ -300,7 +308,136 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
           </li>
         </ul>
       </SettingSection>
+      {/* bookmarks */}
+      <SettingSection id="newTabBookmarks" title="Bookmarks Settings">
+        <SettingsNote>
+          Bookmarks appear below your links on the new tab page and in search
+          results.
+        </SettingsNote>
+        <InputToggle
+          id="newTabShowBookmarks"
+          label="Show Bookmarks"
+          checked={newTabLinks.settings.showBookmarks || false}
+          onChange={(checked) => {
+            firebaseSetData("newtab", currentUser.uid, {
+              ...newTabLinks,
+              settings: {
+                ...newTabLinks.settings,
+                showBookmarks: checked,
+              },
+            });
+          }}
+        />
+        {newTabLinks.bookmarks && newTabLinks.bookmarks.length > 0 && (
+          <ul className={css.bookmarks}>
+            {newTabLinks.bookmarks.map((bookmark, index) => (
+              <Fragment key={index}>
+                <BookmarkItem
+                  bookmark={bookmark}
+                  index={index}
+                  setBookmarkData={(updatedBookmark: BookmarkItemType) => {
+                    firebaseSetData("newtab", currentUser.uid, {
+                      ...newTabLinks,
+                      bookmarks: (newTabLinks.bookmarks || []).map((b, i) =>
+                        i === index ? updatedBookmark : b
+                      ),
+                    });
+                  }}
+                  removeBookmark={() => {
+                    firebaseSetData("newtab", currentUser.uid, {
+                      ...newTabLinks,
+                      bookmarks: (newTabLinks.bookmarks || []).filter(
+                        (_, i) => i !== index
+                      ),
+                    });
+                  }}
+                />
+              </Fragment>
+            ))}
+          </ul>
+        )}
+        {!newTabLinks.bookmarks || newTabLinks.bookmarks.length === 0 ? (
+          <SettingsNote>No bookmarks added yet.</SettingsNote>
+        ) : null}
+        <Button
+          title="Add New Bookmark"
+          icon={{ gficon: "add" }}
+          onClick={() => {
+            firebaseSetData("newtab", currentUser.uid, {
+              ...newTabLinks,
+              bookmarks: [
+                ...(newTabLinks.bookmarks || []),
+                { title: "", url: "", color: "", background: {} },
+              ],
+            });
+          }}
+          style="primary"
+          width="300px"
+        >
+          Add New Bookmark
+        </Button>
+      </SettingSection>
     </>
+  );
+}
+
+function BookmarkItem(props: {
+  bookmark: BookmarkItemType;
+  index: number;
+  setBookmarkData: (bookmark: BookmarkItemType) => void;
+  removeBookmark: () => void;
+}) {
+  const { bookmark, index, setBookmarkData, removeBookmark } = props;
+
+  return (
+    <li className={css.bookmarkItem}>
+      <InputGroup>
+        <Input
+          id={`bookmarkTitle${index}`}
+          label="Title"
+          type="text"
+          value={bookmark.title}
+          onChange={(event) => {
+            setBookmarkData({ ...bookmark, title: event.target.value });
+          }}
+        />
+        <Input
+          id={`bookmarkURL${index}`}
+          label="URL"
+          type="url"
+          value={bookmark.url}
+          onChange={(event) => {
+            setBookmarkData({ ...bookmark, url: event.target.value });
+          }}
+        />
+        <Input
+          id={`bookmarkShorthand${index}`}
+          label="Shorthand"
+          type="text"
+          value={bookmark.shorthand || ""}
+          onChange={(event) => {
+            setBookmarkData({ ...bookmark, shorthand: event.target.value });
+          }}
+        />
+        <Input
+          id={`bookmarkIconURL${index}`}
+          label="Icon URL"
+          type="url"
+          value={bookmark.icon || ""}
+          onChange={(event) => {
+            setBookmarkData({ ...bookmark, icon: event.target.value });
+          }}
+        />
+        <Button
+          title="Remove Bookmark"
+          icon={{ gficon: "remove" }}
+          onClick={() => {
+            removeBookmark();
+          }}
+          style="danger"
+        />
+      </InputGroup>
+    </li>
   );
 }
 

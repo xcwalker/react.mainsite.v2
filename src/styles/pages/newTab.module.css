@@ -83,7 +83,9 @@
   overflow: hidden;
 
   /* transition */
-  transition: width 150ms ease-in-out, background-color 150ms ease-in-out,
+  transition:
+    width 150ms ease-in-out,
+    background-color 150ms ease-in-out,
     border-radius 150ms ease-in-out;
 }
 
@@ -114,7 +116,6 @@
 
   /* transition */
   transition: opacity 150ms ease-in-out;
-
 }
 
 .newTab .editButtonWrapper .editShortcut.modifier {
@@ -211,13 +212,11 @@ li.linkItem .editShortcut {
 
   /* transition */
   transition: opacity 150ms ease-in-out;
-
 }
 
 li.linkItem .editShortcut.modifier {
   opacity: 1;
 }
-
 
 li.linkItem a {
   /* position */
@@ -241,7 +240,7 @@ li.linkItem a {
   text-decoration: none;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--newtab-link-border-radius, 0.5rem);
   overflow: hidden;
 }
 
@@ -264,7 +263,6 @@ li.linkItem a .iconWrapper {
   /* sizing */
   padding-inline: 1rem;
   aspect-ratio: 1/0.47971055900621;
-
 }
 
 li.linkItem a .iconWrapper img {
@@ -344,4 +342,57 @@ li.linkItem a .iconWrapper .iconImage {
 
   /* object-fit */
   object-fit: contain;
+}
+
+li.bookmarkItem a {
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+li.bookmarkItem a .iconWrapper {
+  /* sizing */
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+li.bookmarkItem a .iconWrapper img {
+  /* sizing */
+  width: 100%;
+  height: 100%;
+
+  /* object fit */
+  object-fit: contain;
+}
+
+li.bookmarkItem a .details {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+li.bookmarkItem a .details .title {
+  /* text */
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text);
+}
+
+li.bookmarkItem a .details .url {
+  /* text */
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: lowercase;
+
+  /* styling */
+  color: var(--text-alt);
 }

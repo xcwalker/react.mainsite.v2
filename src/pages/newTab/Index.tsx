@@ -6,6 +6,7 @@ import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import css from "../../styles/pages/newTab.module.css";
 import firebaseGetData from "../../functions/firebase/storage/getData";
 import {
+  BookmarkItem as BookmarkItemType,
   LinkItem as LinkItemType,
   NewTabLinks,
   OrganizationType,
@@ -24,6 +25,7 @@ import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealti
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 import HomeHero from "../home/Hero";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
+import Button from "../../components/Button";
 
 export default function NewTab() {
   const user = useAuth();
@@ -199,7 +201,7 @@ export default function NewTab() {
             {user?.uid !== undefined && (
               <SidebarUser userId={user.uid} className={css.user} />
             )}
-            {linkData?.links && (
+            {linkData && (
               <div className={css.links}>
                 <HomeHero
                   logo={
@@ -215,22 +217,36 @@ export default function NewTab() {
                       modifierPressed={modifierPressed}
                       queryURL={linkData.settings.search.queryURL}
                       searchProvider={linkData.settings.search.provider}
+                      bookmarks={linkData.bookmarks}
                     />
                   )}
                 </div>
-                <ul>
-                  {linkData.links.map((link, index) => (
-                    <LinkItem
-                      key={index}
-                      link={link}
-                      hasCMDKey={hasCMDKey}
-                      modifierPressed={modifierPressed}
-                      index={index}
-                    />
-                  ))}
-                </ul>
+                {linkData.links && (
+                  <ul>
+                    {linkData.links.map((link, index) => (
+                      <LinkItem
+                        key={index}
+                        link={link}
+                        hasCMDKey={hasCMDKey}
+                        modifierPressed={modifierPressed}
+                        index={index}
+                      />
+                    ))}
+                  </ul>
+                )}
+                {linkData?.bookmarks && linkData.settings.showBookmarks && (
+                  <div className={css.bookmarks}>
+                    <h2 className={css.bookmarksTitle}>Bookmarks</h2>
+                    <ul>
+                      {linkData.bookmarks.map((link, index) => (
+                        <BookmarkItem key={index} bookmark={link} />
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
+
             <div className={css.editButtonWrapper}>
               {!hasCMDKey && (
                 <span
@@ -377,4 +393,33 @@ export function isValidHttpUrl(string: string) {
   }
 
   return url.protocol === "http:" || url.protocol === "https:";
+}
+
+export function BookmarkItem(props: { bookmark: BookmarkItemType }) {
+  const url = isValidHttpUrl(props.bookmark.url)
+    ? new URL(props.bookmark.url)
+    : new URL("http://invalidurl"); // Fallback to http if no protocol is provided
+  const hostname = url.hostname.replace(/^www\./, "");
+
+  return (
+    <li className={css.bookmarkItem}>
+      <Button href={url.toString()} className={css.link} title={props.bookmark.title} style="secondary">
+        <div className={css.iconWrapper}>
+          <img
+            src={
+              props.bookmark.icon
+                ? props.bookmark.icon
+                : "https://icon.horse/icon/" + hostname
+            }
+            alt={props.bookmark.title}
+            className={css.iconImage}
+          />
+        </div>
+        <div className={css.details}>
+          <span className={css.title}>{props.bookmark.title}</span>
+          <span className={css.url}>{hostname}</span>
+        </div>
+      </Button>
+    </li>
+  );
 }
