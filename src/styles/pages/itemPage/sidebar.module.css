@@ -1,6 +1,5 @@
 .thumbnail {
-  width: calc(100% + 1rem);
-  margin-inline: -0.5rem;
+  width: 100%;
 }
 
 @media (max-width: 900px) {
@@ -181,4 +180,11 @@
     page-break-inside: avoid;
     break-before: auto;
   }
+}
+
+@media (max-width: 1100px) {
+.thumbnail {
+  width: calc(100% + 2rem);
+  margin-inline: -1rem;
+}
 }
