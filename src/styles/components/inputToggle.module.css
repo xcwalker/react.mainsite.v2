@@ -24,9 +24,11 @@
   /* sizing */
   box-sizing: content-box;
   display: inline-block;
-  width: calc(var(--_width) * 2);
+  width: calc(var(--_width) * 2) !important;
   height: var(--_height);
   padding: var(--_offset);
+  flex-grow: 0;
+  flex-shrink: 0;
 
   /* styling */
   background-color: var(--secondary);

@@ -3,7 +3,7 @@
   padding: 0.5rem;
 
   /* styling */
-  border-radius: var(--radio-ad-border-radius, 1rem);
+  border-radius: var(--radio-ad-border-radius, 2rem);
   border: 2px solid var(--secondary);
   color: white;
 }
@@ -16,7 +16,7 @@
   padding: 1.5rem;
 
   /* styling */
-  border-radius: calc(var(--radio-border-radius, 0.5rem) - 0.5rem);
+  border-radius: calc(var(--radio-ad-border-radius, 2rem) - 1rem);
   overflow: hidden;
 }
 

@@ -29,6 +29,9 @@ import InputGroup from "../../components/InputGroup";
 import devConsole from "../../functions/devConsole";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
 import { separator, title } from "../../App";
+import InputDropdown from "../../components/InputDropdown";
+import InputToggle from "../../components/InputToggle";
+import { InputDuration } from "../../components/InputDuration";
 
 export default function OverlayCreate(props: { id?: string }) {
   const params = useParams();
@@ -520,39 +523,39 @@ function Main(props: {
       <InputGroup>
         <InputGroup direction="row">
           {/* visibility */}
-          <ToggleInput
+          <InputToggle
             label="radio visibility"
             id="radio-visibility"
-            value={props.overlay.data.radio.visibility}
-            onChange={(e) => {
+            checked={props.overlay.data.radio.visibility}
+            onChange={(checked) => {
               props.setOverlay({
                 ...props.overlay,
                 data: {
                   ...props.overlay.data,
                   radio: {
                     ...props.overlay.data.radio,
-                    visibility: e.target.checked,
+                    visibility: checked,
                   },
                 },
               });
             }}
-            falseLabel="Hide Radio"
-            trueLabel="Show Radio"
-            falseIcon="visibility"
-            trueIcon="visibility_off"
           />
-          <StationSelect
+          <InputDropdown
             id="radio-station"
             label="Radio Station"
             value={props.overlay.data.radio.station}
-            onChange={(e) => {
+            values={OverlayStations.map((station) => ({
+              label: station,
+              value: station,
+            }))}
+            onChange={(value) => {
               props.setOverlay({
                 ...props.overlay,
                 data: {
                   ...props.overlay.data,
                   radio: {
                     ...props.overlay.data.radio,
-                    station: e.target.value as Overlay_StationType,
+                    station: value as Overlay_StationType,
                   },
                 },
               });
@@ -596,8 +599,26 @@ function Main(props: {
             });
           }}
         />
-        <InputGroup direction="row">
-          <DurationInput
+        <InputGroup direction="column">
+          <InputToggle
+            // durationBar
+            label="radio duration bar"
+            id="radio-duration-bar"
+            checked={props.overlay.data.radio.durationBar}
+            onChange={(checked) => {
+              props.setOverlay({
+                ...props.overlay,
+                data: {
+                  ...props.overlay.data,
+                  radio: {
+                    ...props.overlay.data.radio,
+                    durationBar: checked,
+                  },
+                },
+              });
+            }}
+          />
+          <InputDuration
             id="radio-duration"
             label="radio duration (ms)"
             min={-1}
@@ -616,28 +637,6 @@ function Main(props: {
                 },
               });
             }}
-          />
-          <ToggleInput
-            // durationBar
-            label="radio duration bar"
-            id="radio-duration-bar"
-            value={props.overlay.data.radio.durationBar}
-            onChange={(e) => {
-              props.setOverlay({
-                ...props.overlay,
-                data: {
-                  ...props.overlay.data,
-                  radio: {
-                    ...props.overlay.data.radio,
-                    durationBar: e.target.checked,
-                  },
-                },
-              });
-            }}
-            falseLabel="Hide Duration Bar"
-            trueLabel="Show Duration Bar"
-            falseIcon="visibility"
-            trueIcon="visibility_off"
           />
         </InputGroup>
         <InputGroup direction="row">
@@ -676,50 +675,40 @@ function Main(props: {
             }}
           />
         </InputGroup>
-        <InputGroup direction="row">
-          <ToggleInput
-            label="radio show DJ"
-            id="radio-show-dj"
-            value={props.overlay.data.radio.showDJ}
-            onChange={(e) => {
-              props.setOverlay({
-                ...props.overlay,
-                data: {
-                  ...props.overlay.data,
-                  radio: {
-                    ...props.overlay.data.radio,
-                    showDJ: e.target.checked,
-                  },
+        <InputToggle
+          label="radio show DJ"
+          id="radio-show-dj"
+          checked={props.overlay.data.radio.showDJ}
+          onChange={(checked) => {
+            props.setOverlay({
+              ...props.overlay,
+              data: {
+                ...props.overlay.data,
+                radio: {
+                  ...props.overlay.data.radio,
+                  showDJ: checked,
                 },
-              });
-            }}
-            falseLabel="Hide DJ"
-            trueLabel="Show DJ"
-            falseIcon="visibility"
-            trueIcon="visibility_off"
-          />
-          <ToggleInput
-            label="radio show station"
-            id="radio-show-station"
-            value={props.overlay.data.radio.showStation}
-            onChange={(e) => {
-              props.setOverlay({
-                ...props.overlay,
-                data: {
-                  ...props.overlay.data,
-                  radio: {
-                    ...props.overlay.data.radio,
-                    showStation: e.target.checked,
-                  },
+              },
+            });
+          }}
+        />
+        <InputToggle
+          label="radio show station"
+          id="radio-show-station"
+          checked={props.overlay.data.radio.showStation}
+          onChange={(checked) => {
+            props.setOverlay({
+              ...props.overlay,
+              data: {
+                ...props.overlay.data,
+                radio: {
+                  ...props.overlay.data.radio,
+                  showStation: checked,
                 },
-              });
-            }}
-            falseLabel="Hide Station"
-            trueLabel="Show Station"
-            falseIcon="visibility"
-            trueIcon="visibility_off"
-          />
-        </InputGroup>
+              },
+            });
+          }}
+        />
       </InputGroup>
     </div>
   );
@@ -1039,67 +1028,6 @@ function TagsInput(props: {
   );
 }
 
-function ToggleInput(props: {
-  id: string;
-  label: string;
-  value: boolean;
-  falseLabel: string;
-  trueLabel: string;
-  falseIcon: string;
-  trueIcon: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) {
-  return (
-    <div className={css.toggleInput}>
-      <label htmlFor={props.id}>{props.label}</label>
-      <div className={css.toggle}>
-        <input
-          type="checkbox"
-          id={props.id}
-          checked={props.value}
-          onChange={props.onChange}
-        />
-        <label htmlFor={props.id} className={css.toggleLabels}>
-          {props.value ? (
-            <>
-              <GFIcon>{props.falseIcon}</GFIcon>
-              <span className={css.falseLabel}>{props.falseLabel}</span>
-            </>
-          ) : (
-            <>
-              <GFIcon>{props.trueIcon}</GFIcon>
-              <span className={css.trueLabel}>{props.trueLabel}</span>
-            </>
-          )}
-        </label>
-      </div>
-    </div>
-  );
-}
-
-function StationSelect(props: {
-  id: string;
-  label: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-}) {
-  return (
-    <div className={css.stationSelect}>
-      <label htmlFor={props.id}>{props.label}</label>
-      <div className={css.select}>
-        <select id={props.id} value={props.value} onChange={props.onChange}>
-          {OverlayStations.map((station) => (
-            <option key={station} value={station}>
-              {station}
-            </option>
-          ))}
-        </select>
-        <GFIcon className={css.icon}>arrow_drop_down</GFIcon>
-      </div>
-    </div>
-  );
-}
-
 function AnimationInput(props: {
   id: string;
   label: string;
@@ -1108,119 +1036,34 @@ function AnimationInput(props: {
   duration: number;
   onDurationChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
-  const [dropDownOpen, setDropdownOpen] = useState(false);
-  // OverlayTransitions
-  // let value be one of OverlayTransitions
-  // should include duration input
   return (
-    <div className={css.animationInput}>
-      <label htmlFor={props.id}>{props.label}</label>
-      <div className={css.animations}>
-        <div className={css.animation}>
-          {/* map OverlayTransitions */}
-          <button
-            onClick={() => setDropdownOpen(true)}
-            onBlur={() => {
-              // only close if not hovering over the dropdown
-              if (!document.querySelector(`#${props.id}-dropdown:hover`)) {
-                setDropdownOpen(false);
-              }
-            }}
-            className={
-              css.selectedAnimation + ` ${dropDownOpen ? css.open : ""}`
-            }
-          >
-            <span>{props.value}</span>
-            <GFIcon className={css.icon}>
-              {dropDownOpen ? "arrow_drop_up" : "arrow_drop_down"}
-            </GFIcon>
-          </button>
-          <div
-            className={
-              css.animationDropdown + ` ${dropDownOpen ? "" : css.closed}`
-            }
-            id={`${props.id}-dropdown`}
-            onBlur={() => setDropdownOpen(false)}
-          >
-            {OverlayTransitions.map((transition) => (
-              <div
-                key={transition}
-                className={
-                  css.animation +
-                  ` ${props.value === transition ? css.selected : ""}`
-                }
-              >
-                <button
-                  id={`${props.id}-${transition}`}
-                  className={css.animationButton}
-                  title={transition}
-                  onClick={() => {
-                    props.onChange(transition);
-                    setDropdownOpen(false);
-                  }}
-                >
-                  {transition}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className={css.duration}>
-          <input
-            type="range"
-            id={`${props.id}-duration`}
-            name={`${props.id}-duration`}
-            min={0}
-            max={500}
-            step={5}
-            value={props.duration}
-            onChange={props.onDurationChange}
-          />
-          <div className={css.value}>
-            <span>{props.duration} ms</span>
-            <span>{(props.duration / 1000).toFixed(2)} s</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function DurationInput(props: {
-  id: string;
-  label: string;
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) {
-  return (
-    <div className={css.durationInput}>
-      <label htmlFor={props.id}>{props.label}</label>
-      <div className={css.duration}>
-        <input
-          type="range"
-          id={props.id}
-          name={props.label}
-          min={props.min}
-          max={props.max}
-          step={props.step}
-          value={props.value}
-          onChange={props.onChange}
-        />
-        {props.value !== -1 && (
-          <div className={css.value}>
-            <span>{props.value} ms</span>
-            <span>{(props.value / 1000).toFixed(2)} s</span>
-          </div>
-        )}
-        {props.value === -1 && (
-          <div className={css.value}>
-            <span>Infinite</span>
-          </div>
-        )}
-      </div>
-    </div>
+    <InputGroup label="Radio Animation" direction="column">
+      <InputDropdown
+        id={`${props.id}-animation-type`}
+        label="Animation Type"
+        value={props.value === "none" ? "none" : "transition-" + props.value}
+        values={OverlayTransitions.map((transition) => ({
+          icon: undefined,
+          label: transition,
+          value: transition === "none" ? "none" : "transition-" + transition,
+        }))}
+        onChange={(value) => {
+          props.onChange(
+            value === "none"
+              ? "none"
+              : (value.replace("transition-", "") as Overlay_TransitionType)
+          );
+        }}
+      />
+      <InputDuration
+        id={`${props.id}-animation-duration`}
+        label="Animation Duration (ms)"
+        value={props.duration}
+        min={0}
+        max={500}
+        step={5}
+        onChange={props.onDurationChange}
+      />
+    </InputGroup>
   );
 }

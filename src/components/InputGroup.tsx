@@ -5,17 +5,21 @@ export default function InputGroup(props: {
   direction?: string;
   fullWidth?: boolean;
   basis?: string;
+  label?: string;
 }) {
   return (
-    <div
-      className={
-        css.inputGroup +
-        ` direction-${props.direction} ` +
-        (props.fullWidth ? ` ${css.fullWidth}` : "")
-      }
-      style={{"--_flex-basis": props.basis} as React.CSSProperties}
-    >
-      {props.children}
+    <div className={css.wrapper}>
+      {props.label && <label className={css.label}>{props.label}</label>}
+      <div
+        className={
+          css.inputGroup +
+          ` direction-${props.direction} ` +
+          (props.fullWidth ? ` ${css.fullWidth}` : "")
+        }
+        style={{ "--_flex-basis": props.basis } as React.CSSProperties}
+      >
+        {props.children}
+      </div>
     </div>
   );
 }

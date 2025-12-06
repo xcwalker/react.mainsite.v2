@@ -112,7 +112,7 @@
 
 .slideshow .dots .dot {
   /* variables */
-  --_offset: 5%;
+  --_offset: 0%;
 
   /* sizing */
   width: var(--_dot-size);

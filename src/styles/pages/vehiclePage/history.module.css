@@ -84,7 +84,7 @@ li:last-of-type .entry::after {
   gap: 0.5rem;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--fleet-history-header-border-radius, 0.5rem);
   background-color: var(--primary);
 }
 
@@ -103,7 +103,7 @@ li:last-of-type .entry::after {
   height: 100%;
 
   /* styling */
-  border-radius: 0.5rem;
+  border-radius: var(--fleet-history-header-border-radius, 0.5rem);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   background-color: var(--accent);
@@ -160,7 +160,7 @@ li:last-of-type .entry::after {
   /* styling */
   color: var(--text);
   font-size: 1.5rem;
-  border-radius: 0.25rem;
+  border-radius: calc(var(--fleet-history-header-border-radius, 0.5rem) / 2);
   background-color: var(--background);
 }
 

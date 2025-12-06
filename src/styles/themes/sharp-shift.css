@@ -24,6 +24,13 @@ html[data-theme="Sharp-Shift"],
   --hero-button-border-radius: 0rem;
   --hero-dot-border-radius: 0rem;
 
+  /* radio */
+  --radio-border-radius: 0rem;
+  --radio-button-border-radius: 0rem;
+  --radio-image-border-radius: 0rem;
+  --radio-ad-border-radius: 0rem;
+  --radio-ad-image-border-radius: 0rem;
+
   /* griditems */
   --grid-item-border-radius: 0rem;
   --grid-item-collection-border-radius: 0rem;
@@ -34,6 +41,7 @@ html[data-theme="Sharp-Shift"],
 
   /* fleet */
   --fleet-border-radius: 0rem;
+  --fleet-history-header-border-radius: 0rem;
 
   /* input */
   --input-border-radius: 0rem;
@@ -48,6 +56,9 @@ html[data-theme="Sharp-Shift"],
   --item-sidebar-border-radius: 0rem;
   --item-sidebar-collection-border-radius: 0rem;
   --recipe-checklist_item-border_radius: 0rem;
+
+  /* overlay */
+  --overlay-border-radius: 0rem;
 
   /* user */
   --user-profile-border-radius: 0rem;

@@ -1,3 +1,44 @@
+.wrapper {
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem;
+
+  /* styling */
+  border-radius: var(--input-border-radius, 0.75rem);
+  background-color: var(--primary);
+
+  & > .inputGroup .wrapper  {
+    border: none;
+    background-color: var(--secondary);
+    flex-basis: auto;
+  }
+}
+
+.wrapper > label {
+  /* sizing */
+  width: 100%;
+  padding: 0.125rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* text */
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  border: none;
+  color: var(--text);
+}
+
 .inputGroup {
   /* flex */
   display: flex;
@@ -7,16 +48,8 @@
   /* sizing */
   padding: 0.25rem;
   flex-grow: 1;
-
-  /* styling */
-  border-radius: var(--input-border-radius, 0.5rem);
-  border: 0.125rem solid var(--primary);
-
-  & > .inputGroup {
-    border: none;
-    background-color: var(--secondary);
-    flex-basis: auto;
-  }
+  border-radius: calc(var(--input-border-radius, 0.75rem) - 0.25rem);
+  background-color: var(--background);
 }
 
 .inputGroup > * {
@@ -31,6 +64,10 @@
 
 .inputGroup:global(.direction-column) {
   flex-direction: column;
+
+  & > * {
+    width: 100%;
+  }
 }
 
 .inputGroup.fullWidth {

@@ -15,7 +15,7 @@
   background: var(--primary);
 }
 
-.labels {
+.label {
   /* sizing */
   width: 100%;
   padding: 0.125rem 1rem;
@@ -66,6 +66,9 @@
   font-weight: 500;
   line-height: 1;
   text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-wrap: nowrap;
 
   /* styling */
   background: var(--background);
@@ -95,6 +98,19 @@
   /* styling */
   overflow-y: auto;
   background: var(--secondary);
-  border-radius: 0.5rem;
+  border-radius: calc(var(--input-border-radius, 0.75rem) - 0.25rem);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    opacity 0.2s ease-in-out,
+    transform 0.2s ease-in-out;
+  box-shadow: 
+    /* darkens whole screen */
+    0 0 0 9999px rgba(0, 0, 0, 0.5),
+    /* main shadow */ 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.dropdown.closed {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.5rem);
 }

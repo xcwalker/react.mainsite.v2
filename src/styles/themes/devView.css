@@ -52,6 +52,9 @@ html[data-theme="DevView™"],
   --item-sidebar-gap: 0.5rem;
   --item-sidebar-section-gap: 0rem;
 
+  /* overlay */
+  --overlay-border-radius: 0rem;
+
   /* settings */
   --settings-note-border-radius: 0rem;
   --settings-border-radius: 0rem;
@@ -59,6 +62,7 @@ html[data-theme="DevView™"],
 
   /* fleet */
   --fleet-border-radius: 0rem;
+  --fleet-history-header-border-radius: 0rem;
 
   /* input */
   --input-border-radius: 0rem;
