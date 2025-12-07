@@ -18,8 +18,8 @@ export default function ItemCarousel(props: {
   title: string;
   itemType: ItemTypes;
   sortDirection?: {
-    value: "asc" | "desc";
-    set: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
+    value: "asc" | "desc" | "alpha-asc" | "alpha-desc";
+    set: React.Dispatch<React.SetStateAction<"asc" | "desc" | "alpha-asc" | "alpha-desc">>;
   };
 }) {
   const [carouselItems, setCarouselItems] = useState<

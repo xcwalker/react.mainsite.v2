@@ -21,7 +21,7 @@ export default function HomeCarousel(props: {
   const [itemArray, setItemArray] = useState<
     { id: string; value: ItemProps }[] | undefined
   >();
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | "alpha-asc" | "alpha-desc">("desc");
 
   useEffect(() => {
     if (props.onHome) {

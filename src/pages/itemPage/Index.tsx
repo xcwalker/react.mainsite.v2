@@ -26,9 +26,9 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
   const [item, setItem] = useState<ItemType | undefined>(undefined);
   const [error, setError] = useState(false);
   const [checklistMode, setChecklistMode] = useState(false);
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | "alpha-asc" | "alpha-desc">("desc");
   const [sortDirectionCollection, setSortDirectionCollection] = useState<
-    "asc" | "desc"
+    "asc" | "desc" | "alpha-asc" | "alpha-desc"
   >("desc");
 
   useEffect(() => {

@@ -5,13 +5,23 @@ export default async function getDataByDateExcludeSlugAndSameCollection(
   firebaseCollection: string,
   slugExclude: string,
   collectionStr: string,
-  sortDirection: "asc" | "desc" = "desc"
+  sortDirection: "asc" | "desc" | "alpha-asc" | "alpha-desc" = "desc"
 ) {
-  const q = query(
-    collection(firebaseDB, firebaseCollection),
-    orderBy("metaData.date.modified", sortDirection),
-    where("metaData.collection", "==", collectionStr)
-  );
+  let q;
+  if (sortDirection === "alpha-asc" || sortDirection === "alpha-desc") {
+    const order = sortDirection === "alpha-asc" ? "asc" : "desc";
+    q = query(
+      collection(firebaseDB, firebaseCollection),
+      orderBy("data.title", order),
+      where("metaData.collection", "==", collectionStr)
+    );
+  } else {
+    q = query(
+      collection(firebaseDB, firebaseCollection),
+      orderBy("metaData.date.modified", sortDirection),
+      where("metaData.collection", "==", collectionStr)
+    );
+  }
 
   const querySnapshot = await getDocs(q);
 

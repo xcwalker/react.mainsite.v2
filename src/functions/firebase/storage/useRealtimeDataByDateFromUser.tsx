@@ -11,13 +11,23 @@ export default async function getRealtimeDataByDateFromUser(
   firebaseCollection: string,
   userId: string,
   setData: React.Dispatch<React.SetStateAction<unknown>>,
-  sortDirection: "asc" | "desc" = "desc"
+  sortDirection: "asc" | "desc" | "alpha-asc" | "alpha-desc" = "desc"
 ) {
-  const q = query(
+  let q;
+  if (sortDirection === "alpha-asc" || sortDirection === "alpha-desc") {
+    const order = sortDirection === "alpha-asc" ? "asc" : "desc";
+    q = query(
+      collection(firebaseDB, firebaseCollection),
+      orderBy("data.title", order),
+      where("metaData.authorID", "==", userId)
+    );
+  } else {
+    q = query(
       collection(firebaseDB, firebaseCollection),
       orderBy("metaData.date.modified", sortDirection),
       where("metaData.authorID", "==", userId)
     );
+  }
 
   const unsubscribe = onSnapshot(
     q,

@@ -19,8 +19,8 @@ export default function Carousel(props: {
   defaultView: string;
   showCreateButton?: ItemTypes | "overlay";
   sortDirection?: {
-    value: "asc" | "desc";
-    set: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
+    value: "asc" | "desc" | "alpha-asc" | "alpha-desc";
+    set: React.Dispatch<React.SetStateAction<"asc" | "desc" | "alpha-asc" | "alpha-desc">>;
   };
 }) {
   const carouselRef = useRef<HTMLElement>(null);
@@ -72,8 +72,10 @@ export default function Carousel(props: {
               id="sortDirection"
               value={props.sortDirection.value}
               values={[
-                { label: "Ascending", value: "asc", icon: "arrow_upward" },
-                { label: "Descending", value: "desc", icon: "arrow_downward" },
+                { label: "Oldest", value: "asc", icon: "arrow_upward" },
+                { label: "Newest", value: "desc", icon: "arrow_downward" },
+                { label: "A-Z", value: "alpha-asc", icon: "sort_by_alpha" },
+                { label: "Z-A", value: "alpha-desc", icon: "sort_by_alpha" },
               ]}
               onChange={(value) => props.sortDirection?.set(value as "asc" | "desc")}
               className={css.pillInputContainer}

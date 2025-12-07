@@ -4,13 +4,23 @@ import { firebaseDB } from "./setup";
 export default async function getDataByDateExcludeSlug(
   firebaseCollection: string,
   slugExclude: string,
-  sortDirection: "asc" | "desc" = "desc"
+  sortDirection: "asc" | "desc" | "alpha-asc" | "alpha-desc" = "desc"
 ) {
-  const q = query(
-    collection(firebaseDB, firebaseCollection),
-    orderBy("metaData.date.modified", sortDirection),
-    where("Document ID", "!=", slugExclude)
-  );
+  let q;
+  if (sortDirection === "alpha-asc" || sortDirection === "alpha-desc") {
+    const order = sortDirection === "alpha-asc" ? "asc" : "desc";
+    q = query(
+      collection(firebaseDB, firebaseCollection),
+      orderBy("data.title", order),
+      where("Document ID", "!=", slugExclude)
+    );
+  } else {
+    q = query(
+      collection(firebaseDB, firebaseCollection),
+      orderBy("metaData.date.modified", sortDirection),
+      where("Document ID", "!=", slugExclude)
+    );
+  }
 
   const querySnapshot = await getDocs(q);
 
