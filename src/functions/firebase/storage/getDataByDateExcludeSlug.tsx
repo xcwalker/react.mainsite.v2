@@ -1,10 +1,14 @@
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { firebaseDB } from "./setup";
 
-export default async function getDataByDateExcludeSlug(firebaseCollection: string, slugExclude: string) {
+export default async function getDataByDateExcludeSlug(
+  firebaseCollection: string,
+  slugExclude: string,
+  sortDirection: "asc" | "desc" = "desc"
+) {
   const q = query(
     collection(firebaseDB, firebaseCollection),
-    orderBy("metaData.date.modified"),
+    orderBy("metaData.date.modified", sortDirection),
     where("Document ID", "!=", slugExclude)
   );
 

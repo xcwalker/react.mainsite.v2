@@ -26,6 +26,10 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
   const [item, setItem] = useState<ItemType | undefined>(undefined);
   const [error, setError] = useState(false);
   const [checklistMode, setChecklistMode] = useState(false);
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [sortDirectionCollection, setSortDirectionCollection] = useState<
+    "asc" | "desc"
+  >("desc");
 
   useEffect(() => {
     firebaseGetRealtimeData(
@@ -90,6 +94,10 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
               title={
                 "More from the " + item.metaData.collectionName + " collection"
               }
+              sortDirection={{
+                value: sortDirectionCollection,
+                set: setSortDirectionCollection,
+              }}
             />
             <ItemCarousel
               itemType={props.itemType}
@@ -97,6 +105,7 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
               collection={item.metaData.collection}
               sameCollection={false}
               title={"More " + props.itemType}
+              sortDirection={{ value: sortDirection, set: setSortDirection }}
             />
           </Section>
         </PageSeoWrapper>

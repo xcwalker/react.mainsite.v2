@@ -17,6 +17,10 @@ export default function ItemCarousel(props: {
   userID?: string;
   title: string;
   itemType: ItemTypes;
+  sortDirection?: {
+    value: "asc" | "desc";
+    set: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
+  };
 }) {
   const [carouselItems, setCarouselItems] = useState<
     { id: string; value: ItemType }[] | undefined
@@ -27,14 +31,16 @@ export default function ItemCarousel(props: {
       getRealtimeDataByDateFromUser(
         props.itemType,
         props.userID,
-        setCarouselItems as React.Dispatch<React.SetStateAction<unknown>>
+        setCarouselItems as React.Dispatch<React.SetStateAction<unknown>>,
+        props.sortDirection ? props.sortDirection.value : "desc"
       );
       return;
     } else if (props.collection && props.sameCollection === true) {
       getDataByDateExcludeSlugAndSameCollection(
         props.itemType,
         props.slug,
-        props.collection
+        props.collection,
+        props.sortDirection ? props.sortDirection.value : "desc"
       ).then((data) => {
         setCarouselItems(data as { id: string; value: ItemType }[]);
       });
@@ -42,12 +48,17 @@ export default function ItemCarousel(props: {
       getDataByDateExcludeSlugAndDifferentCollection(
         props.itemType,
         props.slug,
-        props.collection
+        props.collection,
+        props.sortDirection ? props.sortDirection.value : "desc"
       ).then((data) => {
         setCarouselItems(data as { id: string; value: ItemType }[]);
       });
     } else {
-      getDataByDateExcludeSlug(props.itemType, props.slug).then((data) => {
+      getDataByDateExcludeSlug(
+        props.itemType,
+        props.slug,
+        props.sortDirection ? props.sortDirection.value : "desc"
+      ).then((data) => {
         setCarouselItems(data as { id: string; value: ItemType }[]);
       });
     }
@@ -81,6 +92,7 @@ export default function ItemCarousel(props: {
               })}
             </>
           }
+          sortDirection={props.sortDirection}
         >
           {carouselItems.map((item, index) => {
             return (

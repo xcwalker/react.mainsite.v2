@@ -114,3 +114,31 @@
   pointer-events: none;
   transform: translateY(-0.5rem);
 }
+
+
+.pillInputContainer {
+  /* position */
+  position: relative;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* sizing */
+  width: fit-content;
+  padding: 0.125rem;
+
+  /* styling */
+  border-radius: var(--input-pill-border-radius, 100vmax);
+  background: var(--primary);
+}
+
+.pillInputContainer .input {
+  /* sizing */
+  width: fit-content;
+  height: fit-content;
+  padding: 0.35rem var(--input-pill-padding-horizontal, 1rem);
+
+  /* styling */
+  border-radius: calc(var(--input-pill-border-radius, 100vmax) - 0.125rem);
+}

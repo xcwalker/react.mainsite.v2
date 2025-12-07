@@ -47,6 +47,8 @@ html[data-theme="Sharp-Shift"],
   --input-border-radius: 0rem;
   --newTabLink-border-radius: 0rem;
   --input-toggle-border-radius: 0rem;
+  --input-pill-border-radius: 0rem;
+  --input-pill-padding-horizontal: 1rem;
 
   /* organization */
   --organization-border-radius: 0rem;

@@ -6,6 +6,7 @@ import { RoleProtect } from "./Security/Protect";
 import Button from "./Button";
 import toTitleCase from "../functions/toTitleCase";
 import { ItemTypes } from "../types";
+import { InputDropdownPill } from "./InputDropdown";
 
 export default function Carousel(props: {
   children: ReactNode;
@@ -17,6 +18,10 @@ export default function Carousel(props: {
   titleLink?: { text: string; href: string };
   defaultView: string;
   showCreateButton?: ItemTypes | "overlay";
+  sortDirection?: {
+    value: "asc" | "desc";
+    set: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
+  };
 }) {
   const carouselRef = useRef<HTMLElement>(null);
   const [scrolledDistance, setScrolledDistance] = useState(0);
@@ -60,6 +65,19 @@ export default function Carousel(props: {
             <Link to={props.titleLink.href} className={css.titleLink}>
               {props.titleLink.text}
             </Link>
+          )}
+
+          {props.sortDirection && (
+            <InputDropdownPill
+              id="sortDirection"
+              value={props.sortDirection.value}
+              values={[
+                { label: "Ascending", value: "asc", icon: "arrow_upward" },
+                { label: "Descending", value: "desc", icon: "arrow_downward" },
+              ]}
+              onChange={(value) => props.sortDirection?.set(value as "asc" | "desc")}
+              className={css.pillInputContainer}
+            />
           )}
 
           {props.showCreateButton && (

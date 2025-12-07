@@ -18,28 +18,30 @@ export default function HomeCarousel(props: {
   hasThumbnail: boolean;
 }) {
   const currentUser = useAuth();
-  const [projectsArray, setProjectsArray] = useState<
+  const [itemArray, setItemArray] = useState<
     { id: string; value: ItemProps }[] | undefined
   >();
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
   useEffect(() => {
     if (props.onHome) {
       getDataByDateFromUser(
         props.itemType,
-        currentUser ? currentUser.uid : import.meta.env.VITE_MAIN_USER_ID
+        currentUser ? currentUser.uid : import.meta.env.VITE_MAIN_USER_ID,
+        sortDirection
       ).then((data) => {
-        setProjectsArray(data as { id: string; value: ItemProps }[]);
+        setItemArray(data as { id: string; value: ItemProps }[]);
       });
     } else {
-      getDataByDate(props.itemType).then((data) => {
-        setProjectsArray(data as { id: string; value: ItemProps }[]);
+      getDataByDate(props.itemType, sortDirection).then((data) => {
+        setItemArray(data as { id: string; value: ItemProps }[]);
       });
     }
 
     return () => {
-      setProjectsArray(undefined);
+      setItemArray(undefined);
     };
-  }, [props.onHome, props.itemType, currentUser]);
+  }, [props.onHome, props.itemType, currentUser, sortDirection]);
 
   return (
     <Section id={props.itemType} container={{ className: css.container }}>
@@ -56,8 +58,8 @@ export default function HomeCarousel(props: {
         }
         listView={
           <>
-            {projectsArray &&
-              projectsArray.map((item, index) => {
+            {itemArray &&
+              itemArray.map((item, index) => {
                 return (
                   <Fragment key={index}>
                     <ListItem
@@ -71,10 +73,11 @@ export default function HomeCarousel(props: {
               })}
           </>
         }
+        sortDirection={{ value: sortDirection, set: setSortDirection }}
       >
         <>
-          {projectsArray &&
-            projectsArray.map((item, index) => {
+          {itemArray &&
+            itemArray.map((item, index) => {
               return (
                 <Fragment key={index}>
                   <GridItem

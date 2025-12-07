@@ -23,7 +23,7 @@
 
     .titleLink {
       /* sizing */
-      padding: 0.35rem 1rem;
+      padding: 0.35rem var(--input-pill-padding-horizontal, 1rem);
 
       /* text */
       font-size: 0.75rem;
@@ -35,12 +35,22 @@
 
       /* styling */
       border: 2px solid var(--primary);
-      border-radius: 100rem;
+      border-radius: var(--input-pill-border-radius, 100vmax);
 
       &:hover,
       &:focus-visible {
         border-color: currentColor;
       }
+    }
+
+    .pillInputContainer > button {
+      /* sizing */
+      padding-block: 0.225rem;
+
+      /* text */
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1; 
     }
 
     .createButton {
@@ -64,25 +74,24 @@
 
   &:global(.view-list),
   &:global(.view-grid) {
-  /* position */
-  position: sticky;
-  top: 0;
-  z-index: 997;
+    /* position */
+    position: sticky;
+    top: 0;
+    z-index: 997;
 
-  /* sizing */
-  margin-bottom: 0.25rem;
+    /* sizing */
+    margin-bottom: 0.25rem;
 
-  /* styling */
-  background: var(--background);
-  border-bottom: 1px solid var(--primary);
+    /* styling */
+    background: var(--background);
+    border-bottom: 1px solid var(--primary);
   }
 
   & .title {
     margin-right: auto;
 
     @media (max-width: 800px) {
-    margin-inline: 0;
-      
+      margin-inline: 0;
     }
   }
 
@@ -132,7 +141,7 @@
       border: none;
       background: transparent;
       color: var(--text);
-      border-radius: 50%;
+      border-radius: var(--input-pill-border-radius, 50%);
 
       &:disabled {
         color: var(--secondary);

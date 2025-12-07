@@ -10,11 +10,12 @@ import { firebaseDB } from "./setup";
 export default async function getRealtimeDataByDateFromUser(
   firebaseCollection: string,
   userId: string,
-  setData: React.Dispatch<React.SetStateAction<unknown>>
+  setData: React.Dispatch<React.SetStateAction<unknown>>,
+  sortDirection: "asc" | "desc" = "desc"
 ) {
   const q = query(
       collection(firebaseDB, firebaseCollection),
-      orderBy("metaData.date.modified"),
+      orderBy("metaData.date.modified", sortDirection),
       where("metaData.authorID", "==", userId)
     );
 

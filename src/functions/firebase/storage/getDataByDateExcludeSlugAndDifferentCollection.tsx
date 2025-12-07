@@ -4,11 +4,12 @@ import { firebaseDB } from "./setup";
 export default async function getDataByDateExcludeSlugAndDifferentCollection(
   firebaseCollection: string,
   slugExclude: string,
-  collectionStr: string
+  collectionStr: string,
+  sortDirection: "asc" | "desc" = "desc"
 ) {
   const q = query(
     collection(firebaseDB, firebaseCollection),
-    orderBy("metaData.date.modified"),
+    orderBy("metaData.date.modified", sortDirection),
     where("metaData.collection", "!=", collectionStr)
   );
 
