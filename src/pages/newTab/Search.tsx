@@ -183,6 +183,7 @@ export function NewTabSearch(props: {
     BookmarkItemType[]
   >([]);
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
+  const [searchHostname, setSearchHostname] = useState("");
 
   useEffect(() => {
     if (search.length === 0) {
@@ -210,10 +211,22 @@ export function NewTabSearch(props: {
     fetchSuggestions();
 
     return () => {
-      setSuggestions([]);
       controller.abort();
     };
   }, [search]);
+
+  useEffect(() => {
+    if (searchIsWebsite) {
+      const url = isValidHttpUrl(search)
+        ? new URL(search)
+        : isValidHttpUrl("https://" + search)
+          ? new URL("https://" + search)
+          : new URL("http://invalidurl"); // Fallback to http if no protocol is provided
+                setSearchHostname(url.hostname.replace(/^www\./, ""));
+    } else {
+      setSearchHostname("");
+    }
+  }, [search, searchIsWebsite]);
 
   useEffect(() => {
     if (search.length === 0) {
@@ -232,7 +245,12 @@ export function NewTabSearch(props: {
   }, [props.bookmarks, search]);
 
   return (
-    <div className={css.searchWrapper + (selectedSuggestionIndex == -1 ? " " + css.selected : "")}>
+    <div
+      className={
+        css.searchWrapper +
+        (selectedSuggestionIndex == -1 ? " " + css.selected : "")
+      }
+    >
       {!props.hasCMDKey && (
         <span
           className={
@@ -266,7 +284,18 @@ export function NewTabSearch(props: {
           />
         </div>
       )}
-      {searchIsWebsite && <GFIcon className={css.icon}>language</GFIcon>}
+      {searchIsWebsite && (
+        <div className={css.navIconWrapper}>
+          <>
+            <img
+              src={"https://icon.horse/icon/" + searchHostname}
+              alt=""
+              className={css.icon}
+            />
+            <GFIcon className={css.indicator}>language</GFIcon>
+          </>
+        </div>
+      )}
       <input
         type="text"
         placeholder={"Search " + props.searchProvider}

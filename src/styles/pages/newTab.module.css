@@ -272,6 +272,11 @@ li.linkItem a .iconWrapper img {
 
   /* object fit */
   object-fit: contain;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 li.linkItem a span.title {
