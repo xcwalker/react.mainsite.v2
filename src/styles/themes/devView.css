@@ -78,4 +78,7 @@ html[data-theme="DevView™"],
 
   /* newtab */
   --newtab-link-border-radius: 0rem;
+
+  /* footer */
+  --footer-border-radius: 0rem;
 }

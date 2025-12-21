@@ -30,7 +30,7 @@ function SiteItem(props: {
       <GFIcon className={css.icon}>{props.site.icon}</GFIcon>
       <div className={css.container}>
         <h3>{props.site.name}</h3>
-        <span>{props.site.url}</span>
+        <span>{props.site.url.replace("https://", "").replace("http://", "").replace("/", "")}</span>
       </div>
     </Link>
   );

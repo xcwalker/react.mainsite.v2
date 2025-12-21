@@ -17,7 +17,15 @@ export default function Footer() {
     getIterationAlphabet(build.APP_VERSION);
 
   return (
-    <footer className={css.footer + " " + (!radio.inSidebar ? css.footerRadio : "") + " " + (radio.showDJ ? css.footerDJ : "")}>
+    <footer
+      className={
+        css.footer +
+        " " +
+        (!radio.inSidebar ? css.footerRadio : "") +
+        " " +
+        (radio.showDJ ? css.footerDJ : "")
+      }
+    >
       <Socials />
       <div className={css.container}>
         <div className={css.column}>
@@ -31,12 +39,13 @@ export default function Footer() {
           </span>
           <span className={css.span}>All rights reserved.</span>
         </div>
-
         <div className={css.column}>
           {mode === "development" && (
             <div className={css.devMode}>
               <span>Development Build </span>
-              <span className={css.devBuild}>Development Version {build.DEV_VERSION}</span>
+              <span className={css.devBuild}>
+                Development Version {build.DEV_VERSION}
+              </span>
               <span className={css.prodBuild}>
                 of prod. build {productionBuildString}
               </span>
@@ -48,6 +57,11 @@ export default function Footer() {
               Production Build {productionBuildString}
             </span>
           )}
+        </div>
+      </div>
+      <div className={css.groupContainer}>
+        <div className={css.column}>
+          <Logos.xcwgroup className={css.groupLogo} />
         </div>
       </div>
     </footer>
