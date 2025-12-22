@@ -38,6 +38,15 @@ body {
     var(--transition-color-600);
 }
 
+body.yarl__no_scroll  {
+  overflow: unset;
+  height: auto;
+}
+
+body.yarl__no_scroll #root  {
+  overflow: clip;
+}
+
 @media print {
   body {
     background-color: white;

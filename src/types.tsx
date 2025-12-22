@@ -179,6 +179,13 @@ export const defaultNav: NavSection[] = [
         // iconURL:
         // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Therwim.svg",
       },
+      {
+        title: "Photon Editor",
+        href: "https://photon.xcwalker.dev/",
+        gficon: "backlight_low",
+        // iconURL:
+        // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Photon.svg",
+      },
     ],
   },
   {

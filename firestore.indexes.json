@@ -159,6 +159,96 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "metaData.collection",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "blog",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "metaData.collection",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "blog",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "blog",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "blog",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "blog",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "blog",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
           "fieldPath": "metaData.authorID",
           "order": "ASCENDING"
         },
@@ -285,6 +375,66 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "metaData.collection",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "projects",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "metaData.collection",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "projects",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "projects",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "projects",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
           "fieldPath": "metaData.authorID",
           "order": "ASCENDING"
         },
@@ -335,6 +485,36 @@
           "order": "DESCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "projects",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.collection",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "projects",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.collection",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "projects",
@@ -467,6 +647,66 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "metaData.collection",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "recipes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "metaData.collection",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "recipes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "recipes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "recipes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
           "fieldPath": "metaData.authorID",
           "order": "ASCENDING"
         },
@@ -517,6 +757,36 @@
           "order": "DESCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "recipes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.collection",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "recipes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.collection",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "recipes",
@@ -643,6 +913,66 @@
           "order": "DESCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "videos",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "metaData.collection",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "videos",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "metaData.collection",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "videos",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "ASCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "videos",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "metaData.authorID",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data.title",
+          "order": "DESCENDING"
+        }
+      ],
+      "density": "SPARSE_ALL"
     },
     {
       "collectionGroup": "videos",

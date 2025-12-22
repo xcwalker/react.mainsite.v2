@@ -803,7 +803,9 @@ export const RadioAtom = atomWithStorage(
       image:
         "https://simulatorradio.com/processor/avatar?size=256&name=1726140003584.png",
     },
-  }, undefined, {getOnInit: true}
+  },
+  undefined,
+  { getOnInit: true }
 );
 
 export const NewTabLinksAtom = atomWithStorage<NewTabLinks | undefined>(
