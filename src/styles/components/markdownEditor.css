@@ -1,6 +1,6 @@
 .react-mde {
   border: 0.125rem solid var(--primary);
-  border-radius: 0.5rem;
+  border-radius: var(--markdown-editor-border-radius, 0.5rem);
   overflow: hidden;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .mde-header .mde-tabs button {
-  border-radius: 0.5rem;
+  border-radius: var(--markdown-editor-button-border-radius, 0.5rem);
   padding: 0 0.75rem;
   margin-block: 0.25rem;
   background-color: transparent;
@@ -78,7 +78,7 @@
   border: none;
   background: none;
   color: inherit;
-  border-radius: 0.25rem;
+  border-radius: calc(var(--markdown-editor-button-border-radius, 0.5rem) / 2);
 
 }
 

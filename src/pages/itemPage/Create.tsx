@@ -25,6 +25,7 @@ import Section from "../../components/Section";
 import devConsole from "../../functions/devConsole";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
 import { separator, title } from "../../App";
+import InputList from "../../components/InputList";
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
@@ -207,15 +208,17 @@ function Sidebar(props: {
       {props.itemType === "projects" && (
         <>
           <div className={css.links}>
-              <TextInput
-                value={props.data.metaData.github ? props.data.metaData.github : ""}
-                valueName="github"
-                classification="metaData"
-                placeholder="Github Repository URL"
-                setData={props.setData}
-                title="Github Repository URL"
-                className={css.repoName}
-              />
+            <TextInput
+              value={
+                props.data.metaData.github ? props.data.metaData.github : ""
+              }
+              valueName="github"
+              classification="metaData"
+              placeholder="Github Repository URL"
+              setData={props.setData}
+              title="Github Repository URL"
+              className={css.repoName}
+            />
             <TextInput
               value={props.data.metaData.workshop}
               valueName="workshop"
@@ -476,168 +479,62 @@ function Main(props: {
 
       {/* ingredients */}
       {props.itemType === "recipes" && (
-        <div className={css.ingredients}>
-          {props.data.data.ingredients &&
-            props.data.data.ingredients.map((ingredient, index) => {
-              return (
-                <Fragment key={index}>
-                  <TextInputList
-                    value={ingredient}
-                    valueName={index.toString()}
-                    classification="ingredients"
-                    placeholder={"Ingredient " + (index + 1)}
-                    setData={props.setData}
-                    title="Ingredient"
-                    className={css.ingredient}
-                    data={props.data}
-                  />
-                </Fragment>
-              );
-            })}
-          <button
-            onClick={() => {
-              const ingredientLength = props.data.data.ingredients.length;
-              props.setData((prev) => {
-                const newValue = { ...prev };
-                if (ingredientLength + 1 !== newValue.data.ingredients.length) {
-                  newValue.data.ingredients = [...prev.data.ingredients, ""];
-                }
-                return newValue;
-              });
-            }}
-            className={css.addButton}
-          >
-            <GFIcon>add</GFIcon>
-          </button>
-        </div>
-      )}
-      {/* prep */}
-      {props.itemType === "recipes" && (
-        <div className={css.prep}>
-          {props.data.data.instructions.prep &&
-            props.data.data.instructions.prep.map((instruction, index) => {
-              return (
-                <Fragment key={index}>
-                  <TextInputList
-                    value={instruction}
-                    valueName={index.toString()}
-                    classification="instructions"
-                    instructionTag="prep"
-                    placeholder={"Prep " + (index + 1)}
-                    setData={props.setData}
-                    title="Prep"
-                    className={css.instruction}
-                    data={props.data}
-                  />
-                </Fragment>
-              );
-            })}
-          <button
-            onClick={() => {
-              const instructionLength =
-                props.data.data.instructions.prep?.length || 0;
-              props.setData((prev) => {
-                const newValue = { ...prev };
-                if (
-                  instructionLength + 1 !==
-                  newValue.data.instructions.prep?.length
-                ) {
-                  newValue.data.instructions.prep = [
-                    ...(prev.data.instructions.prep ?? []),
-                    "",
-                  ];
-                }
-                return newValue;
-              });
-            }}
-            className={css.addButton}
-          >
-            <GFIcon>add</GFIcon>
-          </button>
-        </div>
-      )}
-      {/* cook */}
-      {props.itemType === "recipes" && props.data.data.instructions && (
-        <div className={css.cook}>
-          {props.data.data.instructions.cook &&
-            props.data.data.instructions.cook.map((instruction, index) => {
-              return (
-                <Fragment key={index}>
-                  <TextInputList
-                    value={instruction}
-                    valueName={index.toString()}
-                    classification="instructions"
-                    instructionTag="cook"
-                    placeholder={"Cook " + (index + 1)}
-                    setData={props.setData}
-                    title="Cook"
-                    className={css.instruction}
-                    data={props.data}
-                  />
-                </Fragment>
-              );
-            })}
-          <button
-            onClick={() => {
-              const instructionLength =
-                props.data.data.instructions.cook.length;
-              props.setData((prev) => {
-                const newValue = { ...prev };
-                if (
-                  instructionLength + 1 !==
-                  newValue.data.instructions.cook.length
-                ) {
-                  newValue.data.instructions.cook = [
-                    ...prev.data.instructions.cook,
-                    "",
-                  ];
-                }
-                return newValue;
-              });
-            }}
-            className={css.addButton}
-          >
-            <GFIcon>add</GFIcon>
-          </button>
-          {/* buttons */}
-        </div>
-      )}
-      {/* images */}
-      <div className={css.images}>
-        {props.data.metaData.images &&
-          props.data.metaData.images.map((image, index) => {
-            return (
-              <Fragment key={index}>
-                <TextInputList
-                  value={image}
-                  valueName={index.toString()}
-                  classification="images"
-                  placeholder={"Image " + (index + 1)}
-                  setData={props.setData}
-                  title="Images"
-                  className={css.instruction}
-                  data={props.data}
-                />
-              </Fragment>
-            );
-          })}
-        <button
-          onClick={() => {
-            const imageLength = props.data.metaData.images.length || 0;
+        <InputList
+          list={props.data.data.ingredients}
+          onChange={(newList) => {
             props.setData((prev) => {
               const newValue = { ...prev };
-              if (imageLength + 1 !== newValue.metaData.images.length) {
-                newValue.metaData.images = [...prev.metaData.images, ""];
-              }
+              newValue.data.ingredients = newList;
               return newValue;
             });
           }}
-          className={css.addButton}
-        >
-          <GFIcon>add</GFIcon>
-        </button>
-        {/* buttons */}
-      </div>
+          id="ingredients-list"
+          title="Ingredients"
+        />
+      )}
+      {/* prep */}
+      {props.itemType === "recipes" && props.data.data.instructions.prep && (
+        <InputList
+          list={props.data.data.instructions.prep}
+          onChange={(newList) => {
+            props.setData((prev) => {
+              const newValue = { ...prev };
+              newValue.data.instructions.prep = newList;
+              return newValue;
+            });
+          }}
+          id="prep-list"
+          title="Prep"
+        />
+      )}
+      {/* cook */}
+      {props.itemType === "recipes" && props.data.data.instructions && (
+        <InputList
+          list={props.data.data.instructions.cook}
+          onChange={(newList) => {
+            props.setData((prev) => {
+              const newValue = { ...prev };
+              newValue.data.instructions.cook = newList;  
+              return newValue;
+            });
+          }}
+          id="cook-list"
+          title="Cook"
+        />
+      )}
+      {/* images */}
+      <InputList
+        list={props.data.metaData.images}
+        onChange={(newList) => {
+          props.setData((prev) => {
+            const newValue = { ...prev };
+            newValue.metaData.images = newList;
+            return newValue;
+          });
+        }}
+        id="images-list"
+        title="Images"
+      />
     </div>
   );
 }

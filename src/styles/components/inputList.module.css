@@ -1,0 +1,98 @@
+.inputList {
+  /* sizing */
+  padding: 0.125rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+
+  /* styling */
+  background-color: var(--primary);
+}
+
+.inputList .header {
+  /* sizing */
+  padding: 0.25rem 1rem;
+
+  /* flex */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.inputList .header h3 {
+  /* margin */
+  margin: 0;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.inputList .header .viewControls {
+  /* flex */
+  display: flex;
+  gap: var(--input-list-controls-gap, 0.5rem);
+}
+
+.inputList .main {
+  /* sizing */
+  padding: 0.5rem 0.5rem;
+
+  /* styling */
+  background-color: var(--background);
+}
+
+.inputList .main .itemList {
+  /* reset */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.inputList .main .itemList .editItem {
+  /* flex */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0;
+}
+
+.inputList .main .itemList .editItem input {
+  /* sizing */
+  height: 2rem;
+  flex: 1;
+  padding: 0.25rem 0.5rem;
+
+  /* styling */
+  background-color: transparent;
+  color: var(--text);
+  border: 0.125rem solid var(--secondary);
+}
+
+.inputList .main .itemList .editItem input:focus {
+  /* styling */
+  outline: none;
+  border-color: var(--accent);
+}
+
+.inputList .main .addInput {
+  /* sizing */
+  margin-top: 0.5rem;
+  display: flex;
+}
+
+.inputList .main .addInput input,
+.inputList .main textarea {
+  /* sizing */
+  flex: 1;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  resize: vertical;
+
+  /* styling */
+  background-color: transparent;
+  color: var(--text);
+  border: 0.125rem solid var(--secondary);
+}

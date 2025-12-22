@@ -163,11 +163,7 @@
 
 .create .sidebar .tags,
 .create .sidebar .links,
-.create .sidebar .repoInfo,
-.create .main .ingredients,
-.create .main .prep,
-.create .main .cook,
-.create .main .images {
+.create .sidebar .repoInfo {
   /* sizing */
   padding: 0.25rem;
 
