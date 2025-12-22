@@ -69,8 +69,7 @@ export default function ItemCreate(props: {
             },
             authorID: "",
             hasThumbnail: false,
-            repoName: "",
-            subRepo: "",
+            github: "",
             workshop: "",
           },
         } as CombinedItemProps)
@@ -208,28 +207,15 @@ function Sidebar(props: {
       {props.itemType === "projects" && (
         <>
           <div className={css.links}>
-            <div className={css.repoInfo}>
               <TextInput
-                value={props.data.metaData.repoName}
-                valueName="repoName"
+                value={props.data.metaData.github ? props.data.metaData.github : ""}
+                valueName="github"
                 classification="metaData"
-                placeholder="Repository Name"
+                placeholder="Github Repository URL"
                 setData={props.setData}
-                title="Repository Name"
+                title="Github Repository URL"
                 className={css.repoName}
               />
-              <TextInput
-                value={
-                  props.data.metaData.subRepo ? props.data.metaData.subRepo : ""
-                }
-                valueName="subRepo"
-                classification="metaData"
-                placeholder="Sub Repository (folder name)"
-                setData={props.setData}
-                title="Sub Repository (folder name)"
-                className={css.repoName}
-              />
-            </div>
             <TextInput
               value={props.data.metaData.workshop}
               valueName="workshop"
