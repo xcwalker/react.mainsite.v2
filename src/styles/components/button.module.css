@@ -61,6 +61,12 @@
   color: var(--text);
 }
 
+.button.tertiary {
+  /* styling */
+  background: var(--secondary);
+  color: var(--text);
+}
+
 .button.siteHidden {
   display: none;
 }

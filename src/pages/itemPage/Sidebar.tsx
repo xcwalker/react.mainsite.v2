@@ -132,15 +132,9 @@ export function ItemSidebar(props: {
               YouTube
             </Button>
           )}
-          {item.metaData.repoName && item.metaData.repoName.length > 0 && (
+          {item.metaData.github && item.metaData.github.length > 0 && (
             <Button
-              href={
-                "https://github.com/xcwalker/" +
-                item.metaData.repoName +
-                (item.metaData.subRepo
-                  ? "/tree/main/" + item.metaData.subRepo
-                  : "")
-              }
+              href={item.metaData.github}
               external
               title="Github Repo"
               icon={{ inline: <SocialIcon social="github" /> }}

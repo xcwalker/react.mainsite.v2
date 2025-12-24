@@ -19,7 +19,7 @@ export type ButtonType = {
   };
   external?: boolean;
   externalClassName?: string;
-  style?: "primary" | "secondary" | "danger" | "success" | "remove";
+  style?: "primary" | "secondary" | "tertiary" | "danger" | "success" | "remove";
   pageNavigation?: boolean;
   // pageNavigation is used to determine if the button is used for page navigation with # links
   hidden?: "siteNavigation" | "pageNavigation";

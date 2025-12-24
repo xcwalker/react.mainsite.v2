@@ -334,8 +334,7 @@ export type ItemType = {
     };
     authorID: string;
     key?: string;
-    repoName?: string;
-    subRepo?: string;
+    github?: string;
     workshop?: string;
     parnix?: boolean;
   };
@@ -396,8 +395,7 @@ export type VideoItemProps = ItemProps & {
 
 export type ProjectItemProps = ItemProps & {
   metaData: {
-    repoName: string;
-    subRepo?: string;
+    github: string;
     workshop: string;
     authorID: string;
   };

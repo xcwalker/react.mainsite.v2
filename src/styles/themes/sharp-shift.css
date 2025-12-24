@@ -49,6 +49,7 @@ html[data-theme="Sharp-Shift"],
   --input-toggle-border-radius: 0rem;
   --input-pill-border-radius: 0rem;
   --input-pill-padding-horizontal: 1rem;
+  --input-list-controls-gap: 0rem;
 
   /* organization */
   --organization-border-radius: 0rem;
@@ -58,6 +59,8 @@ html[data-theme="Sharp-Shift"],
   --item-sidebar-border-radius: 0rem;
   --item-sidebar-collection-border-radius: 0rem;
   --recipe-checklist_item-border_radius: 0rem;
+  --markdown-editor-border-radius: 0rem;
+  --markdown-editor-button-border-radius: 0rem;
 
   /* overlay */
   --overlay-border-radius: 0rem;
