@@ -27,7 +27,7 @@ export default function HomeHero(props: { logo?: {
       component: <ChristmasHero {...props} />,
       dateRange: {
         start: new Date(date.getFullYear() + "-12-01"),
-        end: new Date(date.getFullYear() + "-12-25"),
+        end: new Date(date.getFullYear() + "-12-25 23:59:59"),
       },
     },
     {
