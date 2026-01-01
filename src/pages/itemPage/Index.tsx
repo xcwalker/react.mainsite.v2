@@ -56,7 +56,7 @@ export default function ItemPage(props: { itemType: ItemTypes }) {
           image={item.metaData.thumbnail}
         >
           <Section id="project">
-            <SideBySide leftWidth="350px" printLeftWidth="350px">
+            <SideBySide leftWidth="350px" printLeftWidth="220px">
               <ItemSidebar
                 itemType={props.itemType}
                 item={item}
