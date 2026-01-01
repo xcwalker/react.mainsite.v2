@@ -174,7 +174,7 @@
     margin-inline: auto;
 
     /* styling */
-    background: var(--background-100);
+    background: white;
     border-radius: 0.5rem;
     break-inside: avoid;
     page-break-inside: avoid;
@@ -182,7 +182,7 @@
   }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (not (print)) {
 .thumbnail {
   width: calc(100% + 2rem);
   margin-inline: -1rem;

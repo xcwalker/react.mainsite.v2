@@ -286,7 +286,7 @@ export function ItemSidebar(props: {
           size={128}
           className={css.printQrCode}
           fgColor="var(--text)"
-          bgColor="var(--background-100)"
+          bgColor="white"
         />
       </SidebarContainer>
       <ShareModal

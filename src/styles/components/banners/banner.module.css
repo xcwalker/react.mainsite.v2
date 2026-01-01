@@ -25,6 +25,6 @@ a.banner {
 
 @media print {
   .banner {
-    display: none;
+    display: none !important;
   }
 }

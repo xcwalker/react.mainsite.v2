@@ -14,11 +14,16 @@
 }
 
 /* disable pull down to refresh on pages with user input */
-html:has(#OverlayCreate), body:has(#OverlayCreate),
-html:has(#create-item), body:has(#create-item),
-html:has(#nomination), body:has(#nomination),
-html:has(#user-edit), body:has(#user-edit),
-html:has(#create-ticket), body:has(#create-ticket) {
+html:has(#OverlayCreate),
+body:has(#OverlayCreate),
+html:has(#create-item),
+body:has(#create-item),
+html:has(#nomination),
+body:has(#nomination),
+html:has(#user-edit),
+body:has(#user-edit),
+html:has(#create-ticket),
+body:has(#create-ticket) {
   overscroll-behavior: none;
 }
 
@@ -34,16 +39,16 @@ body {
   color: var(--text);
 
   /* transition */
-  transition: var(--transition-background_color-600),
-    var(--transition-color-600);
+  transition:
+    var(--transition-background_color-600), var(--transition-color-600);
 }
 
-body.yarl__no_scroll  {
+body.yarl__no_scroll {
   overflow: unset;
   height: auto;
 }
 
-body.yarl__no_scroll #root  {
+body.yarl__no_scroll #root {
   overflow: clip;
 }
 
@@ -81,7 +86,9 @@ html {
 
   /* grid */
   display: grid;
-  grid-template-columns: [nav-start] var(--header-width) [nav-end main-start footer-start] 1fr [main-end footer-end];
+  grid-template-columns:
+    [nav-start] var(--header-width)
+    [nav-end main-start footer-start] 1fr [main-end footer-end];
   grid-template-rows: [nav-start main-start] auto [main-end footer-start] auto [nav-end footer-end];
   gap: 1rem;
   column-gap: 0;
@@ -100,11 +107,19 @@ html {
 }
 
 .material-symbols-outlined {
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 48;
 }
 
 .material-symbols-outlined.active {
-  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 48;
 }
 
 h1,
@@ -143,17 +158,27 @@ h6 {
   }
 }
 
-
 @media print {
+  html {
+    font-size: 8px;
+  }
+
   #root {
+    min-height: 0;
     grid-template-columns: [main-start footer-start] auto [main-end footer-end];
+  }
+
+  body {
+    min-height: 0;
   }
 
   #root > main {
     max-width: 100%;
+    min-height: 0;
+    height: fit-content;
   }
 }
 
-@page{
-  size: A4 landscape !important
- }
+@page {
+  size: A4 landscape !important;
+}

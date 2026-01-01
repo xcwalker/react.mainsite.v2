@@ -114,3 +114,13 @@
   text-decoration: line-through;
   opacity: 0.6;
 }
+
+@media print {
+  .instructions .header {
+    height: auto;
+  }
+  
+  .instructions .header button {
+    display: none;
+  }
+}
