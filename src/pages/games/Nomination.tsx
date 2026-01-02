@@ -12,9 +12,15 @@ import firebaseGetData from "../../functions/firebase/storage/getData";
 import devConsole from "../../functions/devConsole";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
 import { separator, title } from "../../App";
+import { useAuth } from "../../functions/firebase/authentication/useAuth";
+import { InputDropdownPill } from "../../components/InputDropdown";
+import Modal from "../../components/Modal";
+import GFIcon from "../../components/GFIcon";
+import InputToggle from "../../components/InputToggle";
 
 export default function Game_Nomination() {
   const { gameID } = useParams();
+  const currentUser = useAuth();
   const navigate = useNavigate();
   const [scores, setScores] = useState<
     {
@@ -27,13 +33,25 @@ export default function Game_Nomination() {
       scores: [],
     },
   ]);
+  const [startDealer, setStartDealer] = useState(0);
+  const [modifiers, setModifiers] = useState<
+    {
+      label: string;
+      icon: string;
+      round: number;
+    }[] 
+  >([]);
+  const [modifierModalOpen, setModifierModalOpen] = useState(false);
   const [JsonObject, setJsonObject] = useState<{
     JSON?: string;
     currentRound?: number;
+    startDealer?: number;
+    modifiers?: string;
   }>({});
   const [gameStarted, setGameStarted] = useState(false);
   const [error, setError] = useState(false);
   const [currentRound, setCurrentRound] = useState(-1);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     // Reset scores if the number of players changes
@@ -43,6 +61,7 @@ export default function Game_Nomination() {
       // @ts-expect-error Will Work Generic Function
       setJsonObject(data);
       setGameStarted(true);
+
     });
   }, [gameID]);
 
@@ -52,6 +71,10 @@ export default function Game_Nomination() {
         const parsed = JSON.parse(JsonObject.JSON as string);
         setScores(parsed);
         setCurrentRound(JsonObject.currentRound || 0);
+        setStartDealer(JsonObject.startDealer || 0);
+        setModifiers(
+          JsonObject.modifiers ? JSON.parse(JsonObject.modifiers) : []
+        );
       } catch (e) {
         console.error("Error parsing JSON:", e);
         setError(true);
@@ -89,28 +112,30 @@ export default function Game_Nomination() {
       {
         JSON: JSON.stringify(scores),
         currentRound,
+        startDealer,
+        modifiers: JSON.stringify(modifiers),
       },
       {
-        toast: {
-          success: "Game updated successfully!",
-          error: "Failed to update game.",
+        toast: showToast ? {
+          success: "Game updated successfully.",
+          error: "Error updating game.",
           loading: "Updating game...",
-        },
+        } : {
+          noToast: true,
+        }
       }
     );
-  }, [scores, gameID, currentRound]);
+  }, [scores, gameID, currentRound, startDealer, modifiers, showToast]);
 
   if (!gameStarted) {
     return (
       <PageSeoWrapper
-        title={`Nomination Game ${separator} ${title}`}
-        description="Welcome to the Nomination Game!"
+        title={`Nomination ${separator} ${title}`}
+        description="Welcome to Nomination!"
       >
         <AccountPage id="nomination">
-          <h1>Nomination Game</h1>
-          <p>
-            Welcome to the Nomination Game! Click the button below to start.
-          </p>
+          <h1>Nomination</h1>
+          <p>Welcome to Nomination! Click the button below to start.</p>
 
           {scores.map((playerScore, index) => (
             <Fragment key={index}>
@@ -162,12 +187,12 @@ export default function Game_Nomination() {
 
   return (
     <PageSeoWrapper
-      title={`Nomination Game ${separator} ${title}`}
-      description="Manage your Nomination Game here."
+      title={`Nomination ${separator} ${title}`}
+      description="Manage your Nomination here."
     >
       <Section id="nomination">
         <div className={css.controls}>
-          {!gameID && (
+          {!gameID && currentUser && (
             <Button
               onClick={() => {
                 devConsole.log(
@@ -214,11 +239,57 @@ export default function Game_Nomination() {
                   setCurrentRound(parseInt(e.target.value, 10) - 1 || 0)
                 }
               />
+              <InputToggle
+                id="toast-toggle"
+                label="Show Update Toasts"
+                checked={showToast}
+                onChange={(checked) => setShowToast(checked)}
+              />
             </>
           )}
+          <InputDropdownPill
+            id="start-dealer-dropdown"
+            values={scores.map((s, index) => {
+              return { value: index, label: s.player };
+            })}
+            value={startDealer}
+            onChange={(value) => {
+              setStartDealer(value as number);
+            }}
+          />
+          <Button
+            onClick={() => setModifierModalOpen(true)}
+            style="secondary"
+            title="Manage Modifiers"
+            icon={{ gficon: "tune" }}
+            width="fit-content"
+          >
+            Manage Modifiers
+          </Button>
+          {/* Modifier Quick Add To Current Round */}
+          <InputDropdownPill
+            id="modifier-quick-add-dropdown"
+            values={predefinedModifiers}
+            value={""}
+            onChange={(value) =>
+              setModifiers((prev) => [
+                ...prev,
+                {
+                  label:
+                    predefinedModifiers.find((v) => v.value === value)?.label ||
+                    "Custom Modifier",
+                  icon:
+                    predefinedModifiers.find((v) => v.value === value)?.icon ||
+                    "person_edit",
+                  round: currentRound,
+                },
+              ])
+            }
+            placeholder="Modifier Quick Add"
+          />
         </div>
         <ul className={css.scoreboard}>
-          <li className={css.cardCount}>
+          <li className={css.infoColumn}>
             <li className={css.header}></li>
             <ol>
               <li className={css.header}>
@@ -242,7 +313,7 @@ export default function Game_Nomination() {
               )}
             </ol>
           </li>
-          <li className={css.trumpSuit}>
+          <li className={css.infoColumn}>
             <li className={css.header} />
             <ol>
               <li className={css.header}>
@@ -262,6 +333,52 @@ export default function Game_Nomination() {
               )}
             </ol>
           </li>
+          <li className={css.infoColumn}>
+            <li className={css.header} />
+            <ol>
+              <li className={css.header}>
+                <span>Dealer</span>
+              </li>
+              {Array.from(
+                { length: Math.floor(52 / scores.length) * 2 },
+                (_, i) => (
+                  <li
+                    key={i}
+                    className={i === currentRound ? css.currentRound : ""}
+                  >
+                    {scores[(startDealer + i) % scores.length].player}
+                  </li>
+                )
+              )}
+            </ol>
+          </li>
+          {modifiers.length > 0 && (
+            <li className={css.infoColumn}>
+              <li className={css.header} />
+              <ol>
+                <li className={css.header}>
+                  <span>Modifiers</span>
+                </li>
+                {Array.from(
+                  { length: Math.floor(52 / scores.length) * 2 },
+                  (_, i) => (
+                    <li
+                      key={i}
+                      className={i === currentRound ? css.currentRound : ""}
+                    >
+                      {modifiers
+                        .filter((mod) => mod.round === i)
+                        .map((mod, idx) => (
+                          <span key={idx} title={mod.label}>
+                            <GFIcon>{mod.icon}</GFIcon>
+                          </span>
+                        ))}
+                    </li>
+                  )
+                )}
+              </ol>
+            </li>
+          )}
           {scores.map((player, index) => (
             <li key={index}>
               <span className={css.playerName}>{player.player}</span>
@@ -362,6 +479,129 @@ export default function Game_Nomination() {
           ))}
         </ul>
       </Section>
+      <Modal
+        visibility={modifierModalOpen}
+        setVisibility={() => setModifierModalOpen(false)}
+        title="Manage Modifiers"
+        footer={
+          <>
+            <InputDropdownPill
+              id="modifier-add-dropdown"
+              values={predefinedModifiers}
+              value={""}
+              onChange={(value) =>
+                setModifiers((prev) => [
+                  ...prev,
+                  {
+                    label:
+                      predefinedModifiers.find((v) => v.value === value)
+                        ?.label || "Custom Modifier",
+                    icon:
+                      predefinedModifiers.find((v) => v.value === value)
+                        ?.icon || "person_edit",
+                    round: 0,
+                  },
+                ])
+              }
+              inverted
+              placeholder="Add Predefined Modifier"
+            />
+            <Button
+              onClick={() =>
+                setModifiers((prev) => [
+                  ...prev,
+                  { label: "New Modifier", icon: "person_edit", round: 0 },
+                ])
+              }
+              style="primary"
+              title="Add Modifier"
+              icon={{ gficon: "add" }}
+              width="fit-content"
+            >
+              Add Custom Modifier
+            </Button>
+            <Button
+              onClick={() => setModifierModalOpen(false)}
+              style="secondary"
+              title="Close"
+              icon={{ gficon: "close" }}
+              width="fit-content"
+            >
+              Close
+            </Button>
+          </>
+        }
+        fullscreen={true}
+      >
+        <Section
+          id="modifiers-section"
+          container={{ className: css.modifierContainer }}
+        >
+          {modifiers.map((mod, index) => (
+            <div key={index} className={css.modifierItem}>
+              <Input
+                id={`modifier-label-${index}`}
+                value={mod.label}
+                onChange={(e) =>
+                  setModifiers((prev) =>
+                    prev.map((m, mIdx) =>
+                      mIdx === index ? { ...m, label: e.target.value } : m
+                    )
+                  )
+                }
+                label="Modifier Label"
+                disabled={mod.icon !== "person_edit"}
+              />
+              <Input
+                id={`modifier-round-${index}`}
+                type="number"
+                value={mod.round}
+                onChange={(e) =>
+                  setModifiers((prev) =>
+                    prev.map((m, mIdx) =>
+                      mIdx === index
+                        ? { ...m, round: parseInt(e.target.value, 10) || 0 }
+                        : m
+                    )
+                  )
+                }
+                label="Round Number"
+              />
+              <Button
+                onClick={() =>
+                  setModifiers((prev) =>
+                    prev.filter((_, mIdx) => mIdx !== index)
+                  )
+                }
+                style="danger"
+                title="Remove Modifier"
+                icon={{ gficon: "delete" }}
+              >
+                Remove Modifier
+              </Button>
+            </div>
+          ))}
+        </Section>
+      </Modal>
     </PageSeoWrapper>
   );
 }
+
+const predefinedModifiers = [
+  {
+    value: "person_edit",
+    label: "Custom Modifier",
+    icon: "person_edit",
+  },
+  { value: "blind", label: "Blind", icon: "blind" },
+  {
+    value: "no_trumps",
+    label: "No Trumps",
+    icon: "playing_cards",
+  },
+  {
+    value: "no_suit",
+    label: "No suit",
+    icon: "colors",
+  },
+];

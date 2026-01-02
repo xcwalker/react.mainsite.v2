@@ -109,6 +109,11 @@
     /* main shadow */ 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
+.dropdown.inverted {
+  top: auto;
+  bottom: 0;
+}
+
 .dropdown.closed {
   opacity: 0;
   pointer-events: none;

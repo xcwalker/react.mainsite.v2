@@ -82,29 +82,38 @@ export default function InputDropdown(props: {
 
 export function InputDropdownPill(props: {
   id: string;
-  value: string;
+  value: string | number;
   values: {
     icon?: string;
     label: string;
-    value: string;
+    value: string | number;
     selectable?: boolean;
   }[];
-  onChange: (value: string) => void;
+  onChange: (value: string | number) => void;
   className?: string;
+  inverted?: boolean;
+  placeholder?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const placeholder = props.placeholder || "Select...";
 
   return (
-    <div className={css.pillInputContainer + (props.className ? " " + props.className : "")}>
+    <div
+      className={
+        css.pillInputContainer + (props.className ? " " + props.className : "")
+      }
+    >
       <Button
         onClick={() => setIsOpen(true)}
         className={css.input}
         title="Select option"
-        icon={{
-          gficon:
-            props.values.find((v) => v.value === props.value)?.icon ||
-            undefined,
-        }}
+        icon={
+          props.values.find((v) => v.value === props.value)?.icon
+            ? {
+                gficon: props.values.find((v) => v.value === props.value)?.icon,
+              }
+            : undefined
+        }
         onBlur={() => {
           if (!document.querySelector(`#${props.id}-dropdown:hover`)) {
             setIsOpen(false);
@@ -112,10 +121,10 @@ export function InputDropdownPill(props: {
         }}
       >
         {props.values.find((v) => v.value === props.value)?.label ||
-          "Select..."}
+          placeholder}
       </Button>
       <div
-        className={css.dropdown + (isOpen ? " " + css.open : " " + css.closed)}
+        className={css.dropdown + (isOpen ? " " + css.open : " " + css.closed) + (props.inverted ? " " + css.inverted : "")}
         role="listbox"
         aria-labelledby={props.id}
         id={`${props.id}-dropdown`}

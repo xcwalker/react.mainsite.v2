@@ -10,6 +10,7 @@ export default function Modal(props: {
   footer: ReactNode;
   title?: string;
   height?: string;
+  fullscreen?: boolean;
 }) {
   useEffect(() => {
     if (props.visibility) {
@@ -26,7 +27,8 @@ export default function Modal(props: {
           css.mainContainer +
           " " +
           (props.visibility === true ? css.visible : "") +
-          (props.visibility === "demo" ? " " + css.demo : "")
+          (props.visibility === "demo" ? " " + css.demo : "") +
+          (props.fullscreen ? " " + css.fullscreen : "")
         }
         style={
           {

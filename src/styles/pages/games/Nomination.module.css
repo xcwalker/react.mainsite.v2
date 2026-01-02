@@ -92,17 +92,23 @@
   background-color: var(--background-200);
 }
 
-.scoreboard > .cardCount .header,
-.scoreboard > .trumpSuit .header {
+.scoreboard > .infoColumn .header {
   /* sizing */
   min-width: unset;
 }
 
-.scoreboard > .cardCount ol > li,
-.scoreboard > .cardCount ol > .header,
-.scoreboard > .trumpSuit ol > li,
-.scoreboard > .trumpSuit ol > .header {
+.scoreboard > .infoColumn ol > li,
+.scoreboard > .infoColumn ol > .header {
   grid-template-columns: 1fr;
+}
+
+.scoreboard > .infoColumn ol > li {
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-direction: row;
 }
 
 .roundScoreInput {
@@ -144,4 +150,15 @@ li:last-of-type .roundScoreInput {
 .currentRound > * {
 
   border: none !important;
+}
+
+.modifierContainer {
+  /* sizing */
+  width: 100%;
+  overflow-y: auto;
+
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 1rem;
 }

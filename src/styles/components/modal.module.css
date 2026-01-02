@@ -52,6 +52,11 @@
     calc(var(--_opacity-duration) + var(--_hold-after-opacity));
 }
 
+.mainContainer.fullscreen {
+  --_modal-width: calc(100vw - 4rem) !important;
+  --_modal-height: calc(100vh - 4rem) !important;
+}
+
 .mainContainer.demo {
   /* position */
   position: static !important;
