@@ -23,6 +23,7 @@ import {
   suits,
 } from "../LiveView/LiveViewNominationV2";
 import InputToggle from "../../../components/InputToggle";
+import { separator, title } from "../../../App";
 
 export default function SimpleView_Nomination() {
   const { gameID } = useParams<{ gameID: string }>();
@@ -120,7 +121,10 @@ export default function SimpleView_Nomination() {
   }
 
   return (
-    <PageSeoWrapper title={`Simple View Nomination`}>
+    <PageSeoWrapper
+      title={`Simple View Nomination ${separator} ${title}`}
+      description={`Simple View Nomination on ${title}`}
+    >
       <Section id="simpleview-nomination">
         <SideBySide leftWidth="350px">
           <Sidebar
@@ -283,16 +287,9 @@ function Sidebar(props: {
       />
       <InfoLine
         header="Dealer"
-        info={
-          scores[
-            (startDealerIndex + currentRound) % scores.length
-          ]?.player
-        }
+        info={scores[(startDealerIndex + currentRound) % scores.length]?.player}
       />
-      <InfoLine
-        header="Trump"
-        info={suits[currentRound % suits.length]}
-      />
+      <InfoLine header="Trump" info={suits[currentRound % suits.length]} />
       <InfoLine
         header="Total Round Guess"
         info={
@@ -402,7 +399,7 @@ function PlayerRenderer(props: {
         onChange={(e) => {
           setScores((prevScores) => {
             if (!prevScores) return prevScores;
-            
+
             const playerIndex = prevScores.findIndex(
               (p) => p.player === player.player
             );
