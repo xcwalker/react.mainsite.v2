@@ -241,8 +241,6 @@ export default function Game_Nomination() {
                 style="primary"
                 title="Open Simple View"
                 icon={{ gficon: "bolt" }}
-                external
-                target="newTab"
                 width="fit-content"
               >
                 Open Simple View
@@ -498,6 +496,9 @@ export default function Game_Nomination() {
                           );
                         }
                       }}
+                      onFocus={(e) => {
+                        e.target.select();
+                      }}
                     />
                     <input
                       type="number"
@@ -531,6 +532,9 @@ export default function Game_Nomination() {
                             true
                           );
                         }
+                      }}
+                      onFocus={(e) => {
+                        e.target.select();
                       }}
                     />
                     {/* running total */}

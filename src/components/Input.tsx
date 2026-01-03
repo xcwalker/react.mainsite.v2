@@ -93,6 +93,14 @@ export default function Input(props: {
           autoComplete={props.autoComplete}
           min={props.min}
           max={props.max}
+          onFocus={
+            // if type is number select all text in the input
+            (e) => {
+              if (props.type === "number") {
+                e.target.select();
+              }
+            }
+          }
         />
       )}
       {props.type === "textarea" && (
