@@ -68,6 +68,9 @@
 }
 
 .main {
+  /* sizing */
+  height: fit-content;
+  
   /* grid */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
