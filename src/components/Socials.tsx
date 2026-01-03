@@ -67,26 +67,26 @@ export function SocialsList(props: {
 const array = [
   {
     icon: "Twitter",
-    url: "http://www.twitter.com/xc_walker",
+    url: "https://xcw.one/social/twitter",
   },
   {
     icon: "Instagram",
-    url: "https://instagram.com/xc_walker/",
+    url: "https://xcw.one/social/instagram",
   },
   {
     icon: "Youtube",
-    url: "https://www.youtube.com/@xcwalker",
+    url: "https://xcw.one/social/youtube",
   },
   {
     icon: "Discord",
-    url: "https://discordapp.com/users/358316209252597761",
+    url: "https://xcw.one/social/discord",
   },
   {
     icon: "Twitch",
-    url: "https://www.twitch.tv/xc_walker",
+    url: "https://xcw.one/social/twitch",
   },
   {
     icon: "TikTok",
-    url: "https://www.tiktok.com/@xc_walker",
+    url: "https://xcw.one/social/tiktok",
   },
 ];
