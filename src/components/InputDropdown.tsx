@@ -13,8 +13,10 @@ export default function InputDropdown(props: {
     selectable?: boolean;
   }[];
   onChange: (value: string) => void;
+  placeholder?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const placeholder = props.placeholder || "Select...";
 
   return (
     <div className={css.inputContainer}>
@@ -37,7 +39,7 @@ export default function InputDropdown(props: {
         }}
       >
         {props.values.find((v) => v.value === props.value)?.label ||
-          "Select..."}
+          placeholder}
       </Button>
       <div
         className={css.dropdown + (isOpen ? " " + css.open : " " + css.closed)}

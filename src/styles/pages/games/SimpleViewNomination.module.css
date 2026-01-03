@@ -1,0 +1,92 @@
+.buttons {
+  /* grid */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.infoLine {
+  /* sizing */
+  width: 100%;
+  height: fit-content;
+  padding: 0.5rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.25rem;
+
+  /* styling */
+  background: var(--primary);
+  border-radius: var(--item-sidebar-border-radius, 0.5rem);
+}
+
+.infoLine .header {
+  /* sizing */
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text-alt);
+}
+
+.infoLine .info {
+  /* sizing */
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text);
+}
+
+.infoLine .modifier {
+  /* spacing */
+  width: 100%;
+  height: fit-content;
+  padding: 0.25rem 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text);
+  background: var(--secondary);
+  border-radius: calc(var(--item-sidebar-border-radius, 0.5rem) / 2);
+}
+
+.main {
+  /* grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+  gap: 1rem;
+}
+
+.player {
+  /* sizing */
+  padding: 0.25rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* styling */
+  border: 0.25rem solid var(--primary);
+}
+
+.currentDealer {
+  border-color: var(--accent);
+}

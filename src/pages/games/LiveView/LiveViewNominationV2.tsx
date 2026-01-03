@@ -162,6 +162,7 @@ function Sidebar(props: {
     setFullscreen,
     textScaleFactor,
     setTextScaleFactor,
+    scores,
   } = props;
 
   const activeModifiers = modifiers?.filter(
@@ -173,7 +174,7 @@ function Sidebar(props: {
       <InfoLine header="Round" info={(props.currentRound + 1).toString()} />
       <InfoLine
         header="Cards"
-        info={NumberOfCardsForRound({
+        info={NumberOfCardsForRoundNomination({
           roundIndex: props.currentRound,
           numberOfPlayers: props.scores.length,
         }).toString()}
@@ -201,6 +202,21 @@ function Sidebar(props: {
           ))}
         </InfoLine>
       )}
+      <InfoLine
+        header="Total Round Guess"
+        info={
+          scores
+            ?.reduce((total, player) => {
+              return total + (player.scores[currentRound]?.guess || 0);
+            }, 0)
+            .toString() +
+          " / " +
+          NumberOfCardsForRoundNomination({
+            roundIndex: currentRound,
+            numberOfPlayers: scores.length,
+          })
+        }
+      />
       <div className={css.controls}>
         <Button
           onClick={() => {
@@ -268,9 +284,9 @@ function PlayerRenderer(props: {
   );
 }
 
-const suits = ["Hearts", "Clubs", "Diamonds", "Spades"];
+export const suits = ["Hearts", "Clubs", "Diamonds", "Spades"];
 
-function NumberOfCardsForRound(props: {
+export function NumberOfCardsForRoundNomination(props: {
   roundIndex: number;
   numberOfPlayers: number;
 }) {

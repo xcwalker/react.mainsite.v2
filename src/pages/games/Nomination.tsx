@@ -8,7 +8,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import ErrorPage from "../../ErrorPage";
 import firebaseSetData from "../../functions/firebase/storage/setData";
 import firebaseCreateData from "../../functions/firebase/storage/createData";
-import firebaseGetData from "../../functions/firebase/storage/getData";
 import devConsole from "../../functions/devConsole";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
 import { separator, title } from "../../App";
@@ -17,6 +16,7 @@ import { InputDropdownPill } from "../../components/InputDropdown";
 import Modal from "../../components/Modal";
 import GFIcon from "../../components/GFIcon";
 import InputToggle from "../../components/InputToggle";
+import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 
 export default function Game_Nomination() {
   const { gameID } = useParams();
@@ -57,9 +57,12 @@ export default function Game_Nomination() {
     // Reset scores if the number of players changes
     if (!gameID) return;
 
-    firebaseGetData("games", gameID).then((data) => {
-      // @ts-expect-error Will Work Generic Function
-      setJsonObject(data);
+    firebaseGetRealtimeData(
+      "games",
+      gameID,
+      setJsonObject as React.Dispatch<React.SetStateAction<unknown>>,
+      setError
+    ).then(() => {
       setGameStarted(true);
     });
   }, [gameID]);
@@ -231,6 +234,18 @@ export default function Game_Nomination() {
               >
                 Open Live View
               </Button>
+              <Button
+                href="./simple"
+                style="primary"
+                title="Open Simple View"
+                icon={{ gficon: "bolt" }}
+                external
+                target="newTab"
+                width="fit-content"
+              >
+                Open Simple View
+              </Button>
+
               <input
                 type="number"
                 min={1}
@@ -409,12 +424,9 @@ export default function Game_Nomination() {
                       onChange={(e) => {
                         const newGuess = parseInt(e.target.value, 10) || 0;
                         setScores((prevScores) =>
-                          calculateNewScoreOrGuess(
-                            prevScores,
-                            index,
-                            idx,
-                            { guess: newGuess }
-                          )
+                          calculateNewScoreOrGuessNomination(prevScores, index, idx, {
+                            guess: newGuess,
+                          })
                         );
                       }}
                     />
@@ -428,12 +440,9 @@ export default function Game_Nomination() {
                       onChange={(e) => {
                         const newScore = parseInt(e.target.value, 10) || 0;
                         setScores((prevScores) =>
-                          calculateNewScoreOrGuess(
-                            prevScores,
-                            index,
-                            idx,
-                            { score: newScore }
-                          )
+                          calculateNewScoreOrGuessNomination(prevScores, index, idx, {
+                            score: newScore,
+                          })
                         );
                       }}
                     />
@@ -554,7 +563,7 @@ export default function Game_Nomination() {
   );
 }
 
-const predefinedModifiers = [
+export const predefinedModifiers = [
   {
     value: "person_edit",
     label: "Custom Modifier",
@@ -573,7 +582,7 @@ const predefinedModifiers = [
   },
 ];
 
-function calculateNewScoreOrGuess(
+export function calculateNewScoreOrGuessNomination(
   scores: {
     player: string;
     scores: { roundScore: number; guess: number; runningTotal: number }[];

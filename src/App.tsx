@@ -63,6 +63,7 @@ import ModularDashboardIndex from "./pages/modularDashboard/Index";
 import ReAuthenticatePage from "./pages/account/ReAuthenticate";
 import ActionCodePage from "./pages/account/ActionCode";
 import DeleteAccountPage from "./pages/account/Delete";
+import SimpleView_Nomination from "./pages/games/SimpleView/SimpleViewNomination";
 
 export default function App() {
   const currentUser = useAuth();
@@ -728,6 +729,7 @@ export default function App() {
                 <Route path=":gameID">
                   <Route index element={<Game_Nomination />} />
                   <Route path="live" element={<LiveView_Nomination />} />
+                  <Route path="simple" element={<SimpleView_Nomination />} />
                 </Route>
               </Route>
               <Route path="monopoly">

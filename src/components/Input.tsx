@@ -21,6 +21,8 @@ export default function Input(props: {
   isInvalid?: boolean;
   width?: string;
   autoComplete?: string;
+  min?: number;
+  max?: number;
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordHover, setShowPasswordHover] = useState(false);
@@ -89,6 +91,8 @@ export default function Input(props: {
           maxLength={props.maxLength}
           minLength={props.minLength}
           autoComplete={props.autoComplete}
+          min={props.min}
+          max={props.max}
         />
       )}
       {props.type === "textarea" && (
