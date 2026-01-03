@@ -471,7 +471,7 @@ function PlayerRenderer(props: {
       />
       <InfoLine
         header="Running Total"
-        info={player.scores[currentRoundIndex]?.runningTotal.toString()}
+        info={(player.scores[currentRoundIndex]?.runningTotal || 0).toString()}
       />
     </div>
   );
