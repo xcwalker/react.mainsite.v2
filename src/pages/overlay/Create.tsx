@@ -31,7 +31,7 @@ import PageSeoWrapper from "../../components/PageSeoWrapper";
 import { separator, title } from "../../App";
 import InputDropdown from "../../components/InputDropdown";
 import InputToggle from "../../components/InputToggle";
-import { InputDuration } from "../../components/InputDuration";
+import { InputRange } from "../../components/InputRange";
 
 export default function OverlayCreate(props: { id?: string }) {
   const params = useParams();
@@ -618,7 +618,7 @@ function Main(props: {
               });
             }}
           />
-          <InputDuration
+          <InputRange
             id="radio-duration"
             label="radio duration (ms)"
             min={-1}
@@ -1055,7 +1055,7 @@ function AnimationInput(props: {
           );
         }}
       />
-      <InputDuration
+      <InputRange
         id={`${props.id}-animation-duration`}
         label="Animation Duration (ms)"
         value={props.duration}

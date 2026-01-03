@@ -57,6 +57,10 @@
   background: var(--background);
 }
 
+.durationInput .duration.noValue {
+  grid-template-columns: 1fr;
+}
+
 .durationInput .duration input[type="range"] {
   /* sizing */
   width: 100%;

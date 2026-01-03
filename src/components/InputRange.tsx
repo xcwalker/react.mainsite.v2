@@ -1,6 +1,6 @@
 import css from "../styles/components/InputDuration.module.css";
 
-export function InputDuration(props: {
+export function InputRange(props: {
   id: string;
   label: string;
   value: number;
@@ -8,11 +8,12 @@ export function InputDuration(props: {
   max: number;
   step: number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  showValue?: boolean;
 }) {
   return (
     <div className={css.durationInput}>
       <label htmlFor={props.id}>{props.label}</label>
-      <div className={css.duration}>
+      <div className={css.duration + " " + (props.showValue === false ? css.noValue : "")}>
         <input
           type="range"
           id={props.id}
@@ -23,16 +24,20 @@ export function InputDuration(props: {
           value={props.value}
           onChange={props.onChange}
         />
-        {props.value !== -1 && (
-          <div className={css.value}>
-            <span>{props.value} ms</span>
-            <span>{(props.value / 1000).toFixed(2)} s</span>
-          </div>
-        )}
-        {props.value === -1 && (
-          <div className={css.value}>
-            <span>Infinite</span>
-          </div>
+        {props.showValue !== false && (
+          <>
+            {props.value !== -1 && (
+              <div className={css.value}>
+                <span>{props.value} ms</span>
+                <span>{(props.value / 1000).toFixed(2)} s</span>
+              </div>
+            )}
+            {props.value === -1 && (
+              <div className={css.value}>
+                <span>Infinite</span>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

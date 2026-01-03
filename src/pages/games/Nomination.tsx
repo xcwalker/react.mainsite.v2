@@ -39,7 +39,7 @@ export default function Game_Nomination() {
       label: string;
       icon: string;
       round: number;
-    }[] 
+    }[]
   >([]);
   const [modifierModalOpen, setModifierModalOpen] = useState(false);
   const [JsonObject, setJsonObject] = useState<{
@@ -61,7 +61,6 @@ export default function Game_Nomination() {
       // @ts-expect-error Will Work Generic Function
       setJsonObject(data);
       setGameStarted(true);
-
     });
   }, [gameID]);
 
@@ -93,7 +92,7 @@ export default function Game_Nomination() {
         prevScores.map((player, index) => ({
           player: player.player || "Player " + (index + 1),
           scores: Array.from({ length: numberOfRounds }, () => ({
-            roundScore: 0,
+            roundScore: -1,
             runningTotal: 0,
             guess: 0,
           })),
@@ -116,13 +115,15 @@ export default function Game_Nomination() {
         modifiers: JSON.stringify(modifiers),
       },
       {
-        toast: showToast ? {
-          success: "Game updated successfully.",
-          error: "Error updating game.",
-          loading: "Updating game...",
-        } : {
-          noToast: true,
-        }
+        toast: showToast
+          ? {
+              success: "Game updated successfully.",
+              error: "Error updating game.",
+              loading: "Updating game...",
+            }
+          : {
+              noToast: true,
+            },
       }
     );
   }, [scores, gameID, currentRound, startDealer, modifiers, showToast]);
@@ -408,17 +409,11 @@ export default function Game_Nomination() {
                       onChange={(e) => {
                         const newGuess = parseInt(e.target.value, 10) || 0;
                         setScores((prevScores) =>
-                          prevScores.map((p, pIdx) =>
-                            pIdx === index
-                              ? {
-                                  ...p,
-                                  scores: p.scores.map((score, sIdx) => ({
-                                    ...score,
-                                    guess:
-                                      sIdx === idx ? newGuess : score.guess,
-                                  })),
-                                }
-                              : p
+                          calculateNewScoreOrGuess(
+                            prevScores,
+                            index,
+                            idx,
+                            { guess: newGuess }
                           )
                         );
                       }}
@@ -427,45 +422,17 @@ export default function Game_Nomination() {
                       type="number"
                       name={`score-${index}-${idx}`}
                       id={`score-${index}-${idx}`}
-                      min={0}
+                      min={-1}
                       value={s.roundScore}
                       className={css.roundScoreInput}
                       onChange={(e) => {
                         const newScore = parseInt(e.target.value, 10) || 0;
                         setScores((prevScores) =>
-                          prevScores.map((p, pIdx) =>
-                            pIdx === index
-                              ? {
-                                  ...p,
-                                  scores: p.scores.map((score, sIdx) => ({
-                                    ...score,
-                                    roundScore:
-                                      sIdx === idx
-                                        ? newScore
-                                        : score.roundScore,
-                                    runningTotal:
-                                      sIdx >= idx
-                                        ? p.scores
-                                            .slice(0, sIdx + 1)
-                                            .map((s, i) =>
-                                              i === idx
-                                                ? newScore
-                                                : s.roundScore
-                                            )
-                                            .reduce(
-                                              (sum, currentScore, i) =>
-                                                sum +
-                                                (p.scores[i].guess !== 0 &&
-                                                currentScore ===
-                                                  p.scores[i].guess
-                                                  ? currentScore + 10
-                                                  : currentScore),
-                                              0
-                                            )
-                                        : score.runningTotal,
-                                  })),
-                                }
-                              : p
+                          calculateNewScoreOrGuess(
+                            prevScores,
+                            index,
+                            idx,
+                            { score: newScore }
                           )
                         );
                       }}
@@ -605,3 +572,55 @@ const predefinedModifiers = [
     icon: "colors",
   },
 ];
+
+function calculateNewScoreOrGuess(
+  scores: {
+    player: string;
+    scores: { roundScore: number; guess: number; runningTotal: number }[];
+  }[],
+  playerIndex: number,
+  roundIndex: number,
+  newValue: {
+    score?: number;
+    guess?: number;
+  }
+) {
+  const { score: newScore, guess: newGuess } = newValue
+
+  return scores.map((p, pIdx) =>
+    pIdx === playerIndex
+      ? {
+          ...p,
+          scores: p.scores.map((s, sIdx) => ({
+            ...s,
+            roundScore:
+              sIdx === roundIndex ? (newScore ?? s.roundScore) : s.roundScore,
+            guess: sIdx === roundIndex ? (newGuess ?? s.guess) : s.guess,
+            runningTotal:
+              sIdx >= roundIndex
+                ? p.scores
+                    .slice(0, sIdx + 1)
+                    .map((score, i) =>
+                      i === roundIndex
+                        ? (newScore ?? score.roundScore)
+                        : score.roundScore
+                    )
+                    .reduce(
+                      (sum, currentScore, i) => {
+                        if (currentScore === -1) return sum;
+                        return sum +
+                          (currentScore ===
+                          (newGuess !== undefined && i === roundIndex
+                            ? newGuess
+                            : p.scores[i].guess)
+                            ? currentScore + 10
+                            : currentScore);
+                      },
+                      0
+                    )
+                : s.runningTotal,
+          })),
+        }
+      : p
+  );
+}

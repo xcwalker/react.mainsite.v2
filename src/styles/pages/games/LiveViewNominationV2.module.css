@@ -1,0 +1,187 @@
+.nomination {
+  margin: -1rem;
+  padding: 1rem;
+  box-sizing: content-box;
+
+  --_red: red;
+  --_black: var(--text);
+
+  background: #1fa2ff; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #a6ffcb,
+    #12d8fa,
+    #1fa2ff
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #a6ffcb,
+    #12d8fa,
+    #1fa2ff
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.scoresContainer {
+  /* sizing */
+  width: 100%;
+  min-height: 75vh;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  pointer-events: none;
+}
+
+.largeText .scoresContainer {
+  font-size: 1.5rem;
+}
+
+.player {
+  /* position */
+  position: relative;
+
+  /* sizing */
+  min-width: 17rem;
+  padding: 0.5rem;
+
+  /* flex  */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  gap: 1rem;
+
+  /* styling */
+  border-radius: var(--game-border-radius, 0.5rem);
+  border: 0.25rem solid var(--background);
+  background: transparent;
+}
+
+.nominationFullscreen :global(#root) {
+  grid-template-columns: [nav-start] 0[nav-end main-start footer-start] 1fr [main-end footer-end];
+  grid-template-rows: [nav-start main-start] auto [main-end footer-start] 0 [nav-end footer-end];
+  gap: 0;
+}
+
+.nominationFullscreen :global(#root) :global(header),
+.nominationFullscreen :global(#root) :global(footer) {
+  display: none;
+}
+
+.nominationFullscreen :global(#root) :global(main) {
+  max-width: unset;
+  max-height: 100vh;
+}
+
+.nominationFullscreen .nomination,
+.nominationFullscreen .nominationContainer,
+.nominationFullscreen .scoresContainer {
+  height: 100%;
+}
+
+.sideBySide {
+  height: 100%;
+}
+
+.sidebar {
+  height: 100%;
+}
+
+.controls {
+  /* sizing */
+  width: 100%;
+  margin-top: auto;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  gap: 1rem;
+}
+
+.controls > * {
+  width: 100%;
+}
+
+.infoLine {
+  /* sizing */
+  width: 100%;
+  height: fit-content;
+  padding: 0.5rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.25rem;
+
+  /* styling */
+  background: var(--background);
+  border-radius: var(--item-sidebar-border-radius, 0.5rem);
+}
+
+.infoLine .header {
+  /* sizing */
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text-alt);
+}
+
+.infoLine .info {
+  /* sizing */
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text);
+}
+
+.infoLine .suit {
+  /* sizing */
+  width: 100%;
+  height: fit-content;
+  padding: 1rem 6rem;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
+  background: var(--primary);
+  border-radius: calc(var(--item-sidebar-border-radius, 0.5rem) / 2);
+}
+
+.infoLine .modifier {
+  /* spacing */
+  width: 100%;
+  height: fit-content;
+  padding: 0.25rem 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text);
+  background: var(--primary);
+  border-radius: calc(var(--item-sidebar-border-radius, 0.5rem) / 2);
+}

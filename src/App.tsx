@@ -47,7 +47,7 @@ import TicketView from "./pages/ticket/View";
 import GameNavigation from "./pages/games/Navigation";
 import Game_Nomination from "./pages/games/Nomination";
 import Game_Monopoly from "./pages/games/Monopoly";
-import LiveView_Nomination from "./pages/games/LiveView/LiveViewNomination";
+import LiveView_Nomination from "./pages/games/LiveView/LiveViewNominationV2";
 import LoadingPage from "./components/Loading";
 import { DeveloperView } from "./pages/Developer";
 import VehicleEnrollPage from "./pages/vehiclePage/Enroll";

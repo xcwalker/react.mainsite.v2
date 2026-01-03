@@ -159,7 +159,7 @@ function PlayerRenderer(props: {
 
 const suits = ["Hearts", "Clubs", "Diamonds", "Spades"];
 
-function SuitRenderer(props: { index: number }) {
+export function SuitRenderer(props: { index: number }) {
   const { index } = props;
 
   const suit = suits[index % suits.length];
