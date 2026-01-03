@@ -11,10 +11,7 @@ import { useParams } from "react-router-dom";
 import Button from "../../../components/Button";
 import firebaseSetData from "../../../functions/firebase/storage/setData";
 import InputDropdown from "../../../components/InputDropdown";
-import {
-  calculateNewScoreOrGuessNomination,
-  predefinedModifiers,
-} from "../Nomination";
+import { predefinedModifiers, updateLiveScoresNomination } from "../Nomination";
 import GFIcon from "../../../components/GFIcon";
 import ErrorPage from "../../../ErrorPage";
 import InputGroup from "../../../components/InputGroup";
@@ -88,33 +85,33 @@ export default function SimpleView_Nomination() {
     }
   }, [JsonObject]);
 
-  useEffect(() => {
-    // update live game scores
-    if (!gameID || scores === undefined || !(scores[0].scores.length > 0))
-      return;
+  // update live game scores
+  // useEffect(() => {
+  //   if (!gameID || scores === undefined || !(scores[0].scores.length > 0))
+  //     return;
 
-    firebaseSetData(
-      "games",
-      gameID,
-      {
-        JSON: JSON.stringify(scores),
-        currentRound,
-        startDealer,
-        modifiers: JSON.stringify(modifiers),
-      },
-      {
-        toast: showToast
-          ? {
-              success: "Game updated successfully.",
-              error: "Error updating game.",
-              loading: "Updating game...",
-            }
-          : {
-              noToast: true,
-            },
-      }
-    );
-  }, [scores, gameID, currentRound, startDealer, modifiers, showToast]);
+  //   firebaseSetData(
+  //     "games",
+  //     gameID,
+  //     {
+  //       JSON: JSON.stringify(scores),
+  //       currentRound,
+  //       startDealer,
+  //       modifiers: JSON.stringify(modifiers),
+  //     },
+  //     {
+  //       toast: showToast
+  //         ? {
+  //             success: "Game updated successfully.",
+  //             error: "Error updating game.",
+  //             loading: "Updating game...",
+  //           }
+  //         : {
+  //             noToast: true,
+  //           },
+  //     }
+  //   );
+  // }, [scores, gameID, currentRound, startDealer, modifiers, showToast]);
 
   if (error) {
     return <ErrorPage code={404} error="Error fetching game data" />;
@@ -128,10 +125,10 @@ export default function SimpleView_Nomination() {
       <Section id="simpleview-nomination">
         <SideBySide leftWidth="350px">
           <Sidebar
-            setCurrentRound={setCurrentRound}
+            gameID={gameID || ""}
+            JsonObject={JsonObject}
             currentRound={currentRound}
             maxRounds={scores ? scores[0].scores.length - 1 : 0}
-            setModifiers={setModifiers}
             modifiers={modifiers}
             scores={scores || []}
             showToast={showToast}
@@ -143,13 +140,16 @@ export default function SimpleView_Nomination() {
               scores.map((player, index) => (
                 <PlayerRenderer
                   key={index}
+                  gameID={gameID || ""}
+                  JsonObject={JsonObject}
                   player={player}
                   currentRound={currentRound}
-                  setScores={setScores}
+                  scores={scores}
                   numberOfPlayers={scores.length}
                   isCurrentDealer={
                     (startDealer + currentRound) % scores.length === index
                   }
+                  showToast={showToast}
                 />
               ))
             ) : (
@@ -163,18 +163,15 @@ export default function SimpleView_Nomination() {
 }
 
 function Sidebar(props: {
-  setCurrentRound: React.Dispatch<React.SetStateAction<number>>;
+  gameID: string;
+  JsonObject: {
+    JSON?: string;
+    currentRound?: number;
+    startDealer?: number;
+    modifiers?: string;
+  };
   currentRound: number;
   maxRounds: number;
-  setModifiers: React.Dispatch<
-    React.SetStateAction<
-      {
-        label: string;
-        icon: string;
-        round: number;
-      }[]
-    >
-  >;
   modifiers: {
     label: string;
     icon: string;
@@ -189,9 +186,9 @@ function Sidebar(props: {
   startDealerIndex: number;
 }) {
   const {
-    setCurrentRound,
+    gameID,
+    JsonObject,
     currentRound,
-    setModifiers,
     modifiers,
     scores,
     showToast,
@@ -222,11 +219,51 @@ function Sidebar(props: {
           min={1}
           max={props.maxRounds + 1}
           value={currentRound + 1}
-          onChange={(e) => setCurrentRound(Number(e.target.value) - 1)}
+          onChange={(e) =>
+            firebaseSetData(
+              "games",
+              gameID,
+              {
+                ...JsonObject,
+                currentRound: parseInt(e.target.value, 10) - 1 || 0,
+              },
+              {
+                toast: showToast
+                  ? {
+                      success: "Round changed successfully.",
+                      error: "Error changing round.",
+                      loading: "Changing round...",
+                    }
+                  : {
+                      noToast: true,
+                    },
+              }
+            )
+          }
         />
         <div className={css.buttons}>
           <Button
-            onClick={() => setCurrentRound((prev) => Math.max(prev - 1, 0))}
+            onClick={() =>
+              firebaseSetData(
+                "games",
+                gameID,
+                {
+                  ...JsonObject,
+                  currentRound: Math.max(currentRound - 1, 0),
+                },
+                {
+                  toast: showToast
+                    ? {
+                        success: "Round changed successfully.",
+                        error: "Error changing round.",
+                        loading: "Changing round...",
+                      }
+                    : {
+                        noToast: true,
+                      },
+                }
+              )
+            }
             title="Previous Round"
             style="secondary"
             centered
@@ -235,7 +272,25 @@ function Sidebar(props: {
           </Button>
           <Button
             onClick={() =>
-              setCurrentRound((prev) => Math.min(prev + 1, props.maxRounds))
+              firebaseSetData(
+                "games",
+                gameID,
+                {
+                  ...JsonObject,
+                  currentRound: Math.min(currentRound + 1, props.maxRounds),
+                },
+                {
+                  toast: showToast
+                    ? {
+                        success: "Round changed successfully.",
+                        error: "Error changing round.",
+                        loading: "Updating round...",
+                      }
+                    : {
+                        noToast: true,
+                      },
+                }
+              )
             }
             title="Next Round"
             style="primary"
@@ -252,18 +307,26 @@ function Sidebar(props: {
         values={predefinedModifiers}
         value={""}
         onChange={(value) =>
-          setModifiers((prev) => [
-            ...prev,
-            {
-              label:
-                predefinedModifiers.find((v) => v.value === value)?.label ||
-                "Custom Modifier",
-              icon:
-                predefinedModifiers.find((v) => v.value === value)?.icon ||
-                "person_edit",
-              round: currentRound,
-            },
-          ])
+          firebaseSetData("games", gameID, {
+            ...JsonObject,
+            modifiers: JSON.stringify([
+              ...modifiers,
+              {
+                ...predefinedModifiers.find((mod) => mod.value === value),
+                round: currentRound,
+              },
+            ]),
+          }, {
+            toast: showToast
+              ? {
+                  success: "Modifier added successfully.",
+                  error: "Error adding modifier.",
+                  loading: "Adding modifier...",
+                }
+              : {
+                  noToast: true,
+                },
+          })
         }
         label="Quick Add"
       />
@@ -324,35 +387,37 @@ function InfoLine(props: {
 }
 
 function PlayerRenderer(props: {
+  gameID: string;
+  JsonObject: {
+    JSON?: string;
+    currentRound?: number;
+    startDealer?: number;
+    modifiers?: string;
+  };
   player: {
     player: string;
     scores: { roundScore: number; guess: number; runningTotal: number }[];
   };
   currentRound: number;
   startDealerIndex?: number;
-  setScores: React.Dispatch<
-    React.SetStateAction<
-      | {
-          player: string;
-          scores: { roundScore: number; guess: number; runningTotal: number }[];
-        }[]
-      | undefined
-    >
-  >;
+  scores: {
+    player: string;
+    scores: { roundScore: number; guess: number; runningTotal: number }[];
+  }[];
   numberOfPlayers: number;
   isCurrentDealer: boolean;
+  showToast: boolean;
 }) {
   const {
     player,
     currentRound: currentRoundIndex,
-    setScores,
+    scores,
     numberOfPlayers,
     isCurrentDealer,
+    gameID,
+    JsonObject,
+    showToast,
   } = props;
-
-  if (setScores === undefined) {
-    return null;
-  }
 
   return (
     <div
@@ -366,24 +431,15 @@ function PlayerRenderer(props: {
         type="number"
         value={player.scores[currentRoundIndex]?.guess || 0}
         onChange={(e) => {
-          setScores((prevScores) => {
-            if (!prevScores) return prevScores;
-
-            const playerIndex = prevScores.findIndex(
-              (p) => p.player === player.player
-            );
-            if (playerIndex !== -1) {
-              return calculateNewScoreOrGuessNomination(
-                prevScores,
-                playerIndex,
-                currentRoundIndex,
-                {
-                  guess: parseInt(e.target.value, 10),
-                }
-              );
-            }
-            return prevScores;
-          });
+          updateLiveScoresNomination(
+            gameID,
+            JsonObject,
+            scores,
+            scores.findIndex((p) => p.player === player.player),
+            currentRoundIndex,
+            { guess: parseInt(e.target.value, 10) },
+            showToast
+          );
         }}
         min={0}
         max={NumberOfCardsForRoundNomination({
@@ -397,24 +453,15 @@ function PlayerRenderer(props: {
         type="number"
         value={player.scores[currentRoundIndex]?.roundScore || 0}
         onChange={(e) => {
-          setScores((prevScores) => {
-            if (!prevScores) return prevScores;
-
-            const playerIndex = prevScores.findIndex(
-              (p) => p.player === player.player
-            );
-            if (playerIndex !== -1) {
-              return calculateNewScoreOrGuessNomination(
-                prevScores,
-                playerIndex,
-                currentRoundIndex,
-                {
-                  score: parseInt(e.target.value, 10),
-                }
-              );
-            }
-            return prevScores;
-          });
+          updateLiveScoresNomination(
+            gameID,
+            JsonObject,
+            scores,
+            scores.findIndex((p) => p.player === player.player),
+            currentRoundIndex,
+            { score: parseInt(e.target.value, 10) },
+            showToast
+          );
         }}
         min={-1}
         max={NumberOfCardsForRoundNomination({

@@ -104,32 +104,34 @@ export default function Game_Nomination() {
     }
   }, [gameStarted, scores.length, gameID]);
 
-  useEffect(() => {
-    // update live game scores
-    if (!gameID || !(scores[0].scores.length > 0)) return;
+  // update live game scores
+  // deprecated in favor of updating on each change
+  // prevents changes repeating from updates in other clients
+  // useEffect(() => {
+  // if (!gameID || !(scores[0].scores.length > 0)) return;
 
-    firebaseSetData(
-      "games",
-      gameID,
-      {
-        JSON: JSON.stringify(scores),
-        currentRound,
-        startDealer,
-        modifiers: JSON.stringify(modifiers),
-      },
-      {
-        toast: showToast
-          ? {
-              success: "Game updated successfully.",
-              error: "Error updating game.",
-              loading: "Updating game...",
-            }
-          : {
-              noToast: true,
-            },
-      }
-    );
-  }, [scores, gameID, currentRound, startDealer, modifiers, showToast]);
+  // firebaseSetData(
+  //   "games",
+  //   gameID,
+  //   {
+  //     JSON: JSON.stringify(scores),
+  //     currentRound,
+  //     startDealer,
+  //     modifiers: JSON.stringify(modifiers),
+  //   },
+  //   {
+  //     toast: showToast
+  //       ? {
+  //           success: "Game updated successfully.",
+  //           error: "Error updating game.",
+  //           loading: "Updating game...",
+  //         }
+  //       : {
+  //           noToast: true,
+  //         },
+  //   }
+  // );
+  // }, [scores, gameID, currentRound, startDealer, modifiers, showToast]);
 
   if (!gameStarted) {
     return (
@@ -251,9 +253,16 @@ export default function Game_Nomination() {
                 min={1}
                 max={Math.floor(52 / scores.length) * 2}
                 value={currentRound + 1}
-                onChange={(e) =>
-                  setCurrentRound(parseInt(e.target.value, 10) - 1 || 0)
-                }
+                onChange={(e) => {
+                  if (!gameID) {
+                    setCurrentRound(parseInt(e.target.value, 10) - 1 || 0);
+                  } else {
+                    firebaseSetData("games", gameID, {
+                      ...JsonObject,
+                      currentRound: parseInt(e.target.value, 10) - 1 || 0,
+                    });
+                  }
+                }}
               />
               <InputToggle
                 id="toast-toggle"
@@ -270,7 +279,16 @@ export default function Game_Nomination() {
             })}
             value={startDealer}
             onChange={(value) => {
-              setStartDealer(value as number);
+              {
+                if (!gameID) {
+                  setStartDealer(value as number);
+                } else {
+                  firebaseSetData("games", gameID, {
+                    ...JsonObject,
+                    startDealer: value as number,
+                  });
+                }
+              }
             }}
           />
           <Button
@@ -287,20 +305,53 @@ export default function Game_Nomination() {
             id="modifier-quick-add-dropdown"
             values={predefinedModifiers}
             value={""}
-            onChange={(value) =>
-              setModifiers((prev) => [
-                ...prev,
-                {
-                  label:
-                    predefinedModifiers.find((v) => v.value === value)?.label ||
-                    "Custom Modifier",
-                  icon:
-                    predefinedModifiers.find((v) => v.value === value)?.icon ||
-                    "person_edit",
-                  round: currentRound,
-                },
-              ])
-            }
+            onChange={(value) => {
+              if (!gameID) {
+                setModifiers((prev) => [
+                  ...prev,
+                  {
+                    label:
+                      predefinedModifiers.find((v) => v.value === value)
+                        ?.label || "Custom Modifier",
+                    icon:
+                      predefinedModifiers.find((v) => v.value === value)
+                        ?.icon || "person_edit",
+                    round: currentRound,
+                  },
+                ]);
+              } else {
+                firebaseSetData(
+                  "games",
+                  gameID,
+                  {
+                    ...JsonObject,
+                    modifiers: JSON.stringify([
+                      ...modifiers,
+                      {
+                        label:
+                          predefinedModifiers.find((v) => v.value === value)
+                            ?.label || "Custom Modifier",
+                        icon:
+                          predefinedModifiers.find((v) => v.value === value)
+                            ?.icon || "person_edit",
+                        round: currentRound,
+                      },
+                    ]),
+                  },
+                  {
+                    toast: showToast
+                      ? {
+                          success: "Modifier added successfully.",
+                          error: "Error adding modifier.",
+                          loading: "Adding modifier...",
+                        }
+                      : {
+                          noToast: true,
+                        },
+                  }
+                );
+              }
+            }}
             placeholder="Modifier Quick Add"
           />
         </div>
@@ -423,11 +474,29 @@ export default function Game_Nomination() {
                       className={css.roundScoreInput}
                       onChange={(e) => {
                         const newGuess = parseInt(e.target.value, 10) || 0;
-                        setScores((prevScores) =>
-                          calculateNewScoreOrGuessNomination(prevScores, index, idx, {
-                            guess: newGuess,
-                          })
-                        );
+
+                        if (!gameID) {
+                          setScores((prevScores) =>
+                            calculateNewScoreOrGuessNomination(
+                              prevScores,
+                              index,
+                              idx,
+                              {
+                                guess: newGuess,
+                              }
+                            )
+                          );
+                        } else {
+                          updateLiveScoresNomination(
+                            gameID,
+                            JsonObject,
+                            scores,
+                            index,
+                            idx,
+                            { guess: newGuess },
+                            true
+                          );
+                        }
                       }}
                     />
                     <input
@@ -439,11 +508,29 @@ export default function Game_Nomination() {
                       className={css.roundScoreInput}
                       onChange={(e) => {
                         const newScore = parseInt(e.target.value, 10) || 0;
-                        setScores((prevScores) =>
-                          calculateNewScoreOrGuessNomination(prevScores, index, idx, {
-                            score: newScore,
-                          })
-                        );
+
+                        if (!gameID) {
+                          setScores((prevScores) =>
+                            calculateNewScoreOrGuessNomination(
+                              prevScores,
+                              index,
+                              idx,
+                              {
+                                score: newScore,
+                              }
+                            )
+                          );
+                        } else {
+                          updateLiveScoresNomination(
+                            gameID,
+                            JsonObject,
+                            scores,
+                            index,
+                            idx,
+                            { score: newScore },
+                            true
+                          );
+                        }
                       }}
                     />
                     {/* running total */}
@@ -465,30 +552,88 @@ export default function Game_Nomination() {
               id="modifier-add-dropdown"
               values={predefinedModifiers}
               value={""}
-              onChange={(value) =>
-                setModifiers((prev) => [
-                  ...prev,
-                  {
-                    label:
-                      predefinedModifiers.find((v) => v.value === value)
-                        ?.label || "Custom Modifier",
-                    icon:
-                      predefinedModifiers.find((v) => v.value === value)
-                        ?.icon || "person_edit",
-                    round: 0,
-                  },
-                ])
-              }
+              onChange={(value) => {
+                if (!gameID) {
+                  setModifiers((prev) => [
+                    ...prev,
+                    {
+                      label:
+                        predefinedModifiers.find((v) => v.value === value)
+                          ?.label || "Custom Modifier",
+                      icon:
+                        predefinedModifiers.find((v) => v.value === value)
+                          ?.icon || "person_edit",
+                      round: 0,
+                    },
+                  ]);
+                } else {
+                  firebaseSetData(
+                    "games",
+                    gameID,
+                    {
+                      ...JsonObject,
+                      modifiers: JSON.stringify([
+                        ...modifiers,
+                        {
+                          label:
+                            predefinedModifiers.find((v) => v.value === value)
+                              ?.label || "Custom Modifier",
+                          icon:
+                            predefinedModifiers.find((v) => v.value === value)
+                              ?.icon || "person_edit",
+                          round: 0,
+                        },
+                      ]),
+                    },
+                    {
+                      toast: {
+                        success: "Modifier added.",
+                        error: "Error adding modifier.",
+                        loading: "Adding modifier...",
+                      },
+                    }
+                  );
+                }
+              }}
               inverted
               placeholder="Add Predefined Modifier"
             />
             <Button
-              onClick={() =>
-                setModifiers((prev) => [
-                  ...prev,
-                  { label: "New Modifier", icon: "person_edit", round: 0 },
-                ])
-              }
+              onClick={() => {
+                if (!gameID) {
+                  setModifiers((prev) => [
+                    ...prev,
+                    { label: "New Modifier", icon: "person_edit", round: 0 },
+                  ]);
+                } else {
+                  firebaseSetData(
+                    "games",
+                    gameID,
+                    {
+                      ...JsonObject,
+                      modifiers: JSON.stringify([
+                        ...modifiers,
+                        {
+                          label: "New Modifier",
+                          icon: "person_edit",
+                          round: 0,
+                        },
+                      ]),
+                    },
+                    {
+                      toast: showToast
+                        ? {
+                            success: "Modifier added.",
+                            error: "Error adding modifier.",
+                            loading: "Adding modifier...",
+                          }
+                        : {
+                            noToast: true,
+                          },
+                    }
+                  );
+                }
+              }}
               style="primary"
               title="Add Modifier"
               icon={{ gficon: "add" }}
@@ -518,13 +663,39 @@ export default function Game_Nomination() {
               <Input
                 id={`modifier-label-${index}`}
                 value={mod.label}
-                onChange={(e) =>
-                  setModifiers((prev) =>
-                    prev.map((m, mIdx) =>
-                      mIdx === index ? { ...m, label: e.target.value } : m
-                    )
-                  )
-                }
+                onChange={(e) => {
+                  if (!gameID) {
+                    setModifiers((prev) =>
+                      prev.map((m, mIdx) =>
+                        mIdx === index ? { ...m, label: e.target.value } : m
+                      )
+                    );
+                  } else {
+                    firebaseSetData(
+                      "games",
+                      gameID,
+                      {
+                        ...JsonObject,
+                        modifiers: JSON.stringify(
+                          modifiers.map((m, mIdx) =>
+                            mIdx === index ? { ...m, label: e.target.value } : m
+                          )
+                        ),
+                      },
+                      {
+                        toast: showToast
+                          ? {
+                              success: "Modifier updated.",
+                              error: "Error updating modifier.",
+                              loading: "Updating modifier...",
+                            }
+                          : {
+                              noToast: true,
+                            },
+                      }
+                    );
+                  }
+                }}
                 label="Modifier Label"
                 disabled={mod.icon !== "person_edit"}
               />
@@ -532,23 +703,78 @@ export default function Game_Nomination() {
                 id={`modifier-round-${index}`}
                 type="number"
                 value={mod.round}
-                onChange={(e) =>
-                  setModifiers((prev) =>
-                    prev.map((m, mIdx) =>
-                      mIdx === index
-                        ? { ...m, round: parseInt(e.target.value, 10) || 0 }
-                        : m
-                    )
-                  )
-                }
+                onChange={(e) => {
+                  if (!gameID) {
+                    setModifiers((prev) =>
+                      prev.map((m, mIdx) =>
+                        mIdx === index
+                          ? { ...m, round: parseInt(e.target.value, 10) || 0 }
+                          : m
+                      )
+                    );
+                  } else {
+                    firebaseSetData(
+                      "games",
+                      gameID,
+                      {
+                        ...JsonObject,
+                        modifiers: JSON.stringify(
+                          modifiers.map((m, mIdx) =>
+                            mIdx === index
+                              ? {
+                                  ...m,
+                                  round: parseInt(e.target.value, 10) || 0,
+                                }
+                              : m
+                          )
+                        ),
+                      },
+                      {
+                        toast: showToast
+                          ? {
+                              success: "Modifier round updated.",
+                              error: "Error updating modifier round.",
+                              loading: "Updating modifier round...",
+                            }
+                          : {
+                              noToast: true,
+                            },
+                      }
+                    );
+                  }
+                }}
                 label="Round Number"
               />
               <Button
-                onClick={() =>
-                  setModifiers((prev) =>
-                    prev.filter((_, mIdx) => mIdx !== index)
-                  )
-                }
+                onClick={() => {
+                  if (!gameID) {
+                    setModifiers((prev) =>
+                      prev.filter((_, mIdx) => mIdx !== index)
+                    );
+                  } else {
+                    firebaseSetData(
+                      "games",
+                      gameID,
+                      {
+                        ...JsonObject,
+                        modifiers: JSON.stringify(
+                          modifiers.filter((_, mIdx) => mIdx !== index)
+                        ),
+                      },
+                      {
+                        toast: showToast
+                          ? {
+                              success: "Modifier removed.",
+                              error: "Error removing modifier.",
+                              loading: "Removing modifier...",
+                            }
+                          : {
+                              noToast: true,
+                            },
+                      }
+                    );
+                  }
+                }}
                 style="danger"
                 title="Remove Modifier"
                 icon={{ gficon: "delete" }}
@@ -594,7 +820,7 @@ export function calculateNewScoreOrGuessNomination(
     guess?: number;
   }
 ) {
-  const { score: newScore, guess: newGuess } = newValue
+  const { score: newScore, guess: newGuess } = newValue;
 
   return scores.map((p, pIdx) =>
     pIdx === playerIndex
@@ -614,22 +840,69 @@ export function calculateNewScoreOrGuessNomination(
                         ? (newScore ?? score.roundScore)
                         : score.roundScore
                     )
-                    .reduce(
-                      (sum, currentScore, i) => {
-                        if (currentScore === -1) return sum;
-                        return sum +
-                          (currentScore ===
-                          (newGuess !== undefined && i === roundIndex
-                            ? newGuess
-                            : p.scores[i].guess)
-                            ? currentScore + 10
-                            : currentScore);
-                      },
-                      0
-                    )
+                    .reduce((sum, currentScore, i) => {
+                      if (currentScore === -1) return sum;
+                      return (
+                        sum +
+                        (currentScore ===
+                        (newGuess !== undefined && i === roundIndex
+                          ? newGuess
+                          : p.scores[i].guess)
+                          ? currentScore + 10
+                          : currentScore)
+                      );
+                    }, 0)
                 : s.runningTotal,
           })),
         }
       : p
+  );
+}
+
+export function updateLiveScoresNomination(
+  gameID: string,
+  JSONobject: {
+    JSON?: string;
+    currentRound?: number;
+    startDealer?: number;
+    modifiers?: string;
+  },
+  scores: {
+    player: string;
+    scores: { roundScore: number; guess: number; runningTotal: number }[];
+  }[],
+  playerIndex: number,
+  roundIndex: number,
+  newValue: {
+    score?: number;
+    guess?: number;
+  },
+  toast: boolean
+) {
+  const { score: newScore, guess: newGuess } = newValue;
+
+  firebaseSetData(
+    "games",
+    gameID,
+    {
+      ...JSONobject,
+      JSON: JSON.stringify(
+        calculateNewScoreOrGuessNomination(scores, playerIndex, roundIndex, {
+          score: newScore,
+          guess: newGuess,
+        })
+      ),
+    },
+    {
+      toast: toast
+        ? {
+            success: "Score updated successfully.",
+            error: "Error updating score.",
+            loading: "Updating score...",
+          }
+        : {
+            noToast: true,
+          },
+    }
   );
 }
