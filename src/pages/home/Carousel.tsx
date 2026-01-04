@@ -97,15 +97,19 @@ export default function HomeCarousel(props: {
 
   const title = homeSettings
     ? titles.find((t) => t.value === homeSettings?.filter)?.label || props.title
-    : titles[0].label
-      ;
-
+    : titles[0].label;
   return (
     <Section id={props.itemType} container={{ className: css.container }}>
       <Carousel
         showCreateButton={!props.onHome ? props.itemType : undefined}
         className={css.slider}
-        title={currentUser ? title : titles[2].label}
+        title={
+          currentUser
+            ? props.onHome
+              ? title
+              : titles[1].label
+            : titles[2].label
+        }
         multipleViews={true}
         defaultView={
           props.onHome
