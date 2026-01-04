@@ -11,12 +11,17 @@ import "./styles/themes/sharp-shift.css";
 import { useAuth } from "./functions/firebase/authentication/useAuth";
 import firebaseGetRealtimeData from "./functions/firebase/storage/useRealtimeData";
 import { userSettingsType } from "./types";
+import { useSetAtom } from "jotai";
+import { HomeSettingsAtom } from "./App";
 
-export default function SettingController(props: { children: React.ReactNode }) {
+export default function SettingController(props: {
+  children: React.ReactNode;
+}) {
   const currentUser = useAuth();
   const [userSettings, setUserSettings] = useState<userSettingsType | null>(
     null
   );
+  const setHomeSettings = useSetAtom(HomeSettingsAtom);
 
   useEffect(() => {
     if (!currentUser) {
@@ -35,7 +40,18 @@ export default function SettingController(props: { children: React.ReactNode }) 
   }, [currentUser]);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", userSettings?.theme || "system");
+    if (!userSettings) {
+      return;
+    }
+
+    setHomeSettings(userSettings.home);
+  }, [userSettings, setHomeSettings]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      userSettings?.theme || "system"
+    );
 
     if (userSettings?.theme === "custom" && userSettings.customThemeColor) {
       const root = document.documentElement;
@@ -49,7 +65,7 @@ export default function SettingController(props: { children: React.ReactNode }) 
     return () => {
       const root = document.documentElement;
       root.setAttribute("data-theme", "system");
-    }
+    };
   }, [userSettings]);
 
   return <>{props.children}</>;

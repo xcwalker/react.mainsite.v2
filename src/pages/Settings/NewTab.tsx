@@ -137,6 +137,22 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
             });
           }}
         />
+        <InputToggle
+          id="newTabHeroVisibility"
+          label="Show Hero"
+          checked={
+            newTabLinks.settings.showHero !== undefined ? newTabLinks.settings.showHero : true
+          }
+          onChange={(value) => {
+            firebaseSetData("newtab", currentUser.uid, {
+              ...newTabLinks,
+              settings: {
+                ...newTabLinks.settings,
+                showHero: value,
+              },
+            });
+          }}
+        />
       </SettingSection>
       {/* Styling */}
       <SettingSection id="newTabStyling" title="Styling Settings">

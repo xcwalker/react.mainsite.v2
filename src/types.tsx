@@ -470,6 +470,7 @@ export type NewTabLinks = {
       defaultParams?: string; // Additional default parameters for the search query
     };
     showBookmarks?: boolean;
+    showHero?: boolean;
   };
 };
 
@@ -635,6 +636,16 @@ export type userSettingsType = {
   customThemes: customThemeType[];
   navigation: NavSection[];
   navigationShowSocials: boolean;
+
+  home: UserSettingsTypeHome;
+};
+
+export type UserSettingsTypeHome = {
+  filter: "own" | "all" | "xcwalker";
+  showRadio: boolean;
+  showSites: boolean;
+  defaultView: "column" | "grid" | "list";
+  showHero: boolean;
 };
 
 export type customThemeType = {
@@ -655,6 +666,13 @@ export const userSettingsDefault: userSettingsType = {
   customThemes: [],
   navigation: defaultNav,
   navigationShowSocials: true,
+  home: {
+    filter: "own",
+    showRadio: true,
+    showSites: true,
+    defaultView: "column",
+    showHero: true,
+  },
 };
 
 export type Overlay_PositionType =

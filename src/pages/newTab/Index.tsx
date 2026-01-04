@@ -209,6 +209,9 @@ export default function NewTab() {
                       ? organization?.logo.wide
                       : undefined
                   }
+                  showHero={
+                    linkData.settings.showHero !== undefined ? linkData.settings.showHero : true
+                  }
                 />
                 <div className={css.search}>
                   {linkData.settings.showSearch && (

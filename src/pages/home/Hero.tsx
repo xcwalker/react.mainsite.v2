@@ -13,11 +13,14 @@ import birthdayHeroCSS from "../../styles/pages/home/hero/birthdayHero.module.cs
 import noKingsHeroCSS from "../../styles/pages/home/hero/noKingsHero.module.css";
 import { Link } from "react-router-dom";
 
-export default function HomeHero(props: { logo?: {
-  src: string;
-  onDark: string;
-  onLight: string;
-} }) {
+export default function HomeHero(props: {
+  logo?: {
+    src: string;
+    onDark: string;
+    onLight: string;
+  };
+  showHero: boolean;
+}) {
   const date = new Date();
   const [slideshowIndex, setSlideshowIndex] = useState(0);
   const [userInteracted, setUserInteracted] = useState(false);
@@ -116,6 +119,10 @@ export default function HomeHero(props: { logo?: {
     return () => clearTimeout(timeout);
   }, [userInteracted]);
 
+  if (props?.showHero === false) {
+    return <></>;
+  }
+
   return (
     <>
       <Section
@@ -204,7 +211,9 @@ export default function HomeHero(props: { logo?: {
   );
 }
 
-function DefaultHero(props: { logo?: { src: string; onDark: string; onLight: string } }) {
+function DefaultHero(props: {
+  logo?: { src: string; onDark: string; onLight: string };
+}) {
   return (
     <div className={defaultHeroCSS.container}>
       <img src="/background.svg" alt="" className={defaultHeroCSS.background} />
@@ -221,7 +230,10 @@ function DefaultHero(props: { logo?: { src: string; onDark: string; onLight: str
   );
 }
 
-function NewYearsHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
+function NewYearsHero(props: {
+  isActive?: boolean;
+  logo?: { src: string; onDark: string; onLight: string };
+}) {
   return (
     <div className={newYearHeroCSS.container}>
       <img
@@ -251,7 +263,10 @@ function NewYearsHero(props: { isActive?: boolean; logo?: { src: string; onDark:
   );
 }
 
-function BoxingDaysHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
+function BoxingDaysHero(props: {
+  isActive?: boolean;
+  logo?: { src: string; onDark: string; onLight: string };
+}) {
   return (
     <div className={boxingDayHeroCSS.container}>
       <img
@@ -281,7 +296,10 @@ function BoxingDaysHero(props: { isActive?: boolean; logo?: { src: string; onDar
   );
 }
 
-function ChristmasHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
+function ChristmasHero(props: {
+  isActive?: boolean;
+  logo?: { src: string; onDark: string; onLight: string };
+}) {
   return (
     <div className={christmasHeroCSS.container}>
       <img
@@ -311,7 +329,10 @@ function ChristmasHero(props: { isActive?: boolean; logo?: { src: string; onDark
   );
 }
 
-function HalloweenHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
+function HalloweenHero(props: {
+  isActive?: boolean;
+  logo?: { src: string; onDark: string; onLight: string };
+}) {
   return (
     <div className={halloweenHeroCSS.container}>
       <img
@@ -341,7 +362,10 @@ function HalloweenHero(props: { isActive?: boolean; logo?: { src: string; onDark
   );
 }
 
-function BirthdayHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
+function BirthdayHero(props: {
+  isActive?: boolean;
+  logo?: { src: string; onDark: string; onLight: string };
+}) {
   return (
     <div className={birthdayHeroCSS.container}>
       <img
@@ -371,7 +395,10 @@ function BirthdayHero(props: { isActive?: boolean; logo?: { src: string; onDark:
   );
 }
 
-function NoKingsHero(props: { isActive?: boolean; logo?: { src: string; onDark: string; onLight: string } }) {
+function NoKingsHero(props: {
+  isActive?: boolean;
+  logo?: { src: string; onDark: string; onLight: string };
+}) {
   return (
     <div className={noKingsHeroCSS.container}>
       <img

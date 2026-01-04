@@ -36,7 +36,11 @@ import ItemEdit from "./pages/itemPage/Edit";
 import VehiclePage from "./pages/vehiclePage/Index";
 import { FindVehiclePage } from "./pages/vehiclePage/Find";
 import UserEdit from "./pages/user/UserEdit";
-import { NewTabLinks } from "./types";
+import {
+  NewTabLinks,
+  userSettingsDefault,
+  UserSettingsTypeHome,
+} from "./types";
 import OverlayCreate from "./pages/overlay/Create";
 import OverlayIndex from "./pages/overlay/Index";
 import { OverlayViewAll } from "./pages/overlay/ViewAll";
@@ -813,4 +817,9 @@ export const RadioAtom = atomWithStorage(
 export const NewTabLinksAtom = atomWithStorage<NewTabLinks | undefined>(
   "newTabLinks",
   undefined
+);
+
+export const HomeSettingsAtom = atomWithStorage<UserSettingsTypeHome>(
+  "homeSettings",
+  userSettingsDefault.home
 );

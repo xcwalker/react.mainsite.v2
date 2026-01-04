@@ -4,10 +4,15 @@ import SideBySide from "../../components/SideBySide";
 import css from "../../styles/pages/home/radio.module.css";
 import Stack from "../../components/Stack";
 import { useAtomValue } from "jotai";
-import { RadioAtom } from "../../App";
+import { HomeSettingsAtom, RadioAtom } from "../../App";
 
 export function HomeRadio() {
   const radio = useAtomValue(RadioAtom)
+  const homeSettings = useAtomValue(HomeSettingsAtom);
+
+  if (homeSettings?.showRadio === false) {
+    return <></>;
+  }
 
   return (
     <Section id="radio">

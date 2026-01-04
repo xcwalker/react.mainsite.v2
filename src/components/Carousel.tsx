@@ -46,6 +46,10 @@ export default function Carousel(props: {
   }
 
   useEffect(() => {
+    setView(props.defaultView);
+  }, [props.defaultView]);
+
+  useEffect(() => {
     if (carouselRef.current) {
       // @ts-expect-error is on firefox (suckers)
       setScrollDistance(carouselRef.current.scrollLeftMax);

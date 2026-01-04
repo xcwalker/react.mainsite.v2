@@ -4,8 +4,16 @@ import css from "../../styles/pages/home/sites.module.css";
 import { Fragment } from "react/jsx-runtime";
 import GFIcon from "../../components/GFIcon";
 import { defaultNav } from "../../types";
+import { useAtomValue } from "jotai";
+import { HomeSettingsAtom } from "../../App";
 
 export default function HomeSites() {
+  const homeSettings = useAtomValue(HomeSettingsAtom);
+
+  if (homeSettings?.showSites === false) {
+    return <></>;
+  }
+
   return (
     <Section id="sites">
       <h2>Our other sites</h2>

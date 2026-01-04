@@ -9,6 +9,8 @@ import Carousel from "../../components/Carousel";
 import getDataByDate from "../../functions/firebase/storage/getDataByDate";
 import ListItem from "../../components/ListItem";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
+import { useAtomValue } from "jotai";
+import { HomeSettingsAtom } from "../../App";
 
 export default function HomeCarousel(props: {
   title: string;
@@ -21,17 +23,46 @@ export default function HomeCarousel(props: {
   const [itemArray, setItemArray] = useState<
     { id: string; value: ItemProps }[] | undefined
   >();
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | "alpha-asc" | "alpha-desc">("desc");
+  const [sortDirection, setSortDirection] = useState<
+    "asc" | "desc" | "alpha-asc" | "alpha-desc"
+  >("desc");
+  const homeSettings = useAtomValue(HomeSettingsAtom);
 
   useEffect(() => {
     if (props.onHome) {
-      getDataByDateFromUser(
-        props.itemType,
-        currentUser ? currentUser.uid : import.meta.env.VITE_MAIN_USER_ID,
-        sortDirection
-      ).then((data) => {
-        setItemArray(data as { id: string; value: ItemProps }[]);
-      });
+      if (homeSettings?.filter && currentUser) {
+        const filter = homeSettings.filter;
+
+        if (filter === "own") {
+          getDataByDateFromUser(
+            props.itemType,
+            currentUser.uid,
+            sortDirection
+          ).then((data) => {
+            setItemArray(data as { id: string; value: ItemProps }[]);
+          });
+        } else if (filter === "xcwalker") {
+          getDataByDateFromUser(
+            props.itemType,
+            import.meta.env.VITE_MAIN_USER_ID,
+            sortDirection
+          ).then((data) => {
+            setItemArray(data as { id: string; value: ItemProps }[]);
+          });
+        } else {
+          getDataByDate(props.itemType, sortDirection).then((data) => {
+            setItemArray(data as { id: string; value: ItemProps }[]);
+          });
+        }
+      } else {
+        getDataByDateFromUser(
+          props.itemType,
+          currentUser ? currentUser.uid : import.meta.env.VITE_MAIN_USER_ID,
+          sortDirection
+        ).then((data) => {
+          setItemArray(data as { id: string; value: ItemProps }[]);
+        });
+      }
     } else {
       getDataByDate(props.itemType, sortDirection).then((data) => {
         setItemArray(data as { id: string; value: ItemProps }[]);
@@ -41,16 +72,48 @@ export default function HomeCarousel(props: {
     return () => {
       setItemArray(undefined);
     };
-  }, [props.onHome, props.itemType, currentUser, sortDirection]);
+  }, [
+    props.onHome,
+    props.itemType,
+    currentUser,
+    sortDirection,
+    homeSettings?.filter,
+  ]);
+
+  const titles = [
+    {
+      value: "own",
+      label: "Your " + props.title,
+    },
+    {
+      value: "all",
+      label: "All " + props.title,
+    },
+    {
+      value: "xcwalker",
+      label: "XCWalker's " + props.title,
+    },
+  ];
+
+  const title = homeSettings
+    ? titles.find((t) => t.value === homeSettings?.filter)?.label || props.title
+    : titles[0].label
+      ;
 
   return (
     <Section id={props.itemType} container={{ className: css.container }}>
       <Carousel
         showCreateButton={!props.onHome ? props.itemType : undefined}
         className={css.slider}
-        title={props.title}
+        title={currentUser ? title : titles[2].label}
         multipleViews={true}
-        defaultView={props.onHome ? "column" : "grid"}
+        defaultView={
+          props.onHome
+            ? homeSettings && currentUser
+              ? homeSettings.defaultView || "column"
+              : "column"
+            : "grid"
+        }
         titleLink={
           props.titleLink
             ? { text: "View All", href: "/" + props.titleLink }

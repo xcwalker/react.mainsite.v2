@@ -25,6 +25,7 @@ import { SettingsAccount } from "./Account.tsx";
 import SettingsThemes from "./Themes.tsx";
 import SideBySide from "../../components/SideBySide.tsx";
 import SettingsRadio from "./Radio.tsx";
+import SettingsHome from "./Home.tsx";
 
 export default function SettingsPage() {
   const currentUser = useAuth();
@@ -153,7 +154,7 @@ const pages: PageItem[] = [
     name: "home",
     title: "Home Settings",
     icon: "home",
-    component: Page_Home,
+    component: SettingsHome,
   },
   {
     name: "admin",
@@ -242,14 +243,6 @@ function Page_KeyboardShortcuts() {
   return (
     <SettingSection id="keyboardShortcuts" title="Keyboard Shortcuts">
       <p>Keyboard shortcuts coming soon!</p>
-    </SettingSection>
-  );
-}
-
-function Page_Home() {
-  return (
-    <SettingSection id="homeSettings" title="Home Settings">
-      <p>Home settings coming soon!</p>
     </SettingSection>
   );
 }
