@@ -176,7 +176,7 @@ export default function App() {
                 element={
                   <ViewAllPage
                     itemType="blog"
-                    title="All Blog Posts"
+                    title="Blog Posts"
                     hasThumbnail={false}
                   />
                 }
@@ -234,7 +234,7 @@ export default function App() {
                 element={
                   <ViewAllPage
                     itemType="projects"
-                    title="All Projects"
+                    title="Projects"
                     hasThumbnail={true}
                   />
                 }
@@ -292,7 +292,7 @@ export default function App() {
                 element={
                   <ViewAllPage
                     itemType="recipes"
-                    title="All Recipes"
+                    title="Recipes"
                     hasThumbnail={true}
                   />
                 }
@@ -413,7 +413,7 @@ export default function App() {
                 element={
                   <ViewAllPage
                     itemType="albums"
-                    title="All Albums"
+                    title="Albums"
                     hasThumbnail={true}
                   />
                 }
@@ -471,7 +471,7 @@ export default function App() {
                 element={
                   <ViewAllPage
                     itemType="videos"
-                    title="All Videos"
+                    title="Videos"
                     hasThumbnail={true}
                   />
                 }
