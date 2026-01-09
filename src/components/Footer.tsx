@@ -37,7 +37,9 @@ export default function Footer() {
           <span className={css.span}>
             Copyright © 2024 - {buildDate.getFullYear()} xcwalker.
           </span>
-          <span className={css.span}>All rights reserved.</span>
+          <span className={css.span}>
+            All rights reserved. <a href="https://xcw.one">XCW Group</a>
+          </span>
         </div>
         <div className={css.column}>
           {mode === "development" && (
@@ -60,9 +62,9 @@ export default function Footer() {
         </div>
       </div>
       <div className={css.groupContainer}>
-        <div className={css.column}>
+        <a href="https://xcw.one" className={css.column}>
           <Logos.xcwgroup className={css.groupLogo} />
-        </div>
+        </a>
       </div>
     </footer>
   );

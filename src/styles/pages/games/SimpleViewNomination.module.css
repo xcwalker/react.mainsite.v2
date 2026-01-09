@@ -23,6 +23,16 @@
   border-radius: var(--item-sidebar-border-radius, 0.5rem);
 }
 
+.infoLine.accent {
+  background: var(--accent);
+}
+
+.infoLine.danger {
+  --_outline-width: 0.125rem;
+  outline: var(--_outline-width) solid red;
+  outline-offset: calc(var(--_outline-width) * -1);
+}
+
 .infoLine .header {
   /* sizing */
   font-size: 0.75em;
@@ -49,11 +59,11 @@
   height: fit-content;
   padding: 0.25rem 0.5rem;
 
-  /* flex */
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  /* grid */
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
+  
   gap: 0.5rem;
 
   /* text */

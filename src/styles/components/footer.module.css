@@ -149,6 +149,7 @@
     rgba(0, 97, 224, 1) 100%
   );
   border-radius: var(--footer-border-radius, 1rem);
+  color: #ffffff;
 }
 
 .groupContainer .column {
@@ -161,6 +162,10 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+
+  /* styling */
+  color: inherit;
+  text-decoration: none;
 }
 
 .groupLogo {

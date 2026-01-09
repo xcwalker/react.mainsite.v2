@@ -11,7 +11,11 @@ import { useParams } from "react-router-dom";
 import Button from "../../../components/Button";
 import firebaseSetData from "../../../functions/firebase/storage/setData";
 import InputDropdown from "../../../components/InputDropdown";
-import { predefinedModifiers, updateLiveScoresNomination } from "../Nomination";
+import {
+  findRoundPlayersMaxTotalScore,
+  predefinedModifiers,
+  updateLiveScoresNomination,
+} from "../Nomination";
 import GFIcon from "../../../components/GFIcon";
 import ErrorPage from "../../../ErrorPage";
 import InputGroup from "../../../components/InputGroup";
@@ -21,6 +25,7 @@ import {
 } from "../LiveView/LiveViewNominationV2";
 import InputToggle from "../../../components/InputToggle";
 import { separator, title } from "../../../App";
+import IconButton from "../../../components/IconButton";
 
 export default function SimpleView_Nomination() {
   const { gameID } = useParams<{ gameID: string }>();
@@ -307,26 +312,31 @@ function Sidebar(props: {
         values={predefinedModifiers}
         value={""}
         onChange={(value) =>
-          firebaseSetData("games", gameID, {
-            ...JsonObject,
-            modifiers: JSON.stringify([
-              ...modifiers,
-              {
-                ...predefinedModifiers.find((mod) => mod.value === value),
-                round: currentRound,
-              },
-            ]),
-          }, {
-            toast: showToast
-              ? {
-                  success: "Modifier added successfully.",
-                  error: "Error adding modifier.",
-                  loading: "Adding modifier...",
-                }
-              : {
-                  noToast: true,
+          firebaseSetData(
+            "games",
+            gameID,
+            {
+              ...JsonObject,
+              modifiers: JSON.stringify([
+                ...modifiers,
+                {
+                  ...predefinedModifiers.find((mod) => mod.value === value),
+                  round: currentRound,
                 },
-          })
+              ]),
+            },
+            {
+              toast: showToast
+                ? {
+                    success: "Modifier added successfully.",
+                    error: "Error adding modifier.",
+                    loading: "Adding modifier...",
+                  }
+                : {
+                    noToast: true,
+                  },
+            }
+          )
         }
         label="Quick Add"
       />
@@ -337,6 +347,19 @@ function Sidebar(props: {
             <div key={index} className={css.modifier}>
               <GFIcon className={css.icon}>{mod.icon}</GFIcon>
               <span>{mod.label}</span>
+              <IconButton
+                icon={{ gficon: "delete" }}
+                title="Remove Modifier"
+                style="danger"
+                onClick={() =>
+                  firebaseSetData("games", gameID, {
+                    ...JsonObject,
+                    modifiers: JSON.stringify(
+                      modifiers.filter((m) => m !== mod)
+                    ),
+                  })
+                }
+              />
             </div>
           ))}
         </InfoLine>
@@ -367,6 +390,39 @@ function Sidebar(props: {
             numberOfPlayers: scores.length,
           })
         }
+        danger={
+          scores?.reduce((total, player) => {
+            return total + (player.scores[currentRound]?.guess || 0);
+          }, 0) ===
+          NumberOfCardsForRoundNomination({
+            roundIndex: currentRound,
+            numberOfPlayers: scores.length,
+          })
+        }
+      />
+      <InfoLine
+        header="Total Round Score"
+        info={
+          scores
+            ?.reduce((total, player) => {
+              return total + (player.scores[currentRound]?.roundScore || 0);
+            }, 0)
+            .toString() +
+          " / " +
+          NumberOfCardsForRoundNomination({
+            roundIndex: currentRound,
+            numberOfPlayers: scores.length,
+          })
+        }
+        danger={
+          scores?.reduce((total, player) => {
+            return total + (player.scores[currentRound]?.roundScore || 0);
+          }, 0) >
+          NumberOfCardsForRoundNomination({
+            roundIndex: currentRound,
+            numberOfPlayers: scores.length,
+          })
+        }
       />
     </SidebarContainer>
   );
@@ -376,9 +432,17 @@ function InfoLine(props: {
   header: string;
   info?: string;
   children?: React.ReactNode;
+  accent?: boolean;
+  danger?: boolean;
 }) {
   return (
-    <div className={css.infoLine}>
+    <div
+      className={
+        css.infoLine +
+        (props.accent ? ` ${css.accent}` : "") +
+        (props.danger ? ` ${css.danger}` : "")
+      }
+    >
       <span className={css.header}>{props.header}</span>
       {props.info && <span className={css.info}>{props.info}</span>}
       {props.children}
@@ -472,6 +536,10 @@ function PlayerRenderer(props: {
       <InfoLine
         header="Running Total"
         info={(player.scores[currentRoundIndex]?.runningTotal || 0).toString()}
+        accent={
+          findRoundPlayersMaxTotalScore(scores, currentRoundIndex) ===
+          player.scores[currentRoundIndex]?.runningTotal
+        }
       />
     </div>
   );

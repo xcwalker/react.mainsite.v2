@@ -10,7 +10,6 @@ import PageSeoWrapper from "../../../components/PageSeoWrapper";
 import { separator, title } from "../../../App";
 import SideBySide from "../../../components/SideBySide";
 import { InputRange } from "../../../components/InputRange";
-import { SuitRenderer } from "./LiveViewNomination";
 import { SidebarContainer } from "../../../components/Sidebar/SidebarContainer";
 import GFIcon from "../../../components/GFIcon";
 
@@ -311,4 +310,28 @@ function InfoLine(props: {
       {props.children}
     </div>
   );
+}
+
+function SuitRenderer(props: { index: number }) {
+  const { index } = props;
+
+  const suit = suits[index % suits.length];
+
+  if (suit === "Hearts") {
+    return (
+      <img src="/suit-Hearts.svg" alt="Hearts" />
+    );
+  } else if (suit === "Clubs") {
+    return (
+      <img src="/suit-Clubs.svg" alt="Clubs" />
+    );
+  } else if (suit === "Diamonds") {
+    return (
+      <img src="/suit-Diamonds.svg" alt="Diamonds" />
+    );
+  } else if (suit === "Spades") {
+    return (
+      <img src="/suit-Spades.svg" alt="Spades" />
+    );
+  }
 }

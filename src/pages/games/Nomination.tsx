@@ -910,3 +910,15 @@ export function updateLiveScoresNomination(
     }
   );
 }
+export function findRoundPlayersMaxTotalScore(
+  scores: {
+    player: string;
+    scores: { roundScore: number; guess: number; runningTotal: number }[];
+  }[],
+  roundIndex: number
+) {
+  return scores.reduce((max, player) => {
+    const playerTotal = player.scores[roundIndex]?.runningTotal || 0;
+    return playerTotal > max ? playerTotal : max;
+  }, 0);
+}

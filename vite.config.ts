@@ -90,6 +90,38 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react(), tsconfigPaths()],
+    build: {
+      chunkSizeWarningLimit: 800,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              return id
+                .toString()
+                .split("node_modules/")[1]
+                .split("/")[0]
+                .toString();
+            } else if (id.includes("pages")) {
+              if (id.includes("games")) {
+                return id
+                  .toString()
+                  .split("games/")[1]
+                  .split("/")[0]
+                  .toString();
+              } else {
+                return id
+                  .toString()
+                  .split("pages/")[1]
+                  .split("/")[0]
+                  .toString();
+              }
+            } else {
+              console.log("ID: " + id);
+            }
+          },
+        },
+      },
+    },
   };
 });
 
