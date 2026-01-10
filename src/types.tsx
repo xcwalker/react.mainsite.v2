@@ -276,6 +276,7 @@ export interface ItemProps {
     collectionName: string;
     authorID: string;
     parnix?: string;
+    organizationID?: string;
   };
 }
 
@@ -337,6 +338,7 @@ export type ItemType = {
     github?: string;
     workshop?: string;
     parnix?: boolean;
+    organizationID?: string;
   };
 };
 

@@ -1,4 +1,10 @@
-import { ItemType, ItemTypes, RecipeItemProps, UserType } from "../../types";
+import {
+  ItemType,
+  ItemTypes,
+  OrganizationType,
+  RecipeItemProps,
+  UserType,
+} from "../../types";
 import Button from "../../components/Button";
 import { SocialIcon } from "../../components/SocialIcon";
 import GFIcon from "../../components/GFIcon";
@@ -19,6 +25,8 @@ import SidebarDates from "../../components/Sidebar/SidebarDates";
 import { SidebarContainer } from "../../components/Sidebar/SidebarContainer";
 import DeleteWarning from "../../components/DeleteWarning";
 import ShareModal from "../../components/ShareModal";
+import SidebarOrganization from "../../components/Sidebar/SidebarOrganization";
+import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
 
 export function ItemSidebar(props: {
   item: ItemType;
@@ -38,6 +46,10 @@ export function ItemSidebar(props: {
   const [shopQRModal, setShopQRModal] = useState(false);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const navigate = useNavigate();
+  const [organizationData, setOrganizationData] = useState<
+    OrganizationType | undefined
+  >(undefined);
+  const [userData, setUserData] = useState<UserType | undefined>(undefined);
 
   useEffect(() => {
     if (currentUser?.uid) {
@@ -48,6 +60,25 @@ export function ItemSidebar(props: {
       );
     }
   }, [currentUser?.uid]);
+
+  useEffect(() => {
+    if (item.metaData.authorID) {
+      firebaseGetRealtimeUserData(
+        item.metaData.authorID,
+        setUserData as React.Dispatch<React.SetStateAction<unknown>>
+      );
+    }
+  }, [item.metaData.authorID]);
+
+  useEffect(() => {
+    if (item.metaData.organizationID) {
+      firebaseGetRealtimeData(
+        "organizations",
+        item.metaData.organizationID,
+        setOrganizationData as React.Dispatch<React.SetStateAction<unknown>>
+      );
+    }
+  }, [item.metaData.organizationID]);
 
   return (
     <>
@@ -73,23 +104,65 @@ export function ItemSidebar(props: {
         />
         <SidebarTitle title={item.data.title} subtitle={item.data.subTitle} />
         <SidebarDates created={dateCreated} modified={dateModified} />
-        <div className={css.tags}>
-          <div className={css.collection}>
-            <GFIcon className={css.icon}>category</GFIcon>
-            {item.metaData.collectionName}
+        {((item.metaData.collectionName !== "" &&
+          item.metaData.collection !== "") ||
+          item.metaData.tags.length > 0) && (
+          <div className={css.tags}>
+            {item.metaData.collectionName !== "" &&
+              item.metaData.collection !== "" && (
+                <div className={css.collection}>
+                  <GFIcon className={css.icon}>category</GFIcon>
+                  {item.metaData.collectionName}
+                </div>
+              )}
+            {item.metaData.tags.map((tag, index) => {
+              return (
+                <div key={index} className={css.tag}>
+                  <GFIcon className={css.icon}>label</GFIcon>
+                  <span>{tag}</span>
+                </div>
+              );
+            })}
           </div>
-          {item.metaData.tags.map((tag, index) => {
-            return (
-              <div key={index} className={css.tag}>
-                <GFIcon className={css.icon}>label</GFIcon>
-                <span>{tag}</span>
-              </div>
-            );
-          })}
-        </div>
+        )}
         {item.metaData.authorID && (
           <SidebarUser userId={item.metaData.authorID} />
         )}
+        {item.metaData.organizationID && userData && organizationData && (
+          <SidebarOrganization
+            orgId={item.metaData.organizationID}
+            orgData={{
+              info: {
+                displayName: organizationData.name,
+                role:
+                  userData.organization?.id === item.metaData.organizationID
+                    ? userData.organization?.role || "member"
+                    : "former member",
+              },
+              images:
+                organizationData.logo.background &&
+                organizationData.logo.background.type
+                  ? {
+                      profile: organizationData.logo.icon || "",
+                      background:
+                        organizationData.logo.background.imageUrl || "",
+                      backgroundType:
+                        organizationData.logo.background.type || "color",
+                      backgroundColor:
+                        organizationData.logo.background.color || "white",
+                      color: organizationData.logo.color || "#000000",
+                    }
+                  : {
+                      profile: organizationData.logo.icon || "",
+                      background: "",
+                      backgroundType: "color",
+                      backgroundColor: "white",
+                      color: "#000000",
+                    },
+            }}
+          />
+        )}
+
         {props.itemType === "recipes" && (
           <RecipeSidebarContent item={item as RecipeItemProps} />
         )}

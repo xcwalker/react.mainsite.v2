@@ -1,12 +1,14 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import css from "../../styles/pages/itemPage/create.module.css";
 import {
   AlbumItemProps,
   BlogItemProps,
   CombinedItemProps,
   ItemTypes,
+  OrganizationType,
   ProjectItemProps,
   RecipeItemProps,
+  UserType,
 } from "../../types";
 import GFIcon from "../../components/GFIcon";
 import firebaseSetData from "../../functions/firebase/storage/setData";
@@ -26,6 +28,9 @@ import devConsole from "../../functions/devConsole";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
 import { separator, title } from "../../App";
 import InputList from "../../components/InputList";
+import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
+import InputDropdown from "../../components/InputDropdown";
+import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
 
 export default function ItemCreate(props: {
   itemType: ItemTypes;
@@ -106,6 +111,34 @@ function Sidebar(props: {
 }) {
   const navigate = useNavigate();
   const currentUser = useAuth();
+  const [userData, setUserData] = useState<UserType | null>(null);
+  const [organizationData, setOrganizationData] =
+    useState<OrganizationType | null>(null);
+
+  useEffect(() => {
+    if (!currentUser) {
+      setUserData(null);
+      return;
+    }
+
+    firebaseGetRealtimeUserData(
+      currentUser.uid,
+      setUserData as React.Dispatch<React.SetStateAction<unknown>>
+    );
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (!userData?.organization?.id) {
+      setOrganizationData(null);
+      return;
+    }
+
+    firebaseGetRealtimeData(
+      "organizations",
+      userData.organization.id,
+      setOrganizationData as React.Dispatch<React.SetStateAction<unknown>>
+    );
+  }, [userData?.organization?.id]);
 
   return (
     <div className={css.sidebar}>
@@ -304,6 +337,28 @@ function Sidebar(props: {
             className={css.youtube}
           />
         </>
+      )}
+      {userData && userData.organization?.id && organizationData && (
+        <InputDropdown
+          label="Post as Organization"
+          values={[
+            { icon: "person", label: "Personal", value: "personal" },
+            {
+              icon: "business",
+              label: organizationData.name,
+              value: userData.organization.id,
+            },
+          ]}
+          value={props.data.metaData.organizationID || "personal"}
+          onChange={(newValue) => {
+            props.setData((prev) => {
+              const newData = { ...prev };
+              newData.metaData.organizationID = newValue;
+              return newData;
+            });
+          }}
+          id="organizationSelect"
+        />
       )}
       {currentUser && currentUser !== null && (
         <Button
@@ -514,7 +569,7 @@ function Main(props: {
           onChange={(newList) => {
             props.setData((prev) => {
               const newValue = { ...prev };
-              newValue.data.instructions.cook = newList;  
+              newValue.data.instructions.cook = newList;
               return newValue;
             });
           }}

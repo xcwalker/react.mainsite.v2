@@ -29,6 +29,7 @@ import firebaseSetData from "../../functions/firebase/storage/setData";
 import QRCode from "react-qr-code";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
 import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
+import OrganizationsCarousel from "./Carousel";
 
 export default function OrganizationDetails() {
   const currentUser = useAuth();
@@ -43,6 +44,7 @@ export default function OrganizationDetails() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
+  const [showLeaveModal, setShowLeaveModal] = useState(false);
 
   useEffect(() => {
     firebaseGetRealtimeData(
@@ -91,9 +93,11 @@ export default function OrganizationDetails() {
             setShowDeleteModal={setShowDeleteModal}
             setShowInviteModal={setShowInviteModal}
             setShowShareModal={setShowShareModal}
+            setShowLeaveModal={setShowLeaveModal}
           />
           <main className={css.main}>
             <Description organization={organization} />
+            <Posts organizationId={organizationId || ""} />
             <Members users={users} />
           </main>
         </SideBySide>
@@ -116,6 +120,12 @@ export default function OrganizationDetails() {
         organizationId={organizationId || ""}
         organization={organization}
       />
+      <LeaveModal
+        setVisibility={setShowLeaveModal}
+        visibility={showLeaveModal}
+        userData={userData}
+        currentUser={currentUser}
+      />
     </PageSeoWrapper>
   );
 }
@@ -129,6 +139,7 @@ function Sidebar(props: {
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowInviteModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowShareModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowLeaveModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const {
     organization,
@@ -139,6 +150,7 @@ function Sidebar(props: {
     setShowDeleteModal,
     setShowInviteModal,
     setShowShareModal,
+    setShowLeaveModal,
   } = props;
 
   return (
@@ -180,6 +192,7 @@ function Sidebar(props: {
         setShowDeleteModal={setShowDeleteModal}
         setShowInviteModal={setShowInviteModal}
         setShowShareModal={setShowShareModal}
+        setShowLeaveModal={setShowLeaveModal}
       />
     </SidebarContainer>
   );
@@ -194,6 +207,7 @@ function Controls(props: {
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowInviteModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowShareModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowLeaveModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const {
     organization,
@@ -204,6 +218,7 @@ function Controls(props: {
     setShowDeleteModal,
     setShowInviteModal,
     setShowShareModal,
+    setShowLeaveModal,
   } = props;
   const [linkCopied, setLinkCopied] = useState(false);
 
@@ -291,6 +306,14 @@ function Controls(props: {
             Delete
           </Button>
         )}
+      <Button
+        onClick={() => setShowLeaveModal(true)}
+        style="danger"
+        title="Leave Organization"
+        icon={{ gficon: "logout" }}
+      >
+        Leave
+      </Button>
     </SidebarButtonContainer>
   );
 }
@@ -307,6 +330,33 @@ function Description(props: { organization: OrganizationType }) {
       >
         {organization.description}
       </Markdown>
+    </Section>
+  );
+}
+
+function Posts(props: { organizationId: string }) {
+  const { organizationId } = props;
+
+  return (
+    <Section id="postsSection" className={css.postsSection}>
+      <OrganizationsCarousel
+        organizationId={organizationId}
+        title="Posts"
+        itemType="blog"
+        hasThumbnail={true}
+      />
+      <OrganizationsCarousel
+        organizationId={organizationId}
+        title="Projects"
+        itemType="projects"
+        hasThumbnail={true}
+      />
+      <OrganizationsCarousel
+        organizationId={organizationId}
+        title="Recipes"
+        itemType="recipes"
+        hasThumbnail={true}
+      />
     </Section>
   );
 }
@@ -535,6 +585,65 @@ function InviteModal(props: {
           )}
         </div>
       </SideBySide>
+    </Modal>
+  );
+}
+
+function LeaveModal(props: {
+  setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
+  visibility: boolean;
+  userData: UserType | null;
+  currentUser: User | null | undefined;
+}) {
+  const { setVisibility, visibility, userData, currentUser } = props;
+
+  if (!currentUser || !userData) {
+    return null;
+  }
+
+  return (
+    <Modal
+      title="Leave Organization"
+      visibility={visibility}
+      setVisibility={() => setVisibility(false)}
+      footer={
+        <>
+          <Button
+            onClick={() => {
+              const newUserData = userData;
+              newUserData.organization = undefined;
+
+              firebaseSetData("users", currentUser.uid, newUserData, {
+                toast: {
+                  loading: "Leaving Organization",
+                  success: "Left Organization Successfully",
+                  error: "Error Leaving Organization",
+                },
+              }).then(
+                () => {
+                  setVisibility(false);
+                }
+              );
+            }}
+            style="danger"
+            title="Leave Organization"
+            centered
+          >
+            Leave Organization
+          </Button>
+          <Button
+            onClick={() => setVisibility(false)}
+            style="secondary"
+            title="Cancel"
+            centered
+          >
+            Cancel
+          </Button>
+        </>
+      }
+    >
+      <p>Are you sure you want to leave this organization?</p>
+      <p>You will lose access to any organization-only resources.</p>
     </Modal>
   );
 }

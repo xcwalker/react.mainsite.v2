@@ -7,7 +7,6 @@ import LoadingPage from "../../components/Loading";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import AccountPage from "../../components/Security/AccountPage";
 import SidebarUser from "../../components/Sidebar/SidebarUser";
-import { QRModal } from "../../components/QRModal";
 import Button from "../../components/Button";
 import css from "../../styles/pages/games/monopoly.module.css";
 import firebaseSetData from "../../functions/firebase/storage/setData";
@@ -16,6 +15,7 @@ import toast from "react-hot-toast";
 import devConsole from "../../functions/devConsole";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
 import { separator, title } from "../../App";
+import ShareModal from "../../components/ShareModal";
 
 export default function Game_Monopoly() {
   const { gameId } = useParams();
@@ -247,10 +247,10 @@ export default function Game_Monopoly() {
           Begin Game
         </Button>
       </AccountPage>
-      <QRModal
-        link={import.meta.env.VITE_SHORT_URL + "/" + gameId}
-        visible={showQR}
-        close={() => setShowQR(false)}
+      <ShareModal
+        url={import.meta.env.VITE_SHORT_URL + "/" + gameId}
+        visibility={showQR}
+        setVisibility={setShowQR}
       />
     </PageSeoWrapper>
   );

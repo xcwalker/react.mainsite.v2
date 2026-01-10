@@ -27,9 +27,11 @@ type UserTypeSimple = {
 export default function SidebarUser(props: {
   userId?: string;
   className?: string;
-  userData?: UserTypeSimple | UserType
+  userData?: UserTypeSimple | UserType;
 }) {
-  const [userData, setUserData] = useState< UserType | UserTypeSimple | undefined>();
+  const [userData, setUserData] = useState<
+    UserType | UserTypeSimple | undefined
+  >();
 
   useEffect(() => {
     if (props.userData) {
@@ -41,7 +43,7 @@ export default function SidebarUser(props: {
       setUserData(undefined);
       return;
     }
-    
+
     firebaseGetRealtimeData(
       "users",
       props.userId,
@@ -57,7 +59,9 @@ export default function SidebarUser(props: {
     <Link
       className={css.author + (props.className ? " " + props.className : "")}
       to={"/users/" + props.userId}
-      style={{color: userData?.images?.color ? userData.images.color : undefined}}
+      style={{
+        color: userData?.images?.color ? userData.images.color : undefined,
+      }}
     >
       {userData?.images?.background && (
         <>
@@ -111,7 +115,10 @@ export default function SidebarUser(props: {
       </picture>
       <div className={css.text}>
         <span className={css.title}>
-          {userData?.about.displayName}
+          {userData?.about.displayName.startsWith("[DEV] ") && (
+            <span className={css.dev}>DEV</span>
+          )}
+          {userData?.about.displayName.replace("[DEV] ", "")}
           {userData?.info.role && userData?.info.role !== "unverified" && (
             <span className={css.role}>{toTitleCase(userData?.info.role)}</span>
           )}

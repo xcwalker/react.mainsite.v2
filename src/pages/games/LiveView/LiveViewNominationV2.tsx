@@ -319,19 +319,19 @@ function SuitRenderer(props: { index: number }) {
 
   if (suit === "Hearts") {
     return (
-      <img src="/suit-Hearts.svg" alt="Hearts" />
+      <img src="/suit-Hearts.svg" alt="Hearts" loading="lazy" />
     );
   } else if (suit === "Clubs") {
     return (
-      <img src="/suit-Clubs.svg" alt="Clubs" />
+      <img src="/suit-Clubs.svg" alt="Clubs" loading="lazy" />
     );
   } else if (suit === "Diamonds") {
     return (
-      <img src="/suit-Diamonds.svg" alt="Diamonds" />
+      <img src="/suit-Diamonds.svg" alt="Diamonds" loading="lazy" />
     );
   } else if (suit === "Spades") {
     return (
-      <img src="/suit-Spades.svg" alt="Spades" />
+      <img src="/suit-Spades.svg" alt="Spades" loading="lazy" />
     );
   }
 }
