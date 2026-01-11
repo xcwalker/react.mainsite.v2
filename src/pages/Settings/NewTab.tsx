@@ -166,7 +166,7 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
               ...newTabLinks,
               settings: {
                 ...newTabLinks.settings,
-                textColor: value,
+                color: value,
               },
             });
           }}
