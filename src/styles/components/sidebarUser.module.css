@@ -93,6 +93,7 @@ a.author:focus-visible {
   font-weight: 600;
   line-height: 1;
 }
+
 .author .dev {
   /* sizing */
   display: inline-block;

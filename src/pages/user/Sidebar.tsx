@@ -95,7 +95,10 @@ export default function Sidebar(props: { user: UserType; id: string }) {
         )}
         <div className={css.details}>
           <span className={css.displayName}>
-            {props.user.about.displayName}
+            {props.user.about.displayName.includes("[DEV] ") && (
+              <span className={css.dev}>DEV</span>
+            )}
+            {props.user.about.displayName.replace("[DEV] ", "")}
             {props.user.info.role !== "unverified" && (
               <span className={css.role}>
                 {toTitleCase(props.user.info.role)}
@@ -115,6 +118,10 @@ export default function Sidebar(props: { user: UserType; id: string }) {
           </span>
         </div>
         <img src={props.user.images.profile} alt="" className={css.profile} />
+      </div>
+      <div className={css.statement}>
+        <span className={css.title}>Statement</span>
+        <span className={css.content}>{props.user.about.statement}</span>
       </div>
       <div className={css.information}>
         <span>Gender</span>
@@ -170,11 +177,10 @@ export default function Sidebar(props: { user: UserType; id: string }) {
                       <div className={css.background} />
                       <img
                         src={
-                          // old gstatic implementation
-                          // "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-                          // item +
-                          // "&size=128"
-                          "https://icon.horse/icon/" + hostname
+                          hostname === "xcw.one"
+                            ? xcwGroupSocials.find((icon) => icon.url === item)
+                                ?.icon
+                            : "https://icon.horse/icon/" + hostname
                         }
                         alt=""
                       />
@@ -182,9 +188,9 @@ export default function Sidebar(props: { user: UserType; id: string }) {
                   ),
                 }}
               >
-                {/* {domain !== null && domain.replace("www.", "")}
-                {domain === null && item} */}
-                {hostname}
+                {hostname === "xcw.one"
+                  ? xcwGroupSocials.find((icon) => icon.url === item)?.name
+                  : hostname}
               </Button>
             );
           })}
@@ -201,23 +207,25 @@ export default function Sidebar(props: { user: UserType; id: string }) {
               displayName: organizationData.name,
               role: props.user.organization?.role || "member",
             },
-            images: organizationData.logo.background && organizationData.logo.background.type
-              ? {
-                  profile: organizationData.logo.icon || "",
-                  background: organizationData.logo.background.imageUrl || "",
-                  backgroundType:
-                    organizationData.logo.background.type || "color",
-                  backgroundColor:
-                    organizationData.logo.background.color || "white",
-                  color: organizationData.logo.color || "#000000",
-                }
-              : {
-                  profile: organizationData.logo.icon || "",
-                  background: "",
-                  backgroundType: "color",
-                  backgroundColor: "white",
-                  color: "#000000",
-                },
+            images:
+              organizationData.logo.background &&
+              organizationData.logo.background.type
+                ? {
+                    profile: organizationData.logo.icon || "",
+                    background: organizationData.logo.background.imageUrl || "",
+                    backgroundType:
+                      organizationData.logo.background.type || "color",
+                    backgroundColor:
+                      organizationData.logo.background.color || "white",
+                    color: organizationData.logo.color || "#000000",
+                  }
+                : {
+                    profile: organizationData.logo.icon || "",
+                    background: "",
+                    backgroundType: "color",
+                    backgroundColor: "white",
+                    color: "#000000",
+                  },
           }}
         />
       )}
@@ -263,14 +271,24 @@ export default function Sidebar(props: { user: UserType; id: string }) {
         )}
 
       {currentUser?.uid === props.id && (
-        <Button
-          href={"./edit"}
-          title={"Edit"}
-          icon={{ gficon: "edit" }}
-          style="primary"
-        >
-          Edit
-        </Button>
+        <>
+          <Button
+            href={"./edit"}
+            title={"Edit"}
+            icon={{ gficon: "edit" }}
+            style="primary"
+          >
+            Edit
+          </Button>
+          <Button
+            href={"/settings/organization"}
+            title={"Settings"}
+            icon={{ gficon: "settings" }}
+            style="secondary"
+          >
+            Settings
+          </Button>
+        </>
       )}
       {currentUserData?.info.role &&
         currentUserData?.info.role !== "user" &&
@@ -288,3 +306,46 @@ export default function Sidebar(props: { user: UserType; id: string }) {
     </SidebarContainer>
   );
 }
+
+const xcwGroupSocials = [
+  {
+    url: "https://xcw.one/social/twitter",
+    icon: "twitter.svg",
+    name: "Twitter",
+  },
+  {
+    url: "https://xcw.one/social/instagram",
+    icon: "instagram.svg",
+    name: "Instagram",
+  },
+  {
+    url: "https://xcw.one/social/twitch",
+    icon: "twitch.svg",
+    name: "Twitch",
+  },
+  {
+    url: "https://xcw.one/social/tiktok",
+    icon: "tiktok.svg",
+    name: "TikTok",
+  },
+  {
+    url: "https://xcw.one/social/youtube",
+    icon: "youtube.svg",
+    name: "YouTube",
+  },
+  {
+    url: "https://xcw.one/social/linkedin",
+    icon: "linkedin.svg",
+    name: "LinkedIn",
+  },
+  {
+    url: "https://xcw.one/social/discord",
+    icon: "discord.svg",
+    name: "Discord",
+  },
+  {
+    url: "https://xcw.one",
+    icon: "https://xcw.one/Icon V2.svg",
+    name: "XCW Group",
+  },
+];

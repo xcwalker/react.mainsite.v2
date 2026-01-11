@@ -207,6 +207,17 @@ function Sidebar(props: {
           />
           <Input
             type="url"
+            value={props.userData.images.header}
+            onChange={(e) => {
+              const updatedUserData: UserType = { ...props.userData };
+              updatedUserData.images.header = e.target.value;
+              props.setUserData(updatedUserData);
+            }}
+            id="header"
+            label="Header Image URL"
+          />
+          <Input
+            type="url"
             value={props.userData.images.profile}
             onChange={(e) => {
               const updatedUserData: UserType = { ...props.userData };
