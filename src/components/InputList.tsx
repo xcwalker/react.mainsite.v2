@@ -54,10 +54,15 @@ export default function InputList(props: {
               id={props.id + "-textarea"}
               value={props.list.join("\n")}
               onChange={(e) => {
-                const newList = e.target.value
-                  .split("\n")
-                  .map((item) => item.trim());
+                const newList = e.target.value.split("\n");
                 props.onChange(newList);
+              }}
+              onBlur={() => {
+                props.onChange(
+                  props.list
+                    .map((item) => item.trim())
+                    .filter((item) => item !== "")
+                );
               }}
               rows={10}
               style={{ width: "100%" }}
