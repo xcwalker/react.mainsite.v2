@@ -119,7 +119,7 @@ export default function NewTabEdit() {
                       setLinkData((prevLinkData) => {
                         if (!prevLinkData) return prevLinkData;
                         const newLinks = prevLinkData.links.filter(
-                          (_, i) => i !== index
+                          (_, i) => i !== index,
                         );
                         return { ...prevLinkData, links: newLinks };
                       });
@@ -190,7 +190,7 @@ export function LinkItemEdit(props: {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [color, setColor] = useState(props.link.color || "#000000");
   const [backgroundColor, setBackgroundColor] = useState(
-    props.link.background.color || "#ffffff"
+    props.link.background.color || "#ffffff",
   );
 
   useEffect(() => {
@@ -405,30 +405,48 @@ export function LinkItemEdit(props: {
               />
             )}
             {props.link.background.type === "color" && (
-              <>
-                <Button
-                  onClick={() => {
-                    setShowBackgroundColorPicker((prev) => !prev);
-                  }}
-                  title="Show Picker"
-                  style="secondary"
-                >
-                  Show Picker
-                </Button>
-              </>
+              <Button
+                onClick={() => {
+                  setShowBackgroundColorPicker((prev) => !prev);
+                }}
+                title="Show Picker"
+                style="secondary"
+              >
+                Show Picker
+              </Button>
             )}
           </div>
-          <>
-            <Button
-              onClick={() => {
-                setShowColorPicker((prev) => !prev);
-              }}
-              title="Show Text Color Picker"
-              style="secondary"
-            >
-              Show Text Color Picker
-            </Button>
-          </>
+          <InputDropdown
+            id=""
+            label="Link Size"
+            value={props.link.type ?? "narrow"}
+            values={[
+              {
+                label: "Wide",
+                value: "wide",
+              },
+              {
+                label: "Narrow",
+                value: "narrow",
+              },
+            ]}
+            onChange={(value) => {
+              const newLink = {
+                ...props.link,
+                type: value as LinkItemType["type"],
+              };
+              props.setLinkData(newLink);
+            }}
+          />
+          <Button
+            onClick={() => {
+              setShowColorPicker((prev) => !prev);
+            }}
+            title="Show Text Color Picker"
+            style="secondary"
+          >
+            Show Text Color Picker
+          </Button>
         </div>
       </li>
 

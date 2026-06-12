@@ -186,6 +186,11 @@ export const defaultNav: NavSection[] = [
         // iconURL:
         // "https://raw.githubusercontent.com/XCWalker/Default/main/iconSVG/Photon.svg",
       },
+      {
+        title: "Wrkshp",
+        href: "https://wrkshp.uk/",
+        gficon: "car_repair",
+      },
     ],
   },
   {

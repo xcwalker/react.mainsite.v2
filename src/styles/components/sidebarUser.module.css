@@ -92,6 +92,7 @@ a.author:focus-visible {
   font-size: 1rem;
   font-weight: 600;
   line-height: 1;
+  text-shadow: 0px 0px 5px rgb(0, 0, 0);
 }
 
 .author .dev {
@@ -110,6 +111,7 @@ a.author:focus-visible {
   background-color: red;
   background: radial-gradient( circle at top left, rgba(255, 0, 0, 1) 0%, rgba(0, 97, 224, 1) 100% );
   border-radius: var(--user-role-badge-border-radius, 0.25rem);
+  text-shadow: none;
 }
 
 .author .title {
@@ -142,6 +144,7 @@ a.author:focus-visible {
   color: var(--text);
   background-color: var(--accent);
   border-radius: var(--user-role-badge-border-radius, 0.25rem);
+  text-shadow: none;
 }
 
 .author .subTitle {
