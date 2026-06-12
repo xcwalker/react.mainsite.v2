@@ -39,7 +39,7 @@ export default function BannerContainer() {
       <BigTop30Banner />
       <NoKingsBanner />
       <LgbtqPride />
-      <TransPride />
+      {/* <TransPride /> */}
       {(networkLost ||
         import.meta.env.VITE_IS_DEBUG_ALL_BANNERS === "true") && (
         <NetworkLostBanner />

@@ -10,13 +10,14 @@ import firebaseSetData from "../../functions/firebase/storage/setData";
 import firebaseCreateData from "../../functions/firebase/storage/createData";
 import devConsole from "../../functions/devConsole";
 import PageSeoWrapper from "../../components/PageSeoWrapper";
-import { separator, title } from "../../App";
+import { separator, shortURL, title } from "../../App";
 import { useAuth } from "../../functions/firebase/authentication/useAuth";
 import { InputDropdownPill } from "../../components/InputDropdown";
 import Modal from "../../components/Modal";
 import GFIcon from "../../components/GFIcon";
 import InputToggle from "../../components/InputToggle";
 import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
+import ShareModal from "../../components/ShareModal";
 
 export default function Game_Nomination() {
   const { gameID } = useParams();
@@ -52,6 +53,7 @@ export default function Game_Nomination() {
   const [error, setError] = useState(false);
   const [currentRound, setCurrentRound] = useState(-1);
   const [showToast, setShowToast] = useState(false);
+  const [showQRModal, setShowQRModal] = useState(false);
 
   useEffect(() => {
     // Reset scores if the number of players changes
@@ -204,7 +206,7 @@ export default function Game_Nomination() {
                 devConsole.log(
                   "Creating new game with scores:",
                   scores,
-                  JSON.stringify(scores)
+                  JSON.stringify(scores),
                 );
                 firebaseCreateData("games", {
                   JSON: JSON.stringify(scores),
@@ -235,6 +237,15 @@ export default function Game_Nomination() {
                 width="fit-content"
               >
                 Open Live View
+              </Button>
+              <Button
+                onClick={() => setShowQRModal(true)}
+                style="primary"
+                title="Share Live View"
+                icon={{ gficon: "qr_code" }}
+                width="fit-content"
+              >
+                Share Live View
               </Button>
               <Button
                 href="./simple"
@@ -346,7 +357,7 @@ export default function Game_Nomination() {
                       : {
                           noToast: true,
                         },
-                  }
+                  },
                 );
               }
             }}
@@ -374,7 +385,7 @@ export default function Game_Nomination() {
                         : i - (Math.floor(52 / scores.length) * 2) / 2 + 1}
                     </li>
                   );
-                }
+                },
               )}
             </ol>
           </li>
@@ -394,7 +405,7 @@ export default function Game_Nomination() {
                   >
                     {suits[i % suits.length].slice(0, 1)}
                   </li>
-                )
+                ),
               )}
             </ol>
           </li>
@@ -413,7 +424,7 @@ export default function Game_Nomination() {
                   >
                     {scores[(startDealer + i) % scores.length].player}
                   </li>
-                )
+                ),
               )}
             </ol>
           </li>
@@ -439,7 +450,7 @@ export default function Game_Nomination() {
                           </span>
                         ))}
                     </li>
-                  )
+                  ),
                 )}
               </ol>
             </li>
@@ -481,8 +492,8 @@ export default function Game_Nomination() {
                               idx,
                               {
                                 guess: newGuess,
-                              }
-                            )
+                              },
+                            ),
                           );
                         } else {
                           updateLiveScoresNomination(
@@ -492,7 +503,7 @@ export default function Game_Nomination() {
                             index,
                             idx,
                             { guess: newGuess },
-                            true
+                            true,
                           );
                         }
                       }}
@@ -518,8 +529,8 @@ export default function Game_Nomination() {
                               idx,
                               {
                                 score: newScore,
-                              }
-                            )
+                              },
+                            ),
                           );
                         } else {
                           updateLiveScoresNomination(
@@ -529,7 +540,7 @@ export default function Game_Nomination() {
                             index,
                             idx,
                             { score: newScore },
-                            true
+                            true,
                           );
                         }
                       }}
@@ -595,7 +606,7 @@ export default function Game_Nomination() {
                         error: "Error adding modifier.",
                         loading: "Adding modifier...",
                       },
-                    }
+                    },
                   );
                 }
               }}
@@ -634,7 +645,7 @@ export default function Game_Nomination() {
                         : {
                             noToast: true,
                           },
-                    }
+                    },
                   );
                 }
               }}
@@ -671,8 +682,8 @@ export default function Game_Nomination() {
                   if (!gameID) {
                     setModifiers((prev) =>
                       prev.map((m, mIdx) =>
-                        mIdx === index ? { ...m, label: e.target.value } : m
-                      )
+                        mIdx === index ? { ...m, label: e.target.value } : m,
+                      ),
                     );
                   } else {
                     firebaseSetData(
@@ -682,8 +693,10 @@ export default function Game_Nomination() {
                         ...JsonObject,
                         modifiers: JSON.stringify(
                           modifiers.map((m, mIdx) =>
-                            mIdx === index ? { ...m, label: e.target.value } : m
-                          )
+                            mIdx === index
+                              ? { ...m, label: e.target.value }
+                              : m,
+                          ),
                         ),
                       },
                       {
@@ -696,7 +709,7 @@ export default function Game_Nomination() {
                           : {
                               noToast: true,
                             },
-                      }
+                      },
                     );
                   }
                 }}
@@ -713,8 +726,8 @@ export default function Game_Nomination() {
                       prev.map((m, mIdx) =>
                         mIdx === index
                           ? { ...m, round: parseInt(e.target.value, 10) || 0 }
-                          : m
-                      )
+                          : m,
+                      ),
                     );
                   } else {
                     firebaseSetData(
@@ -729,8 +742,8 @@ export default function Game_Nomination() {
                                   ...m,
                                   round: parseInt(e.target.value, 10) || 0,
                                 }
-                              : m
-                          )
+                              : m,
+                          ),
                         ),
                       },
                       {
@@ -743,7 +756,7 @@ export default function Game_Nomination() {
                           : {
                               noToast: true,
                             },
-                      }
+                      },
                     );
                   }
                 }}
@@ -753,7 +766,7 @@ export default function Game_Nomination() {
                 onClick={() => {
                   if (!gameID) {
                     setModifiers((prev) =>
-                      prev.filter((_, mIdx) => mIdx !== index)
+                      prev.filter((_, mIdx) => mIdx !== index),
                     );
                   } else {
                     firebaseSetData(
@@ -762,7 +775,7 @@ export default function Game_Nomination() {
                       {
                         ...JsonObject,
                         modifiers: JSON.stringify(
-                          modifiers.filter((_, mIdx) => mIdx !== index)
+                          modifiers.filter((_, mIdx) => mIdx !== index),
                         ),
                       },
                       {
@@ -775,7 +788,7 @@ export default function Game_Nomination() {
                           : {
                               noToast: true,
                             },
-                      }
+                      },
                     );
                   }
                 }}
@@ -789,6 +802,12 @@ export default function Game_Nomination() {
           ))}
         </Section>
       </Modal>
+      <ShareModal
+        title="Share Live View"
+        setVisibility={setShowQRModal}
+        visibility={showQRModal}
+        url={"g." + shortURL + "/nomination/" + gameID + "/live"}
+      />
     </PageSeoWrapper>
   );
 }
@@ -809,6 +828,26 @@ export const predefinedModifiers = [
     value: "no_suit",
     label: "No suit",
     icon: "colors",
+  },
+  {
+    value: "reversed",
+    label: "Reverse Order",
+    icon: "replay",
+  },
+  {
+    value: "offset",
+    label: "Offset",
+    icon: "swap_horiz",
+  },
+  {
+    value: "double_points",
+    label: "Double Points",
+    icon: "2k",
+  },
+  {
+    value: "half_points",
+    label: "Half Points",
+    icon: "1k",
   },
 ];
 

@@ -63,7 +63,7 @@ export default function SimpleView_Nomination() {
       "games",
       gameID,
       setJsonObject as React.Dispatch<React.SetStateAction<unknown>>,
-      setError
+      setError,
     );
   }, [gameID]);
 
@@ -75,7 +75,7 @@ export default function SimpleView_Nomination() {
         JSON.parse(JsonObject.JSON) as {
           player: string;
           scores: { roundScore: number; guess: number; runningTotal: number }[];
-        }[]
+        }[],
       );
     }
     if (JsonObject.currentRound !== undefined) {
@@ -142,23 +142,50 @@ export default function SimpleView_Nomination() {
           />
           <main className={css.main}>
             {scores && scores.length > 0 ? (
-              scores.map((player, index) => (
-                <PlayerRenderer
-                  key={index}
-                  gameID={gameID || ""}
-                  JsonObject={JsonObject}
-                  player={player}
-                  currentRound={currentRound}
-                  scores={scores}
-                  numberOfPlayers={scores.length}
-                  isCurrentDealer={
-                    (startDealer + currentRound) % scores.length === index
-                  }
-                  showToast={showToast}
-                />
-              ))
+              scores.map((player, index) => {
+                if (index > (startDealer + currentRound) % scores.length) {
+                  return (
+                    <PlayerRenderer
+                      key={index}
+                      gameID={gameID || ""}
+                      JsonObject={JsonObject}
+                      player={player}
+                      currentRound={currentRound}
+                      scores={scores}
+                      numberOfPlayers={scores.length}
+                      isCurrentDealer={
+                        (startDealer + currentRound) % scores.length === index
+                      }
+                      showToast={showToast}
+                    />
+                  );
+                }
+              })
             ) : (
               <p>No players found.</p>
+            )}
+            {scores && scores.length > 0 ? (
+              scores.map((player, index) => {
+                if (index <= (startDealer + currentRound) % scores.length) {
+                  return (
+                    <PlayerRenderer
+                      key={index}
+                      gameID={gameID || ""}
+                      JsonObject={JsonObject}
+                      player={player}
+                      currentRound={currentRound}
+                      scores={scores}
+                      numberOfPlayers={scores.length}
+                      isCurrentDealer={
+                        (startDealer + currentRound) % scores.length === index
+                      }
+                      showToast={showToast}
+                    />
+                  );
+                }
+              })
+            ) : (
+              <></>
             )}
           </main>
         </SideBySide>
@@ -242,7 +269,7 @@ function Sidebar(props: {
                   : {
                       noToast: true,
                     },
-              }
+              },
             )
           }
         />
@@ -266,7 +293,7 @@ function Sidebar(props: {
                     : {
                         noToast: true,
                       },
-                }
+                },
               )
             }
             title="Previous Round"
@@ -294,7 +321,7 @@ function Sidebar(props: {
                     : {
                         noToast: true,
                       },
-                }
+                },
               )
             }
             title="Next Round"
@@ -335,7 +362,7 @@ function Sidebar(props: {
                 : {
                     noToast: true,
                   },
-            }
+            },
           )
         }
         label="Quick Add"
@@ -355,7 +382,7 @@ function Sidebar(props: {
                   firebaseSetData("games", gameID, {
                     ...JsonObject,
                     modifiers: JSON.stringify(
-                      modifiers.filter((m) => m !== mod)
+                      modifiers.filter((m) => m !== mod),
                     ),
                   })
                 }
@@ -405,7 +432,12 @@ function Sidebar(props: {
         info={
           scores
             ?.reduce((total, player) => {
-              return total + (player.scores[currentRound]?.roundScore || 0);
+              return (
+                total +
+                (player.scores[currentRound]?.roundScore !== -1
+                  ? (player.scores[currentRound]?.roundScore ?? 0)
+                  : 0)
+              );
             }, 0)
             .toString() +
           " / " +
@@ -416,7 +448,12 @@ function Sidebar(props: {
         }
         danger={
           scores?.reduce((total, player) => {
-            return total + (player.scores[currentRound]?.roundScore || 0);
+            return (
+              total +
+              (player.scores[currentRound]?.roundScore !== -1
+                ? (player.scores[currentRound]?.roundScore ?? 0)
+                : 0)
+            );
           }, 0) >
           NumberOfCardsForRoundNomination({
             roundIndex: currentRound,
@@ -489,6 +526,21 @@ function PlayerRenderer(props: {
       className={css.player + (isCurrentDealer ? ` ${css.currentDealer}` : "")}
     >
       <InfoLine header="Player" info={player.player} />
+      {isCurrentDealer && (
+        <InfoLine
+          header="Cannot Guess"
+          info={(
+            NumberOfCardsForRoundNomination({
+              roundIndex: currentRoundIndex,
+              numberOfPlayers: numberOfPlayers,
+            }) -
+            scores.reduce((total, player) => {
+              return total + (player.scores[currentRoundIndex]?.guess || 0);
+            }, 0) +
+            (player.scores[currentRoundIndex]?.guess || 0)
+          ).toString()}
+        />
+      )}
       <Input
         id={`player-${player.player}-guess`}
         label="Guess"
@@ -502,7 +554,7 @@ function PlayerRenderer(props: {
             scores.findIndex((p) => p.player === player.player),
             currentRoundIndex,
             { guess: parseInt(e.target.value, 10) },
-            showToast
+            showToast,
           );
         }}
         min={0}
@@ -510,6 +562,18 @@ function PlayerRenderer(props: {
           roundIndex: currentRoundIndex,
           numberOfPlayers: numberOfPlayers,
         })}
+        isInvalid={
+          isCurrentDealer &&
+          (player.scores[currentRoundIndex]?.guess || 0) ===
+            NumberOfCardsForRoundNomination({
+              roundIndex: currentRoundIndex,
+              numberOfPlayers: numberOfPlayers,
+            }) -
+              scores.reduce((total, player) => {
+                return total + (player.scores[currentRoundIndex]?.guess || 0);
+              }, 0) +
+              (player.scores[currentRoundIndex]?.guess || 0)
+        }
       />
       <Input
         id={`player-${player.player}-round-score`}
@@ -524,7 +588,7 @@ function PlayerRenderer(props: {
             scores.findIndex((p) => p.player === player.player),
             currentRoundIndex,
             { score: parseInt(e.target.value, 10) },
-            showToast
+            showToast,
           );
         }}
         min={-1}

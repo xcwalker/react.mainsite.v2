@@ -7,17 +7,19 @@
   --_black: var(--text);
 
   background: #1fa2ff; /* fallback for old browsers */
+  --_multiply: 0.6;
+  --_multiply2: 0.4;
   background: -webkit-linear-gradient(
-    to right,
-    #a6ffcb,
-    #12d8fa,
-    #1fa2ff
+    to bottom right,
+    var(--accent),
+    rgb(from var(--accent) calc(r * var(--_multiply))  calc(g * var(--_multiply))  calc(b * var(--_multiply))),
+    rgb(from var(--accent) calc(r * var(--_multiply2))  calc(g * var(--_multiply2))  calc(b * var(--_multiply2)))
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
-    to right,
-    #a6ffcb,
-    #12d8fa,
-    #1fa2ff
+    to bottom right,
+    var(--accent),
+    rgb(from var(--accent) calc(r * var(--_multiply))  calc(g * var(--_multiply))  calc(b * var(--_multiply))),
+    rgb(from var(--accent) calc(r * var(--_multiply2))  calc(g * var(--_multiply2))  calc(b * var(--_multiply2)))
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -47,19 +49,16 @@
 
   /* sizing */
   min-width: 20ch;
-  padding: 0.5rem;
 
   /* flex  */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  gap: 1rem;
 
   /* styling */
-  border-radius: var(--game-border-radius, 0.5rem);
-  border: 0.25rem solid var(--background);
-  background: transparent;
+  background: var(--background);
+  border-radius: var(--item-sidebar-border-radius, 0.5rem);
 }
 
 .nominationFullscreen :global(#root) {
@@ -158,7 +157,7 @@
   align-items: center;
 
   /* styling */
-  background: var(--primary);
+  background: white;
   border-radius: calc(var(--item-sidebar-border-radius, 0.5rem) / 2);
 }
 

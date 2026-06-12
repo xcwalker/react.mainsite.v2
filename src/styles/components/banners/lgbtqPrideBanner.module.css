@@ -18,5 +18,8 @@
     rgb(147, 40, 142)
   );
 
-  color: black;
+  color: white;
+  letter-spacing: 0.25rem;
+  font-size: 1rem;
+  font-weight: 700;
 }
