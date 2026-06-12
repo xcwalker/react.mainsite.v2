@@ -34,6 +34,10 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 1rem;
+
+  &.new {
+    height: calc(100dvh - 3.5rem - 1rem);
+  }
 }
 
 .container .skip {
@@ -215,4 +219,34 @@
   .links a .content .text {
     display: none;
   }
+}
+
+.profileButton {
+  /* variables */
+  --size: 3.5rem;
+  --pad: 1rem;
+  
+  /* position */
+  position: sticky;
+  inset: var(--pad);
+  bottom: auto;
+  top: calc(100dvh - var(--pad) - var(--size));
+  z-index: 1000;
+
+  /* sizing */
+  width: unset;
+  height: var(--size);
+  grid-template-columns: 50px 1fr;
+}
+
+.profileButton .background {
+  /* position */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  /* sizing */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

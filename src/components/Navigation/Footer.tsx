@@ -1,9 +1,9 @@
-import css from "../styles/components/footer.module.css";
-import { Logos } from "./Logo";
-import Socials from "./Socials";
-import build from "../../version.json";
+import css from "../../styles/components/footer.module.css"
+import { Logos } from "../Logo";
+import Socials from "../Socials";
+import build from "../../../version.json";
 import { useAtomValue } from "jotai";
-import { RadioAtom } from "../App";
+import { RadioAtom } from "../../App";
 
 export default function Footer() {
   const radio = useAtomValue(RadioAtom);

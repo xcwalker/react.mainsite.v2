@@ -640,6 +640,7 @@ export type userSettingsType = {
   navigationShowSocials: boolean;
 
   home: UserSettingsTypeHome;
+  navStyle?: "default" | "classicSidebar";
 };
 
 export type UserSettingsTypeHome = {
@@ -675,6 +676,7 @@ export const userSettingsDefault: userSettingsType = {
     defaultView: "column",
     showHero: true,
   },
+  navStyle: undefined,
 };
 
 export type Overlay_PositionType =

@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import HomeIndex from "./pages/home/Index";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./components/Navigation/Header";
+import Footer from "./components/Navigation/Footer";
 import Main from "./components/Main";
 import ItemPage from "./pages/itemPage/Index";
 import { Helmet } from "react-helmet";

@@ -1,19 +1,20 @@
 import { Fragment, useCallback, useEffect, useState } from "react";
-import { Logos } from "./Logo";
+import { Logos } from "../Logo";
 
-import css from "../styles/components/header.module.css";
-import radioCSS from "../styles/components/header/radio.module.css";
-import GFIcon from "./GFIcon";
-import { SocialsList } from "./Socials";
-import Protect, { RoleProtect } from "./Security/Protect";
+import css from "../../styles/components/header.module.css";
+import radioCSS from "../../styles/components/header/radio.module.css";
+import GFIcon from "../GFIcon";
+import { SocialsList } from "../Socials";
+import Protect, { RoleProtect } from "../Security/Protect";
 import { useAtom } from "jotai";
 import { parseEntities } from "parse-entities";
 
-import { RadioAtom, tabID } from "../App";
-import Button from "./Button";
-import { defaultNav, userSettingsType } from "../types";
-import { useAuth } from "../functions/firebase/authentication/useAuth";
-import firebaseGetRealtimeData from "../functions/firebase/storage/useRealtimeData";
+import { RadioAtom, tabID } from "../../App";
+import Button from "../Button";
+import { defaultNav, userSettingsType, UserType } from "../../types";
+import { useAuth } from "../../functions/firebase/authentication/useAuth";
+import firebaseGetRealtimeData from "../../functions/firebase/storage/useRealtimeData";
+import firebaseGetRealtimeUserData from "../../functions/firebase/user/useRealtimeUserData";
 
 export default function Header() {
   const currentUser = useAuth();
@@ -31,8 +32,22 @@ export default function Header() {
   const [nav, setNav] = useState(defaultNav);
   const [showSocials, setShowSocials] = useState(true);
   const [userSettings, setUserSettings] = useState<userSettingsType | null>(
-    null
+    null,
   );
+  const [userData, setUserData] = useState<UserType | null>(null);
+
+  useEffect(() => {
+    if (userSettings && userSettings?.navStyle !== "classicSidebar") {
+      firebaseGetRealtimeUserData(
+        currentUser?.uid || "",
+        setUserData as React.Dispatch<React.SetStateAction<unknown>>,
+      );
+    }
+
+    return () => {
+      setUserData(null);
+    };
+  }, [currentUser, userSettings]);
 
   useEffect(() => {
     if (!currentUser) {
@@ -43,7 +58,7 @@ export default function Header() {
     firebaseGetRealtimeData(
       "settings",
       currentUser.uid,
-      setUserSettings as React.Dispatch<React.SetStateAction<unknown>>
+      setUserSettings as React.Dispatch<React.SetStateAction<unknown>>,
     );
   }, [currentUser]);
 
@@ -130,7 +145,7 @@ export default function Header() {
         },
         (error) => {
           console.error(error);
-        }
+        },
       )
       .catch((error) => {
         console.error(error);
@@ -144,7 +159,7 @@ export default function Header() {
   useEffect(() => {
     const timer = setTimeout(
       () => ticking && setCount(count + 1),
-      Math.min(6000, count * 1000)
+      Math.min(6000, count * 1000),
     );
 
     return () => {
@@ -190,7 +205,7 @@ export default function Header() {
 
   useEffect(() => {
     const audioElement = document.querySelector(
-      "audio#audioPlayer"
+      "audio#audioPlayer",
     ) as HTMLAudioElement;
 
     if (radio.tabID === tabID) {
@@ -236,9 +251,162 @@ export default function Header() {
     };
   }, [navScroll]);
 
+  if (userSettings?.navStyle === "classicSidebar") {
+    return (
+      <header className={css.header} id="header">
+        <div className={css.container}>
+          <Logos.xcwalkeruk className={css.svg} />
+          <Logos.x className={css.svgSmall} />
+          <Button
+            href="#main"
+            className={css.skip}
+            title="Jump to content"
+            pageNavigation
+            hidden="pageNavigation"
+          >
+            Jump to content
+          </Button>
+          <Button
+            href="#player"
+            className={css.skip}
+            title="Jump to player"
+            pageNavigation
+            hidden="pageNavigation"
+          >
+            Jump to Player
+          </Button>
+          <nav>
+            {nav &&
+              nav.map((set, index) => {
+                return (
+                  <Fragment key={index}>
+                    {!set.hideTitle && (
+                      <span className={css.listTitle}>{set.title}</span>
+                    )}
+                    <ul className={css.links}>
+                      {set.items.map((item, index) => {
+                        if (
+                          item.devOnly &&
+                          import.meta.env.MODE !== "development"
+                        )
+                          return null;
+                        else if (item.requireVerified) {
+                          return (
+                            <Fragment key={index}>
+                              <RoleProtect staffOnly redirect={<></>}>
+                                <Button
+                                  {...item}
+                                  icon={{
+                                    gficon: item.gficon,
+                                    gfClassName: css.icon,
+                                  }}
+                                  hidden={
+                                    item.hidden ? "siteNavigation" : undefined
+                                  }
+                                  isBeta={item.isBeta}
+                                  betaTagClassName={css.betaTag}
+                                >
+                                  <span className={css.title}>
+                                    {item.title}
+                                  </span>
+                                </Button>
+                              </RoleProtect>
+                            </Fragment>
+                          );
+                        } else if (item.requireUser)
+                          return (
+                            <Fragment key={index}>
+                              <Protect>
+                                <Button
+                                  {...item}
+                                  icon={{
+                                    gficon: item.gficon,
+                                    gfClassName: css.icon,
+                                  }}
+                                  hidden={
+                                    item.hidden ? "siteNavigation" : undefined
+                                  }
+                                  isBeta={item.isBeta}
+                                  betaTagClassName={css.betaTag}
+                                >
+                                  <span className={css.title}>
+                                    {item.title}
+                                  </span>
+                                </Button>
+                              </Protect>
+                            </Fragment>
+                          );
+                        else if (item.requireUser === false)
+                          return (
+                            <Fragment key={index}>
+                              <Protect isLoginPage>
+                                <Button
+                                  {...item}
+                                  icon={{
+                                    gficon: item.gficon,
+                                    gfClassName: css.icon,
+                                  }}
+                                  hidden={
+                                    item.hidden ? "siteNavigation" : undefined
+                                  }
+                                  isBeta={item.isBeta}
+                                  betaTagClassName={css.betaTag}
+                                >
+                                  <span className={css.title}>
+                                    {item.title}
+                                  </span>
+                                </Button>
+                              </Protect>
+                            </Fragment>
+                          );
+                        return (
+                          <Fragment key={index}>
+                            <Button
+                              {...item}
+                              icon={{
+                                gficon: item.gficon,
+                                gfClassName: css.icon,
+                              }}
+                              hidden={
+                                item.hidden ? "siteNavigation" : undefined
+                              }
+                              isBeta={item.isBeta}
+                              betaTagClassName={css.betaTag}
+                            >
+                              <span className={css.title}>{item.title}</span>
+                            </Button>
+                          </Fragment>
+                        );
+                      })}
+                    </ul>
+                  </Fragment>
+                );
+              })}
+            {showSocials && (
+              <>
+                <span className={css.listTitle}>Socials</span>
+                <SocialsList
+                  listClassName={css.links}
+                  buttonClassName={css.link}
+                  iconClassName={css.icon}
+                  externalClassName={css.external}
+                  contentClassName={css.content}
+                  textClassName={css.title}
+                  useUnstyledButton
+                />
+              </>
+            )}
+          </nav>
+          {radio.inSidebar && <Radio />}
+        </div>
+        {!radio.inSidebar && <Radio />}
+      </header>
+    );
+  }
+
   return (
     <header className={css.header} id="header">
-      <div className={css.container}>
+      <div className={`${css.container} ${css.new}`}>
         <Logos.xcwalkeruk className={css.svg} />
         <Logos.x className={css.svgSmall} />
         <Button
@@ -269,7 +437,9 @@ export default function Header() {
                   )}
                   <ul className={css.links}>
                     {set.items.map((item, index) => {
-                      if (
+                      if (item.title === "Profile") {
+                        return null;
+                      } else if (
                         item.devOnly &&
                         import.meta.env.MODE !== "development"
                       )
@@ -376,6 +546,41 @@ export default function Header() {
         {radio.inSidebar && <Radio />}
       </div>
       {!radio.inSidebar && <Radio />}
+      <Protect>
+        <Button
+          title="Your Profile"
+          href="/me"
+          icon={{
+            inline: <img src={userData?.images.profile || ""} />,
+          }}
+          className={css.profileButton}
+        >
+          <span className={css.displayName}>{userData?.about.displayName}</span>
+          <span className={css.userName}>@{userData?.about.userName}</span>
+          {userData?.images.backgroundType === "image" && (
+            <img
+              src={userData?.images.background || ""}
+              alt="background"
+              className={css.background}
+            />
+          )}
+          {userData?.images.backgroundType === "color" && (
+            <div
+              className={css.background}
+              style={{ backgroundColor: userData.images.background }}
+            />
+          )}
+          {userData?.images.backgroundType === "video" && (
+            <video
+              className={css.background}
+              src={userData.images.background}
+              autoPlay
+              loop
+              muted
+            />
+          )}
+        </Button>
+      </Protect>
     </header>
   );
 }
