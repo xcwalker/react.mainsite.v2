@@ -6,7 +6,7 @@ import NetworkLostBanner from "./NetworkLostBanner";
 import NetworkRegainedBanner from "./NetworkRegainedBanner";
 import ProtoBanner from "./ProtoBanner";
 import NoKingsBanner from "./NoKingsBanner";
-import TransPride from "./TransPride";
+// import TransPride from "./TransPride";
 import devConsole from "../../functions/devConsole";
 import LgbtqPride from "./LgbtqPride";
 
