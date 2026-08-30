@@ -98,6 +98,7 @@
 
   /* styling */
   border: 0.25rem solid var(--primary);
+  border-radius: var(--item-sidebar-border-radius, 0.5rem);
 }
 
 .currentDealer {

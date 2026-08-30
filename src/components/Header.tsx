@@ -14,6 +14,7 @@ import Button from "./Button";
 import { defaultNav, userSettingsType } from "../types";
 import { useAuth } from "../functions/firebase/authentication/useAuth";
 import firebaseGetRealtimeData from "../functions/firebase/storage/useRealtimeData";
+import { useLocation } from "react-router-dom";
 
 export default function Header() {
   const currentUser = useAuth();
@@ -31,8 +32,10 @@ export default function Header() {
   const [nav, setNav] = useState(defaultNav);
   const [showSocials, setShowSocials] = useState(true);
   const [userSettings, setUserSettings] = useState<userSettingsType | null>(
-    null
+    null,
   );
+
+  const location = useLocation();
 
   useEffect(() => {
     if (!currentUser) {
@@ -43,7 +46,7 @@ export default function Header() {
     firebaseGetRealtimeData(
       "settings",
       currentUser.uid,
-      setUserSettings as React.Dispatch<React.SetStateAction<unknown>>
+      setUserSettings as React.Dispatch<React.SetStateAction<unknown>>,
     );
   }, [currentUser]);
 
@@ -130,7 +133,7 @@ export default function Header() {
         },
         (error) => {
           console.error(error);
-        }
+        },
       )
       .catch((error) => {
         console.error(error);
@@ -144,7 +147,7 @@ export default function Header() {
   useEffect(() => {
     const timer = setTimeout(
       () => ticking && setCount(count + 1),
-      Math.min(6000, count * 1000)
+      Math.min(6000, count * 1000),
     );
 
     return () => {
@@ -190,7 +193,7 @@ export default function Header() {
 
   useEffect(() => {
     const audioElement = document.querySelector(
-      "audio#audioPlayer"
+      "audio#audioPlayer",
     ) as HTMLAudioElement;
 
     if (radio.tabID === tabID) {
@@ -212,7 +215,9 @@ export default function Header() {
   const navScroll = useCallback(() => {
     if (navScrollLastKnown === window.scrollY) return;
 
-    if (window.scrollY > navScrollLastKnown) {
+    if (location.pathname.startsWith("/games/")) {
+      document.body.classList.remove("scrolledUp");
+    } else if (window.scrollY > navScrollLastKnown) {
       document.body.classList.remove("scrolledUp");
     } else if (window.scrollY < navScrollLastKnown - 5) {
       document.body.classList.add("scrolledUp");
@@ -226,7 +231,7 @@ export default function Header() {
       // devConsole.log(document.body.getBoundingClientRect().top)
       document.body.classList.add("scrolled");
     }
-  }, [navScrollLastKnown]);
+  }, [navScrollLastKnown, location.pathname]);
 
   useEffect(() => {
     document.addEventListener("scroll", navScroll);

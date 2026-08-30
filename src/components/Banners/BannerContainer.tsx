@@ -6,7 +6,7 @@ import NetworkLostBanner from "./NetworkLostBanner";
 import NetworkRegainedBanner from "./NetworkRegainedBanner";
 import ProtoBanner from "./ProtoBanner";
 import NoKingsBanner from "./NoKingsBanner";
-import TransPride from "./TransPride";
+// import TransPride from "./TransPride";
 import devConsole from "../../functions/devConsole";
 import LgbtqPride from "./LgbtqPride";
 
@@ -39,7 +39,7 @@ export default function BannerContainer() {
       <BigTop30Banner />
       <NoKingsBanner />
       <LgbtqPride />
-      <TransPride />
+      {/* <TransPride /> */}
       {(networkLost ||
         import.meta.env.VITE_IS_DEBUG_ALL_BANNERS === "true") && (
         <NetworkLostBanner />

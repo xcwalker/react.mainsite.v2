@@ -206,7 +206,7 @@ function Sidebar(props: {
         info={
           scores
             ?.reduce((total, player) => {
-              return total + (player.scores[currentRound]?.guess || 0);
+              return total + (player.scores[currentRound]?.guess ??  0);
             }, 0)
             .toString() +
           " / " +
@@ -269,15 +269,15 @@ function PlayerRenderer(props: {
       <InfoLine header="Player" info={player.player} />
       <InfoLine
         header="Guess"
-        info={player.scores[currentRoundIndex]?.guess.toString()}
+        info={(player.scores[currentRoundIndex]?.guess ?? 0).toString()}
       />
       <InfoLine
         header="Round Score"
-        info={player.scores[currentRoundIndex]?.roundScore.toString()}
+        info={(player.scores[currentRoundIndex]?.roundScore ?? 0).toString()}
       />
       <InfoLine
         header="Running Total"
-        info={player.scores[currentRoundIndex]?.runningTotal.toString()}
+        info={(player.scores[currentRoundIndex]?.runningTotal ?? 0).toString()}
       />
     </div>
   );
