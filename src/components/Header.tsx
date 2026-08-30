@@ -117,7 +117,7 @@ export default function Header() {
 
             if (res?.djs?.now?.avatar) {
               outDJ.image =
-                "https://simulatorradio.com/processor/avatar?size=256&name=" +
+                "https://simulatorradio.com/avatars/" +
                 res.djs.now.avatar;
             }
 

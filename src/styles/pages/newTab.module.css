@@ -284,9 +284,11 @@ li.linkItem a span.title {
   font-size: 1rem;
   line-height: 1;
   font-weight: 700;
+  text-align: center;
 
   /* styling */
   color: inherit;
+
 }
 
 li.linkItem span.url {
