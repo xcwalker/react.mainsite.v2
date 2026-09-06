@@ -471,6 +471,7 @@ export type NewTabLinks = {
     showOrganization: boolean;
     showUser: boolean;
     showSearch: boolean;
+    showRadio: boolean;
     search: {
       provider: "google" | "bing" | "duckduckgo" | "custom";
       queryURL: string; // URL template for search queries
@@ -492,6 +493,7 @@ export const NewTabLinksDefault: NewTabLinks = {
     showOrganization: false,
     showUser: true,
     showSearch: true,
+    showRadio: true,
     search: {
       provider: "google", // "google" | "bing" | "duckduckgo"
       queryURL: "https://google.com/search?&q=", // URL template for search queries
