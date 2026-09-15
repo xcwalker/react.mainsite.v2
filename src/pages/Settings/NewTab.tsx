@@ -174,6 +174,24 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
             });
           }}
         />
+        <InputToggle
+          id="newTabWeatherVisibility"
+          label="Show Weather"
+          checked={
+            newTabLinks.settings.showWeather !== undefined
+              ? newTabLinks.settings.showWeather
+              : true
+          }
+          onChange={(value) => {
+            firebaseSetData("newtab", currentUser.uid, {
+              ...newTabLinks,
+              settings: {
+                ...newTabLinks.settings,
+                showWeather: value,
+              },
+            });
+          }}
+        />
       </SettingSection>
       {/* Styling */}
       <SettingSection id="newTabStyling" title="Styling Settings">
