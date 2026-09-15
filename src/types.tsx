@@ -473,6 +473,7 @@ export type NewTabLinks = {
     showSearch: boolean;
     showRadio: boolean;
     showWeather?: boolean;
+    showClock?: boolean;
     search: {
       provider: "google" | "bing" | "duckduckgo" | "custom";
       queryURL: string; // URL template for search queries

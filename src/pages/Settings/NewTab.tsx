@@ -192,6 +192,24 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
             });
           }}
         />
+        <InputToggle
+          id="newTabClockVisibility"
+          label="Show Clock"
+          checked={
+            newTabLinks.settings.showClock !== undefined
+              ? newTabLinks.settings.showClock
+              : true
+          }
+          onChange={(value) => {
+            firebaseSetData("newtab", currentUser.uid, {
+              ...newTabLinks,
+              settings: {
+                ...newTabLinks.settings,
+                showClock: value,
+              },
+            });
+          }}
+        />
       </SettingSection>
       {/* Styling */}
       <SettingSection id="newTabStyling" title="Styling Settings">
