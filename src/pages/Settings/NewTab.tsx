@@ -141,7 +141,9 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
           id="newTabHeroVisibility"
           label="Show Hero"
           checked={
-            newTabLinks.settings.showHero !== undefined ? newTabLinks.settings.showHero : true
+            newTabLinks.settings.showHero !== undefined
+              ? newTabLinks.settings.showHero
+              : true
           }
           onChange={(value) => {
             firebaseSetData("newtab", currentUser.uid, {
@@ -149,6 +151,61 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
               settings: {
                 ...newTabLinks.settings,
                 showHero: value,
+              },
+            });
+          }}
+        />
+
+        <InputToggle
+          id="newTabRadioVisibility"
+          label="Show Radio"
+          checked={
+            newTabLinks.settings.showRadio !== undefined
+              ? newTabLinks.settings.showRadio
+              : false
+          }
+          onChange={(value) => {
+            firebaseSetData("newtab", currentUser.uid, {
+              ...newTabLinks,
+              settings: {
+                ...newTabLinks.settings,
+                showRadio: value,
+              },
+            });
+          }}
+        />
+        <InputToggle
+          id="newTabWeatherVisibility"
+          label="Show Weather"
+          checked={
+            newTabLinks.settings.showWeather !== undefined
+              ? newTabLinks.settings.showWeather
+              : true
+          }
+          onChange={(value) => {
+            firebaseSetData("newtab", currentUser.uid, {
+              ...newTabLinks,
+              settings: {
+                ...newTabLinks.settings,
+                showWeather: value,
+              },
+            });
+          }}
+        />
+        <InputToggle
+          id="newTabClockVisibility"
+          label="Show Clock"
+          checked={
+            newTabLinks.settings.showClock !== undefined
+              ? newTabLinks.settings.showClock
+              : true
+          }
+          onChange={(value) => {
+            firebaseSetData("newtab", currentUser.uid, {
+              ...newTabLinks,
+              settings: {
+                ...newTabLinks.settings,
+                showClock: value,
               },
             });
           }}
@@ -282,7 +339,7 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
                   firebaseSetData("newtab", currentUser.uid, {
                     ...newTabLinks,
                     links: newTabLinks.links.map((l, i) =>
-                      i === index ? link : l
+                      i === index ? link : l,
                     ),
                   });
                 }}
@@ -355,7 +412,7 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
                     firebaseSetData("newtab", currentUser.uid, {
                       ...newTabLinks,
                       bookmarks: (newTabLinks.bookmarks || []).map((b, i) =>
-                        i === index ? updatedBookmark : b
+                        i === index ? updatedBookmark : b,
                       ),
                     });
                   }}
@@ -363,7 +420,7 @@ export default function SettingsNewTab(props: { currentUser: User | null }) {
                     firebaseSetData("newtab", currentUser.uid, {
                       ...newTabLinks,
                       bookmarks: (newTabLinks.bookmarks || []).filter(
-                        (_, i) => i !== index
+                        (_, i) => i !== index,
                       ),
                     });
                   }}
