@@ -1,0 +1,233 @@
+/* sizing */
+.nomination {
+  margin: -1rem;
+  padding: 1rem;
+  box-sizing: content-box;
+
+  --_red: red;
+  --_black: var(--text);
+
+  background: #1fa2ff; /* fallback for old browsers */
+  --_multiply: 0.6;
+  --_multiply2: 0.4;
+  background: -webkit-linear-gradient(
+    to bottom right,
+    var(--accent),
+    rgb(
+      from var(--accent) calc(r * var(--_multiply)) calc(g * var(--_multiply))
+        calc(b * var(--_multiply))
+    ),
+    rgb(
+      from var(--accent) calc(r * var(--_multiply2)) calc(g * var(--_multiply2))
+        calc(b * var(--_multiply2))
+    )
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom right,
+    var(--accent),
+    rgb(
+      from var(--accent) calc(r * var(--_multiply)) calc(g * var(--_multiply))
+        calc(b * var(--_multiply))
+    ),
+    rgb(
+      from var(--accent) calc(r * var(--_multiply2)) calc(g * var(--_multiply2))
+        calc(b * var(--_multiply2))
+    )
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.scoresContainer {
+  /* sizing */
+  width: 100%;
+  min-height: 75vh;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  pointer-events: none;
+}
+
+/* layout */
+
+.wrapper {
+  /* grid */
+  display: grid;
+  gap: 1rem;
+}
+
+.directionCount1 {
+  grid-template-columns: [one-start] 1fr [one-end];
+  grid-template-rows: [one-start] 1fr [one-end];
+}
+
+.directionCount2 {
+  grid-template-columns: [one-start two-start] 1fr [two-end];
+  grid-template-rows: [one-start] 1fr [one-end two-start] 1fr [two-end];
+}
+
+.directionCount3 {
+  grid-template-columns: [one-start two-start] 1fr [one-end two-end three-start] 50vh [three-end];
+  grid-template-rows: [one-start three-start] 1fr [one-end two-start] 1fr [two-end three-end];
+}
+
+.directionCount4 {
+  grid-template-columns: [one-start] auto [one-end two-start three-start] 1fr [two-end three-end four-start] auto [four-end];
+  grid-template-rows: [one-start two-start four-start] 1fr [two-end three-start] 1fr [three-end one-end four-end];
+}
+
+/* fullscreen */
+
+.nominationFullscreen :global(#root) {
+  grid-template-columns: [nav-start] 0[nav-end main-start footer-start] 1fr [main-end footer-end];
+  grid-template-rows: [nav-start main-start] auto [main-end footer-start] 0 [nav-end footer-end];
+  gap: 0;
+}
+
+.nominationFullscreen :global(#root) :global(header),
+.nominationFullscreen :global(#root) :global(footer) {
+  display: none;
+}
+
+.nominationFullscreen :global(#root) :global(main) {
+  max-width: unset;
+  max-height: 100vh;
+}
+
+.nominationFullscreen .nomination {
+  height: calc(100% - 2rem);
+}
+
+.nominationFullscreen .nominationContainer,
+.nominationFullscreen .wrapper {
+  height: 100%;
+}
+
+.nominationFullscreen .controls {
+  display: none;
+}
+
+.nominationFullscreen :global(#bannerContainer) {
+  display: none !important;
+}
+
+/*  */
+
+.infoLine {
+  /* sizing */
+  width: fit-content;
+  height: fit-content;
+  padding: 0.5rem 1rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.25rem;
+
+  /* styling */
+  background: var(--background);
+  border-radius: var(--item-sidebar-border-radius, 0.5rem);
+}
+
+.infoLine .header {
+  /* sizing */
+  font-size: 1.25em;
+  font-weight: 700;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text-alt);
+}
+
+.infoLine .info {
+  /* sizing */
+  font-size: 2.5em;
+  font-weight: 600;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text);
+}
+
+.infoLine .suit {
+  /* sizing */
+  --_size: 15rem;
+  width: var(--_size);
+  height: var(--_size);
+  padding: 2rem;
+
+  /* flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* styling */
+  background: white;
+  border-radius: calc(var(--item-sidebar-border-radius, 0.5rem) / 2);
+}
+
+.infoLine .suit img {
+  width: 100%;
+  height: 100%;
+  rotate: var(--_svg-rotate);
+}
+
+.infoLine .modifier {
+  /* spacing */
+  width: 100%;
+  height: fit-content;
+  padding: 0.25rem 0.5rem;
+	padding-right: 0.5rem;
+
+  /* flex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+
+  /* text */
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+
+  /* styling */
+  color: var(--text);
+  background: var(--primary);
+  border-radius: calc(var(--item-sidebar-border-radius, 0.5rem) / 2);
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.details {
+	/* grid */
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr);
+	gap: 1rem;
+}
+
+.details .infoLine {
+  width: 100%;
+	height: 100%;
+}

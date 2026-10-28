@@ -54,6 +54,7 @@ export default function Game_Nomination() {
   const [currentRound, setCurrentRound] = useState(-1);
   const [showToast, setShowToast] = useState(false);
   const [showQRModal, setShowQRModal] = useState(false);
+  const [showTableQRModal, setShowTableQRModal] = useState(false);
 
   useEffect(() => {
     // Reset scores if the number of players changes
@@ -227,7 +228,7 @@ export default function Game_Nomination() {
           )}
           {gameID && (
             <>
-              <Button
+              {/* <Button
                 href="./live"
                 style="primary"
                 title="Open Live View"
@@ -237,15 +238,35 @@ export default function Game_Nomination() {
                 width="fit-content"
               >
                 Open Live View
-              </Button>
+              </Button> */}
               <Button
                 onClick={() => setShowQRModal(true)}
                 style="primary"
                 title="Share Live View"
-                icon={{ gficon: "qr_code" }}
+                icon={{ gficon: "live_tv" }}
                 width="fit-content"
               >
                 Share Live View
+              </Button>
+              {/* <Button
+                href="./table"
+                style="primary"
+                title="Open Table View"
+                icon={{ gficon: "live_tv" }}
+                external
+                target="newTab"
+                width="fit-content"
+              >
+                Open Table View
+              </Button> */}
+              <Button
+                onClick={() => setShowTableQRModal(true)}
+                style="primary"
+                title="Share Table View"
+                icon={{ gficon: "table_restaurant" }}
+                width="fit-content"
+              >
+                Share Table View
               </Button>
               <Button
                 href="./simple"
@@ -807,6 +828,12 @@ export default function Game_Nomination() {
         setVisibility={setShowQRModal}
         visibility={showQRModal}
         url={"g." + shortURL + "/nomination/" + gameID + "/live"}
+      />
+      <ShareModal
+        title="Share Table View"
+        setVisibility={setShowTableQRModal}
+        visibility={showTableQRModal}
+        url={"g." + shortURL + "/nomination/" + gameID + "/table"}
       />
     </PageSeoWrapper>
   );

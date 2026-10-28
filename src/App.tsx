@@ -68,6 +68,7 @@ import ReAuthenticatePage from "./pages/account/ReAuthenticate";
 import ActionCodePage from "./pages/account/ActionCode";
 import DeleteAccountPage from "./pages/account/Delete";
 import SimpleView_Nomination from "./pages/games/SimpleView/SimpleViewNomination";
+import TableView_Nomination from "./pages/games/TableView/TableViewNomination";
 
 export default function App() {
   const currentUser = useAuth();
@@ -734,6 +735,7 @@ export default function App() {
                   <Route index element={<Game_Nomination />} />
                   <Route path="live" element={<LiveView_Nomination />} />
                   <Route path="simple" element={<SimpleView_Nomination />} />
+                  <Route path="table" element={<TableView_Nomination />} />
                 </Route>
               </Route>
               <Route path="monopoly">
